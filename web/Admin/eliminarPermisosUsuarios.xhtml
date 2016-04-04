@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <p:tab id="edicioPermisos" title="EdicionPermisos">
+                <p:panel header="Edición de Permisos" >
+   <p:growl id="msgs" showDetail="true"/>
+   
+   
+   <p:dataTable id="tablaPermisos" var="menu" value="#{mbVTablaPermisos.lstTablaPermisos}" editable="true"
+            scrollable="true" scrollHeight="45%" rowStyleClass="#{menu.padre le 0 ? 'colored' : 'colored1'}">
+       
+ 
+       <p:ajax event="rowEdit" listener="#{mbVTablaPermisos.onRowEdit}" update=":form:msgs" />
+       
+       <p:ajax event="rowEditCancel" listener="#{mbVTablaPermisos.onRowCancel}" update=":form:msgs" />
+       
+       
+       
+ 
+       <p:column headerText="Descripción" style="width: 20%;">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{menu.descripcion}" /></f:facet>
+               <f:facet name="input"><p:inputText id="modelInput" value="#{menu.descripcion}" style="width:100%"/></f:facet>
+           </p:cellEditor>
+       </p:column>
+ 
+       <p:column headerText="Contenedor" style="width: 20%;">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{menu.contenedor}"   /></f:facet>
+               <f:facet name="input"><p:inputText value="#{menu.contenedor}" rendered="#{menu.padre > 0 ? true:false}" style="width:100%" label="text"/></f:facet>
+           </p:cellEditor>
+       </p:column>
+ 
+       <p:column headerText="Ruta" style="width: 35%;">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{menu.ruta}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{menu.ruta}" rendered="#{menu.padre > 0 ? true:false}" style="width:100%" label="text"/></f:facet>
+           </p:cellEditor>
+       </p:column>
+ 
+       <p:column headerText="Orden" style="width: 10%; text-align: center;">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{menu.orden}" /></f:facet>
+               <f:facet name="input"><p:inputText value="#{menu.orden}" style="width:100%" label="text"/></f:facet>
+           </p:cellEditor>
+       </p:column>
+ 
+       <p:column style="width:7%;">
+           
+                <p:rowEditor />   
+           
+               
+           
+           
+       </p:column>
+       <p:column style="width:8%;">
+           <p:commandButton id="btnEliminar"
+               action="#{mbVTablaPermisos.onDelete(menu)}"
+               update=":form:tablaPermisos"
+               icon="ui-icon-trash"
+               style="#{menu.padre == 0 ?  'border-style: hidden;background-color: #F0F3F0;': 'border-style: hidden;background-color: transparent;'}"
+               >
+               <p:confirm header="Borrado de Permiso" message="Pulsa ok! para confirmar acción" icon="ui-icon-alert" />
+           </p:commandButton>
+       </p:column>
+   </p:dataTable>
+   
+   <p:confirmDialog global="true" styleClass="change-position">
+        <p:commandButton value="Confirmar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+        <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+    </p:confirmDialog>
+   </p:panel>
+            </p:tab>
+</h:form>
+
+        <script>
+            
+        </script>
+        	
+    </h:body>
+</html>
+

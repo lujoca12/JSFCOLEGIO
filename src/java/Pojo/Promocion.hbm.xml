@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29/02/2016 10:09:02 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.Promocion" table="promocion" schema="public" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="increment" />
+        </id>
+        <many-to-one name="maestria" class="Pojo.Maestria" fetch="select">
+            <column name="id_maestria" not-null="true" />
+        </many-to-one>
+        <property name="descripcion" type="java.lang.Integer">
+            <column name="descripcion" />
+        </property>
+        <property name="fechaResolucion" type="date">
+            <column name="fecha_resolucion" length="13" />
+        </property>
+        <property name="fechaInicio" type="date">
+            <column name="fecha_inicio" length="13" />
+        </property>
+        <property name="fechaFin" type="date">
+            <column name="fecha_fin" length="13" />
+        </property>
+        <property name="cupo" type="java.lang.Integer">
+            <column name="cupo" />
+        </property>
+        <property name="NCuotas" type="java.lang.Integer">
+            <column name="n_cuotas" />
+        </property>
+        <property name="idUsuario" type="int">
+            <column name="id_usuario" not-null="true" />
+        </property>
+        <set name="precios" table="precio" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_promocion" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Precio" />
+        </set>
+        <set name="matriculas" table="matricula" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_promocion" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Matricula" />
+        </set>
+        <set name="modulos" table="modulo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_promocion" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Modulo" />
+        </set>
+    </class>
+</hibernate-mapping>

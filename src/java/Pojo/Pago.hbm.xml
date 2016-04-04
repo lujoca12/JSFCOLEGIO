@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29/02/2016 10:09:02 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.Pago" table="pago" schema="public" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="matricula" class="Pojo.Matricula" fetch="select">
+            <column name="id_matricula" not-null="true" />
+        </many-to-one>
+        <many-to-one name="tipoPago" class="Pojo.TipoPago" fetch="select">
+            <column name="id_tipo_pago" not-null="true" />
+        </many-to-one>
+        <property name="valor" type="java.lang.Double">
+            <column name="valor" scale="0" />
+        </property>
+        <property name="fecha" type="date">
+            <column name="fecha" length="13" />
+        </property>
+        <property name="idComprobante" type="string">
+            <column name="id_comprobante" length="20" />
+        </property>
+        <property name="rutaComprobante" type="string">
+            <column name="ruta_comprobante" />
+        </property>
+    </class>
+</hibernate-mapping>

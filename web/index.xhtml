@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>SISFIAC</title>
+
+
+    </h:head>
+    <h:body>        
+        <ui:composition template="/templates/masterLayout.xhtml">                     
+            <ui:define name="leftContent">                
+            </ui:define>
+            <ui:define name="content">
+                <f:facet name="last">                    
+                    <h:outputStylesheet name="modern-business.css" library="css"/>
+                    <h:outputStylesheet name="index.css" library="css"/>
+                </f:facet>
+                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" role="listbox">
+                        <div class="item active">
+                            <div class="fill" style="background-image: url(#{resource['img/img1.jpg']});"></div> 
+                            
+                            <!--Para agregar un texto <div class="carousel-caption">
+                                 ...<img src="resources/img/img1.jpg" alt="..."/>
+                             </div> -->
+                        </div>
+                        <div class="item">
+                            <div class="fill" style="background-image: url(#{resource['img/img2.jpg']});"></div> 
+                            <!--Para agregar un texto <div class="carousel-caption">
+                                 ...<img src="resources/img/img1.jpg" alt="..."/>
+                             </div> -->
+                        </div>
+                        <div class="item">
+                            <div class="fill" style="background-image: url(#{resource['img/img3.jpg']});"></div> 
+                            <!--Para agregar un texto <div class="carousel-caption">
+                                 ...<img src="resources/img/img1.jpg" alt="..."/>
+                             </div> -->
+                        </div>
+
+                    </div>
+
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                        <span class="icon-prev" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                        <span class="icon-next" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">
+                                Bienvenido a la Unidad de Postgrado de la UTEQ!
+                            </h1>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4><i class="fa fa-fw fa-suitcase"></i> Misión</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <p>La unidad de posgrado contribuiró el fortalecimiento de una cultura de posgrado que atienda las necesidades de formación de educación avanzada de la población profesional institucional, local, regional , y nacional , mediante el desarrollo Maestrías, diseñados bajo las modalidades presencial, semipresencial y a distancia.</p>                                                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4><i class="fa fa-fw fa-gear"></i> Objetivos</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <p>Formar el recurso humano en los niveles intermedios de posgrado, en los grados de maestría, en las áreas de conocimiento necesarias para contribuir al desarrollo social, tecnológico , científico de la región y del país. </p>           
+                                    <p>La preparación de recursos humanos de la mas alta calificación científica, académica y profesional, básicamente a través de la investigación. </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4><i class="fa fa-fw fa-road"></i> Objetivos</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <p>Generar lineamientos estratégicos y recomendaciones para el fomento, formulación, selección y ejecución de planes programa y proyecto de investigación que contribuyan al desarrollo, experiencia y formación del recurso humano necesario para la atención de las demandas sociales, en cordinación con las unidades académicas y de investigación.</p>                                
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <script>
+                    $('.carousel').carousel({
+                        interval: 3000 //changes the speed
+                    });
+                </script>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

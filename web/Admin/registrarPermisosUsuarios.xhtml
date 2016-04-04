@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <div class="ui-fluid">
+        <h:form id="frmRegistrarUsuarios">
+            <p:tab id="personal" title="RegistrarPermisos">
+                <p:panel header="Registrar Permisos" >
+            <p:panelGrid columns="3" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
+                
+                <p:outputLabel for="cboNivel" value="Nivel:" styleClass="labelDerecha"/>
+                <p:selectOneMenu id="cboNivel" value="#{mbVPermisos.nivel}">
+                    
+                    <f:selectItems value="#{mbVPermisos.lstNivel}" />
+                    <p:ajax update="contenedorComponente" />
+                </p:selectOneMenu>
+                <p:message for="cboNivel"/>
+                
+                <p:outputLabel for="cboOrden" value="Orden:" styleClass="labelDerecha"/>
+                <p:selectOneMenu id="cboOrden" value="#{mbVPermisos.orden}">
+                    <f:selectItems value="#{mbVPermisos.lstOrden}" />
+                </p:selectOneMenu>
+                <p:growl id="msgs" showDetail="true" />
+                
+            </p:panelGrid>
+           
+            <!--Ajax del contenedor hijo-->
+            <p:panelGrid id="contenedorComponente" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
+                
+                <p:outputLabel for="txtDescripcionPadre" styleClass="labelDerecha" value="Descripción:" rendered="#{mbVPermisos.nivel == 1 ? true:false}" />
+                <p:inputText id="txtDescripcionPadre" value="#{mbVPermisos.tPermiso.descripcion}" rendered="#{mbVPermisos.nivel == 1 ? true:false}">
+                    <f:validateLength minimum="5" maximum="50" />
+                </p:inputText>
+                <p:message for="txtDescripcionPadre" rendered="#{mbVPermisos.nivel == 1 ? true:false}" />
+                
+                <p:outputLabel for="cboPadre" value="Padre:" styleClass="labelDerecha" rendered="#{mbVPermisos.nivel == 2 ? true:false}"/>
+                <p:selectOneMenu id="cboPadre" value="#{mbVPermisos.padre}" required="true" rendered="#{mbVPermisos.nivel == 2 ? true:false}">
+                    <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                    <f:selectItems value="#{mbVPermisos.lstPermiso}" />
+                </p:selectOneMenu>
+                <p:message for="cboPadre" id="msgDescrPadre" rendered="#{mbVPermisos.nivel == 2 ? true:false}"/>
+                
+                <p:outputLabel for="txtContenedor" styleClass="labelDerecha" value="Contenedor:" rendered="#{mbVPermisos.nivel == 2 ? true:false}" />
+                <p:inputText id="txtContenedor" required="true" value="#{mbVPermisos.contenedor}" placeholder="" rendered="#{mbVPermisos.nivel == 2 ? true:false}" />
+                <p:message for="txtContenedor" rendered="#{mbVPermisos.nivel == 2 ? true:false}"/>
+                
+                <p:outputLabel for="txtRuta" styleClass="labelDerecha" value="Ruta:" rendered="#{mbVPermisos.nivel == 2 ? true:false}" />
+                <p:inputText id="txtRuta" required="true" value="#{mbVPermisos.tuDirectorioPagina}" placeholder="MiCarpeta/NombrePagina o Página" rendered="#{mbVPermisos.nivel == 2 ? true:false}" />
+                <p:message for="txtRuta" rendered="#{mbVPermisos.nivel == 2 ? true:false}"/>
+                
+                <p:outputLabel for="txtDescripcionHijo" styleClass="labelDerecha" value="Descripción:" rendered="#{mbVPermisos.nivel == 2 ? true:false}" />
+                <p:inputText id="txtDescripcionHijo" value="#{mbVPermisos.tPermiso.descripcion}" rendered="#{mbVPermisos.nivel == 2 ? true:false}">
+                    <f:validateLength minimum="5" maximum="50" />
+                </p:inputText>
+                <p:message for="txtDescripcionHijo" rendered="#{mbVPermisos.nivel == 2 ? true:false}"/>
+                
+                
+
+                <p:message for="display"/>
+                <p:commandButton value="Guardar" update="@form" styleClass="anchoBotones" icon="ui-icon-disk"
+                                 actionListener="#{mbVPermisos.registrar}" rendered="#{mbVPermisos.nivel >= 1 ? true:false}" />
+                <h:outputText id="display" value="" />
+            </p:panelGrid>
+            <!--Fin del contenedor Ajax-->
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+            </p:dialog>
+                </p:panel>
+            </p:tab>
+ </h:form>
+            
+    
+    
+</div>
+    </h:body>
+</html>
+

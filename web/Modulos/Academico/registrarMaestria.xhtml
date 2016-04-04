@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <h:outputScript library="js" name="calendar_es.js" />
+        <h:outputScript name="jquery/jquery.js" library="primefaces" />
+    </h:head>
+    <h:body>
+        <div class="ui-fluid">
+            <h:form id="form">
+                <p:tab id="personal" title="RegistrarMaestrias">
+                    <p:panel header="Registrar Maestrias">
+                <p:growl id="msgsM" showDetail="true" />
+                <p:focus context="panel"/>
+                <p:panelGrid id="panel" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
+                    <p:outputLabel for="txtDescripcionMaestria" styleClass="labelDerecha" value="Descripción:" />
+                    <p:autoComplete id="txtDescripcionMaestria" required="true" maxlength="150" value="#{mbVMaestrias.tMaestria.descripcion}" completeMethod="#{mbVMaestrias.completeText}" />
+                    <p:message for="txtDescripcionMaestria" />
+                    
+                    <p:outputLabel for="txtDirector" value="Director:" styleClass="labelDerecha"  />
+                    <p:selectOneMenu id="txtDirector" value="#{mbVMaestrias.theme}" converter="themeConverter" required="true"
+                                     effect="fade" var="t" filter="true" filterMatchMode="contains">
+                        <f:selectItems value="#{mbVMaestrias.lstTheme}" var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme}" />
+                        <p:column style="width:10%">
+                            <h:outputText styleClass="ui-theme ui-theme-#{t.name}" />
+                        </p:column>
+
+                        <p:column>
+                            <h:outputText value="#{t.displayName}" />
+                        </p:column>
+                    </p:selectOneMenu>
+                    <p:message for="txtDirector" />
+                    
+                    <p:outputLabel for="txtFechaInicio" value="Fecha inicio:" styleClass="labelDerecha" />
+                    <p:calendar id="txtFechaInicio" onkeypress="return permite(event, 'none')" locale="es" value="#{mbVMaestrias.tPromocion.fechaInicio}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" >
+                        <p:ajax event="dateSelect" update="txtFechaFin" />
+                    </p:calendar>
+                    <p:message for="txtFechaInicio" />
+                    
+                    <p:outputLabel for="txtFechaFin" value="Fecha fin:" styleClass="labelDerecha" />
+                    <p:calendar id="txtFechaFin" locale="es" value="#{mbVMaestrias.tPromocion.fechaFin}" onkeypress="return permite(event, 'none')" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" >
+                        <f:attribute name="txtFechaInicio" value="#{mbVMaestrias.tPromocion.fechaInicio}"/>
+                        <f:validator validatorId="primeDateRangeValidator" />
+                    </p:calendar>
+                    <p:message for="txtFechaFin" />
+                    
+                    <p:outputLabel for="txtCupos" styleClass="labelDerecha" value="Cupos:" />
+                    <p:inputMask id="txtCupos" value="#{mbVMaestrias.tPromocion.cupo}" required="true" mask="99"/>
+                    <p:message for="txtCupos" />
+                    
+                    <p:outputLabel for="txtNCuotas" styleClass="labelDerecha" value="# Cuotas" />
+                    <p:inputMask id="txtNCuotas" value="#{mbVMaestrias.tPromocion.NCuotas}" required="true" mask="99"/>
+                    <p:message for="txtNCuotas" />
+                    
+                    
+                               
+                    
+                    <p:message for="display"/>
+                    <p:commandButton value="Guardar" update="panel,msgsM" styleClass="anchoBotones" icon="ui-icon-disk"
+                                     actionListener="#{mbVMaestrias.registrar()}" />
+                    <h:outputText id="display" value="" />
+                    
+                        
+                </p:panelGrid>
+                </p:panel>
+                </p:tab>
+                
+            </h:form>
+            <script>
+                           
+            </script>
+         </div>
+    </h:body>
+</html>
+

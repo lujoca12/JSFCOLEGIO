@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"    
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <div class="ui-fluid">
+            <h:form id="form">
+                <p:tab id="personal" title="AsignarQuitarPermisos">
+                <p:panel header="Asignar/Quitar Permisos">
+                <p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank">
+		     <p:outputLabel for="cboUsuario" value="Usuario:" styleClass="labelDerecha"/>
+                     <p:selectOneMenu id="cboUsuario" value="#{mbVUsuario.usuario}">
+                        <f:selectItem itemLabel="Ninguno" itemValue="-1" />
+                        <f:selectItems value="#{mbVUsuario.lstUsuario}"/>
+                        <p:ajax update="arbol" listener="#{mbVUsuario.onClickChange}" />
+                     </p:selectOneMenu>
+                     
+                    <p:growl id="msgs" showDetail="true" />
+                   <p:tree styleClass="bordeArbol" id="arbol" value="#{mbVUsuario.root}" var="node" dynamic="true"
+                           selectionMode="checkbox" selection="#{mbVUsuario.checkboxSelectedTreeNodes}">
+                       
+                     
+                                
+                        <p:treeNode expandedIcon="ui-icon ui-icon-folder-open"
+                                    collapsedIcon="ui-icon ui-icon-folder-collapsed">
+                                <h:outputText value="#{node}"/>
+                        </p:treeNode>
+                    </p:tree>
+                     
+                    <br/>
+                    <br/>
+                     <p:commandButton value="Guardar" styleClass="anchoBotones" update="msgs" icon="ui-icon-disk"
+                                      actionListener="#{mbVUsuario.displaySelectedNodes(mbVUsuario.checkboxSelectedTreeNodes)}"/>
+
+
+                        
+                </p:panelGrid>
+                </p:panel>
+                </p:tab>
+            </h:form>
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+ 
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+            </p:dialog>
+            
+
+            
+         </div>
+    </h:body>
+</html>
+

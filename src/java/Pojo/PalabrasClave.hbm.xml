@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29/02/2016 10:09:02 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.PalabrasClave" table="palabras_clave" schema="public" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="tesis" class="Pojo.Tesis" fetch="select">
+            <column name="id_tesis" not-null="true" />
+        </many-to-one>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="20" />
+        </property>
+    </class>
+</hibernate-mapping>

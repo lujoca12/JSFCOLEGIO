@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"      
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h5="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      >
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/templates/masterLayout.xhtml">
+            <ui:define name="leftContent"></ui:define>
+            <ui:define name="content">     
+                <h:outputStylesheet name="inscripcion.css" library="css"/>
+                <h:outputStylesheet name="fileinput.css" library="css"/>
+                <h:outputScript name="fileinput.min.js" library="js"/>
+                <h:outputScript name="verFoto.js" library="js"/>
+                <h:form id="form" enctype="multipart/form-data" >
+                    <h1 style="text-align: center">Solicitud de Inscripción</h1>
+                    <div id="rootwizard" class="tabbable ">
+                        <ul>
+                            <li><a href="#tab1" data-toggle="tab" style="pointer-events: none;">Información Personal</a></li>
+                            <li><a href="#tab2" data-toggle="tab" style="pointer-events: none;">Lugar de Nacimiento</a></li>
+                            <li><a href="#tab3" data-toggle="tab" style="pointer-events: none;">Información Laboral</a></li>
+                            <li><a href="#tab4" data-toggle="tab" style="pointer-events: none;">Información Educativa</a></li>
+                            <li><a href="#tab5" data-toggle="tab" style="pointer-events: none;">Requisitos</a></li>
+                            
+                        </ul>
+                        <div class="tab-content" >
+                            <div class="tab-pane" id="tab1">
+                                <p:messages  closable="true" />
+
+                                <div class="izquierda">
+                                    <h:outputLabel for="cedPas" value="Cédula o Pasaporte: " />
+                                    <p:inputText  required="true" id="cedPas" class="form-control "/>
+                                </div>
+                                <div class="izquierda">
+                                    <h:outputLabel for="estCivil" value="Estado Civil: " />
+                                    <h:selectOneMenu id="estCivil" class="form-control">
+                                        <f:selectItem itemLabel="Soltero" itemValue="S" />
+                                        <f:selectItem itemLabel="Casado" itemValue="C" />
+                                        <f:selectItem itemLabel="Divorciado" itemValue="D" />
+                                        <f:selectItem itemLabel="Viudo" itemValue="V" />
+                                        <f:selectItem itemLabel="Union Libre" itemValue="U" />
+                                    </h:selectOneMenu>
+                                </div>
+                                <div class="derecha" style="text-align: center;position: relative;display: inline-block;">
+                                    <div class="kv-avatar center-block" style="width:200px">
+                                        <input id="avatar"  name="avatar" type="file" class="file-loading"/>
+                                    </div>                    
+                                    <div id="kv-avatar-errors" class="center-block" style="width:200px;display:none;margin-top: 5px;"/>
+                                </div>
+                                <div class="izquierda limpiar-izq">
+                                    <h:outputLabel for="nombres" value="Nombres: " />
+                                    <p:inputText  required="true" id="nombres" class="form-control "/>
+                                </div>
+                                <div class="izquierda">
+                                    <h:outputLabel for="apellidos" value="Apellidos: " />
+                                    <p:inputText  required="true" id="apellidos" class="form-control "/>
+                                </div>
+                                <div class="izquierda limpiar-izq">
+                                    <h:outputLabel for="fNac" value="Fecha de Nacimiento: " />
+                                    <p:calendar  id="fNac" required="true" navigator="true" mask="true" pattern="dd/MM/yyyy" mindate="01/01/1940" maxdate="#{validadorFecha.fechaMax}"  />                                  
+                                </div>
+
+                                <div class="izquierda">
+
+                                    <h:outputLabel for="email" value="Email: " />
+                                    <p:inputText  required="true" id="email" class="form-control  ">
+                                        
+                                    </p:inputText>
+                                </div>
+                                <div class="izquierda limpiar-izq">
+
+                                    <h:outputLabel for="celular" value="Celular: " />
+                                    <p:inputMask id="celular"  required="true" class="form-control" mask="99-99999999" />
+                                </div>
+                                <div class="izquierda">
+
+                                    <h:outputLabel for="sexo" value="Sexo: " />
+                                    <h:selectOneMenu id="sexo" class="form-control">
+                                        <f:selectItem itemLabel="Masculino" itemValue="M" />
+                                        <f:selectItem itemLabel="Femenino" itemValue="F" />
+                                    </h:selectOneMenu>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab2">
+                                2
+                            </div>
+                            <div class="tab-pane" id="tab3">
+                                3
+                            </div>
+                            <div class="tab-pane" id="tab4">
+                                4
+                            </div>
+                            <div class="tab-pane" id="tab5">
+                                5
+                            </div>
+                            <div class="tab-pane" id="tab6">
+                                6
+                            </div>
+                            <div class="tab-pane" id="tab7">
+                                7
+                            </div>
+                                <ul class="pager wizard limpiar-izq" style="padding-top: 30px;">
+                                <li class="previous first" style="display:none;"><a href="#">First</a></li>
+                                <li class="previous"><a href="#">Previous</a></li>
+                                <li class="next last" style="display:none;"><a href="#">Last</a></li>
+                                <li class="next"><a href="#">Next</a></li>
+                            </ul>
+                        </div>	
+                    </div>
+                </h:form>
+
+                <h:outputScript name="jquery.bootstrap.wizard.min.js" library="js"/>
+                <h:outputScript name="jquery.validate.min.js" library="js"/>
+                <h:outputScript name="messages_es.min.js" library="js"/>
+                <h:outputScript name="validarInscripcion.js" library="js"/>
+
+                
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

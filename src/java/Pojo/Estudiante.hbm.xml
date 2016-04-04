@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29/02/2016 10:09:02 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.Estudiante" table="estudiante" schema="public" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="cedPasaporte" type="string">
+            <column name="ced_pasaporte" length="20" not-null="true" />
+        </property>
+        <property name="nombres" type="string">
+            <column name="nombres" length="50" />
+        </property>
+        <property name="apellidos" type="string">
+            <column name="apellidos" length="50" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="50" />
+        </property>
+        <property name="celular" type="string">
+            <column name="celular" length="10" />
+        </property>
+        <property name="fechaNac" type="date">
+            <column name="fecha_nac" length="13" />
+        </property>
+        <property name="sexo" type="java.lang.Character">
+            <column name="sexo" length="1" />
+        </property>
+        <property name="estadoCivil" type="java.lang.Character">
+            <column name="estado_civil" length="1" />
+        </property>
+        <property name="paisOrigen" type="string">
+            <column name="pais_origen" length="25" />
+        </property>
+        <property name="dscColegiatura" type="java.lang.Integer">
+            <column name="dsc_colegiatura" />
+        </property>
+        <set name="matriculas" table="matricula" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_estudiante" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Matricula" />
+        </set>
+        <set name="datosDoms" table="datos_dom" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_estudiante" />
+            </key>
+            <one-to-many class="Pojo.DatosDom" />
+        </set>
+        <set name="datosNacs" table="datos_nac" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_estudiante" />
+            </key>
+            <one-to-many class="Pojo.DatosNac" />
+        </set>
+        <set name="entrevistas" table="entrevista" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_estudiante" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Entrevista" />
+        </set>
+        <set name="datosLabs" table="datos_lab" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_estudiante" />
+            </key>
+            <one-to-many class="Pojo.DatosLab" />
+        </set>
+        <set name="estudiosRealizadoses" table="estudios_realizados" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_estudiante" />
+            </key>
+            <one-to-many class="Pojo.EstudiosRealizados" />
+        </set>
+    </class>
+</hibernate-mapping>

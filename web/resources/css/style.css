@@ -1,0 +1,102 @@
+*{
+    margin: 0;
+}
+html,body{
+    height: 100%;
+}
+.wrapper{
+    min-height: 100%;
+    margin-bottom: -50px; /* the bottom margin is the negative value of the footer's height */
+}
+.wrapper:after{
+    content: "";
+    display: block;
+}
+footer, .wrapper:after{
+    height: 50px;     
+}
+.cursor{
+    cursor: pointer;
+}
+.icon-right{
+    margin-left: 25px;
+}
+.titulo{
+    text-align: center;
+    margin-top: 100px;
+}
+.elegir-maestria{
+/*    display: table;   
+    width: 700px;
+    margin: auto;
+    height: auto;*/
+ width: 700px;
+ margin: auto;
+ height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+.elegir-maestria>*{
+/*   display: table-cell;
+   vertical-align: middle;   */
+margin: 0;
+   
+}
+.elegir-maestria>select{
+    width: 75%;
+}
+.elegir-maestria>label{
+    margin-right:  15px;    
+}
+.datos{
+    width: 700px;
+    margin:  auto;
+    padding: 0 15px;
+    border-bottom: none;
+    border: 1px silver groove;
+    padding-bottom: 10px;
+}
+.legend{
+    width:auto;
+    margin: 0;
+    padding:0 10px;
+    border-bottom:none;
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+img{
+    width: 200px;
+    height: 200px;
+}
+
+.derecha{
+    float: right;
+}
+.izquierda{
+    float: left;
+    margin-right: 10px;
+    width: 200px;
+    
+}
+.limpiar-izq{
+    clear: left;
+}
+

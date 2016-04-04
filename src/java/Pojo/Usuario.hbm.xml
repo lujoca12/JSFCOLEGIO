@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29/02/2016 10:09:02 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.Usuario" table="usuario" schema="public" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="increment" />
+        </id>
+        <many-to-one name="tipoUsuario" class="Pojo.TipoUsuario" fetch="select">
+            <column name="id_tipo_usuario" not-null="true" />
+        </many-to-one>
+        <property name="cedPasaporte" type="string">
+            <column name="ced_pasaporte" length="20" not-null="true" />
+        </property>
+        <property name="nombres" type="string">
+            <column name="nombres" length="30" />
+        </property>
+        <property name="apellidos" type="string">
+            <column name="apellidos" length="30" />
+        </property>
+        <property name="direccion" type="string">
+            <column name="direccion" length="70" />
+        </property>
+        <property name="telefono" type="string">
+            <column name="telefono" length="10" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" />
+        </property>
+        <property name="estadoCivil" type="java.lang.Character">
+            <column name="estado_civil" length="1" />
+        </property>
+        <property name="sexo" type="java.lang.Character">
+            <column name="sexo" length="1" />
+        </property>
+        <property name="fechaNac" type="date">
+            <column name="fecha_nac" length="13" />
+        </property>
+        <property name="celular" type="string">
+            <column name="celular" length="10" />
+        </property>
+        <property name="estado" type="java.lang.Character">
+            <column name="estado" length="1" />
+        </property>
+        <property name="nick" type="string">
+            <column name="nick" length="10" />
+        </property>
+        <property name="clave" type="string">
+            <column name="clave" length="64" />
+        </property>
+        <property name="usuarioBd" type="string">
+            <column name="usuario_bd" length="10" />
+        </property>
+        <property name="claveBd" type="string">
+            <column name="clave_bd" length="64" />
+        </property>
+        <set name="detallePermisos" table="detalle_permiso" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_usuario" />
+            </key>
+            <one-to-many class="Pojo.DetallePermiso" />
+        </set>
+        <set name="modulos" table="modulo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_usuario" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Modulo" />
+        </set>
+    </class>
+</hibernate-mapping>

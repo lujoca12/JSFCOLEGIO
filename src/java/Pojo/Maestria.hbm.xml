@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29/02/2016 10:09:02 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.Maestria" table="maestria" schema="public" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="increment" />
+        </id>
+        <property name="descripcion" type="string">
+            <column name="descripcion" />
+        </property>
+        <property name="estado" type="java.lang.Character">
+            <column name="estado" length="1" />
+        </property>
+        <set name="tesises" table="tesis" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_maestria" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Tesis" />
+        </set>
+        <set name="promocions" table="promocion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_maestria" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Promocion" />
+        </set>
+        <set name="requisitoses" table="requisitos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_maestria" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Requisitos" />
+        </set>
+    </class>
+</hibernate-mapping>

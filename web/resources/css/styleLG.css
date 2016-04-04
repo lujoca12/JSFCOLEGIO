@@ -1,0 +1,35 @@
+.icon-leftP{
+    margin-right: 10px;
+}
+.icon-rightP{
+    float: right;
+}
+.imgAjax{
+    height: 50px;
+    width: 50px;
+}
+.imgAjaxTabla{
+    height: 25px;
+    width: 25px;
+}
+.activePI > a:hover {
+    color: #f6f6f6;
+    
+    background: #425164;
+        background-color: rgb(66, 81, 100);
+        background-image: none;
+        background-repeat: repeat;
+        background-attachment: scroll;
+        background-position: 0% 0%;
+        background-clip: border-box;
+        background-origin: padding-box;
+        background-size: auto auto;
+}
+.input-left{
+    padding-left: 20px;
+}
+.textoMayuscula{
+    text-transform: uppercase;
+}
+
+

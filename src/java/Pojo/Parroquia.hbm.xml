@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29/02/2016 10:09:02 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.Parroquia" table="parroquia" schema="public" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="canton" class="Pojo.Canton" fetch="select">
+            <column name="id_canton" not-null="true" />
+        </many-to-one>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="50" />
+        </property>
+        <property name="codigo" type="string">
+            <column name="codigo" length="10" />
+        </property>
+        <set name="datosNacs" table="datos_nac" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_parroquia" />
+            </key>
+            <one-to-many class="Pojo.DatosNac" />
+        </set>
+        <set name="datosDoms" table="datos_dom" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_parroquia" />
+            </key>
+            <one-to-many class="Pojo.DatosDom" />
+        </set>
+        <set name="datosLabs" table="datos_lab" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_parroquia" />
+            </key>
+            <one-to-many class="Pojo.DatosLab" />
+        </set>
+    </class>
+</hibernate-mapping>

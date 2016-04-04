@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <div class="ui-fluid">
+            
+            <h:form id="form">
+                <!--<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />-->
+                <p:tab id="personal" title="RegistrarModulos">
+                    <p:panel header="Registrar Módulos">
+                <p:growl id="msgsModulos" showDetail="true" />
+                <p:focus context="panel"/>
+                
+                <p:panelGrid id="panel" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
+                    
+                    <p:outputLabel for="cboMaestria" value="Maestria:" styleClass="labelDerecha"  />
+                    <p:selectOneMenu id="cboMaestria" value="#{mbVModulos.themeMaestria}" converter="themeConverterMaestria" required="true"
+                                     effect="fade" var="tProfesor" filter="true" filterMatchMode="contains">
+                        <f:selectItems value="#{mbVModulos.lstThemeMaestria}" var="themeProf" itemLabel="#{themeProf.displayName}" itemValue="#{themeProf}" />
+                        <p:column style="width:10%">
+                            <h:outputText styleClass="ui-theme ui-theme-#{tProfesor.name}" />
+                        </p:column>
+
+                        <p:column>
+                            <h:outputText value="#{tProfesor.displayName}" />
+                        </p:column>
+                    </p:selectOneMenu>
+                    <p:message for="cboMaestria" />
+                    
+                    <p:outputLabel for="txtModulos" styleClass="labelDerecha" value="Módulo:" />
+                    <p:inputText id="txtModulos" value="#{mbVModulos.tModulo.descripcion}" required="true" maxlength="100"/>
+                    <p:message for="txtModulos" />
+                    
+                    <p:outputLabel for="cboDocente" value="Docente:" styleClass="labelDerecha"  />
+                    <p:selectOneMenu id="cboDocente" value="#{mbVModulos.theme}" converter="themeConverter" required="true"
+                                     effect="fade" var="t" filter="true" filterMatchMode="contains">
+                        <f:selectItems value="#{mbVModulos.lstTheme}" var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme}" />
+                        <p:column style="width:10%">
+                            <h:outputText styleClass="ui-theme ui-theme-#{t.name}" />
+                        </p:column>
+
+                        <p:column>
+                            <h:outputText value="#{t.displayName}" />
+                        </p:column>
+                    </p:selectOneMenu>
+                    <p:message for="cboDocente" />
+                    
+                    <p:outputLabel for="txtCreditos" styleClass="labelDerecha" value="Creditos:" />
+                    <p:inputMask id="txtCreditos" value="#{mbVModulos.tModulo.creditos}" required="true" mask="99"/>
+                    <p:message for="txtCreditos" />
+                    
+                    <p:message for="display"/>
+                    <p:commandButton value="Guardar" update="panel,msgsModulos" styleClass="anchoBotones" icon="ui-icon-disk"
+                                     actionListener="#{mbVModulos.registrar()}" />
+                    <h:outputText id="display" value="" />
+                    
+                </p:panelGrid>
+                </p:panel>
+                </p:tab>
+                
+            </h:form>
+            
+ 
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+            </p:dialog>
+
+            
+         </div>
+    </h:body>
+</html>
+

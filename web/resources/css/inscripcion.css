@@ -1,0 +1,71 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 21/03/2016, 11:03:20
+    Author     : Postgrago
+*/
+
+.ui-wizard{
+    margin: 10px auto;
+    max-width: 50%;
+    
+}
+input{
+    box-shadow: none !important;
+}
+.hasDatepicker{
+    display: block;
+width: 100%;
+height: 34px;
+padding: 6px 12px;
+font-size: 14px;
+line-height: 1.42857143;
+color: #555;
+background-color: #fff;
+background-image: none;
+border: 1px solid #ccc;
+border-radius: 4px;
+-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+-webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+-o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+
+}
+.combo{
+    width: 200px;
+   box-shadow: 2em
+}
+td{
+    padding-bottom:  10px ;
+    padding-right: 5px;
+}
+.derecha{
+    float: right;
+}
+.izquierda{
+    float: left;
+    margin-right: 10px;
+    width: 200px;
+    
+}
+.limpiar-izq{
+    clear: left;
+}
+#rootwizard{
+    max-width: 50%;
+    margin: auto;   
+    
+}
+.pager wizard{
+    padding-top: 20px;
+}
+.tab-content{
+    border: #ccc solid thin; padding: 10px;
+}
+.error{
+    color:  #c6101b;
+}

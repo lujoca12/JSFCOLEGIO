@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"      
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h5="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>        
+        <ui:composition template="/templates/masterLayout.xhtml">
+            <ui:define name="leftContent"></ui:define>
+            <ui:define name="content"> 
+                 <h:outputStylesheet name="inscripcion.css" library="css"/>
+                <h:outputStylesheet name="fileinput.css" library="css"/>
+                <h:outputScript name="fileinput.min.js" library="js"/>
+                <h:outputScript name="verFoto.js" library="js"/>
+            </ui:define>
+        </ui:composition>
+        <div>fecha publicacion</div>
+    </body>
+</html>

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 29/02/2016 10:09:02 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.Matricula" table="matricula" schema="public" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="estudiante" class="Pojo.Estudiante" fetch="select">
+            <column name="id_estudiante" not-null="true" />
+        </many-to-one>
+        <many-to-one name="promocion" class="Pojo.Promocion" fetch="select">
+            <column name="id_promocion" not-null="true" />
+        </many-to-one>
+        <property name="NMatricula" type="int">
+            <column name="n_matricula" not-null="true" />
+        </property>
+        <property name="fechaMatricula" type="date">
+            <column name="fecha_matricula" length="13" />
+        </property>
+        <property name="dscColegiatura" type="java.lang.Integer">
+            <column name="dsc_colegiatura" />
+        </property>
+        <property name="estado" type="java.lang.Character">
+            <column name="estado" length="1" />
+        </property>
+        <set name="asistencias" table="asistencia" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_matricula" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Asistencia" />
+        </set>
+        <set name="pagos" table="pago" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_matricula" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Pago" />
+        </set>
+        <set name="notases" table="notas" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_matricula" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Notas" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -7,6 +7,7 @@ package managedBean;
 
 import Clases.ClsMaestria;
 import Clases.ClsProfesor;
+import Clases.ClsTablaModulosRegistrados;
 import Dao.DaoTMaestrias;
 import Dao.DaoTModulo;
 import Dao.DaoTPromocion;
@@ -42,15 +43,20 @@ public class MbVModulos implements Serializable{
     private ClsMaestria themeMaestria; 
     private List<ClsMaestria> lstThemeMaestria;
     
+    private ClsTablaModulosRegistrados clsTblModulosReg;
+    private List<ClsTablaModulosRegistrados> lstTblModulosReg;
+    
     private int idMaestria;
     private int idDocente;
     private boolean msg;
     private Modulo tModulo;
+    private List<Modulo> lstModulo;
     
     public MbVModulos() {
         tModulo = new Modulo();
         llenarCboDocente();
         llenarCboMaestria();
+        //getTblModuloRegistrados();
     }
 
     public int getIdMaestria() {
@@ -101,6 +107,53 @@ public class MbVModulos implements Serializable{
     public List<ClsMaestria> getLstThemeMaestria() {
         return lstThemeMaestria;
     }
+
+    public List<ClsTablaModulosRegistrados> getLstTblModulosReg() {
+        lstTblModulosReg = new ArrayList<>();
+        try {
+            lstTblModulosReg.clear();
+            DaoTModulo daoTmodulo = new DaoTModulo();
+            lstModulo = daoTmodulo.getTblModulos();
+            
+            if(lstModulo != null){
+                if(lstModulo.size() > 0){
+                    for(Modulo modulo : lstModulo){
+                        lstTblModulosReg.add(new ClsTablaModulosRegistrados(modulo.getPromocion().getMaestria().getId(), modulo.getPromocion().getMaestria().getDescripcion(), modulo.getPromocion().getId(), modulo.getDescripcion(), modulo.getUsuario().getId(), modulo.getUsuario().getApellidos()+" "+modulo.getUsuario().getNombres(), modulo.getCreditos()));
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lstTblModulosReg;
+    }
+
+    public ClsTablaModulosRegistrados getClsTblModulosReg() {
+        return clsTblModulosReg;
+    }
+
+    public void setClsTblModulosReg(ClsTablaModulosRegistrados clsTblModulosReg) {
+        this.clsTblModulosReg = clsTblModulosReg;
+    }
+    
+//    private void getTblModuloRegistrados(){
+//        lstTblModulosReg = new ArrayList<>();
+//        try {
+//            lstTblModulosReg.clear();
+//            DaoTModulo daoTmodulo = new DaoTModulo();
+//            lstModulo = daoTmodulo.getTblModulos();
+//            
+//            if(lstModulo != null){
+//                if(lstModulo.size() > 0){
+//                    for(Modulo modulo : lstModulo){
+//                        lstTblModulosReg.add(new ClsTablaModulosRegistrados(modulo.getPromocion().getMaestria().getId(), modulo.getPromocion().getMaestria().getDescripcion(), modulo.getPromocion().getId(), modulo.getDescripcion(), modulo.getUsuario().getId(), modulo.getUsuario().getApellidos()+" "+modulo.getUsuario().getNombres(), modulo.getCreditos()));
+//                    }
+//                }
+//            }
+//        } catch (Exception ex) {
+//            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
     
     public void llenarCboDocente(){
         this.lstTheme = new ArrayList<ClsProfesor>();

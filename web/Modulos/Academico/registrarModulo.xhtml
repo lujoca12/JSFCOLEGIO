@@ -8,10 +8,10 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <div class="ui-fluid">
+        <div class="ui-fluid" >
             
             <h:form id="form">
-                <!--<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />-->
+                
                 <p:tab id="personal" title="RegistrarModulos">
                     <p:panel header="Registrar Módulos">
                 <p:growl id="msgsModulos" showDetail="true" />
@@ -56,23 +56,46 @@
                     <p:message for="txtCreditos" />
                     
                     <p:message for="display"/>
-                    <p:commandButton value="Guardar" update="panel,msgsModulos" styleClass="anchoBotones" icon="ui-icon-disk"
+                    <p:commandButton value="Guardar" update="panel,panelTabla,msgsModulos" styleClass="anchoBotones" icon="ui-icon-disk"
                                      actionListener="#{mbVModulos.registrar()}" />
+                        
+                    
                     <h:outputText id="display" value="" />
                     
                 </p:panelGrid>
                 </p:panel>
                 </p:tab>
-                
-            </h:form>
             
- 
-            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-                <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
-            </p:dialog>
+         
+        <br></br>
+        
+            
+        <p:panel id="panelTabla" style="height: 30%;">
+                    <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->
+                    <p:dataTable var="lstTbl" value="#{mbVModulos.lstTblModulosReg}"
+                                 scrollable="true" scrollHeight="100%">
+                        <p:column headerText="Maestria" style="width: 30%;">
+                            <h:outputText value="#{lstTbl.maestria}" />
+                        </p:column>
 
-            
-         </div>
+                        <p:column headerText="Módulo" style="width: 30%;">
+                            <h:outputText value="#{lstTbl.modulo}" />
+                        </p:column>
+
+                        <p:column headerText="Docente" style="width: 30%;">
+                            <h:outputText value="#{lstTbl.usuario}" />
+                        </p:column>
+
+                        <p:column headerText="Creditos" style="width: 10%;">
+                            <h:outputText value="#{lstTbl.creditos}" />
+                        </p:column>
+                    </p:dataTable>
+                </p:panel>
+                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                    <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+                </p:dialog>
+            </h:form>
+        </div>
     </h:body>
 </html>
 

@@ -24,11 +24,11 @@
                     <div id="rootwizard" class="tabbable ">
                         <ul>
                             <li><a href="#tab1" data-toggle="tab" style="pointer-events: none;">Información Personal</a></li>
-                            <li><a href="#tab2" data-toggle="tab" style="pointer-events: none;">Lugar de Nacimiento</a></li>
+                            <li><a href="#tab2" data-toggle="tab" style="pointer-events: none;">Información Domiciliaria</a></li>
                             <li><a href="#tab3" data-toggle="tab" style="pointer-events: none;">Información Laboral</a></li>
-                            <li><a href="#tab4" data-toggle="tab" style="pointer-events: none;">Información Educativa</a></li>
+                            <li><a href="#tab4" data-toggle="tab" style="pointer-events: none;">Información Académica</a></li>
                             <li><a href="#tab5" data-toggle="tab" style="pointer-events: none;">Requisitos</a></li>
-                            
+
                         </ul>
                         <div class="tab-content" >
                             <div class="tab-pane" id="tab1">
@@ -68,14 +68,10 @@
                                 </div>
 
                                 <div class="izquierda">
-
                                     <h:outputLabel for="email" value="Email: " />
-                                    <p:inputText  required="true" id="email" class="form-control  ">
-                                        
-                                    </p:inputText>
+                                    <p:inputText  required="true" id="email" class="form-control  "/>
                                 </div>
                                 <div class="izquierda limpiar-izq">
-
                                     <h:outputLabel for="celular" value="Celular: " />
                                     <p:inputMask id="celular"  required="true" class="form-control" mask="99-99999999" />
                                 </div>
@@ -87,30 +83,139 @@
                                         <f:selectItem itemLabel="Femenino" itemValue="F" />
                                     </h:selectOneMenu>
                                 </div>
+                                <div class="izquierda limpiar-izq">
+                                    <h:outputLabel for="paisO" value="País de Origen: "/>
+                                    <h:selectOneMenu id="paisO" class="form-control">
+                                        <f:selectItem itemLabel="Ecuador" itemValue="Ec" />
+                                        <f:selectItem itemLabel="Extranjero" itemValue="Ex" />
+                                    </h:selectOneMenu>
+                                </div>                                
+                                    <div id="provinciaNac" class="izquierda">
+                                    <h:outputLabel for="provinciaNac" value="Provincia de Nacimiento: "/>
+                                    <h:selectOneMenu id="provinciaNac" class="form-control">
+                                        <f:selectItem itemLabel="Los Ríos" itemValue="M" />
+                                        <f:selectItem itemLabel="Otros" itemValue="F" />
+                                    </h:selectOneMenu>
+                                </div>
+                                <div id="cantonNac" class="izquierda limpiar-izq">
+                                    <h:outputLabel for="cantonNac" value="Cantón de Nacimiento: "/>
+                                    <h:selectOneMenu id="cantonNac" class="form-control">
+                                        <f:selectItem itemLabel="Quevedo" itemValue="M" />
+                                        <f:selectItem itemLabel="Extranjero" itemValue="F" />
+                                    </h:selectOneMenu>
+                                </div>
+                                <div id="parroquiaNac" class="izquierda">
+                                    <h:outputLabel for="parroquiaNac" value="Parroquia de Nacimiento: "/>
+                                    <h:selectOneMenu id="parroquiaNac" class="form-control">
+                                        <f:selectItem itemLabel="Quevedo" itemValue="M" />
+                                        <f:selectItem itemLabel="Extranjero" itemValue="F" />
+                                    </h:selectOneMenu>
+                                </div>
                             </div>
                             <div class="tab-pane" id="tab2">
-                                2
+                                <div id="provinciaDom" class="izquierda">
+                                    <h:outputLabel for="provinciaDom" value="Provincia: "/>
+                                    <h:selectOneMenu id="provinciaDom" class="form-control">
+                                        <f:selectItem itemLabel="Los Ríos" itemValue="M" />
+                                        <f:selectItem itemLabel="Otros" itemValue="F" />
+                                    </h:selectOneMenu>
+                                </div>
+                                <div id="cantonDom" class="izquierda ">
+                                    <h:outputLabel for="cantonDom" value="Cantón: "/>
+                                    <h:selectOneMenu id="cantonDom" class="form-control">
+                                        <f:selectItem itemLabel="Quevedo" itemValue="M" />
+                                        <f:selectItem itemLabel="Extranjero" itemValue="F" />
+                                    </h:selectOneMenu>
+                                </div>
+                                <div id="parroquiaDom" class="izquierda">
+                                    <h:outputLabel for="parroquiaDom" value="Parroquia: "/>
+                                    <h:selectOneMenu id="parroquiaDom" class="form-control">
+                                        <f:selectItem itemLabel="Quevedo" itemValue="M" />
+                                        <f:selectItem itemLabel="Extranjero" itemValue="F" />
+                                    </h:selectOneMenu>
+                                </div>
+                                <div class="izquierda" style="width: 60%">
+                                    <h:outputLabel for="direccionDom" value="Dirección: " />
+                                    <p:inputText  required="true" id="direccionDom" class="form-control "/>
+                                </div>
+                                <div class="izquierda ">
+                                    <h:outputLabel for="telefono" value="Teléfono: " />
+                                    <p:inputMask id="telefono"  required="true" class="form-control" mask="99-99999999" />
+                                </div>
                             </div>
                             <div class="tab-pane" id="tab3">
-                                3
+                                <div id="provinciaTra" class="izquierda">
+                                    <h:outputLabel for="provinciaTra" value="Provincia: "/>
+                                    <h:selectOneMenu id="provinciaTra" class="form-control">
+                                        <f:selectItem itemLabel="Los Ríos" itemValue="M" />
+                                        <f:selectItem itemLabel="Otros" itemValue="F" />
+                                    </h:selectOneMenu>
+                                </div>
+                                <div id="cantonTra" class="izquierda ">
+                                    <h:outputLabel for="cantonTra" value="Cantón: "/>
+                                    <h:selectOneMenu id="cantonTra" class="form-control">
+                                        <f:selectItem itemLabel="Quevedo" itemValue="M" />
+                                        <f:selectItem itemLabel="Extranjero" itemValue="F" />
+                                    </h:selectOneMenu>
+                                </div>
+                                <div id="parroquiaTra" class="izquierda">
+                                    <h:outputLabel for="parroquiaTra" value="Parroquia: "/>
+                                    <h:selectOneMenu id="parroquiaTra" class="form-control">
+                                        <f:selectItem itemLabel="Quevedo" itemValue="M" />
+                                        <f:selectItem itemLabel="Extranjero" itemValue="F" />
+                                    </h:selectOneMenu>
+                                </div>
+                                <div class="izquierda" style="width: 60%">
+                                    <h:outputLabel for="empresa" value="Empresa: " />
+                                    <p:inputText  required="true" id="empresa" class="form-control "/>
+                                </div>
+                                <div class="izquierda ">
+                                    <h:outputLabel for="telefonoTra" value="Teléfono: " />
+                                    <p:inputMask id="telefonoTra"  required="true" class="form-control" mask="99-99999999" />
+                                </div>
+                                <div class="izquierda" style="width: 60%">
+                                    <h:outputLabel for="direccionTra" value="Dirección: " />
+                                    <p:inputText  required="true" id="direccionTra" class="form-control "/>
+                                </div>
+                                <div class="izquierda">
+                                    <h:outputLabel for="emailTra" value="Email: " />
+                                    <p:inputText  required="true" id="emailTra" class="form-control  "/>
+                                </div>
                             </div>
                             <div class="tab-pane" id="tab4">
-                                4
+                                <div class="izquierda" style="width: 48%">
+                                    <h:outputLabel for="titulo" value="Título: " />
+                                    <p:inputText  required="true" id="titulo" class="form-control "/>
+                                </div>
+                                <div id="universidad" class="izquierda" style="width: 48%">
+                                    <h:outputLabel for="universidad" value="Universidad: "/>
+                                    <h:selectOneMenu id="universidad" class="form-control">
+                                        <f:selectItem itemLabel="Universidad Tecnica Estatal de Quevedo" itemValue="Universidad Tecnica Estatal de Quevedo" />
+                                        <f:selectItem itemLabel="Otro" itemValue="Otro"  />
+                                    </h:selectOneMenu>
+                                </div>
+                                <div id="universidadNueva" class="izquierda" style="width: 100%; display: none; ">
+                                    <h:outputLabel for="universidadNueva" value="Nombre Universidad: " />
+                                    <p:inputText  required="true" id="universidadNueva" class="form-control "/>
+                                </div>
+                                <div id="nregistro" class="izquierda limpiar-izq">
+                                    <h:outputLabel for="nregistro" value="Número de registro del Senecyt: " />
+                                    <p:inputText  required="true" id="nregistro" class="form-control "/>
+                                </div>
+                                
                             </div>
                             <div class="tab-pane" id="tab5">
-                                5
+                                <div class="izquierda">
+                                    <h:outputLabel value="Requisito1: " />
+                                    <p:fileUpload mode="simple"  required="true" id="req" />
+                                </div>
                             </div>
-                            <div class="tab-pane" id="tab6">
-                                6
-                            </div>
-                            <div class="tab-pane" id="tab7">
-                                7
-                            </div>
-                                <ul class="pager wizard limpiar-izq" style="padding-top: 30px;">
+                            
+                            <ul class="pager wizard limpiar-izq" style="padding-top: 30px;">
                                 <li class="previous first" style="display:none;"><a href="#">First</a></li>
-                                <li class="previous"><a href="#">Previous</a></li>
+                                <li class="previous"><a href="#">Anterior</a></li>
                                 <li class="next last" style="display:none;"><a href="#">Last</a></li>
-                                <li class="next"><a href="#">Next</a></li>
+                                <li class="next"><a href="#">Siguiente</a></li>
                             </ul>
                         </div>	
                     </div>
@@ -119,9 +224,35 @@
                 <h:outputScript name="jquery.bootstrap.wizard.min.js" library="js"/>
                 <h:outputScript name="jquery.validate.min.js" library="js"/>
                 <h:outputScript name="messages_es.min.js" library="js"/>
-                <h:outputScript name="validarInscripcion.js" library="js"/>
+                <h:outputScript name="validarInscripcion.js" library="js"/> 
+                <script>
+                    $(document).ready(function () {
+                        $("#form\\:paisO").change(function () {
+                            var val= $("#form\\:paisO").val();                            
+                            if(val!=="Ec")
+                            {
+                                $("#cantonNac").hide();
+                                $("#provinciaNac").hide();
+                                $("#parroquiaNac").hide();
+                            }else{
+                                $("#cantonNac").show();
+                                $("#provinciaNac").show();
+                                $("#parroquiaNac").show();
+                            }
+                        });
+                        $("#form\\:universidad").change(function () {
+                            var val= $("#form\\:universidad").val();                               
+                            if(val!=="Otro")
+                            {
+                                $("#universidadNueva").hide();                              
+                            }else{
+                                $("#universidadNueva").show();                                
+                            }
+                        });
+                    });
 
-                
+                </script>
+
             </ui:define>
         </ui:composition>
     </h:body>

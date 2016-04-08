@@ -17,7 +17,10 @@
     <h:body>
         <ui:composition template="/templates/masterLayout.xhtml">
             <ui:define name="leftContent"></ui:define>
-            <ui:define name="content">     
+            <ui:define name="content">  
+                <h:outputStylesheet name="green.css" library="css"/>
+                <h:outputScript name="ajax.js" library="js" />
+                <h:outputScript name="jquery/jquery.js" library="primefaces" />
                 <br></br>
                 <br></br>
                 <div class="ui-fluid">

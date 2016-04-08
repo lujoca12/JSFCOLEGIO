@@ -8,43 +8,43 @@ $(document).ready(function () {
     $.validator.addMethod("lettersonly", function (value, element) {
         return this.optional(element) || /^[a-z]+$/i.test(value);
     }, "Solo letras por favor!");
-$.validator.methods.email = function( value, element ) {
-  return this.optional( element ) || /^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})/.test( value );
-};
+    $.validator.methods.email = function (value, element) {
+        return this.optional(element) || /^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})/.test(value);
+    };
 
 //old email pattern [a-z]+@[a-z]+\.[a-z]+
 
-    var $validator = $("#form").validate({
-        rules: {
-            "form:cedPas": {
-                required: true,
-                digits: true,
-                maxlength: 10
-
-            },
-            "form:nombres": {
-                required: true,
-                lettersonly: true,
-                maxlength: 40
-            },
-            "form:apellidos": {
-                required: true,
-                lettersonly: true,
-                maxlength: 40
-            },
-            "form:fNac_input": {
-                required: true,
-            },
-            "form:email": {
-                required: true,
-                email:true,
-                maxlength:45
-            },
-            "form:celular": {
-                required: true      
-            }
-        }
-    });
+//    var $validator = $("#form").validate({
+//        rules: {
+//            "form:cedPas": {
+//                required: true,
+//                digits: true,
+//                maxlength: 10
+//
+//            },
+//            "form:nombres": {
+//                required: true,
+//                lettersonly: true,
+//                maxlength: 40
+//            },
+//            "form:apellidos": {
+//                required: true,
+//                lettersonly: true,
+//                maxlength: 40
+//            },
+//            "form:fNac_input": {
+//                required: true,
+//            },
+//            "form:email": {
+//                required: true,
+//                email: true,
+//                maxlength: 45
+//            },
+//            "form:celular": {
+//                required: true
+//            }
+//        }
+//    });
 
     $('#rootwizard').bootstrapWizard({
         'tabClass': 'nav nav-pills',
@@ -56,4 +56,6 @@ $.validator.methods.email = function( value, element ) {
             }
         }
     });
+    
+
 });

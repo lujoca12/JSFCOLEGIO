@@ -33,10 +33,11 @@
                 <div class="panel-body">   
                     <p:tab title="Buscar">
                         <h:panelGroup>
-                            <button value="fecha " id="fe" type="submit" ondblclick="/Modulos/Biblioteca/principaltesis.xhtml" onclick="">Fecha Publicación</button>
-                            <button value="fecha " id="fe" type="submit" ondblclick="/Modulos/Biblioteca/principaltesis.xhtml" onclick="">Autor</button>
-                            <button value="fecha " id="fe" type="submit" ondblclick="/Modulos/Biblioteca/principaltesis.xhtml" onclick="">Maestría</button>
-                            <button value="fecha " id="fe" type="submit" ondblclick="/Modulos/Biblioteca/principaltesis.xhtml" onclick="">Título</button>
+                            <button><h:link outcome="/Modulos/Biblioteca/busquedaFechaPublicacion" value="Fecha Publicación"></h:link></button>
+                            <button><h:link outcome="/Modulos/Biblioteca/busquedaAutor" value="Autor"></h:link></button>
+                            <button><h:link outcome="/Modulos/Biblioteca/busquedaMaestria" value="Maestría"></h:link></button>
+                            <button><h:link outcome="/Modulos/Biblioteca/busquedaTitulo" value="Título"></h:link></button>
+                            
                         </h:panelGroup>
                     </p:tab>  
                 </div>

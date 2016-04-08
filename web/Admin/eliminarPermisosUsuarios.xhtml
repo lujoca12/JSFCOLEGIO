@@ -9,13 +9,15 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
+        <h4 style="text-align: center">Edición de Permisos</h4>
         <h:form id="form">
             <p:tab id="edicioPermisos" title="EdicionPermisos">
-                <p:panel header="Edición de Permisos" >
+                <p:panel >
+                    
    <p:growl id="msgs" showDetail="true"/>
    
    
-   <p:dataTable id="tablaPermisos" var="menu" value="#{mbVTablaPermisos.lstTablaPermisos}" editable="true"
+   <p:dataTable class="tblDatos" id="tablaPermisos" var="menu" value="#{mbVTablaPermisos.lstTablaPermisos}" editable="true"
             scrollable="true" scrollHeight="45%" rowStyleClass="#{menu.padre le 0 ? 'colored' : 'colored1'}">
        
  
@@ -65,11 +67,11 @@
        <p:column style="width:8%;">
            <p:commandButton id="btnEliminar"
                action="#{mbVTablaPermisos.onDelete(menu)}"
-               update=":form:tablaPermisos"
+               update="form,tablaPermisos"
                icon="ui-icon-trash"
                style="#{menu.padre == 0 ?  'border-style: hidden;background-color: #F0F3F0;': 'border-style: hidden;background-color: transparent;'}"
                >
-               <p:confirm header="Borrado de Permiso" message="Pulsa ok! para confirmar acción" icon="ui-icon-alert" />
+               <p:confirm header="Eliminación de Permiso" message="Pulsa confirmar para realizar acción" icon="ui-icon-alert" />
            </p:commandButton>
        </p:column>
    </p:dataTable>

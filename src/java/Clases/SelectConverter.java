@@ -28,7 +28,7 @@ public class SelectConverter implements Converter {
         } else {
             if(value.equals("-1")){
                 
-            }else{
+            }else if(isNumeric(value)){
                 valor = Integer.parseInt(value);
                for (ClsProfesor item : getSelectItems(uic)) {
                    if(item.getId() == valor)
@@ -40,15 +40,25 @@ public class SelectConverter implements Converter {
         }
     }
     
+    private static boolean isNumeric(String cadena){
+	try {
+		Integer.parseInt(cadena);
+		return true;
+	} catch (NumberFormatException nfe){
+		return false;
+	}
+    }
+    
     protected Collection<ClsProfesor> getSelectItems(UIComponent component) {
         Collection<ClsProfesor> collection = new ArrayList<ClsProfesor>();
 
         for (UIComponent child : component.getChildren()) {
-            if (child instanceof UISelectItem) {
-                UISelectItem ui = (UISelectItem) child;
-                ClsProfesor item = (ClsProfesor) ui.getValue();
-                collection.add(item);
-            } else if (child instanceof UISelectItems) {
+//            if (child instanceof UISelectItem) {
+//                UISelectItem ui = (UISelectItem) child;
+//                ClsProfesor item = (ClsProfesor) ui.getValue();
+//                collection.add(item);
+//            } else 
+                if (child instanceof UISelectItems) {
                 UISelectItems ui = (UISelectItems) child;
                 Object value = ui.getValue();
                 collection.addAll((Collection<ClsProfesor>) value);

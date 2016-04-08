@@ -578,3 +578,113 @@ body .horizontal-menu header.navbar > ul > li#search .search-input:-ms-input-pla
    margin-bottom: 4px !important;
 }
 
+
+
+
+form label{
+    margin-right: 30px !important;
+    font-weight: normal !important;
+}
+.colorPanel{
+    background-color: black;
+    color: white;
+    text-transform: capitalize !important;
+    border: 1px solid black !important;
+}
+.labelDerecha{
+    float: right !important;
+}
+.bordeArbol{
+        border: 0px !important;
+}
+.anchoBotones{
+    width: 150px !important; 
+    background-color: white;
+}
+.anchoBotonesConsulta{
+    width: 200px !important; 
+    background-color: #CDCDCD !important;
+    font-size: 14px !important;
+}
+.anchoBotonesConsulta:hover{
+    background-color: white !important;
+    color: #00b458 !important;
+}
+.panelHeader{
+    background-color: black !important;
+    color: white !important;
+    text-shadow: 0px 1px 0px rgba(249, 246, 246, 0.7) !important;
+}
+.ui-selectonemenu-filter-container {
+    width: 98% !important;
+}
+
+.ui-widget-header{
+    background: #0C0C0C -webkit-gradient(linear, left top, left bottom, from(rgba(8, 8, 8, 0.8)), to(rgba(255,255,255,0))) !important;
+    /*background: #00a651 -webkit-gradient(linear, left top, left bottom, from(#00a651), to(rgba(255,255,255,0))) !important;*/
+    font-weight: normal !important;
+    color: #FBF9F9 !important;
+    text-shadow: 0px 1px 0px rgba(249, 246, 246, 0.7) !important;
+}
+
+
+.ui-panel .ui-panel-titlebar {
+    
+    color: #F0F3F0 !important;
+}
+/*//Color para los padres*/
+.colored {
+    background-color: #F0F3F0 !important;
+    color: #000 !important;
+}
+
+.colored1 {
+    background-color: #FFFFFF !important;
+    color: #000 !important;
+}
+
+.ui-datatable tr.ui-datatable-even:hover, .ui-datatable tr.ui-datatable-odd:hover {
+    background: #78BCFF !important;
+    cursor: pointer;
+}
+.datatableHover tr.ui-datatable-even:hover, .datatableHover tr.ui-datatable-odd:hover {
+    background: transparent !important;
+    cursor: pointer;
+}
+
+th {
+  color: white !important;
+  background: #00a651 -webkit-gradient(linear, left top, left bottom, from(#00a651), to(rgba(255,255,255,0))) !important;
+  font-weight: normal !important;
+    
+}
+.tblDatos th{
+    color: white !important;
+    background: #0C0C0C -webkit-gradient(linear, left top, left bottom, from(#0C0C0C), to(rgba(255,255,255,0))) !important;
+    font-weight: normal !important;
+}
+
+.tblNotas th{
+    color: #000 !important;
+    /*background: #CDCDCD -webkit-gradient(linear, left top, left bottom, from(#CDCDCD), to(rgba(255,255,255,0))) !important;*/
+    background: transparent -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(255,255,255,0))) !important;
+    font-weight: bold !important;
+    border: none !important;
+    
+/*    border: none !important;
+    display: none;*/
+}
+.DataTable table * {
+       border: none !important;
+   }
+/*.bordeLinea{
+    color: #f00;
+    background-color: #f00;
+    height: 5px !important;
+}*/
+
+.botonTabla{
+    border-style: hidden; 
+    background-color: white;
+}
+

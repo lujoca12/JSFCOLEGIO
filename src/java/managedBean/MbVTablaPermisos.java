@@ -79,7 +79,7 @@ public class MbVTablaPermisos implements Serializable{
         this.clsTablaPermisos = clsTablaPermisos;
     }
 
-    public TreeNode cargarTablaPermisos(){
+    public void cargarTablaPermisos(){
      
      String contenedor = "";
      String ruta = "";
@@ -112,7 +112,7 @@ public class MbVTablaPermisos implements Serializable{
         Logger.getLogger(MbVUsuario.class.getName()).log(Level.SEVERE, null, ex);
     }
     
-    return root;
+   
 }
     public void onRowEdit(RowEditEvent event) {
         String id =  String.valueOf(((ClsTablaPermisos) event.getObject()).getId());

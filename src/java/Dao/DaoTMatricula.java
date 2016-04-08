@@ -69,6 +69,18 @@ public class DaoTMatricula implements InterfaceMatricula{
         sesion.close();
         return lstPermiso;
     }
+    
+    @Override
+    public List<Matricula> getMatriculaMaestria(String cedula) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String hql="from Matricula matr inner join fetch matr.promocion pr inner join fetch pr.maestria maest inner join fetch matr.estudiante estud where estud.cedPasaporte = '"+cedula+"' and matr.estado='1' and maest.estado = '1'  order by maest.descripcion asc";
+        Query query = sesion.createQuery(hql);
+        List<Matricula> lstPermiso=(List<Matricula>) query.list();
+        sesion.close();
+        return lstPermiso;
+    }
 
     @Override
     public Matricula getMatriculas(String idMatricula) throws Exception {

@@ -6,15 +6,18 @@
 package managedBean;
 
 import Clases.ClsProfesor;
+import Clases.ClsTablaMaestrias;
 import Dao.DaoTMaestrias;
 import Dao.DaoTPromocion;
 import Dao.DaoTUsuario;
 import Pojo.Maestria;
+import Pojo.Modulo;
 import Pojo.Promocion;
 import Pojo.Usuario;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -25,6 +28,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -39,9 +43,14 @@ public class MbVMaestrias implements Serializable{
     private Maestria tMaestria;
     private Promocion tPromocion;
     
+    private ClsTablaMaestrias clsTblMaestria;
+    private List<ClsTablaMaestrias> lstTblMaestria;
+    
     private ClsProfesor theme; 
     private List<ClsProfesor> lstTheme;
     private List<SelectItem> lstDirector;
+    List<Promocion> lstPromocion;
+    
     private int idMaestria;
     private int idDirector;
     private Date date;
@@ -51,6 +60,7 @@ public class MbVMaestrias implements Serializable{
         tPromocion = new Promocion();
         tPromocion.setFechaInicio(date);
         llenarCboDirector();
+        cargarTablaMaestria();
     }
     
     
@@ -112,6 +122,19 @@ public class MbVMaestrias implements Serializable{
         
         return lstTheme;
     }
+
+    public ClsTablaMaestrias getClsTblMaestria() {
+        return clsTblMaestria;
+    }
+
+    public void setClsTblMaestria(ClsTablaMaestrias clsTblMaestria) {
+        this.clsTblMaestria = clsTblMaestria;
+    }
+
+    public List<ClsTablaMaestrias> getLstTblMaestria() {
+        return lstTblMaestria;
+    }
+    
     public void llenarCboDirector(){
         this.lstTheme = new ArrayList<ClsProfesor>();
          try {
@@ -136,9 +159,38 @@ public class MbVMaestrias implements Serializable{
         this.theme = theme;
     }
     
+    public void cargarTablaMaestria(){
+        lstTblMaestria = new ArrayList<>();
+        try {
+            lstTblMaestria.clear();
+            DaoTPromocion daoTmodulo = new DaoTPromocion();
+            //lstPromocion = null;
+            lstPromocion = daoTmodulo.getPromocionesMaestrias();
+            
+            if(lstPromocion != null){
+                if(lstPromocion.size() > 0){
+                    for(Promocion promocion : lstPromocion){
+                        lstTblMaestria.add(new ClsTablaMaestrias(promocion.getMaestria().getId(),
+                                promocion.getMaestria().getDescripcion(),promocion.getMaestria().getEstado(),
+                                promocion.getId(),promocion.getDescripcion(),promocion.getFechaResolucion(),promocion.getFechaInicio(),
+                                promocion.getFechaFin(),promocion.getCupo(),promocion.getNCuotas(),promocion.getIdUsuario(),promocion.getUsuarios()));
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
 
     public void registrar(){
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(tPromocion.getFechaFin() );
+//        int anioInicio = calendar.get(Calendar.YEAR);
+//        
+//        calendar.setTime(endDate);
+//        int anioFin = calendar.get(Calendar.YEAR);
+//        if()
         DaoTMaestrias daoTmaestrias = new DaoTMaestrias();
         DaoTPromocion daoTpromocion = new DaoTPromocion();
         boolean band = false;
@@ -149,6 +201,7 @@ public class MbVMaestrias implements Serializable{
         try {
             //Aqui obtnego el id del usuario que seleccione
             tPromocion.setIdUsuario(this.theme.getId());
+            tPromocion.setUsuarios(this.theme.getName());
             
             //Establesco en 1 para habilitarlo
             tMaestria.setEstado('1');
@@ -180,9 +233,6 @@ public class MbVMaestrias implements Serializable{
                msg = daoTpromocion.registrar(tPromocion);
             }
             
-            
-            
-            
             try {
                 //daoTpromocion.existe(tPromocion);
                 
@@ -197,6 +247,7 @@ public class MbVMaestrias implements Serializable{
         if(repetida){
             mensajesError("Registro repetido");
         }else{
+            cargarTablaMaestria();
             vaciarCajas();
                 if(msg)
                     mensajesOk("Datos procesados correctamente");
@@ -205,23 +256,6 @@ public class MbVMaestrias implements Serializable{
         }
         
         
-    }
-    
-    private boolean registrarPromocion(Promocion tPromocion, Maestria tMaestria){
-        boolean band = false;
-        DaoTPromocion daoTpromocion = new DaoTPromocion();
-        
-            int i;
-        try {
-            
-            
-            band = daoTpromocion.registrar(tPromocion);
-            
-        } catch (Exception ex) {
-            band = false;
-            Logger.getLogger(MbVMaestrias.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return band;
     }
     
     private void vaciarCajas(){
@@ -238,6 +272,64 @@ public class MbVMaestrias implements Serializable{
     private void mensajesError(String msg){
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje de la Aplicacion", msg);
         FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+    
+    public void onRowEdit(RowEditEvent event) {
+        DaoTPromocion daoTpromocion = new DaoTPromocion();
+        Promocion promocion = new Promocion();
+        promocion.setCupo(((ClsTablaMaestrias) event.getObject()).getCupo());
+        promocion.setNCuotas(((ClsTablaMaestrias) event.getObject()).getCuotas());
+        promocion.setDescripcion(((ClsTablaMaestrias) event.getObject()).getDescripcionP());
+        
+        if(theme== null){
+            promocion.setIdUsuario(((ClsTablaMaestrias) event.getObject()).getIdUsuario());
+            promocion.setUsuarios(((ClsTablaMaestrias) event.getObject()).getNombresUsuarios());
+        }else{
+            promocion.setIdUsuario(theme.getId());
+            promocion.setUsuarios(theme.getName());
+        }
+        promocion.setFechaResolucion(((ClsTablaMaestrias) event.getObject()).getFechaResolucion());
+        promocion.setFechaInicio(((ClsTablaMaestrias) event.getObject()).getFechaInicio());
+        promocion.setFechaFin(((ClsTablaMaestrias) event.getObject()).getFechaFin());
+        Maestria maestria = new Maestria();
+        maestria.setId(((ClsTablaMaestrias) event.getObject()).getIdMaestria());
+        promocion.setId(((ClsTablaMaestrias) event.getObject()).getIdPromocion());
+        promocion.setMaestria(maestria);
+        try {
+            msg = daoTpromocion.update(promocion);
+            cargarTablaMaestria();
+        } catch (Exception ex) {
+            Logger.getLogger(MbVMaestrias.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if (msg) {
+            mensajesOk("Datos procesados correctamente");
+        } else {
+            mensajesError("Error al procesar datos");
+        }
+        
+    }
+    public void onRowCancel(RowEditEvent event) {
+        //cargarTablaMaestria();
+    }
+    public void onDelete(ClsTablaMaestrias clsTblMaestrias){
+        DaoTPromocion daoTpromocion = new DaoTPromocion();
+        Promocion promocion = new Promocion();
+        
+        promocion.setId(clsTblMaestrias.getIdPromocion());
+        
+        try {
+            msg = daoTpromocion.delete(promocion);
+            cargarTablaMaestria();
+        } catch (Exception ex) {
+            Logger.getLogger(MbVMaestrias.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if (msg) {
+            mensajesOk("Dato eliminado correctamente");
+        } else {
+            mensajesError("Error al eliminar datos");
+        }
     }
     
 }

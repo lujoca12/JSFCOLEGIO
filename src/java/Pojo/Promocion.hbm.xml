@@ -32,6 +32,9 @@
         <property name="idUsuario" type="int">
             <column name="id_usuario" not-null="true" />
         </property>
+        <property name="usuarios" type="string">
+            <column name="usuario" length="100" />
+        </property>
         <set name="precios" table="precio" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="id_promocion" not-null="true" />

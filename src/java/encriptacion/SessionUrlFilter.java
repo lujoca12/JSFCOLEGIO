@@ -43,13 +43,11 @@ public class SessionUrlFilter implements Filter{
         
         String[] urlPermitidaSinSesion=new String[]
         {
+            //            "faces/Admin/permisosUsuarios.xhtml",
             "faces/index.xhtml",
             "faces/login.xhtml",
-            "faces/Admin/permisosUsuarios.xhtml",
-            "faces/Admin/eliminarPermisosUsuarios.xhtml",
             "faces/Modulos/Academico/solicitudInscripcion.xhtml",
-            "faces/Modulos/Academico/registrarModulo.xhtml",
-            "faces/Modulos/Academico/permisosUsuarios.xhtml",
+            "faces/Modulos/Academico/consultaNotas.xhtml",
             "faces/Modulos/Biblioteca/principaltesis.xhtml",
             "faces/exito.xhtml"
         };

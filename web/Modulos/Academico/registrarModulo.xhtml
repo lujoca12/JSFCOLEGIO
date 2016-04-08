@@ -14,7 +14,7 @@
                 
                 <p:tab id="personal" title="RegistrarModulos">
                     <p:panel header="Registrar Módulos">
-                <p:growl id="msgsModulos" showDetail="true" />
+                <p:growl id="msgs" showDetail="true" />
                 <p:focus context="panel"/>
                 
                 <p:panelGrid id="panel" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
@@ -40,6 +40,7 @@
                     <p:outputLabel for="cboDocente" value="Docente:" styleClass="labelDerecha"  />
                     <p:selectOneMenu id="cboDocente" value="#{mbVModulos.theme}" converter="themeConverter" required="true"
                                      effect="fade" var="t" filter="true" filterMatchMode="contains">
+                        
                         <f:selectItems value="#{mbVModulos.lstTheme}" var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme}" />
                         <p:column style="width:10%">
                             <h:outputText styleClass="ui-theme ui-theme-#{t.name}" />
@@ -52,11 +53,11 @@
                     <p:message for="cboDocente" />
                     
                     <p:outputLabel for="txtCreditos" styleClass="labelDerecha" value="Creditos:" />
-                    <p:inputMask id="txtCreditos" value="#{mbVModulos.tModulo.creditos}" required="true" mask="99"/>
+                    <p:inputText id="txtCreditos" value="#{mbVModulos.tModulo.creditos}" required="true" onkeypress="return isNumberKey(event)"/>
                     <p:message for="txtCreditos" />
                     
                     <p:message for="display"/>
-                    <p:commandButton value="Guardar" update="panel,panelTabla,msgsModulos" styleClass="anchoBotones" icon="ui-icon-disk"
+                    <p:commandButton value="Guardar" update="form,tblModulos" styleClass="anchoBotones" icon="ui-icon-disk"
                                      actionListener="#{mbVModulos.registrar()}" />
                         
                     
@@ -69,31 +70,75 @@
          
         <br></br>
         
-            
         <p:panel id="panelTabla" style="height: 30%;">
                     <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->
-                    <p:dataTable var="lstTbl" value="#{mbVModulos.lstTblModulosReg}"
-                                 scrollable="true" scrollHeight="100%">
+                    <p:dataTable class="tblDatos" id="tblModulos" var="lstTbl" value="#{mbVModulos.lstTblModulosReg}"
+                                 editable="true" scrollable="true" scrollHeight="150">
+                        <p:ajax event="rowEdit" listener="#{mbVModulos.onRowEdit}" update=":form:msgs" />
+                        <p:ajax event="rowEditCancel" listener="#{mbVModulos.onRowCancel}" update=":form:msgs" />
+                        
                         <p:column headerText="Maestria" style="width: 30%;">
-                            <h:outputText value="#{lstTbl.maestria}" />
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.maestria}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:selectOneMenu value="#{mbVModulos.themeMaestria}" converter="themeConverterMaestria"
+                                     effect="fade" var="tProfesor" filter="true" filterMatchMode="contains">
+                                        <f:selectItem itemLabel="#{lstTbl.maestria}"/>
+                                        <f:selectItems value="#{mbVModulos.lstThemeMaestria}" var="themeProf" itemLabel="#{themeProf.displayName}" itemValue="#{themeProf}" />
+                                        <p:column style="width:10%">
+                                            <h:outputText styleClass="ui-theme ui-theme-#{tProfesor.name}" />
+                                        </p:column>
+
+                                        <p:column>
+                                            <h:outputText value="#{tProfesor.displayName}" />
+                                        </p:column>
+                                    </p:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="Módulo" style="width: 30%;">
-                            <h:outputText value="#{lstTbl.modulo}" />
+                        <p:column headerText="Módulo" style="width: 25%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.modulo}" /></f:facet>
+                                <f:facet name="input"><p:inputText value="#{lstTbl.modulo}" style="width:100%"/></f:facet>
+                            </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="Docente" style="width: 30%;">
-                            <h:outputText value="#{lstTbl.usuario}" />
+                        <p:column headerText="Docente" style="width: 25%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.usuario}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:selectOneMenu value="#{mbVModulos.theme}" converter="themeConverter"
+                                     effect="fade" var="t" filter="true" filterMatchMode="contains">
+                                        <f:selectItem itemLabel="#{lstTbl.usuario}"/>
+                                        <f:selectItems value="#{mbVModulos.lstTheme}" var="theme" noSelectionValue="#{lstTbl.usuario}" itemLabel="#{theme.displayName}" itemValue="#{theme}" />
+                                        <p:column style="width:10%">
+                                            <h:outputText styleClass="ui-theme ui-theme-#{t.name}" />
+                                        </p:column>
+
+                                        <p:column>
+                                            <h:outputText value="#{t.displayName}" />
+                                        </p:column>
+                                    </p:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
                         </p:column>
 
                         <p:column headerText="Creditos" style="width: 10%;">
-                            <h:outputText value="#{lstTbl.creditos}" />
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.creditos}"   /></f:facet>
+                                <f:facet name="input"><p:inputText value="#{lstTbl.creditos}" style="width:100%" label="text" onkeypress="return isNumberKey(event)"/></f:facet>
+                            </p:cellEditor>
                         </p:column>
+                        <p:column style="width:10%;">
+                            <p:rowEditor />   
+                        </p:column>
+                        
                     </p:dataTable>
-                </p:panel>
-                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-                    <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
-                </p:dialog>
+                    
+                </p:panel>    
+        
+                
             </h:form>
         </div>
     </h:body>

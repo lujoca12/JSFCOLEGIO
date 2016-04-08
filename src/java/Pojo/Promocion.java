@@ -21,6 +21,7 @@ public class Promocion  implements java.io.Serializable {
      private Integer cupo;
      private Integer NCuotas;
      private int idUsuario;
+     private String usuarios;
      private Set precios = new HashSet(0);
      private Set matriculas = new HashSet(0);
      private Set modulos = new HashSet(0);
@@ -34,7 +35,7 @@ public class Promocion  implements java.io.Serializable {
         this.maestria = maestria;
         this.idUsuario = idUsuario;
     }
-    public Promocion(int id, Maestria maestria, Integer descripcion, Date fechaResolucion, Date fechaInicio, Date fechaFin, Integer cupo, Integer NCuotas, int idUsuario, Set precios, Set matriculas, Set modulos) {
+    public Promocion(int id, Maestria maestria, Integer descripcion, Date fechaResolucion, Date fechaInicio, Date fechaFin, Integer cupo, Integer NCuotas, int idUsuario, String usuarios, Set precios, Set matriculas, Set modulos) {
        this.id = id;
        this.maestria = maestria;
        this.descripcion = descripcion;
@@ -47,6 +48,7 @@ public class Promocion  implements java.io.Serializable {
        this.precios = precios;
        this.matriculas = matriculas;
        this.modulos = modulos;
+       this.usuarios = usuarios;
     }
    
     public int getId() {
@@ -134,8 +136,13 @@ public class Promocion  implements java.io.Serializable {
         this.modulos = modulos;
     }
 
+    public String getUsuarios() {
+        return usuarios;
+    }
 
-
+    public void setUsuarios(String usuarios) {
+        this.usuarios = usuarios;
+    }
 
 }
 

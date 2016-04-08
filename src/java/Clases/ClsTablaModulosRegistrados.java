@@ -21,8 +21,9 @@ public class ClsTablaModulosRegistrados implements Serializable {
     private int idUsuario;
     private String usuario;
     private int creditos;
+    private int idModulo;
 
-    public ClsTablaModulosRegistrados(int idMaestria, String maestria, int idPromocion, String modulo, int idUsuario, String usuario, int creditos) {
+    public ClsTablaModulosRegistrados(int idMaestria, String maestria, int idPromocion, String modulo, int idUsuario, String usuario, int creditos, int idModulo) {
         this.idMaestria = idMaestria;
         this.maestria = maestria;
         this.idPromocion = idPromocion;
@@ -30,6 +31,7 @@ public class ClsTablaModulosRegistrados implements Serializable {
         this.idUsuario = idUsuario;
         this.usuario = usuario;
         this.creditos = creditos;
+        this.idModulo = idModulo;
     }
 
     public int getIdMaestria() {
@@ -87,9 +89,14 @@ public class ClsTablaModulosRegistrados implements Serializable {
     public void setCreditos(int creditos) {
         this.creditos = creditos;
     }
-    
-    @Override
-    public String toString() {
-        return maestria;
+
+    public int getIdModulo() {
+        return idModulo;
     }
+
+    public void setIdModulo(int idModulo) {
+        this.idModulo = idModulo;
+    }
+
+    
 }

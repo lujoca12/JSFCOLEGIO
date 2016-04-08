@@ -4227,8 +4227,8 @@ form label{
 }
 
 .ui-widget-header{
-    /*background: #0C0C0C -webkit-gradient(linear, left top, left bottom, from(rgba(8, 8, 8, 0.8)), to(rgba(255,255,255,0))) !important;*/
-    background: #00a651 -webkit-gradient(linear, left top, left bottom, from(#00a651), to(rgba(255,255,255,0))) !important;
+    background: #0C0C0C -webkit-gradient(linear, left top, left bottom, from(rgba(8, 8, 8, 0.8)), to(rgba(255,255,255,0))) !important;
+    /*background: #00a651 -webkit-gradient(linear, left top, left bottom, from(#00a651), to(rgba(255,255,255,0))) !important;*/
     font-weight: normal !important;
     color: #FBF9F9 !important;
     text-shadow: 0px 1px 0px rgba(249, 246, 246, 0.7) !important;

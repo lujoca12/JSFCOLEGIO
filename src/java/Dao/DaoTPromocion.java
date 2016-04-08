@@ -70,6 +70,18 @@ public class DaoTPromocion implements InterfacePromocion{
         sesion.close();
         return lstPermiso;
     }
+    
+    @Override
+    public List<Promocion> getPromocionesMaestrias() throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String hql="from Promocion pr inner join fetch pr.maestria m where m.estado='1' and (year(current_date) >= year(pr.fechaInicio) and year(current_date)<= year(pr.fechaFin)) order by pr.id desc";
+        Query query = sesion.createQuery(hql);
+        List<Promocion> lstPermiso=(List<Promocion>) query.list();
+        sesion.close();
+        return lstPermiso;
+    }
 
     @Override
     public Promocion getPromocion(int idMaestria) throws Exception {
@@ -85,7 +97,20 @@ public class DaoTPromocion implements InterfacePromocion{
 
     @Override
     public boolean update(Promocion tPromocion) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean band = false;
+        try {
+            iniciaOperacion();
+            sesion.update(tPromocion);
+
+            tx.commit();
+            sesion.close();
+            band = true;
+        } catch (Exception e) {
+            tx.rollback();
+            band = false;
+        }
+        
+        return band;
     }
 
     @Override
@@ -131,6 +156,24 @@ public class DaoTPromocion implements InterfacePromocion{
             band = false;
         
         sesion.close();
+        return band;
+    }
+    
+    @Override
+    public boolean delete(Promocion tPromocion) throws Exception {
+        boolean band = false;
+        try {
+            iniciaOperacion();
+            sesion.delete(tPromocion);
+
+            tx.commit();
+            sesion.close();
+            band = true;
+        } catch (Exception e) {
+            tx.rollback();
+            band = false;
+        }
+        
         return band;
     }
     

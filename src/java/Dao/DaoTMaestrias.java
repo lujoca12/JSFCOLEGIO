@@ -86,9 +86,11 @@ public class DaoTMaestrias implements InterfaceMaestrias{
         this.tx = null;
         iniciaOperacion();
         //Consulta para que me aparezcan solo las maestrias registradas en el anio actual
-        String hql="from Maestria m inner join fetch m.promocions pr where m.estado='1' and year(pr.fechaInicio) = year(current_date) order by m.descripcion asc";
+        String hql="from Maestria m inner join fetch m.promocions pr where m.estado='1' and (year(current_date) >= year(pr.fechaInicio) and year(current_date)<= year(pr.fechaFin)) order by m.descripcion asc";
+        //Consulta hasta Usuarios
+        //String hql="from Maestria m inner join fetch m.promocions pr inner join fetch pr.modulos mod inner join fetch mod.usuario user where m.estado='1' and year(pr.fechaInicio) = year(current_date) and pr.idUsuario=user.id order by m.descripcion asc";
         Query query = sesion.createQuery(hql);
-        query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         List<Maestria> lstMaestrias=(List<Maestria>) query.list();
         sesion.close();
         return lstMaestrias;

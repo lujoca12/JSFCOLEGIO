@@ -6,8 +6,12 @@
 package managedBean;
 
 import Clases.ClsNotas;
+import Clases.ClsTblNotas;
 import Dao.DaoTMatricula;
+import Dao.DaoTModulo;
+import Dao.DaoTNotas;
 import Pojo.Matricula;
+import Pojo.Modulo;
 import Pojo.Notas;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,8 +33,14 @@ import javax.faces.context.FacesContext;
 public class MbVNotas implements Serializable{
 
     private Notas tNotas;
+    
+    
     private ClsNotas clsNotas;
     private List<ClsNotas> lstTblNotas;
+    
+    private ClsTblNotas clsTblNotas;
+    private List<ClsTblNotas> lstTblNotasReg;
+    
     private String cedula="";
     private String estudiante="";
     private int idProm = 0;
@@ -83,7 +93,18 @@ public class MbVNotas implements Serializable{
     public void setIdProm(int idProm) {
         this.idProm = idProm;
     }
-    
+
+    public ClsTblNotas getClsTblNotas() {
+        return clsTblNotas;
+    }
+
+    public void setClsTblNotas(ClsTblNotas clsTblNotas) {
+        this.clsTblNotas = clsTblNotas;
+    }
+
+    public List<ClsTblNotas> getLstTblNotasReg() {
+        return lstTblNotasReg;
+    }
     
     private void cargarTblMatriculaPromocion(){
         lstTblNotas = new ArrayList<>();
@@ -95,7 +116,8 @@ public class MbVNotas implements Serializable{
             int añoInicio = 0;
             int añoFin = 0;
             
-            if(lstMatricula != null){
+            
+            
                 if(lstMatricula.size() > 0){
                     for(Matricula matricula : lstMatricula){
                         calendar.setTime(matricula.getPromocion().getFechaInicio());
@@ -104,7 +126,7 @@ public class MbVNotas implements Serializable{
                         calendar.setTime(matricula.getPromocion().getFechaFin());
                         añoFin = calendar.get(Calendar.YEAR);
                         estudiante = matricula.getEstudiante().getApellidos()+" "+matricula.getEstudiante().getNombres();
-                         
+                        
                         lstTblNotas.add(new ClsNotas(matricula.getEstudiante().getId(), 
                                 matricula.getEstudiante().getApellidos()+" "+matricula.getEstudiante().getNombres(), 
                                 matricula.getId(), 
@@ -117,7 +139,52 @@ public class MbVNotas implements Serializable{
                                 matricula.getPromocion().getMaestria().getDescripcion()));
                     }
                 }
-            }
+            
+            
+        } catch (Exception ex) {
+            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void cargarTablaNotas(int idMatricula, int idPromocion){
+        lstTblNotasReg = new ArrayList<>();
+        try {
+            lstTblNotasReg.clear();
+            DaoTNotas daoTnotas = new DaoTNotas();
+            List<Notas> lstNotas = daoTnotas.getTodasNotas(idMatricula);
+            
+            //Validacion para saber si hay notas registradas
+                if(lstNotas.size() > 0){
+                    for(Notas nota : lstNotas){
+                         
+                        lstTblNotasReg.add(new ClsTblNotas(nota.getModulo().getId(), 
+                                nota.getModulo().getDescripcion(), 
+                                nota.getModulo().getCreditos(), 
+                                nota.getId(), 
+                                nota.getNota().doubleValue(), 
+                                nota.getObservacion(), 
+                                nota.getNotaTexto()));
+                    }
+                }else{
+                    //Validacion para mostrar las materias asignadas
+                    DaoTModulo daoTmodulo = new DaoTModulo();
+                    List<Modulo> lstModulos = daoTmodulo.getTblModulosNotas(idPromocion);
+                    
+                    if(lstModulos.size() > 0){
+                    for(Modulo modulos : lstModulos){
+                         
+                        lstTblNotasReg.add(new ClsTblNotas(modulos.getId(), 
+                                modulos.getDescripcion(), 
+                                modulos.getCreditos(), 
+                                0, 
+                                0.0, 
+                                "", 
+                                ""));
+                        }
+                    }
+                    
+                }
+            
         } catch (Exception ex) {
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -129,6 +196,7 @@ public class MbVNotas implements Serializable{
     
     public void consultarNotas(ClsNotas clsNotas){
         idProm = clsNotas.getIdPromocion();
+        cargarTablaNotas(clsNotas.getIdMatricula(),clsNotas.getIdPromocion());
     }
     
     private void mensajesOk(String msg){

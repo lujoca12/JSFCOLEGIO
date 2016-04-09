@@ -82,6 +82,19 @@ public class DaoTModulo implements InterfaceModulos{
         sesion.close();
         return lstPermiso;
     }
+    
+    @Override
+    public List<Modulo> getTblModulosNotas(int idPromocion) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        //Presento los modulos registrados x años 
+        String hql="from Modulo mod where mod.promocion = "+idPromocion+" order by mod.descripcion asc";
+        Query query = sesion.createQuery(hql);
+        List<Modulo> lstModulos=(List<Modulo>) query.list();
+        sesion.close();
+        return lstModulos;
+    }
 
     @Override
     public Modulo getModulo(String idModulo) throws Exception {

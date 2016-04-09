@@ -201,7 +201,7 @@ public class MbVModulos implements Serializable{
             
             for(Promocion promocion: lstPromocion){
                 
-                this.lstThemeMaestria.add(new ClsMaestria(promocion.getMaestria().getId(),promocion.getMaestria().getDescripcion()+" ("+promocion.getUsuarios()+")",promocion.getMaestria().getDescripcion(),promocion.getId()));
+                this.lstThemeMaestria.add(new ClsMaestria(promocion.getId(),promocion.getMaestria().getDescripcion()+" ("+promocion.getUsuarios()+")",promocion.getMaestria().getDescripcion(),promocion.getId()));
             }
         } catch (Exception ex) {
             

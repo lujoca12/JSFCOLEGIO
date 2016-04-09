@@ -15,7 +15,7 @@ import java.util.List;
 public interface InterfaceNotas {
     
     public boolean registrar(Notas tNotas) throws Exception;
-    public List<Notas> getTodasNotas() throws Exception;
+    public List<Notas> getTodasNotas(int idMatricula) throws Exception;
     
     public Notas getNotas(String idNotas) throws Exception;
     public boolean update(Notas tNotas) throws Exception;

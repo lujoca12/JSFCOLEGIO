@@ -59,15 +59,18 @@ public class DaoTNotas implements InterfaceNotas{
     }
 
     @Override
-    public List<Notas> getTodasNotas() throws Exception {
+    public List<Notas> getTodasNotas(int idMatricula) throws Exception {
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        String hql="from Permiso as p where p.estado = '1' order by p.orden, p.descripcion asc";
+        //String hql="from Notas nota inner join fetch nota.modulo modul where nota.modulo = "+idModulo+" and "
+          //      + "nota.matricula="+idMatricula+" order by modul.descripcion asc";
+        String hql="from Notas nota inner join fetch nota.modulo modul where "
+                + "nota.matricula="+idMatricula+" order by modul.descripcion asc";
         Query query = sesion.createQuery(hql);
-        List<Notas> lstPermiso=(List<Notas>) query.list();
+        List<Notas> lstNotas=(List<Notas>) query.list();
         sesion.close();
-        return lstPermiso;
+        return lstNotas;
     }
 
     @Override

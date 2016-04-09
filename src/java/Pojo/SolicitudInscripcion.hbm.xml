@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 09/04/2016 3:18:36 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.SolicitudInscripcion" table="solicitud_inscripcion" schema="public" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="estudiante" class="Pojo.Estudiante" fetch="select">
+            <column name="id_estudiante" not-null="true" />
+        </many-to-one>
+        <many-to-one name="promocion" class="Pojo.Promocion" fetch="select">
+            <column name="id_promocion" not-null="true" />
+        </many-to-one>
+        <property name="fechaRealizacion" type="date">
+            <column name="fecha_realizacion" length="13" />
+        </property>
+        <property name="fechaRevision" type="date">
+            <column name="fecha_revision" length="13" />
+        </property>
+        <property name="estado" type="java.lang.Character">
+            <column name="estado" length="1" />
+        </property>
+        <property name="idUsuario" type="java.lang.Integer">
+            <column name="id_usuario" />
+        </property>
+        <property name="lugarEntrevista" type="string">
+            <column name="lugar_entrevista" />
+        </property>
+        <property name="observacion" type="string">
+            <column name="observacion" />
+        </property>
+        <property name="fechaEntrevista" type="timestamp">
+            <column name="fecha_entrevista" length="29" />
+        </property>
+        <set name="matriculas" table="matricula" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_solicitud" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Matricula" />
+        </set>
+        <set name="archivoses" table="archivos" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_solicitud" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Archivos" />
+        </set>
+    </class>
+</hibernate-mapping>

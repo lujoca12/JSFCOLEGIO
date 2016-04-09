@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 29/02/2016 10:09:00 by Hibernate Tools 4.3.1
+// Generated 09/04/2016 3:18:32 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -12,20 +12,23 @@ public class Universidad  implements java.io.Serializable {
 
 
      private int id;
+     private Pais pais;
      private String descripcion;
-     private Set estudiosRealizadoses = new HashSet(0);
+     private Set titulos = new HashSet(0);
 
     public Universidad() {
     }
 
 	
-    public Universidad(int id) {
+    public Universidad(int id, Pais pais) {
         this.id = id;
+        this.pais = pais;
     }
-    public Universidad(int id, String descripcion, Set estudiosRealizadoses) {
+    public Universidad(int id, Pais pais, String descripcion, Set titulos) {
        this.id = id;
+       this.pais = pais;
        this.descripcion = descripcion;
-       this.estudiosRealizadoses = estudiosRealizadoses;
+       this.titulos = titulos;
     }
    
     public int getId() {
@@ -35,6 +38,13 @@ public class Universidad  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
+    public Pais getPais() {
+        return this.pais;
+    }
+    
+    public void setPais(Pais pais) {
+        this.pais = pais;
+    }
     public String getDescripcion() {
         return this.descripcion;
     }
@@ -42,12 +52,12 @@ public class Universidad  implements java.io.Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    public Set getEstudiosRealizadoses() {
-        return this.estudiosRealizadoses;
+    public Set getTitulos() {
+        return this.titulos;
     }
     
-    public void setEstudiosRealizadoses(Set estudiosRealizadoses) {
-        this.estudiosRealizadoses = estudiosRealizadoses;
+    public void setTitulos(Set titulos) {
+        this.titulos = titulos;
     }
 
 

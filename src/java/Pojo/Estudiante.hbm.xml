@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29/02/2016 10:09:02 by Hibernate Tools 4.3.1 -->
+<!-- Generated 09/04/2016 3:18:36 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Pojo.Estudiante" table="estudiante" schema="public" optimistic-lock="version">
         <id name="id" type="int">
@@ -38,12 +38,6 @@
         <property name="dscColegiatura" type="java.lang.Integer">
             <column name="dsc_colegiatura" />
         </property>
-        <set name="matriculas" table="matricula" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="id_estudiante" not-null="true" />
-            </key>
-            <one-to-many class="Pojo.Matricula" />
-        </set>
         <set name="datosDoms" table="datos_dom" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="id_estudiante" />
@@ -56,11 +50,11 @@
             </key>
             <one-to-many class="Pojo.DatosNac" />
         </set>
-        <set name="entrevistas" table="entrevista" inverse="true" lazy="true" fetch="select">
+        <set name="tesises" table="tesis" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="id_estudiante" not-null="true" />
+                <column name="id_estudiante" />
             </key>
-            <one-to-many class="Pojo.Entrevista" />
+            <one-to-many class="Pojo.Tesis" />
         </set>
         <set name="datosLabs" table="datos_lab" inverse="true" lazy="true" fetch="select">
             <key>
@@ -68,11 +62,11 @@
             </key>
             <one-to-many class="Pojo.DatosLab" />
         </set>
-        <set name="estudiosRealizadoses" table="estudios_realizados" inverse="true" lazy="true" fetch="select">
+        <set name="solicitudInscripcions" table="solicitud_inscripcion" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="id_estudiante" />
+                <column name="id_estudiante" not-null="true" />
             </key>
-            <one-to-many class="Pojo.EstudiosRealizados" />
+            <one-to-many class="Pojo.SolicitudInscripcion" />
         </set>
     </class>
 </hibernate-mapping>

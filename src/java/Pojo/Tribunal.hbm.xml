@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 09/04/2016 3:18:36 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.Tribunal" table="tribunal" schema="public" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="fecha" type="date">
+            <column name="fecha" length="13" />
+        </property>
+        <property name="nota" type="string">
+            <column name="nota" length="25" />
+        </property>
+        <set name="detalleTribunals" table="detalle_tribunal" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_tribunal" />
+            </key>
+            <one-to-many class="Pojo.DetalleTribunal" />
+        </set>
+    </class>
+</hibernate-mapping>

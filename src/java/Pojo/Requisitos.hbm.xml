@@ -1,16 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29/02/2016 10:09:02 by Hibernate Tools 4.3.1 -->
+<!-- Generated 09/04/2016 3:18:36 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Pojo.Requisitos" table="requisitos" schema="public" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="maestria" class="Pojo.Maestria" fetch="select">
-            <column name="id_maestria" not-null="true" />
-        </many-to-one>
         <property name="descripcion" type="string">
             <column name="descripcion" />
         </property>
@@ -20,5 +17,11 @@
         <property name="respaldo" type="java.lang.Character">
             <column name="respaldo" length="1" />
         </property>
+        <set name="requisitosPromos" table="requisitos_promo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_requisitos" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.RequisitosPromo" />
+        </set>
     </class>
 </hibernate-mapping>

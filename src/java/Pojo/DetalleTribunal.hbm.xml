@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 09/04/2016 3:18:36 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.DetalleTribunal" table="detalle_tribunal" schema="public" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="tipoTribunal" class="Pojo.TipoTribunal" fetch="select">
+            <column name="id_tipo_tribunal" />
+        </many-to-one>
+        <many-to-one name="tribunal" class="Pojo.Tribunal" fetch="select">
+            <column name="id_tribunal" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

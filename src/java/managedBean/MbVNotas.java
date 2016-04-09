@@ -125,10 +125,10 @@ public class MbVNotas implements Serializable{
                         
                         calendar.setTime(matricula.getPromocion().getFechaFin());
                         añoFin = calendar.get(Calendar.YEAR);
-                        estudiante = matricula.getEstudiante().getApellidos()+" "+matricula.getEstudiante().getNombres();
+                        estudiante = matricula.getSolicitudInscripcion().getEstudiante().getApellidos()+" "+matricula.getSolicitudInscripcion().getEstudiante().getNombres();
                         
-                        lstTblNotas.add(new ClsNotas(matricula.getEstudiante().getId(), 
-                                matricula.getEstudiante().getApellidos()+" "+matricula.getEstudiante().getNombres(), 
+                        lstTblNotas.add(new ClsNotas(matricula.getSolicitudInscripcion().getEstudiante().getId(), 
+                                matricula.getSolicitudInscripcion().getEstudiante().getApellidos()+" "+matricula.getSolicitudInscripcion().getEstudiante().getNombres(), 
                                 matricula.getId(), 
                                 matricula.getNMatricula(), 
                                 matricula.getFechaMatricula(), 

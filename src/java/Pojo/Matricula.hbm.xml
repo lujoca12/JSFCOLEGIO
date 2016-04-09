@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29/02/2016 10:09:02 by Hibernate Tools 4.3.1 -->
+<!-- Generated 09/04/2016 3:18:36 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Pojo.Matricula" table="matricula" schema="public" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="estudiante" class="Pojo.Estudiante" fetch="select">
-            <column name="id_estudiante" not-null="true" />
-        </many-to-one>
         <many-to-one name="promocion" class="Pojo.Promocion" fetch="select">
             <column name="id_promocion" not-null="true" />
+        </many-to-one>
+        <many-to-one name="solicitudInscripcion" class="Pojo.SolicitudInscripcion" fetch="select">
+            <column name="id_solicitud" not-null="true" />
         </many-to-one>
         <property name="NMatricula" type="int">
             <column name="n_matricula" not-null="true" />

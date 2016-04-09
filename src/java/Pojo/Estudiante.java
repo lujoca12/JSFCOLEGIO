@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 29/02/2016 10:09:00 by Hibernate Tools 4.3.1
+// Generated 09/04/2016 3:18:32 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -23,12 +23,11 @@ public class Estudiante  implements java.io.Serializable {
      private Character estadoCivil;
      private String paisOrigen;
      private Integer dscColegiatura;
-     private Set matriculas = new HashSet(0);
      private Set datosDoms = new HashSet(0);
      private Set datosNacs = new HashSet(0);
-     private Set entrevistas = new HashSet(0);
+     private Set tesises = new HashSet(0);
      private Set datosLabs = new HashSet(0);
-     private Set estudiosRealizadoses = new HashSet(0);
+     private Set solicitudInscripcions = new HashSet(0);
 
     public Estudiante() {
     }
@@ -38,7 +37,7 @@ public class Estudiante  implements java.io.Serializable {
         this.id = id;
         this.cedPasaporte = cedPasaporte;
     }
-    public Estudiante(int id, String cedPasaporte, String nombres, String apellidos, String email, String celular, Date fechaNac, Character sexo, Character estadoCivil, String paisOrigen, Integer dscColegiatura, Set matriculas, Set datosDoms, Set datosNacs, Set entrevistas, Set datosLabs, Set estudiosRealizadoses) {
+    public Estudiante(int id, String cedPasaporte, String nombres, String apellidos, String email, String celular, Date fechaNac, Character sexo, Character estadoCivil, String paisOrigen, Integer dscColegiatura, Set datosDoms, Set datosNacs, Set tesises, Set datosLabs, Set solicitudInscripcions) {
        this.id = id;
        this.cedPasaporte = cedPasaporte;
        this.nombres = nombres;
@@ -50,12 +49,11 @@ public class Estudiante  implements java.io.Serializable {
        this.estadoCivil = estadoCivil;
        this.paisOrigen = paisOrigen;
        this.dscColegiatura = dscColegiatura;
-       this.matriculas = matriculas;
        this.datosDoms = datosDoms;
        this.datosNacs = datosNacs;
-       this.entrevistas = entrevistas;
+       this.tesises = tesises;
        this.datosLabs = datosLabs;
-       this.estudiosRealizadoses = estudiosRealizadoses;
+       this.solicitudInscripcions = solicitudInscripcions;
     }
    
     public int getId() {
@@ -135,13 +133,6 @@ public class Estudiante  implements java.io.Serializable {
     public void setDscColegiatura(Integer dscColegiatura) {
         this.dscColegiatura = dscColegiatura;
     }
-    public Set getMatriculas() {
-        return this.matriculas;
-    }
-    
-    public void setMatriculas(Set matriculas) {
-        this.matriculas = matriculas;
-    }
     public Set getDatosDoms() {
         return this.datosDoms;
     }
@@ -156,12 +147,12 @@ public class Estudiante  implements java.io.Serializable {
     public void setDatosNacs(Set datosNacs) {
         this.datosNacs = datosNacs;
     }
-    public Set getEntrevistas() {
-        return this.entrevistas;
+    public Set getTesises() {
+        return this.tesises;
     }
     
-    public void setEntrevistas(Set entrevistas) {
-        this.entrevistas = entrevistas;
+    public void setTesises(Set tesises) {
+        this.tesises = tesises;
     }
     public Set getDatosLabs() {
         return this.datosLabs;
@@ -170,12 +161,12 @@ public class Estudiante  implements java.io.Serializable {
     public void setDatosLabs(Set datosLabs) {
         this.datosLabs = datosLabs;
     }
-    public Set getEstudiosRealizadoses() {
-        return this.estudiosRealizadoses;
+    public Set getSolicitudInscripcions() {
+        return this.solicitudInscripcions;
     }
     
-    public void setEstudiosRealizadoses(Set estudiosRealizadoses) {
-        this.estudiosRealizadoses = estudiosRealizadoses;
+    public void setSolicitudInscripcions(Set solicitudInscripcions) {
+        this.solicitudInscripcions = solicitudInscripcions;
     }
 
 

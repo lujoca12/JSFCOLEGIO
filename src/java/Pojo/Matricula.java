@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 29/02/2016 10:09:00 by Hibernate Tools 4.3.1
+// Generated 09/04/2016 3:18:32 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -13,8 +13,8 @@ public class Matricula  implements java.io.Serializable {
 
 
      private int id;
-     private Estudiante estudiante;
      private Promocion promocion;
+     private SolicitudInscripcion solicitudInscripcion;
      private int NMatricula;
      private Date fechaMatricula;
      private Integer dscColegiatura;
@@ -27,16 +27,16 @@ public class Matricula  implements java.io.Serializable {
     }
 
 	
-    public Matricula(int id, Estudiante estudiante, Promocion promocion, int NMatricula) {
+    public Matricula(int id, Promocion promocion, SolicitudInscripcion solicitudInscripcion, int NMatricula) {
         this.id = id;
-        this.estudiante = estudiante;
         this.promocion = promocion;
+        this.solicitudInscripcion = solicitudInscripcion;
         this.NMatricula = NMatricula;
     }
-    public Matricula(int id, Estudiante estudiante, Promocion promocion, int NMatricula, Date fechaMatricula, Integer dscColegiatura, Character estado, Set asistencias, Set pagos, Set notases) {
+    public Matricula(int id, Promocion promocion, SolicitudInscripcion solicitudInscripcion, int NMatricula, Date fechaMatricula, Integer dscColegiatura, Character estado, Set asistencias, Set pagos, Set notases) {
        this.id = id;
-       this.estudiante = estudiante;
        this.promocion = promocion;
+       this.solicitudInscripcion = solicitudInscripcion;
        this.NMatricula = NMatricula;
        this.fechaMatricula = fechaMatricula;
        this.dscColegiatura = dscColegiatura;
@@ -53,19 +53,19 @@ public class Matricula  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    public Estudiante getEstudiante() {
-        return this.estudiante;
-    }
-    
-    public void setEstudiante(Estudiante estudiante) {
-        this.estudiante = estudiante;
-    }
     public Promocion getPromocion() {
         return this.promocion;
     }
     
     public void setPromocion(Promocion promocion) {
         this.promocion = promocion;
+    }
+    public SolicitudInscripcion getSolicitudInscripcion() {
+        return this.solicitudInscripcion;
+    }
+    
+    public void setSolicitudInscripcion(SolicitudInscripcion solicitudInscripcion) {
+        this.solicitudInscripcion = solicitudInscripcion;
     }
     public int getNMatricula() {
         return this.NMatricula;

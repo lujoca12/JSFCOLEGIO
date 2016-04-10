@@ -75,7 +75,9 @@ public class DaoTMatricula implements InterfaceMatricula{
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        String hql="from Matricula matr inner join fetch matr.promocion pr inner join fetch pr.maestria maest inner join fetch matr.estudiante estud where estud.cedPasaporte = '"+cedula+"' and matr.estado='1' and maest.estado = '1'  order by maest.descripcion asc";
+        //String hql="from Matricula matr inner join fetch matr.promocion pr inner join fetch pr.maestria maest inner join fetch matr.estudiante estud where estud.cedPasaporte = '"+cedula+"' and matr.estado='1' and maest.estado = '1'  order by maest.descripcion asc";
+        String hql="from Matricula matr inner join fetch matr.promocion pr inner join fetch pr.maestria maest inner join fetch matr.solicitudInscripcion solInsc inner join fetch  solInsc.estudiante estud "
+                + "where estud.cedPasaporte = '"+cedula+"' and matr.estado='1' and maest.estado = '1'  order by maest.descripcion asc";
         Query query = sesion.createQuery(hql);
         List<Matricula> lstPermiso=(List<Matricula>) query.list();
         sesion.close();

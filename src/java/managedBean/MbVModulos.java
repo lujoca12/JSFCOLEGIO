@@ -160,7 +160,7 @@ public class MbVModulos implements Serializable{
                 if(lstModulo.size() > 0){
                     for(Modulo modulo : lstModulo){
                         lstTblModulosReg.add(new ClsTablaModulosRegistrados(modulo.getPromocion().getMaestria().getId(), 
-                                modulo.getPromocion().getMaestria().getDescripcion()+" (Dir.(a)"+modulo.getPromocion().getUsuarios()+")", 
+                                modulo.getPromocion().getMaestria().getDescripcion()+" (Dir.(a)"+modulo.getPromocion().getUsuario()+")", 
                                 modulo.getPromocion().getId(), 
                                 modulo.getDescripcion(), 
                                 modulo.getUsuario().getId(), 
@@ -203,7 +203,7 @@ public class MbVModulos implements Serializable{
             
             for(Promocion promocion: lstPromocion){
                 
-                this.lstThemeMaestria.add(new ClsMaestria(promocion.getId(),promocion.getMaestria().getDescripcion()+" ("+promocion.getUsuarios()+")",promocion.getMaestria().getDescripcion(),promocion.getId()));
+                this.lstThemeMaestria.add(new ClsMaestria(promocion.getId(),promocion.getMaestria().getDescripcion()+" ("+promocion.getUsuario()+")",promocion.getMaestria().getDescripcion(),promocion.getId()));
             }
         } catch (Exception ex) {
             

@@ -20,6 +20,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -124,7 +126,7 @@ public class MbVAsistencia implements Serializable{
                 if(lstModulo.size() > 0){
                     for(Modulo modulo : lstModulo){
                         lstCboModulos.add(new ClsTablaModulosRegistrados(modulo.getPromocion().getMaestria().getId(), 
-                                modulo.getPromocion().getMaestria().getDescripcion()+" (Dir.(a)"+modulo.getPromocion().getUsuarios()+")", 
+                                modulo.getPromocion().getMaestria().getDescripcion()+" (Dir.(a)"+modulo.getPromocion().getUsuario()+")", 
                                 modulo.getPromocion().getId(), 
                                 modulo.getDescripcion()+" ("+modulo.getPromocion().getMaestria().getDescripcion()+")", 
                                 modulo.getUsuario().getId(), 
@@ -148,13 +150,14 @@ public class MbVAsistencia implements Serializable{
             Calendar calendar = Calendar.getInstance();
             int añoInicio = 0;
             int añoFin = 0;
+            int cont = 0;
             
                 if(lstMatricula.size() > 0){
                     for(Matricula matricula : lstMatricula){
-                        calendar.setTime(matricula.getPromocion().getFechaInicio());
+                        calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaInicio());
                         añoInicio = calendar.get(Calendar.YEAR);
-                        
-                        calendar.setTime(matricula.getPromocion().getFechaFin());
+                        cont++;
+                        calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaFin());
                         añoFin = calendar.get(Calendar.YEAR);
                         estudiante = matricula.getSolicitudInscripcion().getEstudiante().getApellidos()+" "+matricula.getSolicitudInscripcion().getEstudiante().getNombres();
                         
@@ -163,11 +166,16 @@ public class MbVAsistencia implements Serializable{
                                 matricula.getId(), 
                                 matricula.getNMatricula(), 
                                 matricula.getFechaMatricula(), 
-                                matricula.getPromocion().getId(), 
+                                matricula.getSolicitudInscripcion().getPromocion().getId(), 
                                 añoInicio+"-"+añoFin, 
-                                matricula.getPromocion().getFechaResolucion(), 
-                                matricula.getPromocion().getMaestria().getId(), 
-                                matricula.getPromocion().getMaestria().getDescripcion()));
+                                matricula.getSolicitudInscripcion().getPromocion().getFechaResolucion(), 
+                                matricula.getSolicitudInscripcion().getPromocion().getMaestria().getId(), 
+                                matricula.getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
+                                cont,
+                                0.0,
+                                "",
+                                null,
+                                '0'));
                     }
                 }
             
@@ -175,6 +183,19 @@ public class MbVAsistencia implements Serializable{
         } catch (Exception ex) {
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void registrar(){
+        
+    }
+    
+    private void mensajesOk(String msg){
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje de la Aplicacion", msg);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+    private void mensajesError(String msg){
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje de la Aplicacion", msg);
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
     
 }

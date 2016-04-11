@@ -38,23 +38,31 @@
                     <!--class="tblDatos"-->
                     <p:dataTable class="tblNotas DataTable datatableHover" scrollable="false" var="notas" value="#{mbVNotas.lstTblNotas}"
                                  emptyMessage="No hay Estudiantes para registrar notas">
-                        <p:column headerText="#" style="text-align: center;">
-                            <h:outputText value="#{notas.descripMaestria}" />
+                        <p:column headerText="#" style="text-align: center; width: 10%;">
+                            <h:outputText value="#{notas.n_registro}" />
                         </p:column>
 
-                        <p:column headerText="Estudiante" style="text-align: center;">
+                        <p:column headerText="Estudiante" style="text-align: center; width: 40%;">
                             <h:outputText value="#{notas.nombresEstudiante}" />
                         </p:column>
                         
-                        <p:column headerText="Nota" style="text-align: center;">
-                            <p:inputText value="#{mbVNotas.tNotas.nota}" style="width:100%"/>
+                        <p:column headerText="Nota" style="text-align: center; width: 10%;">
+                            <p:inputText value="#{notas.nota eq 0.0 ? null:notas.nota}" style="width:100%"/>
                         </p:column>
                         
-                        <p:column headerText="Observación" style="text-align: center;">
-                            <p:inputText value="#{mbVNotas.tNotas.observacion}" style="width:100%"/>
+                        <p:column headerText="Observación" style="text-align: center; width: 40%;">
+                            <p:inputText value="#{notas.observacion}" style="width:100%"/>
                         </p:column>
+                        
+                        <br></br>
+                    
 
                     </p:dataTable>
+                    
+                    <p:message for="display"/>
+                    <p:commandButton value="Guardar" update="frmRegistrarNotas,msgsNotas" styleClass="anchoBotones" icon="ui-icon-disk"
+                                     actionListener="#{mbVNotas.registrar()}" />
+                    <h:outputText id="display" value="" />
 
                 </p:panel>
             </h:form>

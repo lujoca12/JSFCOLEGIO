@@ -173,7 +173,7 @@ public class MbVMaestrias implements Serializable{
                         lstTblMaestria.add(new ClsTablaMaestrias(promocion.getMaestria().getId(),
                                 promocion.getMaestria().getDescripcion(),promocion.getMaestria().getEstado(),
                                 promocion.getId(),promocion.getDescripcion(),promocion.getFechaResolucion(),promocion.getFechaInicio(),
-                                promocion.getFechaFin(),promocion.getCupo(),promocion.getNCuotas(),promocion.getIdUsuario(),promocion.getUsuarios()));
+                                promocion.getFechaFin(),promocion.getCupo(),promocion.getNCuotas(),promocion.getIdUsuario(),promocion.getUsuario()));
                     }
                 }
             }
@@ -201,7 +201,7 @@ public class MbVMaestrias implements Serializable{
         try {
             //Aqui obtnego el id del usuario que seleccione
             tPromocion.setIdUsuario(this.theme.getId());
-            tPromocion.setUsuarios(this.theme.getName());
+            tPromocion.setUsuario(this.theme.getName());
             
             //Establesco en 1 para habilitarlo
             tMaestria.setEstado('1');
@@ -283,10 +283,10 @@ public class MbVMaestrias implements Serializable{
         
         if(theme== null){
             promocion.setIdUsuario(((ClsTablaMaestrias) event.getObject()).getIdUsuario());
-            promocion.setUsuarios(((ClsTablaMaestrias) event.getObject()).getNombresUsuarios());
+            promocion.setUsuario(((ClsTablaMaestrias) event.getObject()).getNombresUsuarios());
         }else{
             promocion.setIdUsuario(theme.getId());
-            promocion.setUsuarios(theme.getName());
+            promocion.setUsuario(theme.getName());
         }
         promocion.setFechaResolucion(((ClsTablaMaestrias) event.getObject()).getFechaResolucion());
         promocion.setFechaInicio(((ClsTablaMaestrias) event.getObject()).getFechaInicio());

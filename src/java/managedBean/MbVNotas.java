@@ -145,15 +145,15 @@ public class MbVNotas implements Serializable{
             Calendar calendar = Calendar.getInstance();
             int añoInicio = 0;
             int añoFin = 0;
-            
+            int cont = 0;
             
             
                 if(lstMatricula.size() > 0){
                     for(Matricula matricula : lstMatricula){
-                        calendar.setTime(matricula.getPromocion().getFechaInicio());
+                        calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaInicio());
                         añoInicio = calendar.get(Calendar.YEAR);
-                        
-                        calendar.setTime(matricula.getPromocion().getFechaFin());
+                        cont++;
+                        calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaFin());
                         añoFin = calendar.get(Calendar.YEAR);
                         estudiante = matricula.getSolicitudInscripcion().getEstudiante().getApellidos()+" "+matricula.getSolicitudInscripcion().getEstudiante().getNombres();
                         
@@ -162,11 +162,16 @@ public class MbVNotas implements Serializable{
                                 matricula.getId(), 
                                 matricula.getNMatricula(), 
                                 matricula.getFechaMatricula(), 
-                                matricula.getPromocion().getId(), 
+                                matricula.getSolicitudInscripcion().getPromocion().getId(), 
                                 añoInicio+"-"+añoFin, 
-                                matricula.getPromocion().getFechaResolucion(), 
-                                matricula.getPromocion().getMaestria().getId(), 
-                                matricula.getPromocion().getMaestria().getDescripcion()));
+                                matricula.getSolicitudInscripcion().getPromocion().getFechaResolucion(), 
+                                matricula.getSolicitudInscripcion().getPromocion().getMaestria().getId(), 
+                                matricula.getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
+                                cont,
+                                0.0,
+                                "",
+                                null,
+                                '0'));
                     }
                 }
             
@@ -231,7 +236,7 @@ public class MbVNotas implements Serializable{
                 if(lstModulo.size() > 0){
                     for(Modulo modulo : lstModulo){
                         lstCboModulos.add(new ClsTablaModulosRegistrados(modulo.getPromocion().getMaestria().getId(), 
-                                modulo.getPromocion().getMaestria().getDescripcion()+" (Dir.(a)"+modulo.getPromocion().getUsuarios()+")", 
+                                modulo.getPromocion().getMaestria().getDescripcion()+" (Dir.(a)"+modulo.getPromocion().getUsuario()+")", 
                                 modulo.getPromocion().getId(), 
                                 modulo.getDescripcion()+" ("+modulo.getPromocion().getMaestria().getDescripcion()+")", 
                                 modulo.getUsuario().getId(), 
@@ -254,26 +259,32 @@ public class MbVNotas implements Serializable{
             Calendar calendar = Calendar.getInstance();
             int añoInicio = 0;
             int añoFin = 0;
+            int cont = 0;
             
                 if(lstMatricula.size() > 0){
                     for(Matricula matricula : lstMatricula){
-                        calendar.setTime(matricula.getPromocion().getFechaInicio());
+                        calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaInicio());
                         añoInicio = calendar.get(Calendar.YEAR);
                         
-                        calendar.setTime(matricula.getPromocion().getFechaFin());
+                        calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaFin());
                         añoFin = calendar.get(Calendar.YEAR);
                         estudiante = matricula.getSolicitudInscripcion().getEstudiante().getApellidos()+" "+matricula.getSolicitudInscripcion().getEstudiante().getNombres();
-                        
+                        cont++;
                         lstTblNotas.add(new ClsNotas(matricula.getSolicitudInscripcion().getEstudiante().getId(), 
                                 matricula.getSolicitudInscripcion().getEstudiante().getApellidos()+" "+matricula.getSolicitudInscripcion().getEstudiante().getNombres(), 
                                 matricula.getId(), 
                                 matricula.getNMatricula(), 
                                 matricula.getFechaMatricula(), 
-                                matricula.getPromocion().getId(), 
+                                matricula.getSolicitudInscripcion().getPromocion().getId(), 
                                 añoInicio+"-"+añoFin, 
-                                matricula.getPromocion().getFechaResolucion(), 
-                                matricula.getPromocion().getMaestria().getId(), 
-                                matricula.getPromocion().getMaestria().getDescripcion()));
+                                matricula.getSolicitudInscripcion().getPromocion().getFechaResolucion(), 
+                                matricula.getSolicitudInscripcion().getPromocion().getMaestria().getId(), 
+                                matricula.getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
+                                cont,
+                                0.0,
+                                "",
+                                null,
+                                '0'));
                     }
                 }
             
@@ -281,6 +292,10 @@ public class MbVNotas implements Serializable{
         } catch (Exception ex) {
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    public void registrar(){
+        DaoTNotas daoTnotas = new DaoTNotas();
+        
     }
 
     public void consultarMaestrias(){

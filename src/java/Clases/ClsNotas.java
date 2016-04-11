@@ -17,15 +17,20 @@ public class ClsNotas implements Serializable {
     private int idEstudiante;
     private String nombresEstudiante;
     private int idMatricula;
-    private int n_matricula;
+    private String n_matricula;
     private Date fechaMatricula;
     private int idPromocion;
     private String periodo;
     private Date resolucion;
     private int idMaestria;
     private String descripMaestria;
+    private int n_registro;
+    private Double nota;
+    private String observacion;
+    private Date fecha;
+    private char estado;
 
-    public ClsNotas(int idEstudiante, String nombresEstudiante, int idMatricula, int n_matricula, Date fechaMatricula, int idPromocion, String periodo, Date resolucion, int idMaestria, String descripMaestria) {
+    public ClsNotas(int idEstudiante, String nombresEstudiante, int idMatricula, String n_matricula, Date fechaMatricula, int idPromocion, String periodo, Date resolucion, int idMaestria, String descripMaestria, int n_registro, Double nota, String observacion, Date fecha, char estado) {
         this.idEstudiante = idEstudiante;
         this.nombresEstudiante = nombresEstudiante;
         this.idMatricula = idMatricula;
@@ -36,7 +41,14 @@ public class ClsNotas implements Serializable {
         this.resolucion = resolucion;
         this.idMaestria = idMaestria;
         this.descripMaestria = descripMaestria;
+        this.n_registro = n_registro;
+        this.nota = nota;
+        this.observacion = observacion;
+        this.fecha = fecha;
+        this.estado = estado;
     }
+
+    
 
     public int getIdEstudiante() {
         return idEstudiante;
@@ -62,11 +74,11 @@ public class ClsNotas implements Serializable {
         this.idMatricula = idMatricula;
     }
 
-    public int getN_matricula() {
+    public String getN_matricula() {
         return n_matricula;
     }
 
-    public void setN_matricula(int n_matricula) {
+    public void setN_matricula(String n_matricula) {
         this.n_matricula = n_matricula;
     }
 
@@ -116,6 +128,46 @@ public class ClsNotas implements Serializable {
 
     public void setDescripMaestria(String descripMaestria) {
         this.descripMaestria = descripMaestria;
+    }
+
+    public int getN_registro() {
+        return n_registro;
+    }
+
+    public void setN_registro(int n_registro) {
+        this.n_registro = n_registro;
+    }
+
+    public Double getNota() {
+        return nota;
+    }
+
+    public void setNota(Double nota) {
+        this.nota = nota;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public char getEstado() {
+        return estado;
+    }
+
+    public void setEstado(char estado) {
+        this.estado = estado;
     }
     
     

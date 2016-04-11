@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 09/04/2016 3:18:32 by Hibernate Tools 4.3.1
+// Generated 11/04/2016 15:34:25 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -13,12 +13,11 @@ public class Matricula  implements java.io.Serializable {
 
 
      private int id;
-     private Promocion promocion;
      private SolicitudInscripcion solicitudInscripcion;
-     private int NMatricula;
      private Date fechaMatricula;
      private Integer dscColegiatura;
      private Character estado;
+     private String NMatricula;
      private Set asistencias = new HashSet(0);
      private Set pagos = new HashSet(0);
      private Set notases = new HashSet(0);
@@ -27,20 +26,17 @@ public class Matricula  implements java.io.Serializable {
     }
 
 	
-    public Matricula(int id, Promocion promocion, SolicitudInscripcion solicitudInscripcion, int NMatricula) {
+    public Matricula(int id, SolicitudInscripcion solicitudInscripcion) {
         this.id = id;
-        this.promocion = promocion;
         this.solicitudInscripcion = solicitudInscripcion;
-        this.NMatricula = NMatricula;
     }
-    public Matricula(int id, Promocion promocion, SolicitudInscripcion solicitudInscripcion, int NMatricula, Date fechaMatricula, Integer dscColegiatura, Character estado, Set asistencias, Set pagos, Set notases) {
+    public Matricula(int id, SolicitudInscripcion solicitudInscripcion, Date fechaMatricula, Integer dscColegiatura, Character estado, String NMatricula, Set asistencias, Set pagos, Set notases) {
        this.id = id;
-       this.promocion = promocion;
        this.solicitudInscripcion = solicitudInscripcion;
-       this.NMatricula = NMatricula;
        this.fechaMatricula = fechaMatricula;
        this.dscColegiatura = dscColegiatura;
        this.estado = estado;
+       this.NMatricula = NMatricula;
        this.asistencias = asistencias;
        this.pagos = pagos;
        this.notases = notases;
@@ -53,26 +49,12 @@ public class Matricula  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    public Promocion getPromocion() {
-        return this.promocion;
-    }
-    
-    public void setPromocion(Promocion promocion) {
-        this.promocion = promocion;
-    }
     public SolicitudInscripcion getSolicitudInscripcion() {
         return this.solicitudInscripcion;
     }
     
     public void setSolicitudInscripcion(SolicitudInscripcion solicitudInscripcion) {
         this.solicitudInscripcion = solicitudInscripcion;
-    }
-    public int getNMatricula() {
-        return this.NMatricula;
-    }
-    
-    public void setNMatricula(int NMatricula) {
-        this.NMatricula = NMatricula;
     }
     public Date getFechaMatricula() {
         return this.fechaMatricula;
@@ -94,6 +76,13 @@ public class Matricula  implements java.io.Serializable {
     
     public void setEstado(Character estado) {
         this.estado = estado;
+    }
+    public String getNMatricula() {
+        return this.NMatricula;
+    }
+    
+    public void setNMatricula(String NMatricula) {
+        this.NMatricula = NMatricula;
     }
     public Set getAsistencias() {
         return this.asistencias;

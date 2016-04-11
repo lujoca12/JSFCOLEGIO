@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 29/02/2016 10:09:00 by Hibernate Tools 4.3.1
+// Generated 11/04/2016 15:34:25 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -21,10 +21,11 @@ public class Promocion  implements java.io.Serializable {
      private Integer cupo;
      private Integer NCuotas;
      private int idUsuario;
-     private String usuarios;
+     private String usuario;
+     private Set requisitosPromos = new HashSet(0);
      private Set precios = new HashSet(0);
-     private Set matriculas = new HashSet(0);
      private Set modulos = new HashSet(0);
+     private Set solicitudInscripcions = new HashSet(0);
 
     public Promocion() {
     }
@@ -35,7 +36,7 @@ public class Promocion  implements java.io.Serializable {
         this.maestria = maestria;
         this.idUsuario = idUsuario;
     }
-    public Promocion(int id, Maestria maestria, Integer descripcion, Date fechaResolucion, Date fechaInicio, Date fechaFin, Integer cupo, Integer NCuotas, int idUsuario, String usuarios, Set precios, Set matriculas, Set modulos) {
+    public Promocion(int id, Maestria maestria, Integer descripcion, Date fechaResolucion, Date fechaInicio, Date fechaFin, Integer cupo, Integer NCuotas, int idUsuario, String usuario, Set requisitosPromos, Set precios, Set modulos, Set solicitudInscripcions) {
        this.id = id;
        this.maestria = maestria;
        this.descripcion = descripcion;
@@ -45,10 +46,11 @@ public class Promocion  implements java.io.Serializable {
        this.cupo = cupo;
        this.NCuotas = NCuotas;
        this.idUsuario = idUsuario;
+       this.usuario = usuario;
+       this.requisitosPromos = requisitosPromos;
        this.precios = precios;
-       this.matriculas = matriculas;
        this.modulos = modulos;
-       this.usuarios = usuarios;
+       this.solicitudInscripcions = solicitudInscripcions;
     }
    
     public int getId() {
@@ -114,19 +116,26 @@ public class Promocion  implements java.io.Serializable {
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
+    public String getUsuario() {
+        return this.usuario;
+    }
+    
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+    public Set getRequisitosPromos() {
+        return this.requisitosPromos;
+    }
+    
+    public void setRequisitosPromos(Set requisitosPromos) {
+        this.requisitosPromos = requisitosPromos;
+    }
     public Set getPrecios() {
         return this.precios;
     }
     
     public void setPrecios(Set precios) {
         this.precios = precios;
-    }
-    public Set getMatriculas() {
-        return this.matriculas;
-    }
-    
-    public void setMatriculas(Set matriculas) {
-        this.matriculas = matriculas;
     }
     public Set getModulos() {
         return this.modulos;
@@ -135,14 +144,16 @@ public class Promocion  implements java.io.Serializable {
     public void setModulos(Set modulos) {
         this.modulos = modulos;
     }
-
-    public String getUsuarios() {
-        return usuarios;
+    public Set getSolicitudInscripcions() {
+        return this.solicitudInscripcions;
+    }
+    
+    public void setSolicitudInscripcions(Set solicitudInscripcions) {
+        this.solicitudInscripcions = solicitudInscripcions;
     }
 
-    public void setUsuarios(String usuarios) {
-        this.usuarios = usuarios;
-    }
+
+
 
 }
 

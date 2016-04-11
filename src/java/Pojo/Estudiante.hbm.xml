@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 09/04/2016 3:18:36 by Hibernate Tools 4.3.1 -->
+<!-- Generated 11/04/2016 15:34:34 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Pojo.Estudiante" table="estudiante" schema="public" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <property name="cedPasaporte" type="string">
             <column name="ced_pasaporte" length="20" not-null="true" />

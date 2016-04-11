@@ -29,12 +29,14 @@ public class DaoTDetallePermiso implements InterfaceDetallePermiso{
 
     private Session sesion;
     private Transaction tx;
-    private Document selectedDocument;
+    private Document selectedDocPadre;
+    private Document selectedDocHijo;
     
     private DetallePermiso dtp;
     private Permiso permiso = null;
     private Usuario user = null;
-    private int idDetallePermiso=0;
+    private int idDetPermHijo=0;
+    private int idDetPermPadre=0;
     private int idPadre=0;
     private List<DetallePermiso> lstDetalleP= null;
     
@@ -48,14 +50,22 @@ public class DaoTDetallePermiso implements InterfaceDetallePermiso{
         }
     }
 
-    public Document getSelectedDocument() {
-        return selectedDocument;
+    public Document getSelectedDocPadre() {
+        return selectedDocPadre;
     }
 
-    public void setSelectedDocument(Document selectedDocument) {
-        this.selectedDocument = selectedDocument;
+    public void setSelectedDocPadre(Document selectedDocPadre) {
+        this.selectedDocPadre = selectedDocPadre;
     }
-    
+
+    public Document getSelectedDocHijo() {
+        return selectedDocHijo;
+    }
+
+    public void setSelectedDocHijo(Document selectedDocHijo) {
+        this.selectedDocHijo = selectedDocHijo;
+    }
+
     private void manejaExcepcion(HibernateException he) throws HibernateException
     {
         tx.rollback();
@@ -67,46 +77,48 @@ public class DaoTDetallePermiso implements InterfaceDetallePermiso{
      //   tx.commit();
         char estado = ' ';
         String msg="";
+        boolean band = false;
         this.sesion = null;
         this.tx = null;
-        int cont = 1;
         try {
            iniciaOperacion();
            
             for (int i = 0; i < node.size(); i++) {
-                selectedDocument = (Document) node.get(i).getData();
+                selectedDocPadre = (Document) node.get(i).getData();
                 
-                if(node.get(i).isSelected()){
-                    estado = '1';
-                }else{
-                    estado = '0';
-                }
-                idDetallePermiso = existeDetallePermiso(idUsuario, selectedDocument.getId());
-                if(idDetallePermiso > 0){
-                    asignarPermisosxUsuario(selectedDocument, estado, idUsuario, idDetallePermiso);
-                }else{
-                    idDetallePermiso = getUltimoIdDetallePermiso();
-                    asignarPermisosxUsuario(selectedDocument, estado, idUsuario, idDetallePermiso+cont);
-                    cont++;
-                }
+                
                 //recorriendo los hijos
                 for (int j = 0; j < node.get(i).getChildCount(); j++) {
-                    selectedDocument = (Document) node.get(i).getChildren().get(j).getData();
+                    selectedDocHijo = (Document) node.get(i).getChildren().get(j).getData();
                     
                     if(node.get(i).getChildren().get(j).isSelected()){
+                        band = true;
                         estado = '1';
                     }else{
                         estado = '0';
                     }
-                        idDetallePermiso = existeDetallePermiso(idUsuario, selectedDocument.getId());
-                    if(idDetallePermiso > 0){
-                        asignarPermisosxUsuario(selectedDocument, estado, idUsuario, idDetallePermiso);
+                    
+                       idDetPermHijo = existeDetallePermiso(idUsuario, selectedDocHijo.getId());
+                    if(idDetPermHijo > 0){
+                        asignarPermisosxUsuario(selectedDocHijo, estado, idUsuario, idDetPermHijo);
                     }else{
-                        idDetallePermiso = getUltimoIdDetallePermiso();
-                        asignarPermisosxUsuario(selectedDocument, estado, idUsuario, idDetallePermiso+cont);
-                        cont++;
+                       // idDetallePermiso = getUltimoIdDetallePermiso();
+                        asignarPermisosxUsuario(selectedDocHijo, estado, idUsuario, 0);
                     }
                 }
+                if(band){
+                    estado = '1';
+                }else{
+                    estado = '0';
+                }
+                idDetPermPadre = existeDetallePermiso(idUsuario, selectedDocPadre.getId());
+                if(idDetPermPadre > 0){
+                    asignarPermisosxUsuario(selectedDocPadre, estado, idUsuario, idDetPermPadre);
+                }else{
+//                    idDetallePermiso = getUltimoIdDetallePermiso();
+                    asignarPermisosxUsuario(selectedDocPadre, estado, idUsuario, 0);
+                }
+                band = false;
             }
             
             tx.commit();
@@ -128,7 +140,9 @@ public class DaoTDetallePermiso implements InterfaceDetallePermiso{
         permiso.setId(selectedDocument.getId());
         user.setId(idUsuario);
         //dtp.setId(null);
-        dtp.setId(idDtp);
+        if(idDtp > 0)
+            dtp.setId(idDtp);
+        
         dtp.setEstado(estado);
         dtp.setPermiso(permiso);
         dtp.setUsuario(user);

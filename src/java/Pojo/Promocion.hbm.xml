@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29/02/2016 10:09:02 by Hibernate Tools 4.3.1 -->
+<!-- Generated 11/04/2016 15:34:34 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Pojo.Promocion" table="promocion" schema="public" optimistic-lock="version">
         <id name="id" type="int">
@@ -32,26 +32,32 @@
         <property name="idUsuario" type="int">
             <column name="id_usuario" not-null="true" />
         </property>
-        <property name="usuarios" type="string">
+        <property name="usuario" type="string">
             <column name="usuario" length="100" />
         </property>
+        <set name="requisitosPromos" table="requisitos_promo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_promocion" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.RequisitosPromo" />
+        </set>
         <set name="precios" table="precio" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="id_promocion" not-null="true" />
             </key>
             <one-to-many class="Pojo.Precio" />
         </set>
-        <set name="matriculas" table="matricula" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="id_promocion" not-null="true" />
-            </key>
-            <one-to-many class="Pojo.Matricula" />
-        </set>
         <set name="modulos" table="modulo" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="id_promocion" not-null="true" />
             </key>
             <one-to-many class="Pojo.Modulo" />
+        </set>
+        <set name="solicitudInscripcions" table="solicitud_inscripcion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_promocion" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.SolicitudInscripcion" />
         </set>
     </class>
 </hibernate-mapping>

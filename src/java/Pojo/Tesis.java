@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 29/02/2016 10:09:00 by Hibernate Tools 4.3.1
+// Generated 11/04/2016 15:34:25 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -13,12 +13,14 @@ public class Tesis  implements java.io.Serializable {
 
 
      private int id;
+     private Estudiante estudiante;
      private Maestria maestria;
      private String titulo;
      private String autor;
-     private Date fecha;
+     private Date fechaSustentacion;
      private String ruta;
      private String resumen;
+     private Date fechaSubida;
      private Set palabrasClaves = new HashSet(0);
 
     public Tesis() {
@@ -29,14 +31,16 @@ public class Tesis  implements java.io.Serializable {
         this.id = id;
         this.maestria = maestria;
     }
-    public Tesis(int id, Maestria maestria, String titulo, String autor, Date fecha, String ruta, String resumen, Set palabrasClaves) {
+    public Tesis(int id, Estudiante estudiante, Maestria maestria, String titulo, String autor, Date fechaSustentacion, String ruta, String resumen, Date fechaSubida, Set palabrasClaves) {
        this.id = id;
+       this.estudiante = estudiante;
        this.maestria = maestria;
        this.titulo = titulo;
        this.autor = autor;
-       this.fecha = fecha;
+       this.fechaSustentacion = fechaSustentacion;
        this.ruta = ruta;
        this.resumen = resumen;
+       this.fechaSubida = fechaSubida;
        this.palabrasClaves = palabrasClaves;
     }
    
@@ -46,6 +50,13 @@ public class Tesis  implements java.io.Serializable {
     
     public void setId(int id) {
         this.id = id;
+    }
+    public Estudiante getEstudiante() {
+        return this.estudiante;
+    }
+    
+    public void setEstudiante(Estudiante estudiante) {
+        this.estudiante = estudiante;
     }
     public Maestria getMaestria() {
         return this.maestria;
@@ -68,12 +79,12 @@ public class Tesis  implements java.io.Serializable {
     public void setAutor(String autor) {
         this.autor = autor;
     }
-    public Date getFecha() {
-        return this.fecha;
+    public Date getFechaSustentacion() {
+        return this.fechaSustentacion;
     }
     
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setFechaSustentacion(Date fechaSustentacion) {
+        this.fechaSustentacion = fechaSustentacion;
     }
     public String getRuta() {
         return this.ruta;
@@ -88,6 +99,13 @@ public class Tesis  implements java.io.Serializable {
     
     public void setResumen(String resumen) {
         this.resumen = resumen;
+    }
+    public Date getFechaSubida() {
+        return this.fechaSubida;
+    }
+    
+    public void setFechaSubida(Date fechaSubida) {
+        this.fechaSubida = fechaSubida;
     }
     public Set getPalabrasClaves() {
         return this.palabrasClaves;

@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 29/02/2016 10:09:00 by Hibernate Tools 4.3.1
+// Generated 11/04/2016 15:34:25 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -13,6 +13,7 @@ public class Pais  implements java.io.Serializable {
 
      private int id;
      private String descripcion;
+     private Set universidads = new HashSet(0);
      private Set provincias = new HashSet(0);
 
     public Pais() {
@@ -22,9 +23,10 @@ public class Pais  implements java.io.Serializable {
     public Pais(int id) {
         this.id = id;
     }
-    public Pais(int id, String descripcion, Set provincias) {
+    public Pais(int id, String descripcion, Set universidads, Set provincias) {
        this.id = id;
        this.descripcion = descripcion;
+       this.universidads = universidads;
        this.provincias = provincias;
     }
    
@@ -41,6 +43,13 @@ public class Pais  implements java.io.Serializable {
     
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+    public Set getUniversidads() {
+        return this.universidads;
+    }
+    
+    public void setUniversidads(Set universidads) {
+        this.universidads = universidads;
     }
     public Set getProvincias() {
         return this.provincias;

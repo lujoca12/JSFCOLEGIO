@@ -55,8 +55,19 @@
                         </p:column>
 
                     </p:dataTable>
+                    
+                    <br></br>
+                    <p:message for="display"/>
+                    <p:commandButton value="Guardar" update="frmRegistrarAsist,msgsAsist" styleClass="anchoBotones" icon="ui-icon-disk"
+                                     actionListener="#{mbVModulos.registrar()}" />
+                        
+                    
+                    <h:outputText id="display" value="" />
 
                 </p:panel>
+                
+                
+                
             </h:form>
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">

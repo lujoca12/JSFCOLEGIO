@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 29/02/2016 10:09:00 by Hibernate Tools 4.3.1
+// Generated 11/04/2016 15:34:25 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -14,8 +14,8 @@ public class Modulo  implements java.io.Serializable {
      private int id;
      private Promocion promocion;
      private Usuario usuario;
-     private String descripcion;
      private Integer creditos;
+     private String descripcion;
      private Set asistencias = new HashSet(0);
      private Set notases = new HashSet(0);
 
@@ -28,12 +28,12 @@ public class Modulo  implements java.io.Serializable {
         this.promocion = promocion;
         this.usuario = usuario;
     }
-    public Modulo(int id, Promocion promocion, Usuario usuario, String descripcion, Integer creditos, Set asistencias, Set notases) {
+    public Modulo(int id, Promocion promocion, Usuario usuario, Integer creditos, String descripcion, Set asistencias, Set notases) {
        this.id = id;
        this.promocion = promocion;
        this.usuario = usuario;
-       this.descripcion = descripcion;
        this.creditos = creditos;
+       this.descripcion = descripcion;
        this.asistencias = asistencias;
        this.notases = notases;
     }
@@ -59,19 +59,19 @@ public class Modulo  implements java.io.Serializable {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    public String getDescripcion() {
-        return this.descripcion;
-    }
-    
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
     public Integer getCreditos() {
         return this.creditos;
     }
     
     public void setCreditos(Integer creditos) {
         this.creditos = creditos;
+    }
+    public String getDescripcion() {
+        return this.descripcion;
+    }
+    
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
     public Set getAsistencias() {
         return this.asistencias;

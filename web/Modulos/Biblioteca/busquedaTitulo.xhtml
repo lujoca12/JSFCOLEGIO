@@ -27,9 +27,49 @@ and open the template in the editor.
         <div class="container">
             <h2>Buscar "TESIS" por Título</h2>
             <div id="browse_navigation" class="well text-center">
-                <form method="get">  
+                <form method="get">       
+                    <input type="hidden" name="type" value="title"/>
+                    <input type="hidden" name="sort_by" value="1"/>
+                    <input type="hidden" name="order" value="ASC"/>
+                    <input type="hidden" name="rpp" value="5"/>
+                    <input type="hidden" name="etal" value="1" />
+                    <span>Introducir las primeras letras:</span>
+                    <input type="text" name="starts_with"/>
+                    <input type="submit" class="btn btn-default" value="Buscar" />
                 </form>
             </div>
+            <div id="browse_controls" class="well text-center">
+                <form method="get" action="/handle/123456789/1/browse">
+                    <input type="hidden" name="type" value="author"/>
+                    <label for="order">En orden:</label>
+                    <select name="order">
+                        <option value="ASC" selected="selected">Ascendente</option>
+                        <option value="DESC" >Descendente</option>
+                    </select>
+                    <label for="rpp">Resultados por página</label>
+                    <select name="rpp">
+                        <option value="5" >5</option>
+                        <option value="10" >10</option>
+                        <option value="20" selected="selected">20</option>
+                        <option value="30" >30</option>
+			<option value="40" >40</option>
+			<option value="50" >50</option>
+			<option value="100" >100</option>
+                    </select>       
+                    <input type="submit" class="btn btn-default" name="submit_browse" value="Actualizar"/>
+                     </form>
+            </div>
+            <div class="panel panel-primary">
+                        <div class="panel-heading text-center"> 
+                            		Mostrando resultados    
+                       </div>
+                    </div>
+            <table align="center" class="table" summary="This table browses all dspace content">
+                <colgroup><col width="80" /><col width="130" /><col width="60%" /><col width="40%" /></colgroup>
+                <tr>
+                    
+                </tr>
+            </table>
         </div>        
             </ui:define>
         </ui:composition>

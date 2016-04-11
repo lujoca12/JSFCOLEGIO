@@ -27,10 +27,77 @@ and open the template in the editor.
         <div class="container">
             <h2>Buscar "TESIS" por Fecha de publicación</h2>
             <div id="browse_navigation" class="well text-center">
-                <form method="get">  
+                <form method="get">   
+                    <input type="hidden" name="type" value="dateissued"/>
+                    <input type="hidden" name="sort_by" value="2"/>
+                    <input type="hidden" name="order" value="ASC"/>
+                    <input type="hidden" name="rpp" value="20"/>
+                    <input type="hidden" name="etal" value="4" />
+                    <span>Ir a una fecha de inicio:</span>
+                    <select name="year">
+                        <option selected="selected" value="-1">(Elige año)</option>
+                    </select>
+                    <select name="month">
+                        <option selected="selected" value="-1">(Elige mes)</option>
+                        <option value="1">enero</option>
+                        <option value="2">febrero</option>
+                        <option value="3">marzo</option>	
+                        <option value="4">abril</option>
+                        <option value="5">mayo</option>
+                        <option value="6">junio</option>
+                        <option value="7">julio</option>
+                        <option value="8">agosto</option>
+                        <option value="9">septiembre</option>
+                        <option value="10">octubre</option>
+                        <option value="11">noviembre</option>
+                        <option value="12">diciembre</option>
+                    </select>
+                    <input type="submit" class="btn btn-default" value="Buscar" />
+                    <br/>
+                    <label for="starts_with">O seleccione año:</label>
+                    <input type="text" name="starts_with" size="4" maxlength="4"/>
                 </form>
+            </div>  
+            <div id="browse_controls" class="well text-center">
+                <form method="get" action="/handle/123456789/1/browse">
+                    <input type="hidden" name="type" value="dateissued"/>   
+                    <label for="sort_by">Ordenar por:</label>
+                    <select name="sort_by">
+                        <option value="1" >Título</option> 
+                        <option value="2" selected="selected">Fecha de publicación</option> 
+                        <option value="3" >Fecha de envío</option>		
+                    </select>
+                    <label for="order">En orden:</label>
+                    <select name="order">
+                        <option value="ASC" selected="selected">Ascendente</option>
+                        <option value="DESC" >Descendente</option>
+                    </select>
+                    <label for="rpp">Resultados por página</label>
+                    <select name="rpp">
+                        <option value="5" >5</option>
+                        <option value="10" >10</option>
+                        <option value="20" selected="selected">20</option>
+                        <option value="30" >30</option>
+			<option value="40" >40</option>
+			<option value="50" >50</option>
+			<option value="100" >100</option>
+                    </select>       
+                    <input type="submit" class="btn btn-default" name="submit_browse" value="Actualizar"/>
+                     </form>
             </div>
-        </div>        
+             <div class="panel panel-primary">
+                        <div class="panel-heading text-center"> 
+                            		Mostrando resultados    
+                       </div>
+                    </div>
+            <table align="center" class="table" summary="This table browses all dspace content">
+                <colgroup><col width="80" /><col width="130" /><col width="60%" /><col width="40%" /></colgroup>
+                <tr>
+                    
+                </tr>
+            </table>
+        </div>
+        
             </ui:define>
         </ui:composition>
         

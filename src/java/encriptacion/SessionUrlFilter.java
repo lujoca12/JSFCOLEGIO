@@ -48,7 +48,12 @@ public class SessionUrlFilter implements Filter{
             "faces/login.xhtml",
             "faces/Modulos/Academico/solicitudInscripcion.xhtml",
             "faces/Modulos/Academico/consultaNotas.xhtml",
-            "faces/Modulos/Biblioteca/principaltesis.xhtml",
+            "faces/Modulos/Biblioteca/principaltesis.xhtml",        
+            "faces/Modulos/Biblioteca/busquedaFechaPublicacion.xhtml",
+            "faces/Modulos/Biblioteca/busquedaTitulo.xhtml",
+            "faces/Modulos/Biblioteca/busquedaMaestria.xhtml",
+            "faces/Modulos/Biblioteca/busquedaAutor.xhtml",
+ 
             "faces/exito.xhtml"
         };
         

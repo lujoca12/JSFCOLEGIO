@@ -17,6 +17,7 @@ public interface InterfaceMatricula {
     public boolean registrar(Matricula tMatricula) throws Exception;
     public List<Matricula> getTodasMatriculas() throws Exception;
     public List<Matricula> getMatriculaMaestria(String cedula) throws Exception;
+    public List<Matricula> getMatriculaRegNotas(int idModulo) throws Exception;
     public Matricula getMatriculas(String idMatricula) throws Exception;
     public boolean update(Matricula tMatricula) throws Exception;
     

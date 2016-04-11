@@ -7,7 +7,9 @@ package Dao;
 
 import Interface.InterfaceModulos;
 import Pojo.Modulo;
+import Pojo.Usuario;
 import java.util.List;
+import javax.faces.context.FacesContext;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -77,6 +79,25 @@ public class DaoTModulo implements InterfaceModulos{
         iniciaOperacion();
         //Presento los modulos registrados x años 
         String hql="from Modulo mod inner join fetch mod.promocion p inner join fetch mod.usuario user inner join fetch p.maestria m where m.estado='1' and (year(current_date) >= year(p.fechaInicio) and year(current_date)<= year(p.fechaFin)) order by mod.id desc";
+        Query query = sesion.createQuery(hql);
+        List<Modulo> lstPermiso=(List<Modulo>) query.list();
+        sesion.close();
+        return lstPermiso;
+    }
+    
+    @Override
+    public List<Modulo> getCboModulosNotas() throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        
+        //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
+        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");  
+        
+        String hql="from Modulo modul inner join fetch modul.usuario user inner join fetch  user.tipoUsuario tuser inner join fetch modul.promocion pr inner join fetch pr.maestria maest \n" +
+                    "where user.id="+usuario.getId()+" \n" +
+                    "and (year(current_date) >= year(pr.fechaInicio) and year(current_date)<= year(pr.fechaFin))\n" +
+                    "and (tuser.descripcion like '%Prof%' or tuser.descripcion like '%prof%' or tuser.descripcion like '%Docen%' or tuser.descripcion like '%docent%') order by modul.descripcion asc";
         Query query = sesion.createQuery(hql);
         List<Modulo> lstPermiso=(List<Modulo>) query.list();
         sesion.close();

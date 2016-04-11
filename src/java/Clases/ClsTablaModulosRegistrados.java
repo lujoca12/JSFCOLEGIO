@@ -22,6 +22,7 @@ public class ClsTablaModulosRegistrados implements Serializable {
     private String usuario;
     private int creditos;
     private int idModulo;
+    
 
     public ClsTablaModulosRegistrados(int idMaestria, String maestria, int idPromocion, String modulo, int idUsuario, String usuario, int creditos, int idModulo) {
         this.idMaestria = idMaestria;

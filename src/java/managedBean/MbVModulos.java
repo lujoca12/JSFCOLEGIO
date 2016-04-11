@@ -161,10 +161,12 @@ public class MbVModulos implements Serializable{
                     for(Modulo modulo : lstModulo){
                         lstTblModulosReg.add(new ClsTablaModulosRegistrados(modulo.getPromocion().getMaestria().getId(), 
                                 modulo.getPromocion().getMaestria().getDescripcion()+" (Dir.(a)"+modulo.getPromocion().getUsuarios()+")", 
-                                modulo.getPromocion().getId(), modulo.getDescripcion(), 
+                                modulo.getPromocion().getId(), 
+                                modulo.getDescripcion(), 
                                 modulo.getUsuario().getId(), 
                                 modulo.getUsuario().getApellidos()+" "+modulo.getUsuario().getNombres(), 
-                                modulo.getCreditos(), modulo.getId()));
+                                modulo.getCreditos(), 
+                                modulo.getId()));
                     }
                 }
             }

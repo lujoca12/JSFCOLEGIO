@@ -89,7 +89,7 @@ public class UsuarioBean {
             us = uDAO.verificarDatos(this.usuario);
             if (us != null) {
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", us);
-                this.setUsuarioNombre(us.getApellidos() + " " + us.getNombres());
+                this.usuarioNombre = us.getApellidos() + " " + us.getNombres();
                 //usuarioRol = us.getDetallePermisos()
                 resultado = "Admin/PanelAdministracion?faces-redirect=true";
 

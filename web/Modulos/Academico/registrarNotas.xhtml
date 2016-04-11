@@ -1,12 +1,73 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
+
     </h:head>
     <h:body>
-        Registrar Notas
+
+        <div class="ui-fluid">
+            <h:form id="frmRegistrarNotas">
+                <p:tab id="personal" title="RegistrarNotas">
+                    <p:panel header="Registrar Notas">
+                        <p:growl id="msgsNotas" showDetail="true" />
+                        <p:focus context="panel"/>
+                        <p:panelGrid id="panel" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
+
+                            <p:outputLabel for="cboModulo" value="Módulos:" styleClass="labelDerecha"/>
+                            <p:selectOneMenu id="cboModulo" value="#{mbVNotas.idModulo}">
+                                <f:selectItem itemLabel="(Escoja un Módulo)" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{mbVNotas.lstCboModulos}" var="modulos" itemLabel="#{modulos.modulo}" itemValue="#{modulos.idModulo}" />
+                                <p:ajax update="frmRegistrarNotas,msgsNotas" listener="#{mbVNotas.cargarTablaRegNotas}" />
+                            </p:selectOneMenu>
+                            <p:message for="cboModulo" />
+                        </p:panelGrid>
+                    </p:panel>
+                </p:tab>
+                <br></br>
+                <p:panel id="panelRegistroNotas" rendered="#{mbVNotas.idModulo eq 0 ? false:true}">
+
+                  <!--  <h5 style="text-align: left; font-weight: bold !important; padding-bottom: 0px !important;">
+                        <h:outputText value="Sr.(a) #{mbVNotas.estudiante}"   />
+                    </h5>
+                    <p:separator />-->
+                    <!--class="tblDatos"-->
+                    <p:dataTable class="tblNotas DataTable datatableHover" scrollable="false" var="notas" value="#{mbVNotas.lstTblNotas}"
+                                 emptyMessage="No hay Estudiantes para registrar notas">
+                        <p:column headerText="#" style="text-align: center;">
+                            <h:outputText value="#{notas.descripMaestria}" />
+                        </p:column>
+
+                        <p:column headerText="Estudiante" style="text-align: center;">
+                            <h:outputText value="#{notas.nombresEstudiante}" />
+                        </p:column>
+                        
+                        <p:column headerText="Nota" style="text-align: center;">
+                            <p:inputText value="#{mbVNotas.tNotas.nota}" style="width:100%"/>
+                        </p:column>
+                        
+                        <p:column headerText="Observación" style="text-align: center;">
+                            <p:inputText value="#{mbVNotas.tNotas.observacion}" style="width:100%"/>
+                        </p:column>
+
+                    </p:dataTable>
+
+                </p:panel>
+            </h:form>
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+            </p:dialog>
+
+
+
+        </div>
+
+
     </h:body>
 </html>
 

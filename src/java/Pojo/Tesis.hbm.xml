@@ -21,7 +21,7 @@
             <column name="autor" length="50" />
         </property>
         <property name="fechaSustentacion" type="date">
-            <column name="fechaSustentacion" length="13" />
+            <column name="fecha_sustentacion" length="13" />
         </property>
         <property name="ruta" type="string">
             <column name="ruta" />
@@ -30,7 +30,7 @@
             <column name="resumen" />
         </property>
         <property name="fechaSubida" type="date">
-            <column name="fechaSubida" length="13" />
+            <column name="fecha_subida" length="13" />
         </property>
         <set name="palabrasClaves" table="palabras_clave" inverse="true" lazy="true" fetch="select">
             <key>

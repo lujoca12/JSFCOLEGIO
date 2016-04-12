@@ -85,15 +85,15 @@
                                 </h5>
                                 <p:dataTable id="tblDetalleNotas" class="tblNotas DataTable datatableHover" scrollable="false" var="notas" value="#{mbVNotas.lstTblNotasReg}"
                                              emptyMessage="No hay datos">
-                                    <p:column headerText="Módulo">
+                                    <p:column headerText="Módulo" style="text-align: center !important;">
                                         <h:outputText value="#{notas.descripMod}" />
                                     </p:column>
 
-                                    <p:column headerText="N1">
-                                        <h:outputText value="#{notas.idNotas eq 0 ? null:notas.nota}" />
+                                    <p:column headerText="N1" style="text-align: center !important;">
+                                        <h:outputText value="#{notas.idNotas eq 0 ? null:notas.nota}"  />
                                     </p:column>
 
-                                    <p:column headerText="N2">
+                                    <!--<p:column headerText="N2">
                                         <h:outputText value="#{car.brand}" />
                                     </p:column>
 
@@ -103,9 +103,9 @@
                                     
                                     <p:column headerText="N. Final">
                                         <h:outputText value="#{car.color}" />
-                                    </p:column>
+                                    </p:column>-->
                                     
-                                    <p:column headerText="Estado">
+                                    <p:column headerText="Estado" style="text-align: center !important;">
                                         <h:outputText value="#{car.color}" />
                                     </p:column>
                                 </p:dataTable>

@@ -7,6 +7,7 @@ package managedBean;
 
 import Clases.ClsNotas;
 import Clases.ClsTablaModulosRegistrados;
+import Dao.DaoTAsistencias;
 import Dao.DaoTMatricula;
 import Dao.DaoTModulo;
 import Pojo.Asistencia;
@@ -172,10 +173,10 @@ public class MbVAsistencia implements Serializable{
                                 matricula.getSolicitudInscripcion().getPromocion().getMaestria().getId(), 
                                 matricula.getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
                                 cont,
-                                0.0,
+                                "",
                                 "",
                                 null,
-                                '0'));
+                                true,0));
                     }
                 }
             
@@ -186,13 +187,31 @@ public class MbVAsistencia implements Serializable{
     }
     
     public void registrar(){
+        DaoTAsistencias daoTasistencia = new DaoTAsistencias();
+        try {
+            msg = daoTasistencia.registrar(lstTblNotas,this.idModulo);
+        } catch (Exception ex) {
+            Logger.getLogger(MbVNotas.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
+        if(msg)
+            mensajesOk("Datos procesados correctamente");
+        else
+            mensajesError("Error al procesar datos");
+            vaciarCajas();
+    }
+    
+    private void vaciarCajas(){
+        this.idModulo = 0;
+        cargarCboModulos();
+        lstTblNotas = new ArrayList<>();
     }
     
     private void mensajesOk(String msg){
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje de la Aplicacion", msg);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
+    
     private void mensajesError(String msg){
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje de la Aplicacion", msg);
         FacesContext.getCurrentInstance().addMessage(null, message);

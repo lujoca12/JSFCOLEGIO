@@ -5,6 +5,7 @@
  */
 package Interface;
 
+import Clases.ClsNotas;
 import Pojo.Asistencia;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * @author server
  */
 public interface InterfaceAsistencia {
-    public boolean registrar(Asistencia tAsistencia) throws Exception;
+    public boolean registrar(List<ClsNotas> lstNotas, int idModulo) throws Exception;
     public List<Asistencia> getTodasAsistencias() throws Exception;
     
     public Asistencia getAsistencias(String idMaestria) throws Exception;

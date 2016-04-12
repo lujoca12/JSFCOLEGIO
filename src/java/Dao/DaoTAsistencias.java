@@ -5,9 +5,17 @@
  */
 package Dao;
 
+import Clases.ClsNotas;
 import Interface.InterfaceAsistencia;
 import Pojo.Asistencia;
+import Pojo.Matricula;
+import Pojo.Modulo;
+import Pojo.Notas;
+import Pojo.Usuario;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
+import javax.faces.context.FacesContext;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -41,12 +49,38 @@ public class DaoTAsistencias implements InterfaceAsistencia{
     }
 
     @Override
-    public boolean registrar(Asistencia tAsistencia) throws Exception {
+    public boolean registrar(List<ClsNotas> lstNotas, int idModulo) throws Exception {
         boolean band = false;
         try {
+            //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
+            Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+            
             iniciaOperacion();
-            sesion.save(tAsistencia);
-
+            Asistencia tAsistencia = null;
+            Matricula matricula = null;
+            Modulo modulo = null;
+            
+            Date fecha = new Date();
+            for (int i = 0; i < lstNotas.size(); i++) {
+                tAsistencia = new Asistencia();
+                tAsistencia.setUsuario(usuario.getApellidos()+" "+usuario.getNombres());
+                
+                if(lstNotas.get(i).getEstado())
+                    tAsistencia.setEstado('1');
+                else
+                    tAsistencia.setEstado('0');
+                
+                tAsistencia.setFecha(fecha);
+                matricula = new Matricula();
+                matricula.setId(lstNotas.get(i).getIdMatricula());
+                tAsistencia.setMatricula(matricula);
+                modulo = new Modulo();
+                modulo.setId(idModulo);
+                tAsistencia.setModulo(modulo);
+                tAsistencia.setObservacion(lstNotas.get(i).getObservacion());
+                
+                sesion.save(tAsistencia);
+            }
             tx.commit();
             sesion.close();
             band = true;

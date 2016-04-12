@@ -25,12 +25,13 @@ public class ClsNotas implements Serializable {
     private int idMaestria;
     private String descripMaestria;
     private int n_registro;
-    private Double nota;
+    private String nota;
     private String observacion;
     private Date fecha;
-    private char estado;
+    private boolean estado;
+    private int idNota;
 
-    public ClsNotas(int idEstudiante, String nombresEstudiante, int idMatricula, String n_matricula, Date fechaMatricula, int idPromocion, String periodo, Date resolucion, int idMaestria, String descripMaestria, int n_registro, Double nota, String observacion, Date fecha, char estado) {
+    public ClsNotas(int idEstudiante, String nombresEstudiante, int idMatricula, String n_matricula, Date fechaMatricula, int idPromocion, String periodo, Date resolucion, int idMaestria, String descripMaestria, int n_registro, String nota, String observacion, Date fecha, boolean estado, int idNota) {
         this.idEstudiante = idEstudiante;
         this.nombresEstudiante = nombresEstudiante;
         this.idMatricula = idMatricula;
@@ -46,6 +47,7 @@ public class ClsNotas implements Serializable {
         this.observacion = observacion;
         this.fecha = fecha;
         this.estado = estado;
+        this.idNota = idNota;
     }
 
     
@@ -138,11 +140,11 @@ public class ClsNotas implements Serializable {
         this.n_registro = n_registro;
     }
 
-    public Double getNota() {
+    public String getNota() {
         return nota;
     }
 
-    public void setNota(Double nota) {
+    public void setNota(String nota) {
         this.nota = nota;
     }
 
@@ -162,13 +164,20 @@ public class ClsNotas implements Serializable {
         this.fecha = fecha;
     }
 
-    public char getEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(char estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
     }
-    
+
+    public int getIdNota() {
+        return idNota;
+    }
+
+    public void setIdNota(int idNota) {
+        this.idNota = idNota;
+    }
     
 }

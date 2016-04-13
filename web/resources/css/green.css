@@ -687,4 +687,7 @@ th {
     border-style: hidden; 
     background-color: white;
 }
-
+.ui-growl {
+    position:absolute !important;
+    z-index:9999 !important;
+}

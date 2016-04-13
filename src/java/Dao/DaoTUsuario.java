@@ -57,7 +57,7 @@ public class DaoTUsuario implements InterfaceUsuario{
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        String hql = "FROM Usuario";
+        String hql = "FROM Usuario user inner join fetch user.tipoUsuario tuser order by user.apellidos asc";
         Query query = sesion.createQuery(hql);
         List<Usuario> lstUsuarios=(List<Usuario>) query.list();
         sesion.close();
@@ -65,8 +65,15 @@ public class DaoTUsuario implements InterfaceUsuario{
     }
 
     @Override
-    public Usuario getUsuario(String idUsuario) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Usuario getUsuario(int idUsuario) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String hql = "FROM Usuario user where user.id="+idUsuario+"";
+        Query query = sesion.createQuery(hql);
+        Usuario usuario=(Usuario) query.uniqueResult();
+        sesion.close();
+        return usuario;
     }
 
     @Override

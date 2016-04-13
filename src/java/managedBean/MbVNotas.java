@@ -135,6 +135,7 @@ public class MbVNotas implements Serializable {
     }
 
     private void cargarTblMatriculaPromocion() {
+        this.idProm = 0;
         lstTblNotas = new ArrayList<>();
         try {
             lstTblNotas.clear();
@@ -170,7 +171,8 @@ public class MbVNotas implements Serializable {
                             null,
                             true,0));
                 }
-            }
+            }else
+                this.estudiante = "";
 
         } catch (Exception ex) {
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
@@ -256,7 +258,7 @@ public class MbVNotas implements Serializable {
 
         try {
             lstTblNotas.clear();
-            DaoTMatricula daoTmatricula = new DaoTMatricula();
+            
             DaoTNotas daoTnotas = new DaoTNotas();
             List<Notas> lstNotas = daoTnotas.existe(this.idModulo);
 
@@ -291,6 +293,7 @@ public class MbVNotas implements Serializable {
                 }
 
             } else {//Si no hay Notas registradas cargan las cajas vacias
+                DaoTMatricula daoTmatricula = new DaoTMatricula();
                 List<Matricula> lstMatricula = daoTmatricula.getMatriculaRegNotas(this.idModulo);
 
                 if (lstMatricula.size() > 0) {
@@ -344,7 +347,13 @@ public class MbVNotas implements Serializable {
     }
 
     public void consultarMaestrias() {
-        cargarTblMatriculaPromocion();
+        if(this.cedula.length()<10){
+            this.estudiante = "";
+            this.idProm = 0;
+        }else{
+            cargarTblMatriculaPromocion();
+        }
+        
     }
 
     private void vaciarCajas() {

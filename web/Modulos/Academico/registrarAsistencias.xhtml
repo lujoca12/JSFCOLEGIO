@@ -47,18 +47,18 @@
                         </p:column>
                         
                         <p:column headerText="Asistencia" style="text-align: center; width: 10%;">
-                            <p:selectBooleanCheckbox value="#{notas.estado}" />
+                            <p:selectBooleanCheckbox disabled="#{mbVAsistencia.estado eq 1 ? true:false}" value="#{notas.estado}" />
                         </p:column>
                         
                         <p:column headerText="Observación" style="text-align: center; width: 55%;">
-                            <p:inputText value="#{notas.observacion}" style="width:100%"/>
+                            <p:inputText disabled="#{mbVAsistencia.estado eq 1 ? true:false}" value="#{notas.observacion}" style="width:100%"/>
                         </p:column>
 
                     </p:dataTable>
                     
                     <br></br>
                     <p:message for="display"/>
-                    <p:commandButton value="Guardar" update="frmRegistrarAsist,msgsAsist" styleClass="anchoBotones" icon="ui-icon-disk"
+                    <p:commandButton style="#{mbVAsistencia.estado eq 1 ? 'visibility: hidden':'visibility: visible'}" value="Guardar" update="frmRegistrarAsist,msgsAsist" styleClass="anchoBotones" icon="ui-icon-disk"
                                      actionListener="#{mbVAsistencia.registrar()}" />
                         
                     

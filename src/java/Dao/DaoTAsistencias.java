@@ -114,4 +114,21 @@ public class DaoTAsistencias implements InterfaceAsistencia{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    @Override
+    public List<Asistencia> existe(int idModulo) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        
+        //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
+        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        
+        String hql="from Asistencia asist inner join fetch asist.matricula matr inner join fetch matr.solicitudInscripcion solin inner join fetch solin.estudiante est inner join fetch asist.modulo mod inner join fetch mod.promocion pr\n" +
+                   "inner join fetch pr.maestria maest where mod.id="+idModulo+" and asist.usuario = '"+usuario.getApellidos()+" "+usuario.getNombres()+"' order by est.apellidos asc";
+        Query query = sesion.createQuery(hql);
+        List<Asistencia> lstAsist=(List<Asistencia>) query.list();
+        sesion.close();
+        return lstAsist;
+    }
+    
 }

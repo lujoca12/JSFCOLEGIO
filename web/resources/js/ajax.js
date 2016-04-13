@@ -416,6 +416,7 @@ function CargarPaginaURL(NombreContenedor,ruta)
 //
 function isNumberKey(evt)
  {
+        if (event.keyCode == 13) { test(); return false; }
          var charCode = (evt.which) ? evt.which : event.keyCode
          if (!(charCode >= 48 && charCode <= 57) && charCode != 8 || charCode == 32){
             return false;
@@ -423,6 +424,24 @@ function isNumberKey(evt)
          return true;
 }
 
+function soloNumeros(evt)
+ {
+     
+        if (event.keyCode == 13 ) { test(); return false; }
+        
+         var charCode = (evt.which) ? evt.which : event.keyCode
+         
+         if (!(charCode >= 48 && charCode <= 57) && charCode != 8 || charCode == 32){
+            return false;
+	}
+         return true;
+}
+
+function restablecer(e){
+    if(e.keyCode == 8 || e.keyCode == 46) {
+        test(); return false;
+    }
+}
     var validarNum = function (event, _float){
         event = event || window.event;
         var charCode = event.keyCode || event.which;

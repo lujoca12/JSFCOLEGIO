@@ -18,6 +18,6 @@ public interface InterfaceUsuario {
     public boolean verificarUsuarioNick(String nick) throws Exception;
     public List<Usuario> getTodosUsuarios() throws Exception;
     public List<Usuario> getDocentes() throws Exception;
-    public Usuario getUsuario(String idUsuario) throws Exception;
+    public Usuario getUsuario(int idUsuario) throws Exception;
     public boolean update(Usuario tUsuario) throws Exception;
 }

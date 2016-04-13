@@ -1,12 +1,132 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
+
     </h:head>
     <h:body>
-        Hello Modificar Docente
+
+        <div class="ui-fluid">
+            <h:form id="frmModDocente">
+                <p:tab id="personal" title="EdicionDocente">
+                    <p:panel header="Edición Docente">
+                        <p:growl id="msgs" showDetail="true" />
+                        <p:focus context="panel"/>
+                        <p:panelGrid id="panel" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
+
+                            <p:outputLabel for="txtDocente" value="Docente:" styleClass="labelDerecha"  />
+                            <p:selectOneMenu id="txtDocente" value="#{mbVUsuario.theme}" converter="themeConverter"
+                                             effect="fade" var="t" filter="true" filterMatchMode="contains">
+                                <f:selectItems value="#{mbVUsuario.lstTheme}" var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme}" />
+                                <p:ajax update="frmModDocente,msgs" listener="#{mbVUsuario.cargarDatosDocentes()}" />
+                                <p:column style="width:10%">
+                                    <h:outputText styleClass="ui-theme ui-theme-#{t.name}" />
+                                </p:column>
+
+                                <p:column>
+                                    <h:outputText value="#{t.displayName}" />
+                                </p:column>
+                            </p:selectOneMenu>
+                            <p:message for="txtDocente" />
+                        </p:panelGrid>
+                    </p:panel>
+                </p:tab>
+                
+                <br></br>
+                
+                <p:panel id="panelGetDocentes" rendered="#{mbVUsuario.estado eq 0 ? false:true}">
+                    
+                    <p:panelGrid id="panelDocente" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
+        
+                        <p:outputLabel for="txtUsuario" styleClass="labelDerecha" value="Usuario:" />
+                        <p:inputText id="txtUsuario" value="#{mbVUsuario.tUsuario.nick}" maxlength="10" >
+                            <f:validateLength minimum="5" maximum="10" />
+                        </p:inputText>
+                        <p:message for="txtUsuario"/>
+                        
+                        <p:outputLabel for="txtApellidos" styleClass="labelDerecha" value="Apellidos:" />
+                        <p:inputText id="txtApellidos" value="#{mbVUsuario.tUsuario.apellidos}" required="true" maxlength="30"/>
+                        <p:message for="txtApellidos"/>
+
+                        <p:outputLabel for="txtNombres" styleClass="labelDerecha" value="Nombres:" />
+                        <p:inputText id="txtNombres" value="#{mbVUsuario.tUsuario.nombres}" required="true" maxlength="30"/>
+                        <p:message for="txtNombres"/>
+
+                        <p:outputLabel for="txtCedula" styleClass="labelDerecha" value="Cédula:" />
+                        <p:inputMask id="txtCedula" value="#{mbVUsuario.tUsuario.cedPasaporte}" required="true" mask="999999999-9"/>
+                        <p:message for="txtCedula"/>
+
+                        <p:outputLabel for="txtDireccion" styleClass="labelDerecha" value="Dirección:" />
+                        <p:inputText id="txtDireccion" value="#{mbVUsuario.tUsuario.direccion}" required="true" />
+                        <p:message for="txtDireccion"/>
+
+                        <p:outputLabel for="email" styleClass="labelDerecha" value="Correo:" />
+                        <p:inputText id="email" required="true" label="email" size="40"
+                                     requiredMessage="Por favor ingrese email."
+                                     validatorMessage="Invalid email format"
+                                     value="#{mbVUsuario.tUsuario.email}">
+
+                            <f:validateRegex
+                                pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+
+                        </p:inputText>
+                        <p:message for="email" />
+
+                        <p:outputLabel for="txtFecha" styleClass="labelDerecha" value="Fecha nacimiento:" />
+                        <p:calendar id="txtFecha" value="#{mbVUsuario.tUsuario.fechaNac}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" />
+                        <p:message for="txtFecha"/>
+
+                        <p:outputLabel for="txtTelefono" styleClass="labelDerecha" value="Teléfono:" />
+                        <p:inputMask id="txtTelefono" value="#{mbVUsuario.tUsuario.telefono}" mask="(999)-999-999"/>
+                        <p:message for="txtTelefono"/>
+
+                        <p:outputLabel for="txtCelular" styleClass="labelDerecha" value="Celular:" />
+                        <p:inputMask id="txtCelular" value="#{mbVUsuario.tUsuario.celular}" required="true" mask="(999)-999-9999" size="10"/>
+                        <p:message for="txtCelular"/>
+
+                        <p:outputLabel for="cboEstadoCivil" value="Estado civil:" styleClass="labelDerecha"/>
+                        <p:selectOneMenu id="cboEstadoCivil" required="true" value="#{mbVUsuario.tUsuario.estadoCivil}">
+                            <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                            <f:selectItem itemLabel="Soltero" itemValue="S" />
+                            <f:selectItem itemLabel="Casado" itemValue="C" />
+                            <f:selectItem itemLabel="Viudo" itemValue="V" />
+                            <f:selectItem itemLabel="Divorciado" itemValue="D" />
+                            <f:selectItem itemLabel="Unión Libre" itemValue="U" />
+                        </p:selectOneMenu>
+                        <p:message for="cboEstadoCivil"/>
+
+                        <p:outputLabel for="cboSexo" value="Sexo:" styleClass="labelDerecha"/>
+                        <p:selectOneMenu id="cboSexo" required="true" value="#{mbVUsuario.tUsuario.sexo}">
+                            <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                            <f:selectItem itemLabel="Masculino" itemValue="M" />
+                            <f:selectItem itemLabel="Femenino" itemValue="F" />
+                        </p:selectOneMenu>
+                        <p:message for="cboSexo"/>
+
+                        <p:commandButton value="Actualizar" update="@form" styleClass="anchoBotones" icon="ui-icon-disk"
+                                         actionListener="#{mbVUsuario.actualizarDatos()}" />
+                        
+                        <p:commandButton value="Eliminar" update="@form" styleClass="anchoBotones" icon="ui-icon-disk"
+                                         actionListener="#{mbVUsuario.eliminarDatos()}" />
+
+                    </p:panelGrid>
+                </p:panel>
+                
+            </h:form>
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+            </p:dialog>
+
+
+
+        </div>
+
+
     </h:body>
 </html>
 

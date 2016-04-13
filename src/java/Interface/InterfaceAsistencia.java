@@ -16,7 +16,7 @@ import java.util.List;
 public interface InterfaceAsistencia {
     public boolean registrar(List<ClsNotas> lstNotas, int idModulo) throws Exception;
     public List<Asistencia> getTodasAsistencias() throws Exception;
-    
+    public List<Asistencia> existe(int idModulo) throws Exception;
     public Asistencia getAsistencias(String idMaestria) throws Exception;
     public boolean update(Asistencia tAsistencia) throws Exception;
 }

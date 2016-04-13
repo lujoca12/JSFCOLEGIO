@@ -36,9 +36,11 @@
                         </div>
                            
                             <p:tab title="Consulta de notas">
+                                <p:remoteCommand name="test" update="form,msgs" actionListener="#{mbVNotas.consultarMaestrias()}"/>
                                 <p:panelGrid id="panel" columns="3" layout="grid" styleClass="ui-panelgrid-blank">
                                     <p:outputLabel for="txtCedEstud" style="font-weight: bold !important;" styleClass="labelDerecha" value="Cédula Estudiante:" />
-                                    <p:inputText id="txtCedEstud" value="#{mbVNotas.cedula}" required="true" maxlength="10" onkeypress="return isNumberKey(event)" />
+                                    <p:inputText id="txtCedEstud" value="#{mbVNotas.cedula}" required="true" maxlength="10" onkeypress="return soloNumeros(event)" 
+                                                 onkeyup="restablecer(event)"/>
 
                                     <p:commandButton value="Listar matriculas" update="form,msgs" styleClass="anchoBotonesConsulta" icon="ui-icon-search"
                                                      actionListener="#{mbVNotas.consultarMaestrias()}" />
@@ -106,7 +108,7 @@
                                     </p:column>-->
                                     
                                     <p:column headerText="Estado" style="text-align: center !important;">
-                                        <h:outputText value="#{car.color}" />
+                                        <h:outputText value="#{notas.idNotas eq 0 ? null : notas.nota >= 7 ? 'Aprobado':'Reprobado'}" />
                                     </p:column>
                                 </p:dataTable>
                             </p:panel>

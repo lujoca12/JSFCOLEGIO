@@ -5,31 +5,28 @@
  */
 package managedBean;
 
-import Clases.ClsProfesor;
 import Clases.ClsTablaMaestrias;
+import Clases.ClsProfesor;
 import Dao.DaoTMaestrias;
 import Dao.DaoTPromocion;
 import Dao.DaoTUsuario;
 import Pojo.Maestria;
-import Pojo.Modulo;
 import Pojo.Promocion;
 import Pojo.Usuario;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.inject.Named;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
-import org.primefaces.context.RequestContext;
+import javax.inject.Named;
+import javax.faces.view.ViewScoped;
 import org.primefaces.event.RowEditEvent;
-import org.primefaces.event.SelectEvent;
+
 
 /**
  *
@@ -48,6 +45,7 @@ public class MbVMaestrias implements Serializable{
     
     private ClsProfesor theme; 
     private List<ClsProfesor> lstTheme;
+    
     private List<SelectItem> lstDirector;
     List<Promocion> lstPromocion;
     

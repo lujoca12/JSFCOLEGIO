@@ -32,11 +32,7 @@
                 
                 <p:panel id="panelRegistroNotas" rendered="#{mbVNotas.idModulo eq 0 ? false:true}">
 
-                  <!--  <h5 style="text-align: left; font-weight: bold !important; padding-bottom: 0px !important;">
-                        <h:outputText value="Sr.(a) #{mbVNotas.estudiante}"   />
-                    </h5>
-                    <p:separator />-->
-                    <!--class="tblDatos"-->
+                  
                     
                     <p:dataTable class="tblDatos" scrollable="false" var="notas" value="#{mbVNotas.lstTblNotas}"
                                  emptyMessage="No hay Estudiantes para registrar notas">
@@ -51,7 +47,6 @@
                         <p:column headerText="Nota" style="text-align: center; width: 10%;">
                             <p:inputText value="#{notas.nota}" maxlength="4" required="true"
                                          onkeypress="return validarNum(event, true)" style="width:100%; text-align: center;">
-                                
                             </p:inputText>
                             
                         </p:column>

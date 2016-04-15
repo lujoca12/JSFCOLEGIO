@@ -12,15 +12,36 @@
             <h:form id="form">
                 <p:tab id="personal" title="AsignarQuitarPermisos">
                 <p:panel header="Asignar/Quitar Permisos">
-                <p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank">
+                <p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
 		     <p:outputLabel for="cboUsuario" value="Usuario:" styleClass="labelDerecha"/>
-                     <p:selectOneMenu id="cboUsuario" value="#{mbVUsuario.usuario}">
-                        <f:selectItem itemLabel="Ninguno" itemValue="-1" />
-                        <f:selectItems value="#{mbVUsuario.lstUsuario}"/>
-                        <p:ajax update="arbol" listener="#{mbVUsuario.onClickChange}" />
+                     
+                     <p:selectOneMenu id="cboUsuario" value="#{mbVUsuario.theme}" converter="themeConverter"
+                                      effect="fade" var="t" filter="true" filterMatchMode="contains">
+                         <f:selectItems value="#{mbVUsuario.lstThemeUsuarios}" var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme}" />
+                         <p:ajax update="form,msgs" listener="#{mbVUsuario.onClickChange}" />
+                         <p:column style="width:10%">
+                             <h:outputText styleClass="ui-theme ui-theme-#{t.name}" />
+                         </p:column>
+
+                         <p:column>
+                             <h:outputText value="#{t.displayName}" />
+                         </p:column>
                      </p:selectOneMenu>
                      
-                    <p:growl id="msgs" showDetail="true" />
+                    
+
+
+                        
+                </p:panelGrid>
+                </p:panel>
+                </p:tab>
+                
+                <br></br>
+                
+                <p:panel id="panelGetDocentes" rendered="#{mbVUsuario.estado eq 0 ? false:true}">
+                    
+                    <p:panelGrid id="panelDocente" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
+                        <p:growl id="msgs" showDetail="true" />
                    <p:tree styleClass="bordeArbol" id="arbol" value="#{mbVUsuario.root}" var="node" dynamic="true"
                            selectionMode="checkbox" selection="#{mbVUsuario.checkboxSelectedTreeNodes}">
                        
@@ -34,14 +55,11 @@
                      
                     <br/>
                     <br/>
-                     <p:commandButton value="Guardar" styleClass="anchoBotones" update="msgs" icon="ui-icon-disk"
+                     <p:commandButton value="Guardar" styleClass="anchoBotones" update="form,msgs" icon="ui-icon-disk"
                                       actionListener="#{mbVUsuario.displaySelectedNodes(mbVUsuario.checkboxSelectedTreeNodes)}"/>
-
-
-                        
-                </p:panelGrid>
+                    </p:panelGrid>
                 </p:panel>
-                </p:tab>
+                
             </h:form>
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
  

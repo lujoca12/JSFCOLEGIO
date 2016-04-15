@@ -18,8 +18,8 @@
                         <p:focus context="panel"/>
                         <p:panelGrid id="panel" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
 
-                            <p:outputLabel for="txtDocente" value="Docente:" styleClass="labelDerecha"  />
-                            <p:selectOneMenu id="txtDocente" value="#{mbVUsuario.theme}" converter="themeConverter"
+                            <p:outputLabel for="cboUsuarioB" value="Usuario:" styleClass="labelDerecha"  />
+                            <p:selectOneMenu id="cboUsuarioB" value="#{mbVUsuario.theme}" converter="themeConverter"
                                              effect="fade" var="t" filter="true" filterMatchMode="contains">
                                 <f:selectItems value="#{mbVUsuario.lstThemeUsuarios}" var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme}" />
                                 <p:ajax update="frmModDocente,msgs" listener="#{mbVUsuario.cargarDatosDocentes()}" />
@@ -31,7 +31,7 @@
                                     <h:outputText value="#{t.displayName}" />
                                 </p:column>
                             </p:selectOneMenu>
-                            <p:message for="txtDocente" />
+                            <p:message for="cboUsuarioB" />
                         </p:panelGrid>
                     </p:panel>
                 </p:tab>
@@ -40,29 +40,29 @@
                 
                 <p:panel id="panelGetDocentes" rendered="#{mbVUsuario.estado eq 0 ? false:true}">
                     
-                    <p:panelGrid id="panelDocente" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
+                    <p:panelGrid id="panelDocente" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
         
                         <p:outputLabel for="txtUsuario" styleClass="labelDerecha" value="Usuario:" />
                         <p:inputText id="txtUsuario" value="#{mbVUsuario.tUsuario.nick}" maxlength="10" >
                             <f:validateLength minimum="5" maximum="10" />
                         </p:inputText>
-                        <p:message for="txtUsuario"/>
+                        
                         
                         <p:outputLabel for="txtApellidos" styleClass="labelDerecha" value="Apellidos:" />
                         <p:inputText id="txtApellidos" value="#{mbVUsuario.tUsuario.apellidos}" required="true" maxlength="30"/>
-                        <p:message for="txtApellidos"/>
+                        
 
                         <p:outputLabel for="txtNombres" styleClass="labelDerecha" value="Nombres:" />
                         <p:inputText id="txtNombres" value="#{mbVUsuario.tUsuario.nombres}" required="true" maxlength="30"/>
-                        <p:message for="txtNombres"/>
+                        
 
                         <p:outputLabel for="txtCedula" styleClass="labelDerecha" value="Cédula:" />
                         <p:inputMask id="txtCedula" value="#{mbVUsuario.tUsuario.cedPasaporte}" required="true" mask="999999999-9"/>
-                        <p:message for="txtCedula"/>
+                        
 
                         <p:outputLabel for="txtDireccion" styleClass="labelDerecha" value="Dirección:" />
                         <p:inputText id="txtDireccion" value="#{mbVUsuario.tUsuario.direccion}" required="true" />
-                        <p:message for="txtDireccion"/>
+                        
 
                         <p:outputLabel for="email" styleClass="labelDerecha" value="Correo:" />
                         <p:inputText id="email" required="true" label="email" size="40"
@@ -74,19 +74,19 @@
                                 pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 
                         </p:inputText>
-                        <p:message for="email" />
+                        
 
                         <p:outputLabel for="txtFecha" styleClass="labelDerecha" value="Fecha nacimiento:" />
                         <p:calendar id="txtFecha" value="#{mbVUsuario.tUsuario.fechaNac}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" />
-                        <p:message for="txtFecha"/>
+                        
 
                         <p:outputLabel for="txtTelefono" styleClass="labelDerecha" value="Teléfono:" />
                         <p:inputMask id="txtTelefono" value="#{mbVUsuario.tUsuario.telefono}" mask="(999)-999-999"/>
-                        <p:message for="txtTelefono"/>
+                        
 
                         <p:outputLabel for="txtCelular" styleClass="labelDerecha" value="Celular:" />
                         <p:inputMask id="txtCelular" value="#{mbVUsuario.tUsuario.celular}" required="true" mask="(999)-999-9999" size="10"/>
-                        <p:message for="txtCelular"/>
+                        
 
                         <p:outputLabel for="cboEstadoCivil" value="Estado civil:" styleClass="labelDerecha"/>
                         <p:selectOneMenu id="cboEstadoCivil" required="true" value="#{mbVUsuario.tUsuario.estadoCivil}">
@@ -97,7 +97,7 @@
                             <f:selectItem itemLabel="Divorciado" itemValue="D" />
                             <f:selectItem itemLabel="Unión Libre" itemValue="U" />
                         </p:selectOneMenu>
-                        <p:message for="cboEstadoCivil"/>
+                        
 
                         <p:outputLabel for="cboSexo" value="Sexo:" styleClass="labelDerecha"/>
                         <p:selectOneMenu id="cboSexo" required="true" value="#{mbVUsuario.tUsuario.sexo}">
@@ -105,18 +105,24 @@
                             <f:selectItem itemLabel="Masculino" itemValue="M" />
                             <f:selectItem itemLabel="Femenino" itemValue="F" />
                         </p:selectOneMenu>
-                        <p:message for="cboSexo"/>
-
-                        
-                        <p:commandButton value="Actualizar" update="@form" styleClass="anchoBotones" icon="ui-icon-disk"
-                                         actionListener="#{mbVUsuario.actualizarDatos()}" />
-                        
-                        <p:commandButton value="Eliminar" update="@form" styleClass="anchoBotones" icon="ui-icon-disk"
-                                         actionListener="#{mbVUsuario.eliminarDatos()}" />
 
                     </p:panelGrid>
+                    <center>
+                        <div>
+                            <p:commandButton value="Actualizar" update="@form" styleClass="anchoBotones" icon="ui-icon-disk"
+                                             actionListener="#{mbVUsuario.actualizarDatos()}" style="margin-right: 20px;"/>
+                        <p:commandButton value="Eliminar" update="@form" styleClass="anchoBotones" icon="ui-icon-disk"
+                                         actionListener="#{mbVUsuario.eliminarDatos()}" >
+                            <p:confirm header="Eliminación de Usuarios" message="Presiona confirmar para realizar acción" icon="ui-icon-alert" />
+                        </p:commandButton>
+                        </div>
+                    </center>
                 </p:panel>
-                
+                <p:confirmDialog global="true" styleClass="change-position">
+                    <p:commandButton value="Confirmar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                    <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                </p:confirmDialog>
+
             </h:form>
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">

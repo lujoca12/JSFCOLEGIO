@@ -125,7 +125,7 @@ public class DaoTNotas implements InterfaceNotas{
         Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         
         String hql="from Notas nota inner join fetch nota.matricula matr inner join fetch matr.solicitudInscripcion solin inner join fetch solin.estudiante est inner join fetch nota.modulo mod inner join fetch mod.promocion pr\n" +
-                    "inner join fetch pr.maestria maest where mod.id="+idModulo+" and nota.estado='0' and nota.usuario = '"+usuario.getApellidos()+" "+usuario.getNombres()+"' order by est.apellidos asc";
+                   " inner join fetch mod.usuario user inner join fetch pr.maestria maest where mod.id="+idModulo+" and nota.estado='0' and user.nombres='"+usuario.getNombres()+"' and user.apellidos='"+usuario.getApellidos()+"' order by est.apellidos asc";
         Query query = sesion.createQuery(hql);
         List<Notas> lstNotas=(List<Notas>) query.list();
         sesion.close();

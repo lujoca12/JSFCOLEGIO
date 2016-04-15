@@ -169,10 +169,11 @@ public class MbVNotas implements Serializable {
                             "",
                             "",
                             null,
-                            true,0));
+                            true, 0));
                 }
-            }else
+            } else {
                 this.estudiante = "";
+            }
 
         } catch (Exception ex) {
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
@@ -186,37 +187,55 @@ public class MbVNotas implements Serializable {
             DaoTNotas daoTnotas = new DaoTNotas();
             List<Notas> lstNotas = daoTnotas.getTodasNotas(idMatricula);
 
+            DaoTModulo daoTmodulo = new DaoTModulo();
+            List<Modulo> lstModulos = daoTmodulo.getTblModulosNotas(idPromocion);
+
             //Validacion para saber si hay notas registradas
-            if (lstNotas.size() > 0) {
-                for (Notas nota : lstNotas) {
-
-                    lstTblNotasReg.add(new ClsTblNotas(nota.getModulo().getId(),
-                            nota.getModulo().getDescripcion(),
-                            nota.getModulo().getCreditos(),
-                            nota.getId(),
-                            nota.getNota().doubleValue(),
-                            nota.getObservacion(),
-                            nota.getNotaTexto()));
-                }
-            } else {
-                //Validacion para mostrar las materias asignadas
-                DaoTModulo daoTmodulo = new DaoTModulo();
-                List<Modulo> lstModulos = daoTmodulo.getTblModulosNotas(idPromocion);
-
+//            if (lstNotas.size() > 0) {
+//                for (Notas nota : lstNotas) {
+//
+//                    lstTblNotasReg.add(new ClsTblNotas(nota.getModulo().getId(),
+//                            nota.getModulo().getDescripcion(),
+//                            nota.getModulo().getCreditos(),
+//                            nota.getId(),
+//                            nota.getNota().doubleValue(),
+//                            nota.getObservacion(),
+//                            nota.getNotaTexto()));
+//                }
+//            } else {
+            boolean bandera = true;
                 if (lstModulos.size() > 0) {
                     for (Modulo modulos : lstModulos) {
 
-                        lstTblNotasReg.add(new ClsTblNotas(modulos.getId(),
-                                modulos.getDescripcion(),
-                                modulos.getCreditos(),
-                                0,
-                                0.0,
-                                "",
-                                ""));
+                        if (lstNotas.size() > 0) {
+                            for (Notas nota : lstNotas) {
+                                if (modulos.getId() == nota.getModulo().getId()) {
+                                    bandera = false;
+                                    lstTblNotasReg.add(new ClsTblNotas(modulos.getId(),
+                                            modulos.getDescripcion(),
+                                            modulos.getCreditos(),
+                                            nota.getId(),
+                                            nota.getNota().doubleValue(),
+                                            nota.getObservacion(),
+                                            nota.getNotaTexto()));
+                                }
+
+                            }
+                        }
+                        if(bandera){
+                            lstTblNotasReg.add(new ClsTblNotas(modulos.getId(),
+                                    modulos.getDescripcion(),
+                                    modulos.getCreditos(),
+                                    0,
+                                    0.0,
+                                    "",
+                                    ""));
+                        }
+                        bandera = true;
                     }
                 }
 
-            }
+//            }
 
         } catch (Exception ex) {
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
@@ -255,74 +274,84 @@ public class MbVNotas implements Serializable {
         int añoInicio = 0;
         int añoFin = 0;
         int cont = 0;
+        boolean bandera = true;
 
         try {
             lstTblNotas.clear();
-            
+
             DaoTNotas daoTnotas = new DaoTNotas();
             List<Notas> lstNotas = daoTnotas.existe(this.idModulo);
+            
+            DaoTMatricula daoTmatricula = new DaoTMatricula();
+            List<Matricula> lstMatricula = daoTmatricula.getMatriculaRegNotas(this.idModulo);
 
-            if (lstNotas.size() > 0) {
-
-                for (Notas notas : lstNotas) {
-
-                    calendar.setTime(notas.getMatricula().getSolicitudInscripcion().getPromocion().getFechaInicio());
-                    añoInicio = calendar.get(Calendar.YEAR);
-
-                    calendar.setTime(notas.getMatricula().getSolicitudInscripcion().getPromocion().getFechaFin());
-                    añoFin = calendar.get(Calendar.YEAR);
-
-                    estudiante = notas.getMatricula().getSolicitudInscripcion().getEstudiante().getApellidos() + " " + notas.getMatricula().getSolicitudInscripcion().getEstudiante().getNombres();
-                    cont++;
-                    lstTblNotas.add(new ClsNotas(notas.getMatricula().getSolicitudInscripcion().getEstudiante().getId(),
-                            estudiante,
-                            notas.getMatricula().getId(),
-                            notas.getMatricula().getNMatricula(),
-                            notas.getMatricula().getFechaMatricula(),
-                            notas.getMatricula().getSolicitudInscripcion().getPromocion().getId(),
-                            añoInicio + "-" + añoFin,
-                            notas.getMatricula().getSolicitudInscripcion().getPromocion().getFechaResolucion(),
-                            notas.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getId(),
-                            notas.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
-                            cont,
-                            notas.getNota().toString(),
-                            notas.getObservacion(),
-                            null,
-                            true,
-                            notas.getId()));
-                }
-
-            } else {//Si no hay Notas registradas cargan las cajas vacias
-                DaoTMatricula daoTmatricula = new DaoTMatricula();
-                List<Matricula> lstMatricula = daoTmatricula.getMatriculaRegNotas(this.idModulo);
 
                 if (lstMatricula.size() > 0) {
                     for (Matricula matricula : lstMatricula) {
-                        calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaInicio());
-                        añoInicio = calendar.get(Calendar.YEAR);
+                        
+                        if (lstNotas.size() > 0) {
 
-                        calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaFin());
-                        añoFin = calendar.get(Calendar.YEAR);
-                        estudiante = matricula.getSolicitudInscripcion().getEstudiante().getApellidos() + " " + matricula.getSolicitudInscripcion().getEstudiante().getNombres();
-                        cont++;
-                        lstTblNotas.add(new ClsNotas(matricula.getSolicitudInscripcion().getEstudiante().getId(),
-                                matricula.getSolicitudInscripcion().getEstudiante().getApellidos() + " " + matricula.getSolicitudInscripcion().getEstudiante().getNombres(),
-                                matricula.getId(),
-                                matricula.getNMatricula(),
-                                matricula.getFechaMatricula(),
-                                matricula.getSolicitudInscripcion().getPromocion().getId(),
-                                añoInicio + "-" + añoFin,
-                                matricula.getSolicitudInscripcion().getPromocion().getFechaResolucion(),
-                                matricula.getSolicitudInscripcion().getPromocion().getMaestria().getId(),
-                                matricula.getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
-                                cont,
-                                "0",
-                                "",
-                                null,
-                                true,0));
+                            for (Notas notas : lstNotas) {
+                                if(matricula.getId() == notas.getMatricula().getId()){
+                                    bandera = false;
+                                    calendar.setTime(notas.getMatricula().getSolicitudInscripcion().getPromocion().getFechaInicio());
+                                    añoInicio = calendar.get(Calendar.YEAR);
+
+                                    calendar.setTime(notas.getMatricula().getSolicitudInscripcion().getPromocion().getFechaFin());
+                                    añoFin = calendar.get(Calendar.YEAR);
+
+                                    estudiante = notas.getMatricula().getSolicitudInscripcion().getEstudiante().getApellidos() + " " + notas.getMatricula().getSolicitudInscripcion().getEstudiante().getNombres();
+                                    cont++;
+                                    lstTblNotas.add(new ClsNotas(notas.getMatricula().getSolicitudInscripcion().getEstudiante().getId(),
+                                            estudiante,
+                                            notas.getMatricula().getId(),
+                                            notas.getMatricula().getNMatricula(),
+                                            notas.getMatricula().getFechaMatricula(),
+                                            notas.getMatricula().getSolicitudInscripcion().getPromocion().getId(),
+                                            añoInicio + "-" + añoFin,
+                                            notas.getMatricula().getSolicitudInscripcion().getPromocion().getFechaResolucion(),
+                                            notas.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getId(),
+                                            notas.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
+                                            cont,
+                                            notas.getNota().toString(),
+                                            notas.getObservacion(),
+                                            null,
+                                            true,
+                                            notas.getId()));
+                                }
+                            }
+                        }
+                        
+                        if(bandera){
+                            calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaInicio());
+                            añoInicio = calendar.get(Calendar.YEAR);
+
+                            calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaFin());
+                            añoFin = calendar.get(Calendar.YEAR);
+                            estudiante = matricula.getSolicitudInscripcion().getEstudiante().getApellidos() + " " + matricula.getSolicitudInscripcion().getEstudiante().getNombres();
+                            cont++;
+                            lstTblNotas.add(new ClsNotas(matricula.getSolicitudInscripcion().getEstudiante().getId(),
+                                    matricula.getSolicitudInscripcion().getEstudiante().getApellidos() + " " + matricula.getSolicitudInscripcion().getEstudiante().getNombres(),
+                                    matricula.getId(),
+                                    matricula.getNMatricula(),
+                                    matricula.getFechaMatricula(),
+                                    matricula.getSolicitudInscripcion().getPromocion().getId(),
+                                    añoInicio + "-" + añoFin,
+                                    matricula.getSolicitudInscripcion().getPromocion().getFechaResolucion(),
+                                    matricula.getSolicitudInscripcion().getPromocion().getMaestria().getId(),
+                                    matricula.getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
+                                    cont,
+                                    "0",
+                                    "",
+                                    null,
+                                    true, 0));
+                            
+                        }
+                        
+                        bandera = true;
                     }
                 }
-            }
+            
 
         } catch (Exception ex) {
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
@@ -347,13 +376,14 @@ public class MbVNotas implements Serializable {
     }
 
     public void consultarMaestrias() {
-        if(this.cedula.length()<10){
+        if (this.cedula.length() < 10) {
             this.estudiante = "";
             this.idProm = 0;
-        }else{
+        } else {
+            this.cedula = this.cedula.replace("-", "");
             cargarTblMatriculaPromocion();
         }
-        
+
     }
 
     private void vaciarCajas() {

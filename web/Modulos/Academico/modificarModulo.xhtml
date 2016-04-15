@@ -11,21 +11,21 @@
         <div class="ui-fluid" >
             <h4 style="text-align: center">Edición de Módulos</h4>
             <h:form id="form">
-                 <p:growl id="msgs" showDetail="true"/>
+                <p:growl id="msgs" showDetail="true"/>
                 <p:panel id="panelTabla" style="height: 30%;">
                     <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->
                     <p:dataTable class="tblDatos" id="tblModulos" var="lstTbl" value="#{mbVModulos.lstTblModulosReg}"
                                  editable="true" scrollable="true" scrollHeight="150" emptyMessage="No hay Datos">
-                        
+
                         <p:ajax event="rowEdit" listener="#{mbVModulos.onRowEdit}" update=":form:msgs" />
                         <p:ajax event="rowEditCancel" listener="#{mbVModulos.onRowCancel}" update=":form:msgs" />
-                        
+
                         <p:column headerText="Maestria" style="width: 30%;">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.maestria}" /></f:facet>
                                 <f:facet name="input">
                                     <p:selectOneMenu value="#{mbVModulos.themeMaestria}" converter="themeConverterMaestria"
-                                     effect="fade" var="tProfesor" filter="true" filterMatchMode="contains">
+                                                     effect="fade" var="tProfesor" filter="true" filterMatchMode="contains">
                                         <f:selectItem itemLabel="#{lstTbl.maestria}"/>
                                         <f:selectItems value="#{mbVModulos.lstThemeMaestria}" var="themeProf" itemLabel="#{themeProf.displayName}" itemValue="#{themeProf}" />
                                         <p:column style="width:10%">
@@ -52,7 +52,7 @@
                                 <f:facet name="output"><h:outputText value="#{lstTbl.usuario}" /></f:facet>
                                 <f:facet name="input">
                                     <p:selectOneMenu value="#{mbVModulos.theme}" converter="themeConverter"
-                                     effect="fade" var="t" filter="true" filterMatchMode="contains">
+                                                     effect="fade" var="t" filter="true" filterMatchMode="contains">
                                         <f:selectItem itemLabel="#{lstTbl.usuario}"/>
                                         <f:selectItems value="#{mbVModulos.lstTheme}" var="theme" noSelectionValue="#{lstTbl.usuario}" itemLabel="#{theme.displayName}" itemValue="#{theme}" />
                                         <p:column style="width:10%">
@@ -70,7 +70,11 @@
                         <p:column headerText="Creditos" style="width: 10%;">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.creditos}"   /></f:facet>
-                                <f:facet name="input"><p:inputText value="#{lstTbl.creditos}" style="width:100%" onkeypress="return isNumberKey(event)" label="text"/></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{lstTbl.creditos}" style="width:100%" onkeypress="return isNumberKey(event)" label="text">
+                                        <f:validateLongRange minimum="1"/>
+                                    </p:inputText>
+                                </f:facet>
                             </p:cellEditor>
                         </p:column>
                         <p:column style="width:7%;">
@@ -83,7 +87,7 @@
                                              icon="ui-icon-trash"
                                              style="border-style: hidden;background-color: transparent;"
                                              >
-                                <p:confirm header="Eliminación de Módulo" message="Pulsa confirmar para realizar acción" icon="ui-icon-alert" />
+                                <p:confirm header="Eliminación de Módulo" message="Presiona confirmar para realizar acción" icon="ui-icon-alert" />
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>
@@ -92,7 +96,11 @@
                         <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
                     </p:confirmDialog>
                 </p:panel>
-                
+                <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                    <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+                </p:dialog>
             </h:form>
         </div>
     </h:body>

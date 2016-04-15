@@ -174,6 +174,8 @@ public class MbVAsistencia implements Serializable {
             
             DaoTAsistencias daoTasistencia = new DaoTAsistencias();
             List<Asistencia> lstAsistencia = daoTasistencia.existe(this.idModulo);
+            
+            
             boolean asist = false;
             
             if(lstAsistencia.size() > 0){

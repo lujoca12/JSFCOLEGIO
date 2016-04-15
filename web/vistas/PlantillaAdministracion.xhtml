@@ -13,53 +13,53 @@
         <meta name="author" content="SISFIAC"/>        
         <link href="#{resource['img/logoPostgrado.ico']}" rel="shortcut icon" type="image/x-icon"/>
         <title>PostGrado UTEQ</title>
-    
-    <h:outputStylesheet name="css/bootstrap.min.css"/>
-    <!-- font Awesome -->
-    <h:outputStylesheet name="font-awesome/css/font-awesome.min.css"/>
-    <!-- Ionicons -->
-    <h:outputStylesheet name="css/ionicons.min.css"/>
-    <!-- Morris chart -->
-    <h:outputStylesheet name="css/morris.css" />
-    <!-- jvectormap -->
-    <h:outputStylesheet name="css/jquery-jvectormap-1.2.2.css" />
-    <!-- Date Picker -->
-    <h:outputStylesheet name="css/datepicker3.css" />
-    <!-- fullCalendar -->
-    <!-- <h:outputStylesheet href="css/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css" /> -->
-    <!-- Daterange picker -->
-    <h:outputStylesheet name="css/daterangepicker-bs3.css" />
-    <!-- iCheck for checkboxes and radio inputs -->
-    <h:outputStylesheet name="css/all.css" />
-    <!-- bootstrap wysihtml5 - text editor -->
-    <!-- <h:outputStylesheet href="css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" /> -->
-   <!-- <h:outputStylesheet name='http://fonts.googleapis.com/css?family=Lato'/>-->
-    
-    <!-- Theme style -->
-    <h:outputStylesheet name="css/styleAdmin.css"/>
-    <h:outputStylesheet name="css/style.css"/>
-    <h:outputStylesheet name="css/styleLG.css"/>
-    <h:outputStylesheet name="css/green.css"/>
-    <h:outputScript name="js/ajax.js"></h:outputScript>
-    <!-- jQuery 2.0.2 -->
-    <f:facet name="first">
-        <link href="#{resource['img/logoPostgrado.ico']}" rel="shortcut icon" type="image/x-icon"/>
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-    </f:facet>
-        
 
-          
-      </h:head>
-      <h:body class="skin-black">
+        <h:outputStylesheet name="css/bootstrap.min.css"/>
+        <!-- font Awesome -->
+        <h:outputStylesheet name="font-awesome/css/font-awesome.min.css"/>
+        <!-- Ionicons -->
+        <h:outputStylesheet name="css/ionicons.min.css"/>
+        <!-- Morris chart -->
+        <h:outputStylesheet name="css/morris.css" />
+        <!-- jvectormap -->
+        <h:outputStylesheet name="css/jquery-jvectormap-1.2.2.css" />
+        <!-- Date Picker -->
+        <h:outputStylesheet name="css/datepicker3.css" />
+        <!-- fullCalendar -->
+        <!-- <h:outputStylesheet href="css/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css" /> -->
+        <!-- Daterange picker -->
+        <h:outputStylesheet name="css/daterangepicker-bs3.css" />
+        <!-- iCheck for checkboxes and radio inputs -->
+        <h:outputStylesheet name="css/all.css" />
+        <!-- bootstrap wysihtml5 - text editor -->
+        <!-- <h:outputStylesheet href="css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" /> -->
+        <!-- <h:outputStylesheet name='http://fonts.googleapis.com/css?family=Lato'/>-->
+
+        <!-- Theme style -->
+        <h:outputStylesheet name="css/styleAdmin.css"/>
+        <h:outputStylesheet name="css/style.css"/>
+        <h:outputStylesheet name="css/styleLG.css"/>
+        <h:outputStylesheet name="css/green.css"/>
+        <h:outputScript name="js/ajax.js"></h:outputScript>
+        <!-- jQuery 2.0.2 -->
+        <f:facet name="first">
+            <link href="#{resource['img/logoPostgrado.ico']}" rel="shortcut icon" type="image/x-icon"/>
+            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        </f:facet>
+
+
+
+    </h:head>
+    <h:body class="skin-black" style="overflow-y: hidden !important;">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
-            
+
             <a href="/JSFSISFIAC/faces/index.xhtml" class="logo" style="background-color: #00a651;font-family: Arial,sans-serif;">
                 Postgrado UTEQ
-            
-    
+
+
             </a>
-           
+
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
@@ -228,67 +228,67 @@
                             </a>
                             <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
                                 <li class="dropdown-header text-center">Cuenta</li>
-                                    <li>
-                                        <a href="#">
+                                <li>
+                                    <a href="#">
                                         <i class="fa fa-user fa-fw pull-right"></i>
-                                            Perfil
-                                        </a>
-                                        <a data-toggle="modal" href="#modal-user-settings">
+                                        Perfil
+                                    </a>
+                                    <a data-toggle="modal" href="#modal-user-settings">
                                         <i class="fa fa-cog fa-fw pull-right"></i>
-                                            Ajustes
-                                        </a>
-                                        </li>
+                                        Ajustes
+                                    </a>
+                                </li>
 
-                                        <li class="divider"></li>
+                                <li class="divider"></li>
 
-                                        <li>
-                                            <h:form>
-                                                <h:commandLink action="#{usuarioBean.cerrarSesion()}"><i class="fa fa-ban fa-fw pull-right"></i>Salir</h:commandLink>
-                                            </h:form>
-                                            
-                                        </li>
-                                    </ul>
+                                <li>
+                                    <h:form>
+                                        <h:commandLink action="#{usuarioBean.cerrarSesion()}"><i class="fa fa-ban fa-fw pull-right"></i>Salir</h:commandLink>
+                                    </h:form>
+
                                 </li>
                             </ul>
-                        </div>
-                    </nav>
-                </header>
-        <div  class="wrapper row-offcanvas row-offcanvas-left page-container">
-           
-                    <!-- Left side column. contains the logo and sidebar -->
-                    <aside id="contenedorIzquierdo" class="left-side sidebar-menu">
-                        
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div  class="wrapper row-offcanvas row-offcanvas-left page-container" style="overflow-y: hidden !important;">
+
+            <!-- Left side column. contains the logo and sidebar -->
+            <aside id="contenedorIzquierdo" class="left-side sidebar-menu">
+
                 <section class="sidebar">
-                            <!-- Sidebar user panel -->
-                            <div class="user-panel">
-                                <div class="pull-left image">
-                                    <img src="../resources/img/logo_u.png" class="img-circle" alt="User Image" />
-                                </div>
-                                <div class="pull-left info">
-                                    <p>Hola</p>
+                    <!-- Sidebar user panel -->
+                    <div class="user-panel">
+                        <div class="pull-left image">
+                            <img src="../resources/img/logo_u.png" class="img-circle" alt="User Image" />
+                        </div>
+                        <div class="pull-left info">
+                            <p>Hola</p>
 
-                                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                                </div>
-                            </div>
-                            <hr></hr>
-                            <h:form id="formMenuIzquierdo" class="page-container">
-                                <p:growl autoUpdate="true"/>
-
-                                <p:panelMenu  model="#{mbVMenu.menuModel}" />
-                                   <!--<p:submenu styleClass="menu-sistema" label="Asistencias" class="sidebar-menu">
-                                        <p:menuitem value="Registrar" icon="ui-icon-disk" />
-                                        <p:menuitem value="Actualizar" icon="ui-icon-arrowrefresh-1-w" />
-                                    </p:submenu>-->
-                            </h:form>
-                           <!--Fin del Menu dinamico-->
-                        </section>
-            
-                        <!-- sidebar: style can be found in sidebar.less -->
+                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                        </div>
+                    </div>
+                    <hr></hr>
+                    <h:form id="formMenuIzquierdo" class="page-container">
+                        <p:growl autoUpdate="true"/>
                         
-                        <!-- /.sidebar -->
-                    </aside>
+                        <p:panelMenu  model="#{mbVMenu.menuModel}" />
+                        <!--<p:submenu styleClass="menu-sistema" label="Asistencias" class="sidebar-menu">
+                             <p:menuitem value="Registrar" icon="ui-icon-disk" />
+                             <p:menuitem value="Actualizar" icon="ui-icon-arrowrefresh-1-w" />
+                         </p:submenu>-->
+                    </h:form>
+                    <!--Fin del Menu dinamico-->
+                </section>
 
-                    <aside class="right-side">
+                <!-- sidebar: style can be found in sidebar.less -->
+
+                <!-- /.sidebar -->
+            </aside>
+
+            <aside class="right-side">
 
                 <!-- Main content -->
                 <section class="content">
@@ -296,45 +296,45 @@
                     <div id="contenedorCentral" class="row">
                         <div name="contenedorCentral" class="col-md-12">
                             <ui:insert name="contenedorCentral">
-                                
+
                             </ui:insert>
                         </div>
-                      </div>
-                    </section><!-- /.content -->
-                    </aside>
+                    </div>
+                </section><!-- /.content -->
+            </aside>
 
-                  </div>
-                    
-                    
-              <!-- row end -->
-                
-                <div class="footer-main">
-                    
+        </div>
 
 
-    <!-- Footer -->
-    <footer style="text-align: center">
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Desarrollado por la Carrera de Ingeniería en Sistemas. 2016-Hasta el infinito y mas allá</p>
+        <!-- row end -->
+
+        <div class="footer-main">
+
+
+
+            <!-- Footer -->
+            <footer style="text-align: center">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p>Desarrollado por la Carrera de Ingeniería en Sistemas. 2016-Hasta el infinito y mas allá</p>
+                    </div>
                 </div>
-            </div>
-        </footer>
+            </footer>
 
-    </div>
-    <!-- /.container -->
-
-   
+        </div>
+        <!-- /.container -->
 
 
-              
-            
 
 
-      
 
 
-        
+
+
+
+
+
+
         <h:outputScript name="js/jquery.min.js"></h:outputScript>
 
         <!-- jQuery UI 1.10.3 -->
@@ -362,22 +362,22 @@
         <h:outputScript name="js/dashboard.js"></h:outputScript>
 
         <!-- Director for demo purposes -->
-        <h:outputScript>
-            $('input').on('ifChecked', function(event) {
+        <script>
+            $('input').on('ifChecked', function (event) {
                 // var element = $(this).parent().find('input:checkbox:first');
                 // element.parent().parent().parent().addClass('highlight');
                 $(this).parents('li').addClass("task-done");
                 console.log('ok');
             });
-            $('input').on('ifUnchecked', function(event) {
+            $('input').on('ifUnchecked', function (event) {
                 // var element = $(this).parent().find('input:checkbox:first');
                 // element.parent().parent().parent().removeClass('highlight');
                 $(this).parents('li').removeClass("task-done");
                 console.log('not');
             });
 
-        </h:outputScript>
-        <h:outputScript>
+        </script>
+        <script>
             $('#noti-box').slimScroll({
                 height: '400px',
                 size: '5px',
@@ -388,7 +388,7 @@
                 checkboxClass: 'icheckbox_flat-grey',
                 radioClass: 'iradio_flat-grey'
             });
-</h:outputScript>
-      </h:body>
+        </script>
+    </h:body>
 </html>
 

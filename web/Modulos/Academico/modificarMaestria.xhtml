@@ -13,14 +13,14 @@
         <div class="ui-fluid" >
             <h4 style="text-align: center">Edición de Maestrias</h4>
             <h:form id="form">
-                 <p:growl id="msgs" showDetail="true"/>
+                <p:growl id="msgs" showDetail="true"/>
                 <p:panel id="panelTabla" style="height: 30%;">
                     <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->
                     <p:dataTable class="tblDatos" id="tblMaestria" var="lstTbl" value="#{mbVMaestrias.lstTblMaestria}"
                                  editable="true" scrollable="true" scrollHeight="150">
                         <p:ajax event="rowEdit" listener="#{mbVMaestrias.onRowEdit}" update=":form:msgs" />
                         <p:ajax event="rowEditCancel" listener="#{mbVMaestrias.onRowCancel}" update=":form:msgs" />
-                        
+
                         <p:column headerText="Maestria" style="width: 20%;">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.descripcionM}" /></f:facet>
@@ -30,13 +30,13 @@
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
-                        
+
                         <p:column headerText="Director" style="width: 20%;">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.nombresUsuarios}" /></f:facet>
                                 <f:facet name="input">
                                     <p:selectOneMenu value="#{mbVMaestrias.theme}" converter="themeConverter"
-                                     effect="fade" var="t" filter="true" filterMatchMode="contains">
+                                                     effect="fade" var="t" filter="true" filterMatchMode="contains">
                                         <f:selectItem itemLabel="#{lstTbl.nombresUsuarios}"/>
                                         <f:selectItems value="#{mbVMaestrias.lstTheme}" var="theme" noSelectionValue="#{lstTbl.nombresUsuarios}" itemLabel="#{theme.displayName}" itemValue="#{theme}" />
                                         <p:column style="width:10%">
@@ -50,7 +50,7 @@
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
-                        
+
                         <p:column headerText="F. Resolución" style="width: 13%;">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.fechaResolucion}" /></f:facet>
@@ -76,7 +76,7 @@
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
-                        
+
                         <p:column headerText="F. Fin" style="width: 12%;">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.fechaFin}" /></f:facet>
@@ -92,17 +92,25 @@
                         <p:column headerText="Cupos" style="width: 7%;">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.cupo}" /></f:facet>
-                                <f:facet name="input"><p:inputText value="#{lstTbl.cupo}" onkeypress="return isNumberKey(event)" style="width:100%" label="text"/></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{lstTbl.cupo}" onkeypress="return isNumberKey(event)" style="width:100%" label="text">
+                                        <f:validateLongRange minimum="1"/>
+                                    </p:inputText>
+                                </f:facet>
                             </p:cellEditor>
                         </p:column>
-                        
+
                         <p:column headerText="Cuotas" style="width: 7%;">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.cuotas}"   /></f:facet>
-                                <f:facet name="input"><p:inputText value="#{lstTbl.cuotas}" onkeypress="return isNumberKey(event)" style="width:100%" label="text"/></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{lstTbl.cuotas}" onkeypress="return isNumberKey(event)" style="width:100%" label="text">
+                                        <f:validateLongRange minimum="1"/>
+                                    </p:inputText>
+                                </f:facet>
                             </p:cellEditor>
                         </p:column>
-                        
+
                         <p:column style="width:6%;">
                             <p:rowEditor />   
                         </p:column>
@@ -113,17 +121,21 @@
                                              icon="ui-icon-trash"
                                              style="border-style: hidden;background-color: transparent;"
                                              >
-                                <p:confirm header="Eliminación de Maestria" message="Pulsa confirmar para realizar acción" icon="ui-icon-alert" />
+                                <p:confirm header="Eliminación de Maestria" message="Presiona confirmar para realizar acción" icon="ui-icon-alert" />
                             </p:commandButton>
                         </p:column>
-                        
+
                     </p:dataTable>
                     <p:confirmDialog global="true" styleClass="change-position">
                         <p:commandButton value="Confirmar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
                         <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
                     </p:confirmDialog>
                 </p:panel>
-                
+                <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                    <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+                </p:dialog>
             </h:form>
         </div>
     </h:body>

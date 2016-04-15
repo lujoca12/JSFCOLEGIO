@@ -31,11 +31,6 @@
                 <br></br>
                 <p:panel id="panelRegistroNotas" rendered="#{mbVAsistencia.idModulo eq 0 ? false:true}">
 
-                  <!--  <h5 style="text-align: left; font-weight: bold !important; padding-bottom: 0px !important;">
-                        <h:outputText value="Sr.(a) #{mbVAsistencia.estudiante}"   />
-                    </h5>
-                    <p:separator />-->
-                    <!--class="tblDatos"-->
                     <p:dataTable class="tblDatos" scrollable="false" var="notas" value="#{mbVAsistencia.lstTblNotas}"
                                  emptyMessage="No hay Estudiantes para registrar asistencia">
                         <p:column headerText="#" style="text-align: center; width: 5%;">
@@ -58,7 +53,7 @@
                     
                     <br></br>
                     <p:message for="display"/>
-                    <p:commandButton style="#{mbVAsistencia.estado eq 1 ? 'visibility: hidden':'visibility: visible'}" value="Guardar" update="frmRegistrarAsist,msgsAsist" styleClass="anchoBotones" icon="ui-icon-disk"
+                    <p:commandButton rendered="#{mbVAsistencia.estado eq 1 ? false:true}" value="Guardar" update="frmRegistrarAsist,msgsAsist" styleClass="anchoBotones" icon="ui-icon-disk"
                                      actionListener="#{mbVAsistencia.registrar()}" />
                         
                     

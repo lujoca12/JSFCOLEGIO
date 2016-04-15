@@ -16,44 +16,44 @@
                 <p:panel header="Registrar Usuarios">
             <p:growl id="msgsDocente" showDetail="true" />
             <p:focus context="panel"/>
-            <p:panelGrid id="panel" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
+            <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
         
         <p:outputLabel for="cboDirectorMaestria" value="Tipo usuario:" styleClass="labelDerecha"/>
         <p:selectOneMenu id="cboDirectorMaestria" required="true" value="#{mbVUsuario.idRol}">
             <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
              <f:selectItems value="#{mbVUsuario.lstTodosUsuarios}" />
          </p:selectOneMenu>
-         <p:message for="cboDirectorMaestria" />
+         
                      
         <p:outputLabel for="txtUsuario" styleClass="labelDerecha" value="Usuario:" />
         <p:inputText id="txtUsuario" value="#{mbVUsuario.tUsuario.nick}" maxlength="10" >
             <f:validateLength minimum="5" maximum="10" />
         </p:inputText>
-        <p:message for="txtUsuario"/>
+        
         
         <p:outputLabel for="txtClave" styleClass="labelDerecha" value="Clave:" />
         <p:password id="txtClave" value="#{mbVUsuario.clave}" required="true" feedback="true" match="txtRClave" inline="true" />
-        <p:message for="txtClave"/>
+        
         
         <p:outputLabel for="txtRClave" styleClass="labelDerecha" value="Repetir clave:" />
         <p:password id="txtRClave" value="#{mbVUsuario.clave}" required="true" feedback="true" inline="true" />
-        <p:message for="txtRClave"/>
+        
         
         <p:outputLabel for="txtApellidos" styleClass="labelDerecha" value="Apellidos:" />
         <p:inputText id="txtApellidos" value="#{mbVUsuario.tUsuario.apellidos}" required="true" maxlength="30"/>
-        <p:message for="txtApellidos"/>
+        
             
         <p:outputLabel for="txtNombres" styleClass="labelDerecha" value="Nombres:" />
         <p:inputText id="txtNombres" value="#{mbVUsuario.tUsuario.nombres}" required="true" maxlength="30"/>
-        <p:message for="txtNombres"/>
+        
         
         <p:outputLabel for="txtCedula" styleClass="labelDerecha" value="Cédula:" />
         <p:inputMask id="txtCedula" value="#{mbVUsuario.tUsuario.cedPasaporte}" required="true" mask="999999999-9"/>
-        <p:message for="txtCedula"/>
+        
         
         <p:outputLabel for="txtDireccion" styleClass="labelDerecha" value="Dirección:" />
         <p:inputText id="txtDireccion" value="#{mbVUsuario.tUsuario.direccion}" required="true" />
-        <p:message for="txtDireccion"/>
+        
         
         <p:outputLabel for="email" styleClass="labelDerecha" value="Correo:" />
         <p:inputText id="email" required="true" label="email" size="40"
@@ -65,19 +65,19 @@
 		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 
 	</p:inputText>
-	<p:message for="email" />
+	
         
         <p:outputLabel for="txtFecha" styleClass="labelDerecha" value="Fecha nacimiento:" />
         <p:calendar id="txtFecha" value="#{mbVUsuario.tUsuario.fechaNac}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" />
-        <p:message for="txtFecha"/>
+        
         
         <p:outputLabel for="txtTelefono" styleClass="labelDerecha" value="Teléfono:" />
         <p:inputMask id="txtTelefono" value="#{mbVUsuario.telefono}" mask="(999)-999-999"/>
-        <p:message for="txtTelefono"/>
+        
         
         <p:outputLabel for="txtCelular" styleClass="labelDerecha" value="Celular:" />
         <p:inputMask id="txtCelular" value="#{mbVUsuario.celular}" required="true" mask="(999)-999-9999" size="10"/>
-        <p:message for="txtCelular"/>
+        
  
         <p:outputLabel for="cboEstadoCivil" value="Estado civil:" styleClass="labelDerecha"/>
         <p:selectOneMenu id="cboEstadoCivil" required="true" value="#{mbVUsuario.tUsuario.estadoCivil}">
@@ -88,7 +88,7 @@
             <f:selectItem itemLabel="Divorciado" itemValue="D" />
             <f:selectItem itemLabel="Unión Libre" itemValue="U" />
         </p:selectOneMenu>
-        <p:message for="cboEstadoCivil"/>
+        
         
         <p:outputLabel for="cboSexo" value="Sexo:" styleClass="labelDerecha"/>
         <p:selectOneMenu id="cboSexo" required="true" value="#{mbVUsuario.tUsuario.sexo}">
@@ -96,21 +96,22 @@
             <f:selectItem itemLabel="Masculino" itemValue="M" />
             <f:selectItem itemLabel="Femenino" itemValue="F" />
         </p:selectOneMenu>
-        <p:message for="cboSexo"/>
         
-        <p:message for="display"/>
+        
+        <h:outputText id="display" value="" />
         <p:commandButton value="Guardar" update="@form" styleClass="anchoBotones" icon="ui-icon-disk"
                          actionListener="#{mbVUsuario.registrarUsuarios()}" />
-        <h:outputText id="display" value="" />
+        
         
     </p:panelGrid>
                 </p:panel>
             </p:tab>
- </h:form>
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
                 <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
             </p:dialog>
+ </h:form>
+            
     
     
     

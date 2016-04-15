@@ -57,7 +57,7 @@ public class DaoTUsuario implements InterfaceUsuario{
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        String hql = "FROM Usuario user inner join fetch user.tipoUsuario tuser order by user.apellidos asc";
+        String hql = "FROM Usuario user inner join fetch user.tipoUsuario tuser where user.estado='1' order by user.apellidos asc";
         Query query = sesion.createQuery(hql);
         List<Usuario> lstUsuarios=(List<Usuario>) query.list();
         sesion.close();
@@ -69,7 +69,7 @@ public class DaoTUsuario implements InterfaceUsuario{
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        String hql = "FROM Usuario user where user.id="+idUsuario+"";
+        String hql = "FROM Usuario user where user.id="+idUsuario+" and user.estado='1'";
         Query query = sesion.createQuery(hql);
         Usuario usuario=(Usuario) query.uniqueResult();
         sesion.close();
@@ -78,7 +78,20 @@ public class DaoTUsuario implements InterfaceUsuario{
 
     @Override
     public boolean update(Usuario tUsuario) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean band = false;
+        try {
+            iniciaOperacion();
+            sesion.update(tUsuario);
+
+            tx.commit();
+            sesion.close();
+            band = true;
+        } catch (Exception e) {
+            tx.rollback();
+            band = false;
+        }
+        
+        return band;
     }
 
     @Override
@@ -100,7 +113,7 @@ public class DaoTUsuario implements InterfaceUsuario{
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        String hql = "from Usuario as u where u.nick='"+nick+"'";
+        String hql = "from Usuario as u where u.nick='"+nick+"' and u.estado='1'";
         Query query = sesion.createQuery(hql);
         List<Usuario> lstUsuarios=(List<Usuario>) query.list();
         if(!lstUsuarios.isEmpty())

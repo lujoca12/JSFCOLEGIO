@@ -442,6 +442,11 @@ function restablecer(e){
         test(); return false;
     }
 }
+function restablecerMm(e){
+    if(e.keyCode == 46) {
+        test1(); return false;
+    }
+}
     var validarNum = function (event, _float){
         event = event || window.event;
         var charCode = event.keyCode || event.which;

@@ -200,7 +200,9 @@ public class MbVUsuario implements Serializable {
             this.lstTheme.clear();
             this.lstTheme.add(new ClsProfesor(-1, "Ninguno", "Ninguno"));
             for (Usuario user : lstUsuario) {
-                this.lstTheme.add(new ClsProfesor(user.getId(), user.getApellidos() + " " + user.getNombres(), user.getApellidos() + " " + user.getNombres()));
+                this.lstTheme.add(new ClsProfesor(user.getId(), 
+                        user.getApellidos() + " " + user.getNombres(), 
+                        String.valueOf(user.getTipoUsuario().getId())));
             }
         } catch (Exception ex) {
 
@@ -218,7 +220,7 @@ public class MbVUsuario implements Serializable {
             for (Usuario user : lstUsuario) {
                 this.lstThemeUsuarios.add(new ClsProfesor(user.getId(), 
                         user.getApellidos() + " " + user.getNombres()+" ("+user.getTipoUsuario().getDescripcion()+")", 
-                        user.getApellidos() + " " + user.getNombres()+" ("+user.getTipoUsuario().getDescripcion()+")"));
+                        String.valueOf(user.getTipoUsuario().getId())));
             }
         } catch (Exception ex) {
 
@@ -262,10 +264,14 @@ public class MbVUsuario implements Serializable {
         TreeNode node0 = null;
 
         TreeNode node00 = null;
+        
+        
         try {
-            if (usuario.equals("-1")) {
+            if(this.theme == null){
+                this.estado = 0; 
                 root = new DefaultTreeNode(new Document("Files", 0, "Folder"), null);
             } else {
+                this.estado = 1;
                 DaoTMenu daoTmenu = new DaoTMenu();
                 lstMenus = daoTmenu.getTodosPermisos();
                 if (lstMenus != null) {
@@ -274,7 +280,7 @@ public class MbVUsuario implements Serializable {
                         if (p.getPadre() == 0) {
                             node0 = new DefaultTreeNode(new Document(p.getDescripcion(), p.getId(), "Folder"), root);
 
-                            lstMenusDetalle = daoTmenu.getEstadoPermisoUsuario(Integer.parseInt(usuario), p.getId());
+                            lstMenusDetalle = daoTmenu.getEstadoPermisoUsuario(this.theme.getId(), p.getId());
                             if (!lstMenusDetalle.isEmpty()) {
                                 if (lstMenusDetalle.get(0).getEstado().equals('1')) {
                                     node0.setSelected(true);
@@ -289,7 +295,7 @@ public class MbVUsuario implements Serializable {
                                     node00.setRowKey(String.valueOf(p1.getId()));
 
                                     daoTmenu = new DaoTMenu();
-                                    lstMenusDetalle = daoTmenu.getEstadoPermisoUsuario(Integer.parseInt(usuario), p1.getId());
+                                    lstMenusDetalle = daoTmenu.getEstadoPermisoUsuario(this.theme.getId(), p1.getId());
                                     if (!lstMenusDetalle.isEmpty()) {
                                         if (lstMenusDetalle.get(0).getEstado().equals('1')) {
                                             node00.setSelected(true);
@@ -317,7 +323,7 @@ public class MbVUsuario implements Serializable {
             try {
 
                 DaoTDetallePermiso daoTDetPerm = new DaoTDetallePermiso();
-                msg = daoTDetPerm.registrar(root.getChildren(), Integer.parseInt(usuario));
+                msg = daoTDetPerm.registrar(root.getChildren(), this.theme.getId());
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje de la Aplicacion", msg);
                 FacesContext.getCurrentInstance().addMessage(null, message);
 
@@ -368,12 +374,55 @@ public class MbVUsuario implements Serializable {
     }
     
     public void actualizarDatos(){
+        DaoTUsuario daoTusuario = new DaoTUsuario();
+        try {
+            TipoUsuario tipoUser = new TipoUsuario();
+            tipoUser.setId(Integer.parseInt(this.theme.getName()));
+            tUsuario.setTipoUsuario(tipoUser);
+            tUsuario.setTelefono(tUsuario.getTelefono().replaceAll("[()-]", ""));
+            tUsuario.setCelular(tUsuario.getCelular().replaceAll("[()-]", ""));
+            band = daoTusuario.update(tUsuario);
+        } catch (Exception ex) {
+            Logger.getLogger(MbVUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
+        if (band) {
+            this.estado = 0;
+            mensajesOk("Datos actualizados correctamente");
+            llenarCboDocentes();
+            llenarCboUsuarios();
+        } else {
+            this.estado = 1;
+            mensajesError("Error al actualizar datos");
+        }
     }
     
     public void eliminarDatos(){
+        DaoTUsuario daoTusuario = new DaoTUsuario();
+        try {
+            TipoUsuario tipoUser = new TipoUsuario();
+            tipoUser.setId(Integer.parseInt(this.theme.getName()));
+            tUsuario.setTipoUsuario(tipoUser);
+            tUsuario.setEstado('0');
+            tUsuario.setTelefono(tUsuario.getTelefono().replaceAll("[()-]", ""));
+            tUsuario.setCelular(tUsuario.getCelular().replaceAll("[()-]", ""));
+            band = daoTusuario.update(tUsuario);
+        } catch (Exception ex) {
+            Logger.getLogger(MbVUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
+        if (band) {
+            this.estado = 0;
+            mensajesOk("Datos eliminados correctamente");
+            llenarCboDocentes();
+            llenarCboUsuarios();
+        } else {
+            this.estado = 1;
+            mensajesError("Error al eliminar datos");
+        }
     }
+    
+    
 
     public void registrarUsuarios() {
         DaoTUsuario daoTusuario = new DaoTUsuario();

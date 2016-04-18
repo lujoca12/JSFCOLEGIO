@@ -42,6 +42,18 @@
 
                         <p:column headerText="Módulo" style="width: 25%;">
                             <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.n_modulo}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:selectOneMenu id="cboNmodulo" value="#{lstTbl.n_modulo}">
+                                        <f:selectItem itemLabel="#{lstTbl.n_modulo}"/>
+                                        <f:selectItems value="#{mbVModulos.lstTodosModulos}" />
+                                    </p:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="Descripciòn" style="width: 25%;">
+                            <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.modulo}" /></f:facet>
                                 <f:facet name="input"><p:inputText value="#{lstTbl.modulo}" style="width:100%"/></f:facet>
                             </p:cellEditor>
@@ -66,18 +78,45 @@
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
+                        
+                        <p:column headerText="F. Inicio" style="width: 20%;">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{lstTbl.fechaInicio}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:calendar id="txtFechaInicio" onkeypress="return permite(event, 'none')" locale="es" value="#{lstTbl.fechaInicio}" effect="fold" pattern="dd-MM-yyyy" mask="true" >
+                                        <p:ajax event="dateSelect" update="txtFechaFin" />
+                                        <p:ajax event="blur" update="txtFechaFin" />
+                                        <f:attribute name="txtFechaFin" value="#{lstTbl.fechaFin}"/>
+                                        <f:validator validatorId="primeDateRangeValidator1" />
+                                    </p:calendar>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
 
-                        <p:column headerText="Creditos" style="width: 10%;">
+                        <p:column headerText="F. Fin" style="width: 20%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.fechaFin}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:calendar id="txtFechaFin" mindate="#{lstTbl.fechaInicio}" locale="es" value="#{lstTbl.fechaFin}" onkeypress="return permite(event, 'none')" effect="fold" pattern="dd-MM-yyyy" mask="true" >
+                                        <f:attribute name="txtFechaInicio" value="#{lstTbl.fechaInicio}"/>
+                                        <f:validator validatorId="primeDateRangeValidator1" />
+                                    </p:calendar>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Creditos" style="width: 12%;">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.creditos}"   /></f:facet>
                                 <f:facet name="input">
                                     <p:inputText value="#{lstTbl.creditos}" style="width:100%" onkeypress="return isNumberKey(event)" label="text">
-                                        <f:validateLongRange minimum="1"/>
                                     </p:inputText>
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
-                        <p:column style="width:7%;">
+                        <p:column style="width:10%;">
                             <p:rowEditor />   
                         </p:column>
                         <p:column style="width:8%;">

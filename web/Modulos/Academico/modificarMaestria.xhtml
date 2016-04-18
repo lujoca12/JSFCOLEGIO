@@ -60,6 +60,15 @@
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
+                        
+                        <p:column headerText="Resolución" style="width: 13%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.n_resolucion}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{lstTbl.n_resolucion}" maxlength="25" style="width:100%" label="text"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
 
                         <p:column headerText="F. Inicio" style="width: 11%;">
                             <p:cellEditor>

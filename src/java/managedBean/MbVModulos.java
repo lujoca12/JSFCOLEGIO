@@ -17,6 +17,7 @@ import Pojo.Modulo;
 import Pojo.Promocion;
 import Pojo.Usuario;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -44,6 +45,8 @@ public class MbVModulos implements Serializable{
     private ClsMaestria themeMaestria; 
     private List<ClsMaestria> lstThemeMaestria;
     
+    private List<SelectItem> lstTodosModulos;
+    
     private ClsTablaModulosRegistrados clsTblModulosReg;
     private List<ClsTablaModulosRegistrados> lstTblModulosReg;
     private List<ClsTablaModulosRegistrados> filteredCars;
@@ -51,10 +54,10 @@ public class MbVModulos implements Serializable{
     private int idMaestria;
     private int idDocente;
     private String moduloDescripcion;
-    private int credito;
     private boolean msg;
     private Modulo tModulo;
     private List<Modulo> lstModulo;
+    private String creditos;
     
     public MbVModulos() {
         cargarTablaModulos();
@@ -128,14 +131,6 @@ public class MbVModulos implements Serializable{
     public void setModuloDescripcion(String moduloDescripcion) {
         this.moduloDescripcion = moduloDescripcion;
     }
-
-    public int getCredito() {
-        return credito;
-    }
-
-    public void setCredito(int credito) {
-        this.credito = credito;
-    }
     
     public List<ClsTablaModulosRegistrados> getLstTblModulosReg() {
         return lstTblModulosReg;
@@ -148,6 +143,37 @@ public class MbVModulos implements Serializable{
     public void setClsTblModulosReg(ClsTablaModulosRegistrados clsTblModulosReg) {
         this.clsTblModulosReg = clsTblModulosReg;
     }
+
+    public String getCreditos() {
+        return creditos;
+    }
+
+    public void setCreditos(String creditos) {
+        this.creditos = creditos;
+    }
+
+    public List<SelectItem> getLstTodosModulos() {
+        this.lstTodosModulos = new ArrayList<SelectItem>();
+        try {
+            String[] modulos={
+                "Mòdulo I", "Mòdulo II", "Mòdulo III", "Mòdulo IV","Mòdulo V",
+                "Mòdulo VI", "Mòdulo VII", "Mòdulo VIII", "Mòdulo IX","Mòdulo X",
+                "Mòdulo XI", "Mòdulo XII", "Mòdulo XIII", "Mòdulo XIV","Mòdulo XV",
+                "Mòdulo XVI", "Mòdulo XVII", "Mòdulo XVIII", "Mòdulo XIX","Mòdulo XX",
+                "Mòdulo XXI", "Mòdulo XXII", "Mòdulo XXIII", "Mòdulo XXIV","Mòdulo XXV",
+                "Otro"
+            };
+            lstTodosModulos.clear();
+            for (int i = 0; i < modulos.length; i++) {
+                SelectItem usuarioItem = new SelectItem(modulos[i].toString(), modulos[i].toString());
+                this.lstTodosModulos.add(usuarioItem);
+            }
+        } catch (Exception ex) {
+
+        }
+        return lstTodosModulos;
+    }
+    
     
     public void cargarTablaModulos(){
         lstTblModulosReg = new ArrayList<>();
@@ -165,8 +191,11 @@ public class MbVModulos implements Serializable{
                                 modulo.getDescripcion(), 
                                 modulo.getUsuario().getId(), 
                                 modulo.getUsuario().getApellidos()+" "+modulo.getUsuario().getNombres(), 
-                                modulo.getCreditos(), 
-                                modulo.getId()));
+                                modulo.getCreditos().toString(), 
+                                modulo.getId(),
+                                modulo.getN_modulo(),
+                                modulo.getFechaInicio(),
+                                modulo.getFechaFin()));
                     }
                 }
             }
@@ -236,6 +265,9 @@ public class MbVModulos implements Serializable{
             DaoTPromocion daoTpromocion = new DaoTPromocion();
             Promocion promocion = new Promocion();
             promocion.setId(this.themeMaestria.getIdPromocion());
+            BigDecimal bigdec;
+            bigdec = new BigDecimal(Double.parseDouble(creditos));
+            tModulo.setCreditos(bigdec);
             tModulo.setPromocion(promocion);
             
             Usuario usuario = new Usuario();
@@ -269,6 +301,7 @@ public class MbVModulos implements Serializable{
         idMaestria = 0;
         tModulo = new Modulo();
         llenarCboDocente();
+        creditos = "";
         //llenarCboMaestria();
         
     }
@@ -309,7 +342,12 @@ public class MbVModulos implements Serializable{
             modulo.setUsuario(user);
             modulo.setId(((ClsTablaModulosRegistrados) event.getObject()).getIdModulo());
             modulo.setDescripcion(((ClsTablaModulosRegistrados) event.getObject()).getModulo());
-            modulo.setCreditos(((ClsTablaModulosRegistrados) event.getObject()).getCreditos());
+            BigDecimal bigdec;
+            bigdec = new BigDecimal(Double.parseDouble(((ClsTablaModulosRegistrados) event.getObject()).getCreditos()));
+            modulo.setCreditos(bigdec);
+            modulo.setFechaInicio(((ClsTablaModulosRegistrados) event.getObject()).getFechaInicio());
+            modulo.setFechaFin(((ClsTablaModulosRegistrados) event.getObject()).getFechaFin());
+            modulo.setN_modulo(((ClsTablaModulosRegistrados) event.getObject()).getN_modulo());
             msg = daoTmodulo.update(modulo);
             cargarTablaModulos();
             

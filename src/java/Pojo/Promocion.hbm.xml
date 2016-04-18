@@ -59,5 +59,8 @@
             </key>
             <one-to-many class="Pojo.SolicitudInscripcion" />
         </set>
+        <property name="n_resolucion" type="string">
+            <column name="resolucion" length="25" />
+        </property>
     </class>
 </hibernate-mapping>

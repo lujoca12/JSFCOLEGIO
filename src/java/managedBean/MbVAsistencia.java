@@ -152,8 +152,11 @@ public class MbVAsistencia implements Serializable {
                                 modulo.getDescripcion() + " (" + modulo.getPromocion().getMaestria().getDescripcion() + ")",
                                 modulo.getUsuario().getId(),
                                 modulo.getUsuario().getApellidos() + " " + modulo.getUsuario().getNombres(),
-                                modulo.getCreditos(),
-                                modulo.getId()));
+                                modulo.getCreditos().toString(),
+                                modulo.getId(),
+                                modulo.getN_modulo(),
+                                modulo.getFechaInicio(),
+                                modulo.getFechaFin()));
                     }
                 }
             }

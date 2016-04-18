@@ -14,8 +14,8 @@
         <many-to-one name="usuario" class="Pojo.Usuario" fetch="select">
             <column name="id_usuario" not-null="true" />
         </many-to-one>
-        <property name="creditos" type="java.lang.Integer">
-            <column name="creditos" />
+        <property name="creditos" type="big_decimal">
+            <column name="creditos" precision="4" />
         </property>
         <property name="descripcion" type="string">
             <column name="descripcion" length="100" />
@@ -32,5 +32,14 @@
             </key>
             <one-to-many class="Pojo.Notas" />
         </set>
+        <property name="fechaInicio" type="date">
+            <column name="fecha_inicio" length="13" />
+        </property>
+        <property name="fechaFin" type="date">
+            <column name="fecha_fin" length="13" />
+        </property>
+        <property name="n_modulo" type="string">
+            <column name="modulo" length="15" />
+        </property>
     </class>
 </hibernate-mapping>

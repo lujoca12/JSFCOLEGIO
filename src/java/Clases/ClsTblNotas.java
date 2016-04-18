@@ -16,13 +16,13 @@ public class ClsTblNotas implements Serializable {
     
     private int idModulo;
     private String descripMod;
-    private int creditos;
+    private String creditos;
     private int idNotas;
     private Double nota;
     private String observ;
     private String notaTexto;
 
-    public ClsTblNotas(int idModulo, String descripMod, int creditos, int idNotas, Double nota, String observ, String notaTexto) {
+    public ClsTblNotas(int idModulo, String descripMod, String creditos, int idNotas, Double nota, String observ, String notaTexto) {
         this.idModulo = idModulo;
         this.descripMod = descripMod;
         this.creditos = creditos;
@@ -48,11 +48,11 @@ public class ClsTblNotas implements Serializable {
         this.descripMod = descripMod;
     }
 
-    public int getCreditos() {
+    public String getCreditos() {
         return creditos;
     }
 
-    public void setCreditos(int creditos) {
+    public void setCreditos(String creditos) {
         this.creditos = creditos;
     }
 

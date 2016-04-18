@@ -171,7 +171,8 @@ public class MbVMaestrias implements Serializable{
                         lstTblMaestria.add(new ClsTablaMaestrias(promocion.getMaestria().getId(),
                                 promocion.getMaestria().getDescripcion(),promocion.getMaestria().getEstado(),
                                 promocion.getId(),promocion.getDescripcion(),promocion.getFechaResolucion(),promocion.getFechaInicio(),
-                                promocion.getFechaFin(),promocion.getCupo(),promocion.getNCuotas(),promocion.getIdUsuario(),promocion.getUsuario()));
+                                promocion.getFechaFin(),promocion.getCupo(),promocion.getNCuotas(),promocion.getIdUsuario(),promocion.getUsuario(),
+                                promocion.getN_resolucion()));
                     }
                 }
             }
@@ -293,6 +294,7 @@ public class MbVMaestrias implements Serializable{
         maestria.setId(((ClsTablaMaestrias) event.getObject()).getIdMaestria());
         promocion.setId(((ClsTablaMaestrias) event.getObject()).getIdPromocion());
         promocion.setMaestria(maestria);
+        promocion.setN_resolucion(((ClsTablaMaestrias) event.getObject()).getN_resolucion());
         try {
             msg = daoTpromocion.update(promocion);
             cargarTablaMaestria();

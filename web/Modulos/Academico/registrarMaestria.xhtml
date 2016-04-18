@@ -119,6 +119,15 @@
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
+                        
+                        <p:column headerText="Resolución" style="width: 13%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.n_resolucion}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{lstTbl.n_resolucion}" maxlength="25" style="width:100%" label="text"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
 
                         <p:column headerText="F. Inicio" style="width: 11%;">
                             <p:cellEditor>
@@ -179,6 +188,14 @@
                         <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
                     </p:confirmDialog>
                 </p:panel>
+                <p:tabView>
+                    <p:tab title="Maestrias">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <p:outputLabel for="txtDescripcionMaestria" styleClass="labelDerecha" value="Descripción:" />
+                            <p:autoComplete id="txtDescripcionMaestria" required="true" maxlength="150" value="#{mbVMaestrias.tMaestria.descripcion}" completeMethod="#{mbVMaestrias.completeText}" />
+                        </h:panelGrid>
+                    </p:tab>
+                </p:tabView>
             </h:form>
         </div>
     </h:body>

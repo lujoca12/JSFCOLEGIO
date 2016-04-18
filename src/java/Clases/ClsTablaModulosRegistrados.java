@@ -6,6 +6,7 @@
 package Clases;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
@@ -20,11 +21,14 @@ public class ClsTablaModulosRegistrados implements Serializable {
     private String modulo;
     private int idUsuario;
     private String usuario;
-    private int creditos;
+    private String creditos;
     private int idModulo;
+    private String n_modulo;
+    private Date fechaInicio;
+    private Date fechaFin;
     
 
-    public ClsTablaModulosRegistrados(int idMaestria, String maestria, int idPromocion, String modulo, int idUsuario, String usuario, int creditos, int idModulo) {
+    public ClsTablaModulosRegistrados(int idMaestria, String maestria, int idPromocion, String modulo, int idUsuario, String usuario, String creditos, int idModulo, String n_modulo, Date fechaInicio, Date fechaFin) {
         this.idMaestria = idMaestria;
         this.maestria = maestria;
         this.idPromocion = idPromocion;
@@ -33,6 +37,9 @@ public class ClsTablaModulosRegistrados implements Serializable {
         this.usuario = usuario;
         this.creditos = creditos;
         this.idModulo = idModulo;
+        this.n_modulo = n_modulo;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
     }
 
     public int getIdMaestria() {
@@ -83,11 +90,11 @@ public class ClsTablaModulosRegistrados implements Serializable {
         this.usuario = usuario;
     }
 
-    public int getCreditos() {
+    public String getCreditos() {
         return creditos;
     }
 
-    public void setCreditos(int creditos) {
+    public void setCreditos(String creditos) {
         this.creditos = creditos;
     }
 
@@ -99,5 +106,28 @@ public class ClsTablaModulosRegistrados implements Serializable {
         this.idModulo = idModulo;
     }
 
+    public String getN_modulo() {
+        return n_modulo;
+    }
+
+    public void setN_modulo(String n_modulo) {
+        this.n_modulo = n_modulo;
+    }
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
+    }
     
 }

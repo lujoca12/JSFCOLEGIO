@@ -54,10 +54,17 @@
                     <br></br>
                     <p:message for="display"/>
                     <p:commandButton rendered="#{mbVAsistencia.estado eq 1 ? false:true}" value="Guardar" update="frmRegistrarAsist,msgsAsist" styleClass="anchoBotones" icon="ui-icon-disk"
-                                     actionListener="#{mbVAsistencia.registrar()}" />
+                                     actionListener="#{mbVAsistencia.registrar()}">
+                        <p:confirm header="Registro de Asistencias" message="Esta completamente seguro de realizar esta acción" icon="ui-icon-alert" />
+                    </p:commandButton>
                         
                     
                     <h:outputText id="display" value="" />
+                    
+                    <p:confirmDialog global="true" styleClass="change-position">
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                    </p:confirmDialog>
 
                 </p:panel>
                 

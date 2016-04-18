@@ -213,7 +213,7 @@ public class MbVNotas implements Serializable {
                                     bandera = false;
                                     lstTblNotasReg.add(new ClsTblNotas(modulos.getId(),
                                             modulos.getDescripcion(),
-                                            modulos.getCreditos(),
+                                            modulos.getCreditos().toString(),
                                             nota.getId(),
                                             nota.getNota().doubleValue(),
                                             nota.getObservacion(),
@@ -225,7 +225,7 @@ public class MbVNotas implements Serializable {
                         if(bandera){
                             lstTblNotasReg.add(new ClsTblNotas(modulos.getId(),
                                     modulos.getDescripcion(),
-                                    modulos.getCreditos(),
+                                    modulos.getCreditos().toString(),
                                     0,
                                     0.0,
                                     "",
@@ -258,8 +258,11 @@ public class MbVNotas implements Serializable {
                                 modulo.getDescripcion() + " (" + modulo.getPromocion().getMaestria().getDescripcion() + ")",
                                 modulo.getUsuario().getId(),
                                 modulo.getUsuario().getApellidos() + " " + modulo.getUsuario().getNombres(),
-                                modulo.getCreditos(),
-                                modulo.getId()));
+                                modulo.getCreditos().toString(),
+                                modulo.getId(),
+                                modulo.getN_modulo(),
+                                modulo.getFechaInicio(),
+                                modulo.getFechaFin()));
                     }
                 }
             }

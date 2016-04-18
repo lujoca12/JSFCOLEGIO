@@ -27,8 +27,9 @@ public class ClsTablaMaestrias implements Serializable {
     private int cuotas;
     private int idUsuario;
     private String nombresUsuarios;
+    private String n_resolucion;
 
-    public ClsTablaMaestrias(int idMaestria, String descripcionM, char estado, int idPromocion, int descripcionP, Date fechaResolucion, Date fechaInicio, Date fechaFin, int cupo, int cuotas, int idUsuario, String nombresUsuarios) {
+    public ClsTablaMaestrias(int idMaestria, String descripcionM, char estado, int idPromocion, int descripcionP, Date fechaResolucion, Date fechaInicio, Date fechaFin, int cupo, int cuotas, int idUsuario, String nombresUsuarios, String n_resolucion) {
         this.idMaestria = idMaestria;
         this.descripcionM = descripcionM;
         this.estado = estado;
@@ -41,6 +42,7 @@ public class ClsTablaMaestrias implements Serializable {
         this.cuotas = cuotas;
         this.idUsuario = idUsuario;
         this.nombresUsuarios = nombresUsuarios;
+        this.n_resolucion = n_resolucion;
     }
 
     public int getIdMaestria() {
@@ -137,6 +139,14 @@ public class ClsTablaMaestrias implements Serializable {
 
     public void setDescripcionP(int descripcionP) {
         this.descripcionP = descripcionP;
+    }
+
+    public String getN_resolucion() {
+        return n_resolucion;
+    }
+
+    public void setN_resolucion(String n_resolucion) {
+        this.n_resolucion = n_resolucion;
     }
     
 }

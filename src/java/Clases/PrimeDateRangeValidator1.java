@@ -27,16 +27,25 @@ public class PrimeDateRangeValidator1 implements Validator{
             return;
         }
          
-        //Leave the null handling of startDate to required="true"
-        Object startDateValue = component.getAttributes().get("txtFechaInicio1");
+        Object startDateValue = component.getAttributes().get("txtFechaInicio");
+        Object endDateValue = component.getAttributes().get("txtFechaFin");
+        Date startDate = null;
+        Date endDate = null;
         //System.out.println("Fecha Obtenida: "+startDateValue);
-        if (startDateValue==null) {
+        if (startDateValue==null && endDateValue == null) {
             return;
+        }else if(startDateValue==null && endDateValue != null){
+            
+            startDate = (Date)value;
+            endDate = (Date)endDateValue;
+        }else if(startDateValue!=null && endDateValue == null){
+            
+            startDate = (Date)startDateValue;
+            endDate = (Date)value;
         }
         
         
-        Date startDate = (Date)startDateValue;
-        Date endDate = (Date)value;
+        
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(startDate);
         int anioInicio = calendar.get(Calendar.YEAR);
@@ -44,7 +53,7 @@ public class PrimeDateRangeValidator1 implements Validator{
         calendar.setTime(endDate);
         int anioFin = calendar.get(Calendar.YEAR);
         
-        if (endDate.before(startDate) || endDate.equals(startDate) || (anioFin - anioInicio) < 2 ) {
+        if (endDate.before(startDate) || endDate.equals(startDate)) {
              FacesMessage message = new FacesMessage("La fecha Final no puede ser igual o menor que la inicial.");
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(message);

@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @author server
  */
-public class ClsTablaMaestrias implements Serializable {
+public class ClsTablaMaestriaPromocion implements Serializable {
     
     private static final long serialVersionUID = 1L;
     private int idMaestria;
@@ -29,7 +29,7 @@ public class ClsTablaMaestrias implements Serializable {
     private String nombresUsuarios;
     private String n_resolucion;
 
-    public ClsTablaMaestrias(int idMaestria, String descripcionM, char estado, int idPromocion, int descripcionP, Date fechaResolucion, Date fechaInicio, Date fechaFin, int cupo, int cuotas, int idUsuario, String nombresUsuarios, String n_resolucion) {
+    public ClsTablaMaestriaPromocion(int idMaestria, String descripcionM, char estado, int idPromocion, int descripcionP, Date fechaResolucion, Date fechaInicio, Date fechaFin, int cupo, int cuotas, int idUsuario, String nombresUsuarios, String n_resolucion) {
         this.idMaestria = idMaestria;
         this.descripcionM = descripcionM;
         this.estado = estado;

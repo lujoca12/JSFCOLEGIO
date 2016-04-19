@@ -20,6 +20,7 @@ public interface InterfaceMaestrias {
     public List<Maestria> getTodasMaestrias() throws Exception;
     public List<Maestria> getMaestriasxDescripcion(String descrpcion) throws Exception;
     public Maestria getMaestrias(String idMaestria) throws Exception;
+    public List<Maestria> getMaestrias() throws Exception;
     public boolean update(Maestria tMaestria) throws Exception;
-    
+    public boolean delete(Maestria tMaestria) throws Exception;
 }

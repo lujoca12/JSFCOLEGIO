@@ -95,6 +95,19 @@ public class DaoTMaestrias implements InterfaceMaestrias{
         sesion.close();
         return lstMaestrias;
     }
+    
+    @Override
+    public List<Maestria> getMaestrias() throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String hql="from Maestria m where m.estado = '1' order by m.descripcion asc";
+        Query query = sesion.createQuery(hql);
+
+        List<Maestria> lstMaestrias=(List<Maestria>) query.list();
+        sesion.close();
+        return lstMaestrias;
+    }
 
     @Override
     public Maestria getMaestrias(String idMaestria) throws Exception {
@@ -103,7 +116,40 @@ public class DaoTMaestrias implements InterfaceMaestrias{
 
     @Override
     public boolean update(Maestria tMaestria) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean band = false;
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        try {
+            sesion.update(tMaestria);
+            band = true;
+            tx.commit();
+            sesion.close();
+        } catch (Exception e) {
+            tx.rollback();
+            band = false;
+        }
+        
+        return band;
+    }
+    
+    @Override
+    public boolean delete(Maestria tMaestria) throws Exception {
+        boolean band = false;
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        try {
+            sesion.delete(tMaestria);
+            band = true;
+            tx.commit();
+            sesion.close();
+        } catch (Exception e) {
+            tx.rollback();
+            band = false;
+        }
+        
+        return band;
     }
 
     @Override

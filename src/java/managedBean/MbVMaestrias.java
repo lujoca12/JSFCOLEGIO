@@ -5,8 +5,10 @@
  */
 package managedBean;
 
-import Clases.ClsTablaMaestrias;
+import Clases.ClsMaestria;
+import Clases.ClsTablaMaestriaPromocion;
 import Clases.ClsProfesor;
+import Clases.ClsTablaMaestria;
 import Dao.DaoTMaestrias;
 import Dao.DaoTPromocion;
 import Dao.DaoTUsuario;
@@ -40,8 +42,15 @@ public class MbVMaestrias implements Serializable{
     private Maestria tMaestria;
     private Promocion tPromocion;
     
-    private ClsTablaMaestrias clsTblMaestria;
-    private List<ClsTablaMaestrias> lstTblMaestria;
+    private ClsTablaMaestriaPromocion clsTblMaestriaPromocion;
+    private List<ClsTablaMaestriaPromocion> lstTblMaestriaPromocion;
+    
+    
+    private ClsTablaMaestria clsTablamaestria;
+    private List<ClsTablaMaestria> lstTablamaestria;
+    
+    private ClsMaestria themeMaestria; 
+    private List<ClsMaestria> lstThemeMaestria;
     
     private ClsProfesor theme; 
     private List<ClsProfesor> lstTheme;
@@ -58,9 +67,10 @@ public class MbVMaestrias implements Serializable{
         tPromocion = new Promocion();
         tPromocion.setFechaInicio(date);
         llenarCboDirector();
+        llenarCboMaestria();
+        cargarTablaMaestriaPromocion();
         cargarTablaMaestria();
     }
-    
     
     public List<String> completeText(String query) {
         DaoTMaestrias daoTmaestria = new DaoTMaestrias();
@@ -121,18 +131,42 @@ public class MbVMaestrias implements Serializable{
         return lstTheme;
     }
 
-    public ClsTablaMaestrias getClsTblMaestria() {
-        return clsTblMaestria;
+    public ClsTablaMaestriaPromocion getClsTblMaestria() {
+        return clsTblMaestriaPromocion;
     }
 
-    public void setClsTblMaestria(ClsTablaMaestrias clsTblMaestria) {
-        this.clsTblMaestria = clsTblMaestria;
+    public void setClsTblMaestria(ClsTablaMaestriaPromocion clsTblMaestriaPromocion) {
+        this.clsTblMaestriaPromocion = clsTblMaestriaPromocion;
     }
 
-    public List<ClsTablaMaestrias> getLstTblMaestria() {
-        return lstTblMaestria;
+    public List<ClsTablaMaestriaPromocion> getLstTblMaestria() {
+        return lstTblMaestriaPromocion;
     }
-    
+
+    public ClsTablaMaestria getClsTablamaestria() {
+        return clsTablamaestria;
+    }
+
+    public void setClsTablamaestria(ClsTablaMaestria clsTablamaestria) {
+        this.clsTablamaestria = clsTablamaestria;
+    }
+
+    public List<ClsTablaMaestria> getLstTablamaestria() {
+        return lstTablamaestria;
+    }
+
+    public ClsMaestria getThemeMaestria() {
+        return themeMaestria;
+    }
+
+    public void setThemeMaestria(ClsMaestria themeMaestria) {
+        this.themeMaestria = themeMaestria;
+    }
+
+    public List<ClsMaestria> getLstThemeMaestria() {
+        return lstThemeMaestria;
+    }
+
     public void llenarCboDirector(){
         this.lstTheme = new ArrayList<ClsProfesor>();
          try {
@@ -148,6 +182,27 @@ public class MbVMaestrias implements Serializable{
             
         }
     }
+    
+    public void llenarCboMaestria(){
+        this.lstThemeMaestria = new ArrayList<ClsMaestria>();
+         try {
+            DaoTMaestrias daoTmaestria = new DaoTMaestrias();
+            
+            List<Maestria> lstMaestria = daoTmaestria.getMaestrias();
+            this.lstThemeMaestria.clear();
+            this.lstThemeMaestria.add(new ClsMaestria(-1,"Ninguno","Ninguno",0));
+            
+            for(Maestria maestria: lstMaestria){
+                
+                this.lstThemeMaestria.add(new ClsMaestria(maestria.getId(),
+                        maestria.getDescripcion(),
+                        maestria.getDescripcion(),
+                        maestria.getId()));
+            }
+        } catch (Exception ex) {
+            
+        }
+    }
 
     public ClsProfesor getTheme() {
         return theme;
@@ -157,10 +212,10 @@ public class MbVMaestrias implements Serializable{
         this.theme = theme;
     }
     
-    public void cargarTablaMaestria(){
-        lstTblMaestria = new ArrayList<>();
+    public void cargarTablaMaestriaPromocion(){
+        lstTblMaestriaPromocion = new ArrayList<>();
         try {
-            lstTblMaestria.clear();
+            lstTblMaestriaPromocion.clear();
             DaoTPromocion daoTmodulo = new DaoTPromocion();
             //lstPromocion = null;
             lstPromocion = daoTmodulo.getPromocionesMaestrias();
@@ -168,7 +223,7 @@ public class MbVMaestrias implements Serializable{
             if(lstPromocion != null){
                 if(lstPromocion.size() > 0){
                     for(Promocion promocion : lstPromocion){
-                        lstTblMaestria.add(new ClsTablaMaestrias(promocion.getMaestria().getId(),
+                        lstTblMaestriaPromocion.add(new ClsTablaMaestriaPromocion(promocion.getMaestria().getId(),
                                 promocion.getMaestria().getDescripcion(),promocion.getMaestria().getEstado(),
                                 promocion.getId(),promocion.getDescripcion(),promocion.getFechaResolucion(),promocion.getFechaInicio(),
                                 promocion.getFechaFin(),promocion.getCupo(),promocion.getNCuotas(),promocion.getIdUsuario(),promocion.getUsuario(),
@@ -181,62 +236,93 @@ public class MbVMaestrias implements Serializable{
         }
     }
     
+    public void cargarTablaMaestria(){
+        lstTablamaestria = new ArrayList<>();
+        try {
+            lstTablamaestria.clear();
+            DaoTMaestrias daoTmaestria = new DaoTMaestrias();
+            List<Maestria> lstMaestria = daoTmaestria.getMaestrias();
+            
+            if(lstMaestria != null){
+                if(lstMaestria.size() > 0){
+                    for(Maestria maestria : lstMaestria){
+                        lstTablamaestria.add(new ClsTablaMaestria(maestria.getId(),
+                                maestria.getDescripcion(),
+                                maestria.getEstado()));
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 
     public void registrar(){
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(tPromocion.getFechaFin() );
-//        int anioInicio = calendar.get(Calendar.YEAR);
-//        
-//        calendar.setTime(endDate);
-//        int anioFin = calendar.get(Calendar.YEAR);
-//        if()
-        DaoTMaestrias daoTmaestrias = new DaoTMaestrias();
+
         DaoTPromocion daoTpromocion = new DaoTPromocion();
+        boolean band = false;
+
+        //Variable para saber si esta registrada ya la maestria promocion
+        boolean repetida = false;
+
+        try {
+            //Aqui obtnego el id del usuario que seleccione
+            tPromocion.setIdUsuario(this.theme.getId());
+            tPromocion.setUsuario(this.theme.getName());
+
+            //Establesco en 1 para habilitarlo
+            tMaestria.setEstado('1');
+
+            int i = 0;
+
+            i = daoTpromocion.getUltimoidPromocion(this.themeMaestria.getDisplayName());
+            tPromocion.setDescripcion(i + 1);
+            tMaestria.setId(this.themeMaestria.getId());
+            tPromocion.setMaestria(tMaestria);
+            //Si la maestria existe comparo que no este repetida
+            repetida = daoTpromocion.existe(tPromocion);
+            if (!repetida) {
+                msg = daoTpromocion.registrar(tPromocion);
+            }
+
+        } catch (Exception e) {
+            vaciarCajas();
+        }
+
+        if (repetida) {
+            mensajesError("Registro repetido");
+        } else {
+            cargarTablaMaestriaPromocion();
+            vaciarCajas();
+            if (msg) {
+                mensajesOk("Datos procesados correctamente");
+            } else {
+                mensajesError("Error al procesar datos");
+            }
+        }
+        
+        
+    }
+    
+    public void registrarMaestria(){
+        DaoTMaestrias daoTmaestrias = new DaoTMaestrias();
         boolean band = false;
         
         //Variable para saber si esta registrada ya la maestria promocion
         boolean repetida = false;
         
         try {
-            //Aqui obtnego el id del usuario que seleccione
-            tPromocion.setIdUsuario(this.theme.getId());
-            tPromocion.setUsuario(this.theme.getName());
-            
-            //Establesco en 1 para habilitarlo
             tMaestria.setEstado('1');
-            
             //invocando al metodo que obtienesi ya esta la maestria ingresada
             List<Maestria> lstMaestria = (List<Maestria>)daoTmaestrias.getMaestriasxDescripcion(tMaestria.getDescripcion());
-            
-            int i = 0;
-            
-            //Si la maestria esta registrada entonces sera mayor que cero
+
             if(lstMaestria.size() > 0){
-                i = daoTpromocion.getUltimoidPromocion(tMaestria.getDescripcion());
-                tPromocion.setDescripcion(i+1);
-                tMaestria.setId(lstMaestria.get(0).getId());
-                tPromocion.setMaestria(tMaestria);
-                //Si la maestria existe comparo que no este repetida
-                repetida = daoTpromocion.existe(tPromocion);
-                if(!repetida)
-                    msg = daoTpromocion.registrar(tPromocion);
+                repetida = true;
             }
             else{
                 //Si la maestria no existe se la registra
-                band =  daoTmaestrias.registrar(tMaestria);
-            }
-            //Compruebo que la maestria la registre en la bd
-            if(band){
-               tPromocion.setDescripcion(i+1);
-               tPromocion.setMaestria(tMaestria);
-               msg = daoTpromocion.registrar(tPromocion);
-            }
-            
-            try {
-                //daoTpromocion.existe(tPromocion);
-                
-            } catch (Exception ex) {
-                Logger.getLogger(MbVMaestrias.class.getName()).log(Level.SEVERE, null, ex);
+                msg =  daoTmaestrias.registrar(tMaestria);
             }
             
         } catch (Exception e) {
@@ -253,8 +339,6 @@ public class MbVMaestrias implements Serializable{
                 else
                     mensajesError("Error al procesar datos");
         }
-        
-        
     }
     
     private void vaciarCajas(){
@@ -262,6 +346,7 @@ public class MbVMaestrias implements Serializable{
         tPromocion = new Promocion();
         idDirector = 0;
         llenarCboDirector();
+        llenarCboMaestria();
     }
     
     private void mensajesOk(String msg){
@@ -276,28 +361,28 @@ public class MbVMaestrias implements Serializable{
     public void onRowEdit(RowEditEvent event) {
         DaoTPromocion daoTpromocion = new DaoTPromocion();
         Promocion promocion = new Promocion();
-        promocion.setCupo(((ClsTablaMaestrias) event.getObject()).getCupo());
-        promocion.setNCuotas(((ClsTablaMaestrias) event.getObject()).getCuotas());
-        promocion.setDescripcion(((ClsTablaMaestrias) event.getObject()).getDescripcionP());
+        promocion.setCupo(((ClsTablaMaestriaPromocion) event.getObject()).getCupo());
+        promocion.setNCuotas(((ClsTablaMaestriaPromocion) event.getObject()).getCuotas());
+        promocion.setDescripcion(((ClsTablaMaestriaPromocion) event.getObject()).getDescripcionP());
         
         if(theme== null){
-            promocion.setIdUsuario(((ClsTablaMaestrias) event.getObject()).getIdUsuario());
-            promocion.setUsuario(((ClsTablaMaestrias) event.getObject()).getNombresUsuarios());
+            promocion.setIdUsuario(((ClsTablaMaestriaPromocion) event.getObject()).getIdUsuario());
+            promocion.setUsuario(((ClsTablaMaestriaPromocion) event.getObject()).getNombresUsuarios());
         }else{
             promocion.setIdUsuario(theme.getId());
             promocion.setUsuario(theme.getName());
         }
-        promocion.setFechaResolucion(((ClsTablaMaestrias) event.getObject()).getFechaResolucion());
-        promocion.setFechaInicio(((ClsTablaMaestrias) event.getObject()).getFechaInicio());
-        promocion.setFechaFin(((ClsTablaMaestrias) event.getObject()).getFechaFin());
+        promocion.setFechaResolucion(((ClsTablaMaestriaPromocion) event.getObject()).getFechaResolucion());
+        promocion.setFechaInicio(((ClsTablaMaestriaPromocion) event.getObject()).getFechaInicio());
+        promocion.setFechaFin(((ClsTablaMaestriaPromocion) event.getObject()).getFechaFin());
         Maestria maestria = new Maestria();
-        maestria.setId(((ClsTablaMaestrias) event.getObject()).getIdMaestria());
-        promocion.setId(((ClsTablaMaestrias) event.getObject()).getIdPromocion());
+        maestria.setId(((ClsTablaMaestriaPromocion) event.getObject()).getIdMaestria());
+        promocion.setId(((ClsTablaMaestriaPromocion) event.getObject()).getIdPromocion());
         promocion.setMaestria(maestria);
-        promocion.setN_resolucion(((ClsTablaMaestrias) event.getObject()).getN_resolucion());
+        promocion.setN_resolucion(((ClsTablaMaestriaPromocion) event.getObject()).getN_resolucion());
         try {
             msg = daoTpromocion.update(promocion);
-            cargarTablaMaestria();
+            cargarTablaMaestriaPromocion();
         } catch (Exception ex) {
             Logger.getLogger(MbVMaestrias.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -309,10 +394,32 @@ public class MbVMaestrias implements Serializable{
         }
         
     }
-    public void onRowCancel(RowEditEvent event) {
-        //cargarTablaMaestria();
+    
+    public void onRowEditMaestria(RowEditEvent event) {
+        DaoTMaestrias daoTmaestrias = new DaoTMaestrias();
+        tMaestria.setId(((ClsTablaMaestria) event.getObject()).getIdMaestria());
+        tMaestria.setDescripcion(((ClsTablaMaestria) event.getObject()).getDescripcionM());
+        tMaestria.setEstado('1');
+        
+        try {
+            msg = daoTmaestrias.update(tMaestria);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(MbVMaestrias.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if (msg) {
+            cargarTablaMaestria();
+            mensajesOk("Datos actualizados correctamente");
+        } else {
+            mensajesError("Error al actualizar datos");
+        }
     }
-    public void onDelete(ClsTablaMaestrias clsTblMaestrias){
+    
+    public void onRowCancel(RowEditEvent event) {
+        //cargarTablaMaestriaPromocion();
+    }
+    public void onDelete(ClsTablaMaestriaPromocion clsTblMaestrias){
         DaoTPromocion daoTpromocion = new DaoTPromocion();
         Promocion promocion = new Promocion();
         
@@ -320,6 +427,27 @@ public class MbVMaestrias implements Serializable{
         
         try {
             msg = daoTpromocion.delete(promocion);
+            cargarTablaMaestriaPromocion();
+        } catch (Exception ex) {
+            Logger.getLogger(MbVMaestrias.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if (msg) {
+            mensajesOk("Dato eliminado correctamente");
+        } else {
+            mensajesError("Error al eliminar datos");
+        }
+    }
+    
+    public void onDeleteMaestria(ClsTablaMaestria clsTblMaestriaD){
+        DaoTMaestrias daoTmaestrias = new DaoTMaestrias();
+        
+        tMaestria.setId(clsTblMaestriaD.getIdMaestria());
+        tMaestria.setDescripcion(clsTblMaestriaD.getDescripcionM());
+        tMaestria.setEstado('0');
+        
+        try {
+            msg = daoTmaestrias.update(tMaestria);
             cargarTablaMaestria();
         } catch (Exception ex) {
             Logger.getLogger(MbVMaestrias.class.getName()).log(Level.SEVERE, null, ex);

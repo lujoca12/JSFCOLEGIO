@@ -18,168 +18,41 @@
                         <p:focus context="panel"/>
                         <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
                             <p:outputLabel for="txtDescripcionMaestria" styleClass="labelDerecha" value="Descripción:" />
-                            <p:autoComplete id="txtDescripcionMaestria" required="true" maxlength="150" value="#{mbVMaestrias.tMaestria.descripcion}" completeMethod="#{mbVMaestrias.completeText}" />
-
-
-                            <p:outputLabel for="txtDirector" value="Director:" styleClass="labelDerecha"  />
-                            <p:selectOneMenu id="txtDirector" value="#{mbVMaestrias.theme}" converter="themeConverter" required="true"
-                                             effect="fade" var="t" filter="true" filterMatchMode="contains">
-                                <f:selectItems value="#{mbVMaestrias.lstTheme}" var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme}" />
-                                <p:column style="width:10%">
-                                    <h:outputText styleClass="ui-theme ui-theme-#{t.name}" />
-                                </p:column>
-
-                                <p:column>
-                                    <h:outputText value="#{t.displayName}" />
-                                </p:column>
-                            </p:selectOneMenu>
-
-
-                            <p:outputLabel for="txtFechaInicio" value="Fecha inicio:" styleClass="labelDerecha" />
-                            <p:calendar id="txtFechaInicio" onkeypress="return permite(event, 'none')" locale="es" value="#{mbVMaestrias.tPromocion.fechaInicio}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" >
-                                <p:ajax event="dateSelect" update="txtFechaFin" />
-                                <p:ajax event="blur" update="txtFechaFin" />
-                                <f:attribute name="txtFechaFin" value="#{mbVMaestrias.tPromocion.fechaFin}"/>
-                                <f:validator validatorId="primeDateRangeValidator" />
-                            </p:calendar>
-
-
-                            <p:outputLabel for="txtFechaFin" value="Fecha fin:" styleClass="labelDerecha" />
-                            <p:calendar id="txtFechaFin" mindate="#{mbVMaestrias.tPromocion.fechaInicio}" locale="es" value="#{mbVMaestrias.tPromocion.fechaFin}" onkeypress="return permite(event, 'none')" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" >
-                                <f:attribute name="txtFechaInicio" value="#{mbVMaestrias.tPromocion.fechaInicio}"/>
-                                <f:validator validatorId="primeDateRangeValidator" />
-                            </p:calendar>
-
-
-                            <p:outputLabel for="txtCupos" styleClass="labelDerecha" value="Cupos:" />
-                            <p:inputText id="txtCupos" value="#{mbVMaestrias.tPromocion.cupo}" required="true" onkeypress="return isNumberKey(event)">
-                                <f:validateLongRange minimum="1"/>
-                            </p:inputText>
-
-
-                            <p:outputLabel for="txtNCuotas" styleClass="labelDerecha" value="# Cuotas" />
-                            <p:inputText id="txtNCuotas" value="#{mbVMaestrias.tPromocion.NCuotas}" required="true" onkeypress="return isNumberKey(event)">
-                                <f:validateLongRange minimum="1"/>
-                            </p:inputText>
-
+                            <p:inputText id="txtDescripcionMaestria" value="#{mbVMaestrias.tMaestria.descripcion}" required="true" maxlength="150"/>
 
                             <h:outputText id="display" value="" />
                             <p:commandButton value="Guardar" update="form,msgs" styleClass="anchoBotones" icon="ui-icon-disk"
-                                             actionListener="#{mbVMaestrias.registrar()}" />
-
-
-
+                                             actionListener="#{mbVMaestrias.registrarMaestria()}" />
                         </p:panelGrid>
                     </p:panel>
                 </p:tab>
                 <br></br>
                 <p:panel id="panelTabla" style="height: 30%;">
                     <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->   
-                    <p:dataTable class="tblDatos" id="tblMaestria" var="lstTbl" value="#{mbVMaestrias.lstTblMaestria}"
+                    <p:dataTable class="tblDatos" id="tblMaestria" var="lstTbl" value="#{mbVMaestrias.lstTablamaestria}"
                                  editable="true" scrollable="true" scrollHeight="150">
-                        <p:ajax event="rowEdit" listener="#{mbVMaestrias.onRowEdit}" update=":form:tblMaestria :form:msgs" />
+                        <p:ajax event="rowEdit" listener="#{mbVMaestrias.onRowEditMaestria}" update=":form:tblMaestria :form:msgs" />
                         <p:ajax event="rowEditCancel" listener="#{mbVMaestrias.onRowCancel}" update=":form:msgs" />
+                        
+                        <p:column headerText="Codigo" style="width: 10%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.idMaestria}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="txtDescripcionMaestria" disabled="true" value="#{lstTbl.idMaestria}" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
 
-                        <p:column headerText="Maestria" style="width: 20%;">
+                        <p:column headerText="Maestria" style="width: 50%;">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.descripcionM}" /></f:facet>
                                 <f:facet name="input">
-                                    <p:autoComplete readonly="true" style="width:100%" required="true" maxlength="150" value="#{lstTbl.descripcionM}" completeMethod="#{mbVMaestrias.completeText}" />
-                                    <!--<p:inputText value="#{lstTbl.descripcionM}" style="width:100%"/>-->
+                                    <p:inputText value="#{lstTbl.descripcionM}" required="true" maxlength="150" style="width:100%"/>
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="Director" style="width: 20%;">
-                            <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{lstTbl.nombresUsuarios}" /></f:facet>
-                                <f:facet name="input">
-                                    <p:selectOneMenu value="#{mbVMaestrias.theme}" converter="themeConverter"
-                                                     effect="fade" var="t" filter="true" filterMatchMode="contains">
-                                        <f:selectItem itemLabel="#{lstTbl.nombresUsuarios}"/>
-                                        <f:selectItems value="#{mbVMaestrias.lstTheme}" var="theme" noSelectionValue="#{lstTbl.nombresUsuarios}" itemLabel="#{theme.displayName}" itemValue="#{theme}" />
-                                        <p:column style="width:10%">
-                                            <h:outputText styleClass="ui-theme ui-theme-#{t.name}" />
-                                        </p:column>
-
-                                        <p:column>
-                                            <h:outputText value="#{t.displayName}" />
-                                        </p:column>
-                                    </p:selectOneMenu>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-
-                        <p:column headerText="F. Resolución" style="width: 13%;">
-                            <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{lstTbl.fechaResolucion}" /></f:facet>
-                                <f:facet name="input">
-                                    <p:calendar id="txtFechaResol" locale="es" value="#{lstTbl.fechaResolucion}" effect="fold" pattern="dd-MM-yyyy" mask="true" >
-                                    </p:calendar>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-                        
-                        <p:column headerText="Resolución" style="width: 13%;">
-                            <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{lstTbl.n_resolucion}" /></f:facet>
-                                <f:facet name="input">
-                                    <p:inputText value="#{lstTbl.n_resolucion}" maxlength="25" style="width:100%" label="text"/>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-
-                        <p:column headerText="F. Inicio" style="width: 11%;">
-                            <p:cellEditor>
-                                <f:facet name="output">
-                                    <h:outputText value="#{lstTbl.fechaInicio}" />
-                                </f:facet>
-                                <f:facet name="input">
-                                    <p:calendar id="txtFechaInicio" onkeypress="return permite(event, 'none')" locale="es" value="#{lstTbl.fechaInicio}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" >
-                                        <p:ajax event="dateSelect" update="txtFechaFin" />
-                                        <p:ajax event="blur" update="txtFechaFin" />
-                                        <f:attribute name="txtFechaFin" value="#{lstTbl.fechaFin}"/>
-                                        <f:validator validatorId="primeDateRangeValidator" />
-                                    </p:calendar>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-
-                        <p:column headerText="F. Fin" style="width: 12%;">
-                            <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{lstTbl.fechaFin}" /></f:facet>
-                                <f:facet name="input">
-                                    <p:calendar id="txtFechaFin" mindate="#{lstTbl.fechaInicio}" locale="es" value="#{lstTbl.fechaFin}" onkeypress="return permite(event, 'none')" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" >
-                                        <f:attribute name="txtFechaInicio" value="#{lstTbl.fechaInicio}"/>
-                                        <f:validator validatorId="primeDateRangeValidator" />
-                                    </p:calendar>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-
-                        <p:column headerText="Cupos" style="width: 7%;">
-                            <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{lstTbl.cupo}" /></f:facet>
-                                <f:facet name="input">
-                                    <p:inputText value="#{lstTbl.cupo}" onkeypress="return isNumberKey(event)" style="width:100%" label="text">
-                                        <f:validateLongRange minimum="1"/>
-                                    </p:inputText>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-
-                        <p:column headerText="Cuotas" style="width: 7%;">
-                            <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{lstTbl.cuotas}"   /></f:facet>
-                                <f:facet name="input">
-                                    <p:inputText value="#{lstTbl.cuotas}" onkeypress="return isNumberKey(event)" style="width:100%" label="text">
-                                        <f:validateLongRange minimum="1"/>
-                                    </p:inputText>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-
-                        <p:column style="width:8%;">
+                        <p:column style="width:10%;">
                             <p:rowEditor />   
                         </p:column>
                     </p:dataTable>
@@ -188,14 +61,6 @@
                         <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
                     </p:confirmDialog>
                 </p:panel>
-                <p:tabView>
-                    <p:tab title="Maestrias">
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <p:outputLabel for="txtDescripcionMaestria" styleClass="labelDerecha" value="Descripción:" />
-                            <p:autoComplete id="txtDescripcionMaestria" required="true" maxlength="150" value="#{mbVMaestrias.tMaestria.descripcion}" completeMethod="#{mbVMaestrias.completeText}" />
-                        </h:panelGrid>
-                    </p:tab>
-                </p:tabView>
             </h:form>
         </div>
     </h:body>

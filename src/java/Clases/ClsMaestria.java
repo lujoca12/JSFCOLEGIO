@@ -15,14 +15,18 @@ public class ClsMaestria {
     private String displayName; 
     private String name;
     private int idPromocion;
+    private int añoInicio;
+    private int añoFin;
      
     public ClsMaestria() {}
  
-    public ClsMaestria(int id, String displayName, String name, int idPromocion) {
+    public ClsMaestria(int id, String displayName, String name, int idPromocion, int añoInicio, int añoFin) {
         this.id = id;
         this.displayName = displayName;
         this.name = name;
         this.idPromocion = idPromocion;
+        this.añoInicio = añoInicio;
+        this.añoFin = añoFin;
     }
  
     public int getId() {
@@ -56,6 +60,23 @@ public class ClsMaestria {
     public void setIdPromocion(int idPromocion) {
         this.idPromocion = idPromocion;
     }
+
+    public int getAñoInicio() {
+        return añoInicio;
+    }
+
+    public void setAñoInicio(int añoInicio) {
+        this.añoInicio = añoInicio;
+    }
+
+    public int getAñoFin() {
+        return añoFin;
+    }
+
+    public void setAñoFin(int añoFin) {
+        this.añoFin = añoFin;
+    }
+    
     
      
     @Override

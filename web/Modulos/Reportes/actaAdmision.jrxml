@@ -1,27 +1,426 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2201f372-e150-4f8c-8381-608800651f5e">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="37"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#FFEFEF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#FFEFEF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#FFEFEF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 5">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 6">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 7">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="logoUteq" class="java.io.InputStream"/>
+	<parameter name="logoPostgrado" class="java.io.InputStream"/>
+	<parameter name="idMaestria" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<queryString language="hql">
+		<![CDATA[select est.cedPasaporte as cedula, est.apellidos as apellidos, est.nombres as nombres, maest.descripcion as maestria, pr.fechaInicio as fechaInicio, pr.fechaFin as fechaFin, pr.descripcion as n_promoc, matr.NMatricula as n_matricula, pr.fechaResolucion as fechaResolucion, pr.n_resolucion as n_resolucion  from Estudiante est 
+inner join est.solicitudInscripcions solinscr 
+inner join solinscr.matriculas matr 
+inner join solinscr.promocion pr
+inner join pr.maestria maest 
+where maest.id = $P{idMaestria}  and maest.estado = '1' and matr.estado = '1']]>
+	</queryString>
+	<field name="cedula" class="java.lang.String"/>
+	<field name="apellidos" class="java.lang.String"/>
+	<field name="nombres" class="java.lang.String"/>
+	<field name="maestria" class="java.lang.String"/>
+	<field name="fechaInicio" class="java.util.Date"/>
+	<field name="fechaFin" class="java.util.Date"/>
+	<field name="n_promoc" class="java.lang.Integer"/>
+	<field name="n_matricula" class="java.lang.String"/>
+	<field name="fechaResolucion" class="java.util.Date"/>
+	<field name="n_resolucion" class="java.lang.String"/>
+	<variable name="cedula_1" class="java.lang.Integer" resetType="Page" calculation="Count">
+		<variableExpression><![CDATA[$F{cedula}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch"/>
+		<band height="89" splitType="Stretch">
+			<frame>
+				<reportElement x="0" y="0" width="555" height="89" uuid="840a5be5-8a23-44ca-961b-ad192f205e59"/>
+				<frame>
+					<reportElement x="70" y="3" width="417" height="43" uuid="c64a01f0-ff4a-411a-a297-2e1dc03bd821"/>
+					<staticText>
+						<reportElement x="3" y="0" width="414" height="20" uuid="db6de5c3-feaf-4845-a79a-0d69bf24fdac"/>
+						<textElement textAlignment="Center">
+							<font fontName="Arial" size="16" isBold="true"/>
+						</textElement>
+						<text><![CDATA[UNIVERSIDAD TÉCNICA ESTATAL DE QUEVEDO]]></text>
+					</staticText>
+					<staticText>
+						<reportElement x="133" y="20" width="155" height="20" uuid="4db4676e-7e7d-4110-848d-d5bad337c926"/>
+						<textElement textAlignment="Center">
+							<font fontName="Arial" size="12" isBold="true"/>
+						</textElement>
+						<text><![CDATA[UNIDAD DE POSTGRADO]]></text>
+					</staticText>
+				</frame>
+				<line>
+					<reportElement mode="Opaque" x="0" y="85" width="555" height="1" backcolor="#000000" uuid="f76b9f1f-6e00-4ccb-8319-1ce15cb56184"/>
+					<graphicElement>
+						<pen lineWidth="2.0"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="209" y="62" width="142" height="20" uuid="e61d3621-be33-4128-b32b-b34b4c3c6a19"/>
+					<textElement>
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[Quevedo - Los Rios - Ecuador]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="110" y="37" width="88" height="20" uuid="65c4441e-6031-4c60-89f0-0e8d8fdeac14"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[Telefax:        2759 244]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="110" y="52" width="88" height="20" uuid="cc3e8643-1f9b-4a1e-9e23-f7d928535656"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[Conmutador: 2751 430]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="358" y="37" width="97" height="20" uuid="9ad86ac8-2f90-4932-ad4d-493e4b0eaf47"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[P.O.BOX Guayaquil: 5620]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="358" y="52" width="97" height="20" uuid="0f583153-611b-428b-a743-05a076bcb7f6"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[P.O.BOX Quevedo 73]]></text>
+				</staticText>
+				<image>
+					<reportElement x="0" y="19" width="70" height="60" uuid="97358e7c-15f8-47e9-ae40-f0ff99cc36a7"/>
+					<imageExpression><![CDATA[$P{logoUteq}]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="483" y="19" width="70" height="60" uuid="d26fea93-eca8-4a6b-879a-76b41a40b1c0"/>
+					<imageExpression><![CDATA[$P{logoPostgrado}]]></imageExpression>
+				</image>
+			</frame>
+		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="76" splitType="Stretch">
+			<textField>
+				<reportElement x="110" y="0" width="345" height="14" uuid="06ab05cf-b25f-47d9-970a-b3b205a496cb"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ACTA DE ADMISIÓN Nº "+$F{n_promoc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="14" width="345" height="14" uuid="60511a5d-e2d6-4f8d-b9fc-fcf57fb40a21"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["MAESTRÍA EN "+$F{maestria}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="28" width="553" height="48" uuid="322e8dec-c664-49a5-b072-624e1dd94063"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA["En la ciudad de Quevedo con fecha "+$F{fechaInicio}+", se da inicio al proceso de matriculación de "+
+"la Maestría en "+$F{maestria}+", "+$F{n_promoc}+" Promoción, a los profesionales que cumplan con los requisitos "+
+"que según la Ley establecen para estos casos, según nómina que se detalla:"]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch"/>
+		<band height="18" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="70" height="14" uuid="10874dee-9535-459d-a715-ae4009d7d536"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CÉDULA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="73" y="0" width="181" height="18" uuid="4ffff755-4cb5-443f-bc86-d0d26c4536a7"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[APELLIDOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="258" y="0" width="169" height="14" uuid="112ce93c-874a-43b6-95e4-06dd3b15ef28"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="427" y="2" width="100" height="14" uuid="1b594159-bcc0-4438-9418-362ad280f318"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº MATR.]]></text>
+			</staticText>
+		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="70" height="14" uuid="a1ba7198-b572-4aa3-b0b2-f8b31b194baa"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="73" y="0" width="181" height="14" uuid="012005ac-2e00-4b3a-a6d0-118d53002a61"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{apellidos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="258" y="0" width="169" height="14" uuid="c7552a07-28ec-4c3f-b4cd-94c2524815bb"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="427" y="0" width="100" height="14" uuid="5395a983-4b6d-44ee-a0ca-53bc36592000"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{n_matricula}]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="14" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="119" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="553" height="65" uuid="772501c3-d0ee-4e4a-b200-48e76448407d"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Una vez matriculados los profesionales establecidos para este paralelo según el Proyecto aprobado por el CONESUP de "+
+"fecha "+$F{fechaResolucion}+" con resolución "+$F{n_resolucion}+", se cierra este proceso con la "+
+"fecha "+$F{fechaFin}+"."+
+"Para constancia, certifica el secretario(a) académico de la Unidad de Postgrado, Quevedo de la Universidad Técnica Estatal de "+
+"Quevedo."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="180" y="97" width="199" height="20" uuid="edcd1bb3-6255-4a8c-b520-ddf27f14f363"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Secretario(a) Académico Postgrado - UTEQ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="427" y="97" width="80" height="20" uuid="afc3f014-cdfa-4505-acec-191fe345c0b8"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="507" y="97" width="40" height="20" uuid="5f02299d-1c72-4e90-9982-04eb393b673a"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

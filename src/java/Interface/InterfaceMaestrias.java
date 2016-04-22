@@ -18,6 +18,7 @@ public interface InterfaceMaestrias {
     public boolean registrarMaestriaPromocion(Maestria tMaestria,Promocion tPromocion) throws Exception;
     public boolean registrar(Maestria tMaestria) throws Exception;
     public List<Maestria> getTodasMaestrias() throws Exception;
+    public List<Maestria> getMaestriaPromocion() throws Exception;
     public List<Maestria> getMaestriasxDescripcion(String descrpcion) throws Exception;
     public Maestria getMaestrias(String idMaestria) throws Exception;
     public List<Maestria> getMaestrias() throws Exception;

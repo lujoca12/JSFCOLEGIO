@@ -17,6 +17,7 @@ import Pojo.Promocion;
 import Pojo.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -190,14 +191,15 @@ public class MbVMaestrias implements Serializable{
             
             List<Maestria> lstMaestria = daoTmaestria.getMaestrias();
             this.lstThemeMaestria.clear();
-            this.lstThemeMaestria.add(new ClsMaestria(-1,"Ninguno","Ninguno",0));
+            this.lstThemeMaestria.add(new ClsMaestria(-1,"Ninguno","Ninguno",0,0,0));
             
             for(Maestria maestria: lstMaestria){
-                
                 this.lstThemeMaestria.add(new ClsMaestria(maestria.getId(),
                         maestria.getDescripcion(),
                         maestria.getDescripcion(),
-                        maestria.getId()));
+                        maestria.getId(),
+                        0,
+                        0));
             }
         } catch (Exception ex) {
             

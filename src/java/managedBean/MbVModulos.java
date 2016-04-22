@@ -35,22 +35,22 @@ import org.primefaces.event.RowEditEvent;
  */
 @Named(value = "mbVModulos")
 @ViewScoped
-public class MbVModulos implements Serializable{
+public class MbVModulos implements Serializable {
 
     private List<SelectItem> lstMaestria;
-    
-    private ClsProfesor theme; 
+
+    private ClsProfesor theme;
     private List<ClsProfesor> lstTheme;
-    
-    private ClsMaestria themeMaestria; 
+
+    private ClsMaestria themeMaestria;
     private List<ClsMaestria> lstThemeMaestria;
-    
+
     private List<SelectItem> lstTodosModulos;
-    
+
     private ClsTablaModulosRegistrados clsTblModulosReg;
     private List<ClsTablaModulosRegistrados> lstTblModulosReg;
     private List<ClsTablaModulosRegistrados> filteredCars;
-    
+
     private int idMaestria;
     private int idDocente;
     private String moduloDescripcion;
@@ -58,7 +58,7 @@ public class MbVModulos implements Serializable{
     private Modulo tModulo;
     private List<Modulo> lstModulo;
     private String creditos;
-    
+
     public MbVModulos() {
         cargarTablaModulos();
         tModulo = new Modulo();
@@ -74,7 +74,7 @@ public class MbVModulos implements Serializable{
     public void setFilteredCars(List<ClsTablaModulosRegistrados> filteredCars) {
         this.filteredCars = filteredCars;
     }
-    
+
     public int getIdMaestria() {
         return idMaestria;
     }
@@ -98,12 +98,12 @@ public class MbVModulos implements Serializable{
     public void settModulo(Modulo tModulo) {
         this.tModulo = tModulo;
     }
-    
+
     public List<ClsProfesor> getLstTheme() {
-        
+
         return lstTheme;
     }
-    
+
     public ClsProfesor getTheme() {
         return theme;
     }
@@ -131,7 +131,7 @@ public class MbVModulos implements Serializable{
     public void setModuloDescripcion(String moduloDescripcion) {
         this.moduloDescripcion = moduloDescripcion;
     }
-    
+
     public List<ClsTablaModulosRegistrados> getLstTblModulosReg() {
         return lstTblModulosReg;
     }
@@ -155,12 +155,12 @@ public class MbVModulos implements Serializable{
     public List<SelectItem> getLstTodosModulos() {
         this.lstTodosModulos = new ArrayList<SelectItem>();
         try {
-            String[] modulos={
-                "Mòdulo I", "Mòdulo II", "Mòdulo III", "Mòdulo IV","Mòdulo V",
-                "Mòdulo VI", "Mòdulo VII", "Mòdulo VIII", "Mòdulo IX","Mòdulo X",
-                "Mòdulo XI", "Mòdulo XII", "Mòdulo XIII", "Mòdulo XIV","Mòdulo XV",
-                "Mòdulo XVI", "Mòdulo XVII", "Mòdulo XVIII", "Mòdulo XIX","Mòdulo XX",
-                "Mòdulo XXI", "Mòdulo XXII", "Mòdulo XXIII", "Mòdulo XXIV","Mòdulo XXV",
+            String[] modulos = {
+                "Mòdulo I", "Mòdulo II", "Mòdulo III", "Mòdulo IV", "Mòdulo V",
+                "Mòdulo VI", "Mòdulo VII", "Mòdulo VIII", "Mòdulo IX", "Mòdulo X",
+                "Mòdulo XI", "Mòdulo XII", "Mòdulo XIII", "Mòdulo XIV", "Mòdulo XV",
+                "Mòdulo XVI", "Mòdulo XVII", "Mòdulo XVIII", "Mòdulo XIX", "Mòdulo XX",
+                "Mòdulo XXI", "Mòdulo XXII", "Mòdulo XXIII", "Mòdulo XXIV", "Mòdulo XXV",
                 "Otro"
             };
             lstTodosModulos.clear();
@@ -173,25 +173,24 @@ public class MbVModulos implements Serializable{
         }
         return lstTodosModulos;
     }
-    
-    
-    public void cargarTablaModulos(){
+
+    public void cargarTablaModulos() {
         lstTblModulosReg = new ArrayList<>();
         try {
             lstTblModulosReg.clear();
             DaoTModulo daoTmodulo = new DaoTModulo();
             lstModulo = daoTmodulo.getTblModulos();
-            
-            if(lstModulo != null){
-                if(lstModulo.size() > 0){
-                    for(Modulo modulo : lstModulo){
-                        lstTblModulosReg.add(new ClsTablaModulosRegistrados(modulo.getPromocion().getMaestria().getId(), 
-                                modulo.getPromocion().getMaestria().getDescripcion()+" (Dir.(a)"+modulo.getPromocion().getUsuario()+")", 
-                                modulo.getPromocion().getId(), 
-                                modulo.getDescripcion(), 
-                                modulo.getUsuario().getId(), 
-                                modulo.getUsuario().getApellidos()+" "+modulo.getUsuario().getNombres(), 
-                                modulo.getCreditos().toString(), 
+
+            if (lstModulo != null) {
+                if (lstModulo.size() > 0) {
+                    for (Modulo modulo : lstModulo) {
+                        lstTblModulosReg.add(new ClsTablaModulosRegistrados(modulo.getPromocion().getMaestria().getId(),
+                                modulo.getPromocion().getMaestria().getDescripcion() + " (Dir.(a)" + modulo.getPromocion().getUsuario() + ")",
+                                modulo.getPromocion().getId(),
+                                modulo.getDescripcion(),
+                                modulo.getUsuario().getId(),
+                                modulo.getUsuario().getApellidos() + " " + modulo.getUsuario().getNombres(),
+                                modulo.getCreditos().toString(),
                                 modulo.getId(),
                                 modulo.getN_modulo(),
                                 modulo.getFechaInicio(),
@@ -203,39 +202,42 @@ public class MbVModulos implements Serializable{
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void llenarCboDocente(){
+
+    public void llenarCboDocente() {
         this.lstTheme = new ArrayList<ClsProfesor>();
-         try {
+        try {
             DaoTUsuario daoTusuario = new DaoTUsuario();
-            
+
             List<Usuario> lstUsuario = daoTusuario.getDocentes();
             this.lstTheme.clear();
-            this.lstTheme.add(new ClsProfesor(-1,"Ninguno","Ninguno"));
-            for(Usuario user: lstUsuario){
-                this.lstTheme.add(new ClsProfesor(user.getId(), user.getApellidos()+" "+user.getNombres(), user.getApellidos()+" "+user.getNombres()));
+            this.lstTheme.add(new ClsProfesor(-1, "Ninguno", "Ninguno"));
+            for (Usuario user : lstUsuario) {
+                this.lstTheme.add(new ClsProfesor(user.getId(), user.getApellidos() + " " + user.getNombres(), user.getApellidos() + " " + user.getNombres()));
             }
         } catch (Exception ex) {
-            
+
         }
     }
-    
-    public void llenarCboMaestria(){
+
+    public void llenarCboMaestria() {
         this.lstThemeMaestria = new ArrayList<ClsMaestria>();
-         try {
+        try {
             DaoTMaestrias daoTmaestria = new DaoTMaestrias();
             DaoTPromocion daoTpromocion = new DaoTPromocion();
-            
+
             List<Promocion> lstPromocion = daoTpromocion.getPromocionesMaestrias();
             this.lstThemeMaestria.clear();
-            this.lstThemeMaestria.add(new ClsMaestria(-1,"Ninguno","Ninguno",0));
-            
-            for(Promocion promocion: lstPromocion){
-                
-                this.lstThemeMaestria.add(new ClsMaestria(promocion.getId(),promocion.getMaestria().getDescripcion()+" ("+promocion.getUsuario()+")",promocion.getMaestria().getDescripcion(),promocion.getId()));
+            this.lstThemeMaestria.add(new ClsMaestria(-1, "Ninguno", "Ninguno", 0, 0, 0));
+
+            for (Promocion promocion : lstPromocion) {
+
+                this.lstThemeMaestria.add(new ClsMaestria(promocion.getId(),
+                        promocion.getMaestria().getDescripcion() + " (" + promocion.getUsuario() + ")",
+                        promocion.getMaestria().getDescripcion(), promocion.getId(),
+                        0, 0));
             }
         } catch (Exception ex) {
-            
+
         }
     }
 
@@ -243,25 +245,25 @@ public class MbVModulos implements Serializable{
         this.lstMaestria = new ArrayList<SelectItem>();
         try {
             DaoTMaestrias daoTmaestria = new DaoTMaestrias();
-            
+
             List<Maestria> lstMaestria = daoTmaestria.getTodasMaestrias();
             lstMaestria.clear();
-            for(Maestria maestria: lstMaestria){
-                SelectItem maestriaItem = new SelectItem(maestria.getId(),maestria.getDescripcion());
+            for (Maestria maestria : lstMaestria) {
+                SelectItem maestriaItem = new SelectItem(maestria.getId(), maestria.getDescripcion());
                 this.lstMaestria.add(maestriaItem);
             }
         } catch (Exception ex) {
-            
+
         }
         return lstMaestria;
     }
 
-    public void registrar(){
+    public void registrar() {
         boolean repetida = false;
         try {
-            
+
             DaoTModulo daoTmodulo = new DaoTModulo();
-            
+
             DaoTPromocion daoTpromocion = new DaoTPromocion();
             Promocion promocion = new Promocion();
             promocion.setId(this.themeMaestria.getIdPromocion());
@@ -269,73 +271,74 @@ public class MbVModulos implements Serializable{
             bigdec = new BigDecimal(Double.parseDouble(creditos));
             tModulo.setCreditos(bigdec);
             tModulo.setPromocion(promocion);
-            
+
             Usuario usuario = new Usuario();
             usuario.setId(theme.getId());
             tModulo.setUsuario(usuario);
-            
+
             repetida = daoTmodulo.existe(tModulo);
-            if(!repetida)
+            if (!repetida) {
                 msg = daoTmodulo.registrar(tModulo);
-            
+            }
+
             cargarTablaModulos();
-            
+
         } catch (Exception ex) {
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(repetida){
+        if (repetida) {
             mensajesError("Registro repetido");
-        }else{
-            if(msg)
-            mensajesOk("Datos procesados correctamente");
-        else
-            mensajesError("Error al procesar datos");
+        } else {
+            if (msg) {
+                mensajesOk("Datos procesados correctamente");
+            } else {
+                mensajesError("Error al procesar datos");
+            }
             vaciarCajas();
         }
-        
-         
+
     }
-    
-    private void vaciarCajas(){
+
+    private void vaciarCajas() {
         idDocente = 0;
         idMaestria = 0;
         tModulo = new Modulo();
         llenarCboDocente();
         creditos = "";
         //llenarCboMaestria();
-        
+
     }
-    
-    private void mensajesOk(String msg){
+
+    private void mensajesOk(String msg) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje de la Aplicacion", msg);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
-    private void mensajesError(String msg){
+
+    private void mensajesError(String msg) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje de la Aplicacion", msg);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
-    
+
     public void onRowEdit(RowEditEvent event) {
-        
+
         DaoTModulo daoTmodulo = new DaoTModulo();
         Usuario user = new Usuario();
         Promocion promocion = new Promocion();
-        
-        
-        if(theme == null && themeMaestria == null){
+
+        if (theme == null && themeMaestria == null) {
             user.setId(((ClsTablaModulosRegistrados) event.getObject()).getIdUsuario());
             promocion.setId(((ClsTablaModulosRegistrados) event.getObject()).getIdPromocion());
-        }else if(theme == null && themeMaestria != null){
+        } else if (theme == null && themeMaestria != null) {
             promocion.setId(themeMaestria.getIdPromocion());
             user.setId(((ClsTablaModulosRegistrados) event.getObject()).getIdUsuario());
-        }else if(themeMaestria == null && theme != null){
+        } else if (themeMaestria == null && theme != null) {
             user.setId(theme.getId());
             promocion.setId(((ClsTablaModulosRegistrados) event.getObject()).getIdPromocion());
-        }else{
+        } else {
             promocion.setId(themeMaestria.getIdPromocion());
             user.setId(theme.getId());
         }
-        
+
         try {
             Modulo modulo = new Modulo();
             modulo.setPromocion(promocion);
@@ -350,19 +353,22 @@ public class MbVModulos implements Serializable{
             modulo.setN_modulo(((ClsTablaModulosRegistrados) event.getObject()).getN_modulo());
             msg = daoTmodulo.update(modulo);
             cargarTablaModulos();
-            
+
         } catch (Exception ex) {
             Logger.getLogger(MbVTablaPermisos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(msg)
+        if (msg) {
             mensajesOk("Datos actualizados correctamente");
-        else
+        } else {
             mensajesError("Error al actualizar datos");
+        }
     }
+
     public void onRowCancel(RowEditEvent event) {
-        
+
     }
-    public void onDelete(ClsTablaModulosRegistrados clsTblModulos){
+
+    public void onDelete(ClsTablaModulosRegistrados clsTblModulos) {
         DaoTModulo daoTmodulo = new DaoTModulo();
         Modulo modulo = new Modulo();
         modulo.setId(clsTblModulos.getIdModulo());
@@ -372,10 +378,11 @@ public class MbVModulos implements Serializable{
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
         }
         cargarTablaModulos();
-        if(msg)
+        if (msg) {
             mensajesOk("Dato eliminado correctamente");
-        else
+        } else {
             mensajesError("Error al eliminar dato");
+        }
     }
-   
+
 }

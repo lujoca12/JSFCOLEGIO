@@ -108,6 +108,19 @@ public class DaoTMaestrias implements InterfaceMaestrias{
         sesion.close();
         return lstMaestrias;
     }
+    
+    @Override
+    public List<Maestria> getMaestriaPromocion() throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String hql="from Maestria m inner join fetch m.promocions pr where m.estado = '1' order by m.descripcion asc";
+        Query query = sesion.createQuery(hql);
+
+        List<Maestria> lstMaestrias=(List<Maestria>) query.list();
+        sesion.close();
+        return lstMaestrias;
+    }
 
     @Override
     public Maestria getMaestrias(String idMaestria) throws Exception {

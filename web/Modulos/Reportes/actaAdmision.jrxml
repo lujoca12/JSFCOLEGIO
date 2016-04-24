@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2201f372-e150-4f8c-8381-608800651f5e">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="37"/>
+	<property name="ireport.y" value="25"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -191,8 +191,161 @@
 			<style backcolor="#EFF7FF"/>
 		</conditionalStyle>
 	</style>
-	<parameter name="logoUteq" class="java.io.InputStream"/>
-	<parameter name="logoPostgrado" class="java.io.InputStream"/>
+	<style name="table 8">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 9">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 9_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 9_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 9_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 10">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 10_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 10_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 10_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 11">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 11_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 11_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 11_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 12">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 12_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 12_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 12_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 13">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 13_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 13_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 13_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="dataset" uuid="b0065a05-dda2-4945-9b9e-9ff5fb081be8">
+		<queryString language="hql">
+			<![CDATA[from Estudiante]]>
+		</queryString>
+		<field name="apellidos" class="java.lang.String"/>
+		<field name="cedPasaporte" class="java.lang.String"/>
+		<field name="celular" class="java.lang.String"/>
+		<field name="datosDoms" class="java.util.Set"/>
+		<field name="datosLabs" class="java.util.Set"/>
+		<field name="datosNacs" class="java.util.Set"/>
+		<field name="dscColegiatura" class="java.lang.Integer"/>
+		<field name="email" class="java.lang.String"/>
+		<field name="estadoCivil" class="java.lang.Character"/>
+		<field name="fechaNac" class="java.util.Date"/>
+		<field name="id" class="java.lang.Integer"/>
+		<field name="nombres" class="java.lang.String"/>
+		<field name="paisOrigen" class="java.lang.String"/>
+		<field name="sexo" class="java.lang.Character"/>
+		<field name="solicitudInscripcions" class="java.util.Set"/>
+		<field name="tesises" class="java.util.Set"/>
+	</subDataset>
+	<parameter name="logoUteq" class="java.lang.String"/>
+	<parameter name="logoPostgrado" class="java.lang.String"/>
 	<parameter name="idMaestria" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
 	</parameter>
@@ -221,15 +374,15 @@ where maest.id = $P{idMaestria}  and maest.estado = '1' and matr.estado = '1']]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="89" splitType="Stretch">
+		<band height="82" splitType="Stretch">
 			<frame>
-				<reportElement x="0" y="0" width="555" height="89" uuid="840a5be5-8a23-44ca-961b-ad192f205e59"/>
+				<reportElement x="0" y="0" width="555" height="82" uuid="840a5be5-8a23-44ca-961b-ad192f205e59"/>
 				<frame>
-					<reportElement x="70" y="3" width="417" height="43" uuid="c64a01f0-ff4a-411a-a297-2e1dc03bd821"/>
+					<reportElement x="70" y="8" width="417" height="43" uuid="c64a01f0-ff4a-411a-a297-2e1dc03bd821"/>
 					<staticText>
 						<reportElement x="3" y="0" width="414" height="20" uuid="db6de5c3-feaf-4845-a79a-0d69bf24fdac"/>
 						<textElement textAlignment="Center">
-							<font fontName="Arial" size="16" isBold="true"/>
+							<font fontName="Arial" size="14" isBold="true"/>
 						</textElement>
 						<text><![CDATA[UNIVERSIDAD TÉCNICA ESTATAL DE QUEVEDO]]></text>
 					</staticText>
@@ -242,9 +395,9 @@ where maest.id = $P{idMaestria}  and maest.estado = '1' and matr.estado = '1']]>
 					</staticText>
 				</frame>
 				<line>
-					<reportElement mode="Opaque" x="0" y="85" width="555" height="1" backcolor="#000000" uuid="f76b9f1f-6e00-4ccb-8319-1ce15cb56184"/>
+					<reportElement mode="Opaque" x="0" y="74" width="555" height="1" backcolor="#000000" uuid="f76b9f1f-6e00-4ccb-8319-1ce15cb56184"/>
 					<graphicElement>
-						<pen lineWidth="2.0"/>
+						<pen lineWidth="1.0"/>
 					</graphicElement>
 				</line>
 				<staticText>
@@ -283,12 +436,12 @@ where maest.id = $P{idMaestria}  and maest.estado = '1' and matr.estado = '1']]>
 					<text><![CDATA[P.O.BOX Quevedo 73]]></text>
 				</staticText>
 				<image>
-					<reportElement x="0" y="19" width="70" height="60" uuid="97358e7c-15f8-47e9-ae40-f0ff99cc36a7"/>
-					<imageExpression><![CDATA[$P{logoUteq}]]></imageExpression>
+					<reportElement x="8" y="11" width="50" height="46" uuid="97358e7c-15f8-47e9-ae40-f0ff99cc36a7"/>
+					<imageExpression><![CDATA[new File($P{logoUteq})]]></imageExpression>
 				</image>
 				<image>
-					<reportElement x="483" y="19" width="70" height="60" uuid="d26fea93-eca8-4a6b-879a-76b41a40b1c0"/>
-					<imageExpression><![CDATA[$P{logoPostgrado}]]></imageExpression>
+					<reportElement x="498" y="11" width="50" height="46" uuid="d26fea93-eca8-4a6b-879a-76b41a40b1c0"/>
+					<imageExpression><![CDATA[new File($P{logoPostgrado})]]></imageExpression>
 				</image>
 			</frame>
 		</band>
@@ -323,29 +476,29 @@ where maest.id = $P{idMaestria}  and maest.estado = '1' and matr.estado = '1']]>
 	<columnHeader>
 		<band height="18" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="70" height="14" uuid="10874dee-9535-459d-a715-ae4009d7d536"/>
-				<textElement textAlignment="Center">
+				<reportElement style="table_TH" x="11" y="0" width="73" height="18" backcolor="#FFFFFF" uuid="10874dee-9535-459d-a715-ae4009d7d536"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CÉDULA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="73" y="0" width="181" height="18" uuid="4ffff755-4cb5-443f-bc86-d0d26c4536a7"/>
-				<textElement>
+				<reportElement style="table_TH" x="84" y="0" width="181" height="18" backcolor="#FFFFFF" uuid="4ffff755-4cb5-443f-bc86-d0d26c4536a7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[APELLIDOS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="258" y="0" width="169" height="14" uuid="112ce93c-874a-43b6-95e4-06dd3b15ef28"/>
-				<textElement>
+				<reportElement style="table_TH" x="265" y="0" width="169" height="18" backcolor="#FFFFFF" uuid="112ce93c-874a-43b6-95e4-06dd3b15ef28"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOMBRES]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="427" y="2" width="100" height="14" uuid="1b594159-bcc0-4438-9418-362ad280f318"/>
-				<textElement textAlignment="Center">
+				<reportElement style="table_TH" x="434" y="0" width="104" height="18" backcolor="#FFFFFF" uuid="1b594159-bcc0-4438-9418-362ad280f318"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nº MATR.]]></text>
@@ -353,31 +506,31 @@ where maest.id = $P{idMaestria}  and maest.estado = '1' and matr.estado = '1']]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="16" splitType="Stretch">
+		<band height="15" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="70" height="14" uuid="a1ba7198-b572-4aa3-b0b2-f8b31b194baa"/>
-				<textElement textAlignment="Center">
+				<reportElement style="table_CH" x="11" y="0" width="73" height="15" backcolor="#FFFFFF" uuid="a1ba7198-b572-4aa3-b0b2-f8b31b194baa"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="73" y="0" width="181" height="14" uuid="012005ac-2e00-4b3a-a6d0-118d53002a61"/>
-				<textElement>
+				<reportElement style="table_CH" x="84" y="0" width="181" height="15" backcolor="#FFFFFF" uuid="012005ac-2e00-4b3a-a6d0-118d53002a61"/>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{apellidos}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[' '.concat($F{apellidos}.toUpperCase())]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="258" y="0" width="169" height="14" uuid="c7552a07-28ec-4c3f-b4cd-94c2524815bb"/>
-				<textElement>
+				<reportElement style="table_CH" x="265" y="0" width="169" height="15" backcolor="#FFFFFF" uuid="c7552a07-28ec-4c3f-b4cd-94c2524815bb"/>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[' '.concat($F{nombres}.toUpperCase())]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="427" y="0" width="100" height="14" uuid="5395a983-4b6d-44ee-a0ca-53bc36592000"/>
-				<textElement textAlignment="Center">
+				<reportElement style="table_CH" x="434" y="0" width="104" height="15" backcolor="#FFFFFF" uuid="5395a983-4b6d-44ee-a0ca-53bc36592000"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{n_matricula}]]></textFieldExpression>
@@ -391,7 +544,7 @@ where maest.id = $P{idMaestria}  and maest.estado = '1' and matr.estado = '1']]>
 		<band height="119" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="553" height="65" uuid="772501c3-d0ee-4e4a-b200-48e76448407d"/>
-				<textElement>
+				<textElement textAlignment="Justified">
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Una vez matriculados los profesionales establecidos para este paralelo según el Proyecto aprobado por el CONESUP de "+
@@ -401,26 +554,19 @@ where maest.id = $P{idMaestria}  and maest.estado = '1' and matr.estado = '1']]>
 "Quevedo."]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="180" y="97" width="199" height="20" uuid="edcd1bb3-6255-4a8c-b520-ddf27f14f363"/>
+				<reportElement x="180" y="80" width="199" height="20" uuid="edcd1bb3-6255-4a8c-b520-ddf27f14f363"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
 				<text><![CDATA[Secretario(a) Académico Postgrado - UTEQ]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="427" y="97" width="80" height="20" uuid="afc3f014-cdfa-4505-acec-191fe345c0b8"/>
-				<textElement textAlignment="Right">
+			<staticText>
+				<reportElement x="180" y="65" width="199" height="20" uuid="653b8ea4-972a-4d57-806b-7d849bec1914"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement x="507" y="97" width="40" height="20" uuid="5f02299d-1c72-4e90-9982-04eb393b673a"/>
-				<textElement>
-					<font fontName="Arial"/>
-				</textElement>
-				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
+				<text><![CDATA[Lcdo(a). Bolivar Yépez Yánez, M.Sc.]]></text>
+			</staticText>
 		</band>
 	</pageFooter>
 </jasperReport>

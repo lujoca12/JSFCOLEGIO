@@ -17,6 +17,7 @@ body .profile-info.dropdown .dropdown-menu li a:hover {
 body .page-container .sidebar-menu {
   background: #00a651;
   color: #009549;
+  /*#1C9626*/
 }
 body .page-container.sidebar-collapsed .sidebar-menu #main-menu > li#search .search-input {
   background-color: #009549 !important;

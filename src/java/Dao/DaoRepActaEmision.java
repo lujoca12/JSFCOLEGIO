@@ -5,12 +5,17 @@
  */
 package Dao;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -64,19 +69,31 @@ public class DaoRepActaEmision {
         realPath += "Modulos\\Reportes\\";
         
         iniciaOperacion();
+        
         param.put(JRHibernateQueryExecuterFactory.PARAMETER_HIBERNATE_SESSION, sesion);
-        param.put("logoUteq",this.getClass().getResourceAsStream(realPath+"logoPostgrado.jpg"));
-        param.put("logoPostgrado",this.getClass().getResourceAsStream(realPath+"logoUTEQoriginal1.jpg"));
+        param.put("logoUteq",realPath+"logoUTEQoriginal1.jpg");
+        param.put("logoPostgrado",realPath+"logoPostgrado.jpg");
         param.put("idMaestria",idMaestria);
         
-        String file = "pdf\\reporte" + sf.format(date.getTime())+ ".pdf";
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        
+        String file = "reporte" + sf.format(date.getTime())+ ".pdf";
         JasperPrint jPrint = null;
         try {
            // JasperReport JReporte = JasperCompileManager.compileReport(realPath+"actaAdmision.jasper");
             jPrint = JasperFillManager.fillReport(realPath+"actaAdmision.jasper", param);
-            JasperViewer.viewReport(jPrint, false);
-            JasperExportManager.exportReportToPdfFile(jPrint, file);
+            JasperExportManager.exportReportToPdfStream(jPrint, baos);
+            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            response.reset();
+            response.setContentType("Aplicacion/pdf");
+            response.setContentLength(baos.size());
+            response.setHeader("Content-disposition", "inline; filename="+file+"");
+            response.getOutputStream().write(baos.toByteArray());
+            response.getOutputStream().flush();
+            response.getOutputStream().close();
+            FacesContext.getCurrentInstance().responseComplete();
             band = true;
+            
         } catch (Exception ex) {
             System.out.println(ex.toString());
             band = false;

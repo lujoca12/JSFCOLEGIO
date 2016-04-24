@@ -84,13 +84,16 @@ public class MbVActaEmision implements Serializable {
     
     public void cargarReporte(){
         DaoRepActaEmision daoReport = new DaoRepActaEmision();
-        msg = daoReport.reporte(this.themeMaestria.getId());
-        
-        if(msg){
-            mensajesOk("Reporte cargado correctamente");
-        }else{
-            mensajesError("error al cargar Reporte");
+        if(themeMaestria != null){
+            msg = daoReport.reporte(this.themeMaestria.getId());
+
+            if (msg) {
+                mensajesOk("Reporte cargado correctamente");
+            } else {
+                mensajesError("error al cargar Reporte");
+            }
         }
+            
     }
     
     private void mensajesOk(String msg){

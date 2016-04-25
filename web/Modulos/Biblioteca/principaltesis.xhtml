@@ -4,14 +4,11 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"      
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:h5="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:jsf="http://xmlns.jcp.org/jsf"
       >
     <h:head>
         <title>Facelet Title</title>
     </h:head>
-    <h:body>
+    <h:body class="undernavigation">
         <ui:composition template="/templates/masterLayout.xhtml">
             <ui:define name="leftContent"></ui:define>
             <ui:define name="content"> 
@@ -20,16 +17,20 @@
                 <h:outputScript name="fileinput.min.js" library="js"/>
                 <h:outputScript name="verFoto.js" library="js"/>
         <div class="container">
-        <ol class="breadcrumb btn-success">
+        <ol class="breadcrumb">
         <li>Repositorio Digital UTEQ</li>
         </ol>
         </div>
+                <div class="container">
+                    <div class="well">
+                        <div class="row">
                 <h1 style="align-content: center">Repositorio Digital Tesis Postgrado UTEQ</h1>
-        <h:form style="width: 500px" >
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    buscar
-                </div>
+                        </div>
+                    </div>
+                </div>                
+        <h:form >
+            <div class="panel panel-default">
+                <div class="panel-heading">Buscar</div>
                 <div class="panel-body">   
                     <p:tab title="Buscar">
                         <h:panelGroup>
@@ -43,7 +44,7 @@
                 </div>
             </div>          
         </h:form>
-        <div class="md-2">
+<!--        <div class="md-2">
             <h3>Otras opciones relacionadas</h3>
             <div id="facets" class="facetsBox row panel">
                 <div id="facet-autor" class="facet col-md-4" style="width: 930px;">
@@ -79,7 +80,7 @@
                     </ul>
                 </div>
             </div> 
-        </div>
+        </div>-->
             </ui:define>
         </ui:composition>
     </h:body>

@@ -20,6 +20,7 @@ public class Notas  implements java.io.Serializable {
      private String notaTexto;
      private Date fecha;
      private String usuario;
+     private String responsable;
 
     public Notas() {
     }
@@ -30,7 +31,7 @@ public class Notas  implements java.io.Serializable {
         this.matricula = matricula;
         this.modulo = modulo;
     }
-    public Notas(int id, Matricula matricula, Modulo modulo, BigDecimal nota, String observacion, Character estado, String notaTexto, Date fecha, String usuario) {
+    public Notas(int id, Matricula matricula, Modulo modulo, BigDecimal nota, String observacion, Character estado, String notaTexto, Date fecha, String usuario, String responsable) {
        this.id = id;
        this.matricula = matricula;
        this.modulo = modulo;
@@ -40,6 +41,7 @@ public class Notas  implements java.io.Serializable {
        this.notaTexto = notaTexto;
        this.fecha = fecha;
        this.usuario = usuario;
+       this.responsable = responsable;
     }
    
     public int getId() {
@@ -106,9 +108,13 @@ public class Notas  implements java.io.Serializable {
         this.usuario = usuario;
     }
 
+    public String getResponsable() {
+        return responsable;
+    }
 
-
-
+    public void setResponsable(String responsable) {
+        this.responsable = responsable;
+    }
 }
 
 

@@ -272,7 +272,7 @@ public class MbVMaestrias implements Serializable{
             //Aqui obtnego el id del usuario que seleccione
             tPromocion.setIdUsuario(this.theme.getId());
             tPromocion.setUsuario(this.theme.getName());
-
+            tPromocion.setEstado('1');
             //Establesco en 1 para habilitarlo
             tMaestria.setEstado('1');
 
@@ -377,6 +377,7 @@ public class MbVMaestrias implements Serializable{
         promocion.setFechaResolucion(((ClsTablaMaestriaPromocion) event.getObject()).getFechaResolucion());
         promocion.setFechaInicio(((ClsTablaMaestriaPromocion) event.getObject()).getFechaInicio());
         promocion.setFechaFin(((ClsTablaMaestriaPromocion) event.getObject()).getFechaFin());
+        promocion.setEstado('1');
         Maestria maestria = new Maestria();
         maestria.setId(((ClsTablaMaestriaPromocion) event.getObject()).getIdMaestria());
         promocion.setId(((ClsTablaMaestriaPromocion) event.getObject()).getIdPromocion());
@@ -426,9 +427,22 @@ public class MbVMaestrias implements Serializable{
         Promocion promocion = new Promocion();
         
         promocion.setId(clsTblMaestrias.getIdPromocion());
+        promocion.setCupo(clsTblMaestrias.getCupo());
+        promocion.setDescripcion(clsTblMaestrias.getDescripcionP());
+        promocion.setEstado('0');
+        promocion.setFechaFin(clsTblMaestrias.getFechaFin());
+        promocion.setFechaInicio(clsTblMaestrias.getFechaInicio());
+        promocion.setFechaResolucion(clsTblMaestrias.getFechaResolucion());
+        promocion.setIdUsuario(clsTblMaestrias.getIdUsuario());
+        promocion.setNCuotas(clsTblMaestrias.getCuotas());
+        promocion.setN_resolucion(clsTblMaestrias.getN_resolucion());
+        promocion.setUsuario(clsTblMaestrias.getNombresUsuarios());
+        Maestria maestria = new Maestria();
+        maestria.setId(clsTblMaestrias.getIdMaestria());
+        promocion.setMaestria(maestria);
         
         try {
-            msg = daoTpromocion.delete(promocion);
+            msg = daoTpromocion.update(promocion);
             cargarTablaMaestriaPromocion();
         } catch (Exception ex) {
             Logger.getLogger(MbVMaestrias.class.getName()).log(Level.SEVERE, null, ex);

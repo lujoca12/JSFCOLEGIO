@@ -13,6 +13,7 @@ import Dao.DaoTModulo;
 import Pojo.Asistencia;
 import Pojo.Matricula;
 import Pojo.Modulo;
+import Pojo.Usuario;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
@@ -139,9 +140,11 @@ public class MbVAsistencia implements Serializable {
     public void cargarCboModulos() {
         lstCboModulos = new ArrayList<>();
         try {
+            //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
+            Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
             lstCboModulos.clear();
             DaoTModulo daoTmodulo = new DaoTModulo();
-            List<Modulo> lstModulo = daoTmodulo.getCboModulosNotas();
+            List<Modulo> lstModulo = daoTmodulo.getCboModulosNotas(usuario.getId());
 
             if (lstModulo != null) {
                 if (lstModulo.size() > 0) {

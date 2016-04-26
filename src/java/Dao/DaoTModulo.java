@@ -86,17 +86,22 @@ public class DaoTModulo implements InterfaceModulos{
     }
     
     @Override
-    public List<Modulo> getCboModulosNotas() throws Exception {
+    public List<Modulo> getCboModulosNotas(int usuario_id) throws Exception {
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
         
-        //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
-        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");  
-        
+//        //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
+//        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");  
+        String consulta = "";
+        if(usuario_id == 0)
+            consulta = "";
+        else
+            consulta = "user.id="+usuario_id+" and";
+
         String hql="from Modulo modul inner join fetch modul.usuario user inner join fetch  user.tipoUsuario tuser inner join fetch modul.promocion pr inner join fetch pr.maestria maest \n" +
-                    "where user.id="+usuario.getId()+" \n" +
-                    "and (year(current_date) >= year(pr.fechaInicio) and year(current_date)<= year(pr.fechaFin))\n" +
+                    "where "+consulta+" \n" +
+                    "(year(current_date) >= year(pr.fechaInicio) and year(current_date)<= year(pr.fechaFin))\n" +
                     "and (tuser.descripcion like '%Prof%' or tuser.descripcion like '%prof%' or tuser.descripcion like '%Docen%' or tuser.descripcion like '%docent%') order by modul.descripcion asc";
         Query query = sesion.createQuery(hql);
         List<Modulo> lstPermiso=(List<Modulo>) query.list();

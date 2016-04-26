@@ -32,5 +32,8 @@
         <property name="usuario" type="string">
             <column name="usuario" length="100" />
         </property>
+        <property name="responsable" type="string">
+            <column name="responsable" length="100" />
+        </property>
     </class>
 </hibernate-mapping>

@@ -46,7 +46,7 @@
                         
                         <p:column headerText="Nota" style="text-align: center; width: 10%;">
                             <p:inputText value="#{notas.nota}" maxlength="4" required="true"
-                                         onkeypress="return validarNum(event, true)" style="width:100%; text-align: center;">
+                                         disabled="#{mbVNotas.tipo_user eq 0 ? true:false}" onkeypress="return validarNum(event, true)" style="width:100%; text-align: center;">
                             </p:inputText>
                             
                         </p:column>
@@ -54,15 +54,11 @@
                         <p:column headerText="Observación" style="text-align: center; width: 55%;">
                             <p:inputText value="#{notas.observacion}" style="width:100%"/>
                         </p:column>
-                        
-                        
-                    
-
                     </p:dataTable>
                     <br></br>
                     <p:message for="display"/>
                     <p:commandButton value="Guardar" update="frmRegistrarNotas,msgsNotas" styleClass="anchoBotones" icon="ui-icon-disk"
-                                     actionListener="#{mbVNotas.registrar()}" >
+                                     rendered="#{mbVNotas.lstTblNotas.size() eq 0 ? false:true}" actionListener="#{mbVNotas.registrar()}" >
                         <p:confirm header="Registro de Notas" message="Esta completamente seguro de realizar esta acción" icon="ui-icon-alert" />
                     </p:commandButton>
                     <h:outputText id="display" value="" />

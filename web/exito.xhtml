@@ -3,40 +3,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+            xmlns:h5="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-       <h:form id="form">               
-                
-                <p:panel header="Asignar Requisitos">
-                    <p:growl id="msgs" showDetail="true"/>
-                    <p:panelGrid id="panel" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
-
-                        <h:outputLabel for="maestria" value="Seleccionar Maestría: " styleClass="labelDerecha" />
-                        <h:selectOneMenu id="maestria" class="form-control " >
-                            <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
-                            <f:selectItems value="#{maestriaBean.listaMaestrias}"  />    
-                        </h:selectOneMenu>  
-                        <p:message for="maestria"/>
-
-                        <p:outputLabel for="requisitos" value="Descripcion:" styleClass="labelDerecha"/>
-                        <h:selectOneMenu id="requisitos" class="form-control " value="#{requisitosBean.descripcion}" >
-                            <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
-                            <f:selectItems value="#{requisitosBean.listaRequisitos}"  />    
-                        </h:selectOneMenu>  
-                        <p:button value="Agregar" style="width: 50%;"></p:button>
-
-                        <p:pickList id="pickList" value="#{AsignarRequisitosBean.listaRequisitos}" converter="requisitos" var="requisitos" itemLabel="#{requisitos.descripcion}" itemValue="#{requisitos.id}"  />
-
-
-                        <p:message for="display"/>
-                        <p:commandButton value="Guardar" update="form,msgs" styleClass="anchoBotones" icon="ui-icon-disk"
-                                         actionListener="#{requisitosBean.registrar()}" />
-                        <h:outputText id="display" value="" />
-                    </p:panelGrid>
-                </p:panel>
+      <h:form id="form" enctype="multipart/form-data" >
+                     <p:growl id="messages" showDetail="true" />
+                <div class="derecha" style="text-align: center;position: relative;display: inline-block;">
+                                    <div class="kv-avatar center-block" style="width:200px">
+                                        <input id="avatar"  name="avatar" h5:value="#{maestriaBean.a}" type="file" class="file-loading"/>
+                                        
+                                    </div>                    
+                                    <div id="kv-avatar-errors" class="center-block" style="width:200px;display:none;margin-top: 5px;"/>
+                                </div>
+                                    <p:commandButton value="Submit" ajax="false" actionListener="#{maestriaBean.upload}"  />
 
             </h:form>
     </h:body>

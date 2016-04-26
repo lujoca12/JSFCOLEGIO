@@ -27,6 +27,7 @@ public class Promocion  implements java.io.Serializable {
      private Set modulos = new HashSet(0);
      private Set solicitudInscripcions = new HashSet(0);
      private String n_resolucion;
+     private Character estado;
 
     public Promocion() {
     }
@@ -37,7 +38,7 @@ public class Promocion  implements java.io.Serializable {
         this.maestria = maestria;
         this.idUsuario = idUsuario;
     }
-    public Promocion(int id, Maestria maestria, Integer descripcion, Date fechaResolucion, Date fechaInicio, Date fechaFin, Integer cupo, Integer NCuotas, int idUsuario, String usuario, Set requisitosPromos, Set precios, Set modulos, Set solicitudInscripcions, String n_resolucion) {
+    public Promocion(int id, Maestria maestria, Integer descripcion, Date fechaResolucion, Date fechaInicio, Date fechaFin, Integer cupo, Integer NCuotas, int idUsuario, String usuario, Set requisitosPromos, Set precios, Set modulos, Set solicitudInscripcions, String n_resolucion, Character estado) {
        this.id = id;
        this.maestria = maestria;
        this.descripcion = descripcion;
@@ -53,6 +54,15 @@ public class Promocion  implements java.io.Serializable {
        this.modulos = modulos;
        this.solicitudInscripcions = solicitudInscripcions;
        this.n_resolucion = n_resolucion;
+       this.estado = estado;
+    }
+
+    public Character getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Character estado) {
+        this.estado = estado;
     }
    
     public int getId() {

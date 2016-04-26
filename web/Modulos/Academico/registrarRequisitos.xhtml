@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+
+    </h:head>
+    <h:body>
+        <div class="ui-fluid">
+            <h:form id="form">               
+
+                <p:panel header="Registrar Requisitos">
+                    <p:growl id="msgs" showDetail="true"/>
+                    <p:panelGrid id="panel" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
+
+                        <p:outputLabel for="descripcion" value="Descripcion:" styleClass="labelDerecha"/>
+                        <p:inputText id="descripcion" required="true" value="#{requisitosBean.descripcion}" maxlength="255" validatorMessage="Ingrese solo letras.">
+                                    <f:validateRegex pattern="[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]+"/>
+                        </p:inputText>
+                        <p:message for="descripcion"/>
+
+                        <p:outputLabel for="respaldo" value="Se necesita respaldo?:" styleClass="labelDerecha"/>
+                        <p:selectBooleanCheckbox id="respaldo" required="true" value="#{requisitosBean.respaldo}"/>
+                        <p:message for="respaldo"/>
+
+                        <p:message for="display"/>
+                        <p:commandButton value="Guardar" update="form,msgs" styleClass="anchoBotones" icon="ui-icon-disk"
+                                         actionListener="#{requisitosBean.registrar()}" />
+                        <h:outputText id="display" value="" />
+                    </p:panelGrid>
+                </p:panel>
+
+            </h:form>
+        </div>
+    </h:body>
+</html>
+

@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <div class="ui-fluid">
+            <h:form id="form">               
+
+                <p:panel header="Asignar Requisitos">
+                    <p:growl id="msgs" showDetail="true"/>
+                    <p:panelGrid id="panel" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
+
+                        <h:outputLabel for="maestria" value="Seleccionar Maestría: " styleClass="labelDerecha" />
+                        <h:selectOneMenu id="maestria" class="form-control " value="#{AsignarRequisitosBean.idMaestria}"  >
+                            <p:ajax listener="#{AsignarRequisitosBean.onMaestriaChange}" update="promocion" />
+                            <p:ajax listener="#{AsignarRequisitosBean.onMaestriaChange}" update="listaRequisitos" />
+                            <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{AsignarRequisitosBean.maestrias}"  />  
+                        </h:selectOneMenu>  
+                        <p:message for="maestria"/>                        
+
+                        <h:outputLabel for="promocion" value="Seleccionar Promocion: " styleClass="labelDerecha" />
+                        <h:selectOneMenu id="promocion" class="form-control " value="#{AsignarRequisitosBean.idPromo}"  >                            
+                            <p:ajax listener="#{AsignarRequisitosBean.onPromoChange}" update="listaRequisitos" />
+                            <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{AsignarRequisitosBean.promociones}"  />  
+                        </h:selectOneMenu>  
+                        <p:message for="promocion"/> 
+
+                        <h:outputLabel for="listaRequisitos" value="Lista de Requisitos: " styleClass="labelDerecha" />
+                        <p:selectManyCheckbox id="listaRequisitos" value="#{AsignarRequisitosBean.reqSelec}" layout="pageDirection" >                            
+                            <f:selectItems value="#{AsignarRequisitosBean.listaRequisitos}"  />
+                        </p:selectManyCheckbox>
+                        <p:message for="listaRequisitos"/> 
+
+                        <p:message for="display"/>
+                        <p:commandButton value="Guardar" update="form,msgs" styleClass="anchoBotones" icon="ui-icon-disk"
+                                         actionListener="#{AsignarRequisitosBean.registrarReqPromo()}" />
+                        <h:outputText id="display" value="" />
+                    </p:panelGrid>
+                </p:panel>
+
+            </h:form>
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+ 
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+            </p:dialog>
+        </div>
+    </h:body>
+</html>
+

@@ -20,7 +20,16 @@
                 <h:outputScript name="fileinput.min.js" library="js"/>
                 <h:outputScript name="verFoto.js" library="js"/>
                 <h:form id="form" enctype="multipart/form-data" >
-                    <h1 style="text-align: center">Solicitud de Inscripción</h1>
+                    <div class="encabezado">
+                        <h1 style="text-align: center;">Solicitud de Inscripción</h1>     
+
+                        <h:outputLabel for="maestria" value="Seleccionar Maestría: " class="izquierda" style="width: 180px"/>
+                        <h:selectOneMenu id="maestria" class="form-control " style="width: 60%; float: left;">
+                            <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{maestriaBean.listaMaestrias}"  />    
+                        </h:selectOneMenu>  
+                        <input type="button" class="btn btn-primary" id="btn-maestria" style="width: 10%; margin-left: 5px;" value="Ok"></input>
+                    </div>
                     <div id="rootwizard" class="tabbable ">
                         <ul>
                             <li><a href="#tab1" data-toggle="tab" style="pointer-events: none;">Información Personal</a></li>
@@ -90,7 +99,7 @@
                                         <f:selectItem itemLabel="Extranjero" itemValue="Ex" />
                                     </h:selectOneMenu>
                                 </div>                                
-                                    <div id="provinciaNac" class="izquierda">
+                                <div id="provinciaNac" class="izquierda">
                                     <h:outputLabel for="provinciaNac" value="Provincia de Nacimiento: "/>
                                     <h:selectOneMenu id="provinciaNac" class="form-control">
                                         <f:selectItem itemLabel="Los Ríos" itemValue="M" />
@@ -202,7 +211,7 @@
                                     <h:outputLabel for="nregistro" value="Número de registro del Senecyt: " />
                                     <p:inputText  required="true" id="nregistro" class="form-control "/>
                                 </div>
-                                
+
                             </div>
                             <div class="tab-pane" id="tab5">
                                 <div class="izquierda">
@@ -210,7 +219,7 @@
                                     <p:fileUpload mode="simple"  required="true" id="req" />
                                 </div>
                             </div>
-                            
+
                             <ul class="pager wizard limpiar-izq" style="padding-top: 30px;">
                                 <li class="previous first" style="display:none;"><a href="#">First</a></li>
                                 <li class="previous"><a href="#">Anterior</a></li>
@@ -227,27 +236,39 @@
                 <h:outputScript name="validarInscripcion.js" library="js"/> 
                 <script>
                     $(document).ready(function () {
+                        $("#rootwizard").hide();
+                        var val;
                         $("#form\\:paisO").change(function () {
-                            var val= $("#form\\:paisO").val();                            
-                            if(val!=="Ec")
+                             val = $("#form\\:paisO").val();
+                            if (val !== "Ec")
                             {
                                 $("#cantonNac").hide();
                                 $("#provinciaNac").hide();
                                 $("#parroquiaNac").hide();
-                            }else{
+                            } else {
                                 $("#cantonNac").show();
                                 $("#provinciaNac").show();
                                 $("#parroquiaNac").show();
                             }
                         });
                         $("#form\\:universidad").change(function () {
-                            var val= $("#form\\:universidad").val();                               
-                            if(val!=="Otro")
+                             val = $("#form\\:universidad").val();
+                            if (val !== "Otro")
                             {
-                                $("#universidadNueva").hide();                              
-                            }else{
-                                $("#universidadNueva").show();                                
+                                $("#universidadNueva").hide();
+                            } else {
+                                $("#universidadNueva").show();
                             }
+                        });
+                        $("#btn-maestria").click(function(){
+                             val = $("#form\\:maestria").val();
+                             if(val==="")
+                             {
+                                 $("#rootwizard").hide();                                 
+                             }else{                                 
+                                 $("#rootwizard").show();                                 
+                             }
+                             
                         });
                     });
 

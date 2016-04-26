@@ -41,5 +41,8 @@
             </key>
             <one-to-many class="Pojo.Notas" />
         </set>
+        <property name="fechaGraduacion" type="date">
+            <column name="fecha_graduacion" length="13" />
+        </property>
     </class>
 </hibernate-mapping>

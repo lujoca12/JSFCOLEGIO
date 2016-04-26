@@ -21,6 +21,7 @@ public class Matricula  implements java.io.Serializable {
      private Set asistencias = new HashSet(0);
      private Set pagos = new HashSet(0);
      private Set notases = new HashSet(0);
+     private Date fechaGraduacion;
 
     public Matricula() {
     }
@@ -30,7 +31,7 @@ public class Matricula  implements java.io.Serializable {
         this.id = id;
         this.solicitudInscripcion = solicitudInscripcion;
     }
-    public Matricula(int id, SolicitudInscripcion solicitudInscripcion, Date fechaMatricula, Integer dscColegiatura, Character estado, String NMatricula, Set asistencias, Set pagos, Set notases) {
+    public Matricula(int id, SolicitudInscripcion solicitudInscripcion, Date fechaMatricula, Integer dscColegiatura, Character estado, String NMatricula, Set asistencias, Set pagos, Set notases,Date fechaGraduacion) {
        this.id = id;
        this.solicitudInscripcion = solicitudInscripcion;
        this.fechaMatricula = fechaMatricula;
@@ -40,6 +41,15 @@ public class Matricula  implements java.io.Serializable {
        this.asistencias = asistencias;
        this.pagos = pagos;
        this.notases = notases;
+       this.fechaGraduacion=fechaGraduacion;
+    }
+
+    public Date getFechaGraduacion() {
+        return fechaGraduacion;
+    }
+
+    public void setFechaGraduacion(Date fechaGraduacion) {
+        this.fechaGraduacion = fechaGraduacion;
     }
    
     public int getId() {

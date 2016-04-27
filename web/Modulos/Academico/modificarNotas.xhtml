@@ -1,12 +1,98 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
+
     </h:head>
     <h:body>
-        Modificar Notas
+
+        <div class="ui-fluid">
+            <h:form id="frmRegistrarNotas">
+                <p:tab id="personal" title="RegistrarNotas">
+                    <p:panel header="Registrar Notas">
+                        <p:growl id="msgsNotas" showDetail="true" />
+                        <p:focus context="panel"/>
+                        <p:panelGrid id="panel" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
+
+                            <p:outputLabel for="cboModulo" value="Módulos:" styleClass="labelDerecha"/>
+                            <p:selectOneMenu id="cboModulo" value="#{mbVNotas.idModulo}">
+                                <f:selectItem itemLabel="(Escoja un Módulo)" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{mbVNotas.lstCboModulos}" var="modulos" itemLabel="#{modulos.modulo}" itemValue="#{modulos.idModulo}" />
+                                <p:ajax update="frmRegistrarNotas,msgsNotas" listener="#{mbVNotas.cargarTablaRegNotas}" />
+                            </p:selectOneMenu>
+                            <p:message for="cboModulo" />
+                        </p:panelGrid>
+                    </p:panel>
+                </p:tab>
+                <br></br>
+
+                <p:panel id="panelRegistroNotas" rendered="#{mbVNotas.idModulo eq 0 ? false:true}">
+
+                    <h5 style="font-weight: bold;">#{mbVNotas.maestria}</h5>
+
+                    <p:dataTable class="tblDatos" scrollable="false" var="notas" value="#{mbVNotas.lstTblNotas}"
+                                 emptyMessage="No hay Estudiantes para registrar notas">
+                        <p:column headerText="#" style="text-align: center; width: 5%;">
+                            <h:outputText value="#{notas.n_registro}" />
+                        </p:column>
+
+                        <p:column headerText="Estudiante" style="text-align: center; width: 30%;">
+                            <h:outputText value="#{notas.nombresEstudiante}" />
+                        </p:column>
+
+                        <p:column headerText="Nota" style="text-align: center; width: 10%;">
+                            <p:inputText value="#{notas.nota}" maxlength="4" required="true" onclick="this.select()"
+                                         readonly="#{(mbVNotas.tipo_user eq 0 and mbVNotas.estado eq 'A') 
+                                                     or (mbVNotas.tipo_user eq 1 and mbVNotas.estado eq 'A')
+                                                     or (mbVNotas.tipo_user eq 1 and mbVNotas.estado eq 'G')
+                                                     or (mbVNotas.estado eq 'B' and mbVNotas.tipo_user eq 0)
+                                                     or (mbVNotas.estado eq ' ' and mbVNotas.tipo_user eq 0)}" 
+                                         onkeypress="return validarNum(event, true)" style="width:100%; text-align: center;">
+                            </p:inputText>
+
+                        </p:column>
+
+                        <p:column headerText="Observación" style="text-align: center; width: 55%;">
+                            <p:inputText value="#{notas.observacion}" style="width:100%"/>
+                        </p:column>
+                    </p:dataTable>
+                    <br></br>
+                    <p:message for="display"/>
+
+                    <center>
+                        <div>
+                            <p:commandButton value="Eliminar" update="frmRegistrarNotas,msgsNotas" styleClass="anchoBotones" icon="ui-icon-disk"
+                                             actionListener="#{mbVNotas.cargarTablaEdicionRegNotas()}" 
+                                             rendered="#{(mbVNotas.tipo_user eq 0)
+                                                        
+                                                        }" >
+                                <p:confirm header="Registro de Calificaciones" message="Desea guardar las notas?" icon="ui-icon-alert" />
+                            </p:commandButton>
+                        </div>
+                    </center>
+                    <h:outputText id="display" value="" />
+
+                    <p:confirmDialog global="true" styleClass="change-position">
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                    </p:confirmDialog>
+                </p:panel>
+                <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                    <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+                </p:dialog>
+            </h:form>
+
+
+
+
+        </div>
+
+
     </h:body>
 </html>
 

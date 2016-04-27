@@ -55,6 +55,7 @@ public class MbVNotas implements Serializable {
     private int idModulo = 0;
     private int tipo_user;
     private Character estado;
+    private String docente;
     private boolean msg;
 
     public MbVNotas() {
@@ -160,6 +161,14 @@ public class MbVNotas implements Serializable {
 
     public void setEstado(Character estado) {
         this.estado = estado;
+    }
+
+    public String getDocente() {
+        return docente;
+    }
+
+    public void setDocente(String docente) {
+        this.docente = docente;
     }
     
     private void cargarTblMatriculaPromocion() {
@@ -334,7 +343,7 @@ public class MbVNotas implements Serializable {
         int añoFin = 0;
         int cont = 0;
         boolean bandera = true;
-        
+        maestria = "";
         for (int i = 0; i < lstCboModulos.size(); i++) {
             if(lstCboModulos.get(i).getIdModulo() == this.idModulo){
                 maestria = lstCboModulos.get(i).getMaestria();
@@ -344,10 +353,11 @@ public class MbVNotas implements Serializable {
         
         try {
             lstTblNotas.clear();
-
+            estado = ' ';
+            tipo_user = 0;
             DaoTNotas daoTnotas = new DaoTNotas();
             List<Notas> lstNotas = daoTnotas.existe(this.idModulo);
-
+            
             DaoTMatricula daoTmatricula = new DaoTMatricula();
             List<Matricula> lstMatricula = daoTmatricula.getMatriculaRegNotas(this.idModulo);
             
@@ -356,6 +366,7 @@ public class MbVNotas implements Serializable {
             
             if(usuario.getTipoUsuario().getDescripcion().equals("Profesor(a)") || usuario.getTipoUsuario().getDescripcion().equals("Docente") || usuario.getTipoUsuario().getDescripcion().equals("PROFESOR(A)") || usuario.getTipoUsuario().getDescripcion().equals("DOCENTE")){
                 tipo_user = 1;
+            
             }else{
                 tipo_user = 0;
             }
@@ -367,6 +378,9 @@ public class MbVNotas implements Serializable {
                         for (Notas notas : lstNotas) {
                             
                             if (matricula.getId() == notas.getMatricula().getId()) {
+                                
+                                estado = notas.getEstado();
+                                docente = notas.getModulo().getUsuario().getApellidos()+" "+notas.getModulo().getUsuario().getNombres();
                                 bandera = false;
                                 calendar.setTime(notas.getMatricula().getSolicitudInscripcion().getPromocion().getFechaInicio());
                                 añoInicio = calendar.get(Calendar.YEAR);
@@ -425,6 +439,139 @@ public class MbVNotas implements Serializable {
                     bandera = true;
                 }
             }
+            if(estado != null)
+                if(estado.equals('A'))
+                    mensajesOk("Notas ya Registradas");
+            
+            if(usuario.getTipoUsuario().getDescripcion().equals("Profesor(a)") || usuario.getTipoUsuario().getDescripcion().equals("Docente") || usuario.getTipoUsuario().getDescripcion().equals("PROFESOR(A)") || usuario.getTipoUsuario().getDescripcion().equals("DOCENTE")){
+                tipo_user = 1;
+                if(estado != null)
+                    if (estado.equals('G')) {
+                        mensajesOk("Notas ya Registradas");
+                    }
+            }
+                
+
+        } catch (Exception ex) {
+            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void cargarTablaEdicionRegNotas() {
+        lstTblNotas = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        int añoInicio = 0;
+        int añoFin = 0;
+        int cont = 0;
+        boolean bandera = true;
+        maestria = "";
+        for (int i = 0; i < lstCboModulos.size(); i++) {
+            if(lstCboModulos.get(i).getIdModulo() == this.idModulo){
+                maestria = lstCboModulos.get(i).getMaestria();
+                i = lstCboModulos.size();
+            }
+        }
+        
+        try {
+            lstTblNotas.clear();
+            estado = ' ';
+            tipo_user = 0;
+            DaoTNotas daoTnotas = new DaoTNotas();
+            List<Notas> lstNotas = daoTnotas.existe(this.idModulo);
+            
+            DaoTMatricula daoTmatricula = new DaoTMatricula();
+            List<Matricula> lstMatricula = daoTmatricula.getMatriculaRegNotas(this.idModulo);
+            
+            //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
+            Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+            
+            if(usuario.getTipoUsuario().getDescripcion().equals("Profesor(a)") || usuario.getTipoUsuario().getDescripcion().equals("Docente") || usuario.getTipoUsuario().getDescripcion().equals("PROFESOR(A)") || usuario.getTipoUsuario().getDescripcion().equals("DOCENTE")){
+                tipo_user = 1;
+            
+            }else{
+                tipo_user = 0;
+            }
+            
+            if (lstMatricula.size() > 0) {
+                for (Matricula matricula : lstMatricula) {
+
+                    if (lstNotas.size() > 0) {
+                        for (Notas notas : lstNotas) {
+                            
+                            if (matricula.getId() == notas.getMatricula().getId()) {
+                                
+                                estado = notas.getEstado();
+                                docente = notas.getModulo().getUsuario().getApellidos()+" "+notas.getModulo().getUsuario().getNombres();
+                                bandera = false;
+                                calendar.setTime(notas.getMatricula().getSolicitudInscripcion().getPromocion().getFechaInicio());
+                                añoInicio = calendar.get(Calendar.YEAR);
+
+                                calendar.setTime(notas.getMatricula().getSolicitudInscripcion().getPromocion().getFechaFin());
+                                añoFin = calendar.get(Calendar.YEAR);
+
+                                estudiante = notas.getMatricula().getSolicitudInscripcion().getEstudiante().getApellidos() + " " + notas.getMatricula().getSolicitudInscripcion().getEstudiante().getNombres();
+                                cont++;
+                                lstTblNotas.add(new ClsNotas(notas.getMatricula().getSolicitudInscripcion().getEstudiante().getId(),
+                                        estudiante,
+                                        notas.getMatricula().getId(),
+                                        notas.getMatricula().getNMatricula(),
+                                        notas.getMatricula().getFechaMatricula(),
+                                        notas.getMatricula().getSolicitudInscripcion().getPromocion().getId(),
+                                        añoInicio + "-" + añoFin,
+                                        notas.getMatricula().getSolicitudInscripcion().getPromocion().getFechaResolucion(),
+                                        notas.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getId(),
+                                        notas.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
+                                        cont,
+                                        notas.getNota().toString(),
+                                        notas.getObservacion(),
+                                        null,
+                                        true,
+                                        notas.getId()));
+                            }
+                        }
+                    }
+
+                    if (bandera) {
+                        calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaInicio());
+                        añoInicio = calendar.get(Calendar.YEAR);
+
+                        calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaFin());
+                        añoFin = calendar.get(Calendar.YEAR);
+                        estudiante = matricula.getSolicitudInscripcion().getEstudiante().getApellidos() + " " + matricula.getSolicitudInscripcion().getEstudiante().getNombres();
+                        cont++;
+                        lstTblNotas.add(new ClsNotas(matricula.getSolicitudInscripcion().getEstudiante().getId(),
+                                matricula.getSolicitudInscripcion().getEstudiante().getApellidos() + " " + matricula.getSolicitudInscripcion().getEstudiante().getNombres(),
+                                matricula.getId(),
+                                matricula.getNMatricula(),
+                                matricula.getFechaMatricula(),
+                                matricula.getSolicitudInscripcion().getPromocion().getId(),
+                                añoInicio + "-" + añoFin,
+                                matricula.getSolicitudInscripcion().getPromocion().getFechaResolucion(),
+                                matricula.getSolicitudInscripcion().getPromocion().getMaestria().getId(),
+                                matricula.getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
+                                cont,
+                                "0",
+                                "",
+                                null,
+                                true, 0));
+
+                    }
+
+                    bandera = true;
+                }
+            }
+            if(estado != null)
+                if(estado.equals('A'))
+                    mensajesOk("Notas ya Registradas");
+            
+            if(usuario.getTipoUsuario().getDescripcion().equals("Profesor(a)") || usuario.getTipoUsuario().getDescripcion().equals("Docente") || usuario.getTipoUsuario().getDescripcion().equals("PROFESOR(A)") || usuario.getTipoUsuario().getDescripcion().equals("DOCENTE")){
+                tipo_user = 1;
+                if(estado != null)
+                    if (estado.equals('G')) {
+                        mensajesOk("Notas ya Registradas");
+                    }
+            }
+                
 
         } catch (Exception ex) {
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
@@ -435,7 +582,7 @@ public class MbVNotas implements Serializable {
         DaoTNotas daoTnotas = new DaoTNotas();
         try {
             if(lstTblNotas.size() > 0)
-                msg = daoTnotas.registrar(lstTblNotas, this.idModulo, accion);
+                msg = daoTnotas.registrar(lstTblNotas, this.idModulo, accion, docente);
                 
         } catch (Exception ex) {
             Logger.getLogger(MbVNotas.class.getName()).log(Level.SEVERE, null, ex);
@@ -448,9 +595,20 @@ public class MbVNotas implements Serializable {
         }
         vaciarCajas();
     }
-    
+//    B  = Borrador-> Docente
+//    G  = Guardado-> Docente
+//    A  = Archivado-> Secretario u otros
+//    E  = Eliminado-> Calificaciones de baja
     public void registrar_borrador(){
         registrar('B');
+    }
+    
+    public void registrar_notas_docente(){
+        registrar('G');
+    }
+    
+    public void confirmar_notas_Secretaria(){
+        registrar('A');
     }
 
     public void consultarMaestrias() {
@@ -462,6 +620,9 @@ public class MbVNotas implements Serializable {
             cargarTblMatriculaPromocion();
         }
 
+    }
+    public void eliminarNotas(){
+        
     }
 
     private void vaciarCajas() {

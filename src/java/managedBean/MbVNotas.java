@@ -54,6 +54,7 @@ public class MbVNotas implements Serializable {
     private int idProm = 0;
     private int idModulo = 0;
     private int tipo_user;
+    private Character estado;
     private boolean msg;
 
     public MbVNotas() {
@@ -151,6 +152,14 @@ public class MbVNotas implements Serializable {
 
     public void setTipo_user(int tipo_user) {
         this.tipo_user = tipo_user;
+    }
+
+    public Character getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Character estado) {
+        this.estado = estado;
     }
     
     private void cargarTblMatriculaPromocion() {
@@ -342,12 +351,21 @@ public class MbVNotas implements Serializable {
             DaoTMatricula daoTmatricula = new DaoTMatricula();
             List<Matricula> lstMatricula = daoTmatricula.getMatriculaRegNotas(this.idModulo);
             
+            //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
+            Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+            
+            if(usuario.getTipoUsuario().getDescripcion().equals("Profesor(a)") || usuario.getTipoUsuario().getDescripcion().equals("Docente") || usuario.getTipoUsuario().getDescripcion().equals("PROFESOR(A)") || usuario.getTipoUsuario().getDescripcion().equals("DOCENTE")){
+                tipo_user = 1;
+            }else{
+                tipo_user = 0;
+            }
+            
             if (lstMatricula.size() > 0) {
                 for (Matricula matricula : lstMatricula) {
 
                     if (lstNotas.size() > 0) {
-
                         for (Notas notas : lstNotas) {
+                            
                             if (matricula.getId() == notas.getMatricula().getId()) {
                                 bandera = false;
                                 calendar.setTime(notas.getMatricula().getSolicitudInscripcion().getPromocion().getFechaInicio());
@@ -413,23 +431,26 @@ public class MbVNotas implements Serializable {
         }
     }
 
-    public void registrar() {
+    public void registrar(Character accion) {
         DaoTNotas daoTnotas = new DaoTNotas();
         try {
             if(lstTblNotas.size() > 0)
-                msg = daoTnotas.registrar(lstTblNotas, this.idModulo);
+                msg = daoTnotas.registrar(lstTblNotas, this.idModulo, accion);
                 
         } catch (Exception ex) {
             Logger.getLogger(MbVNotas.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         if (msg) {
             mensajesOk("Datos procesados correctamente");
         } else {
             mensajesError("Error al procesar datos");
         }
         vaciarCajas();
-
+    }
+    
+    public void registrar_borrador(){
+        registrar('B');
     }
 
     public void consultarMaestrias() {

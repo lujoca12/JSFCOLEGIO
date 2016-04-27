@@ -57,23 +57,34 @@
                     </p:dataTable>
                     <br></br>
                     <p:message for="display"/>
-                    <p:commandButton value="Guardar" update="frmRegistrarNotas,msgsNotas" styleClass="anchoBotones" icon="ui-icon-disk"
-                                     rendered="#{mbVNotas.lstTblNotas.size() eq 0 ? false:true}" actionListener="#{mbVNotas.registrar()}" >
-                        <p:confirm header="Registro de Notas" message="Esta completamente seguro de realizar esta acción" icon="ui-icon-alert" />
-                    </p:commandButton>
+                    
+                    <center>
+                        <div>
+                            <p:commandButton value="Borrador" update="frmRegistrarNotas,msgsNotas" styleClass="anchoBotones" icon="ui-icon-disk"
+                                             rendered="#{mbVNotas.lstTblNotas.size() gt 0 ? true:false}" 
+                                             actionListener="#{mbVNotas.registrar_borrador()}" 
+                                             style="margin-right: 20px;">
+                                <p:confirm header="Registro de Calificaciones" message="Desea guardar las notas como Borrador?" icon="ui-icon-alert" />
+                            </p:commandButton>
+                            <p:commandButton value="Guardar" update="frmRegistrarNotas,msgsNotas" styleClass="anchoBotones" icon="ui-icon-disk"
+                                             actionListener="#{mbVUsuario.eliminarDatos()}" >
+                                <p:confirm header="Registro de Calificaciones" message="Desea guardar las notas?" icon="ui-icon-alert" />
+                            </p:commandButton>
+                        </div>
+                    </center>
                     <h:outputText id="display" value="" />
                     
                     <p:confirmDialog global="true" styleClass="change-position">
                         <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
                         <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
                     </p:confirmDialog>
-
                 </p:panel>
+                <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                    <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+                </p:dialog>
             </h:form>
-            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
-            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-                <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
-            </p:dialog>
+            
 
 
 

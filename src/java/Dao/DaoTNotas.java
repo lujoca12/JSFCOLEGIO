@@ -48,7 +48,7 @@ public class DaoTNotas implements InterfaceNotas{
     }
 
     @Override
-    public boolean registrar(List<ClsNotas> lstNotas, int idModulo) throws Exception {
+    public boolean registrar(List<ClsNotas> lstNotas, int idModulo, Character accion) throws Exception {
         boolean band = false;
         try {
             //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
@@ -66,7 +66,7 @@ public class DaoTNotas implements InterfaceNotas{
                 tNotas.setUsuario(usuario.getApellidos()+" "+usuario.getNombres());
                 bigdec = new BigDecimal(Double.parseDouble(lstNotas.get(i).getNota()));
                 tNotas.setNota(bigdec);
-                tNotas.setEstado('0');
+                tNotas.setEstado(accion);
                 tNotas.setFecha(fecha);
                 matricula = new Matricula();
                 matricula.setId(lstNotas.get(i).getIdMatricula());
@@ -121,11 +121,19 @@ public class DaoTNotas implements InterfaceNotas{
         this.tx = null;
         iniciaOperacion();
         
+        int tipo_user = 0;
         //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
         Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        String consulta = "";
+         
+        if(usuario.getTipoUsuario().getDescripcion().equals("Profesor(a)") || usuario.getTipoUsuario().getDescripcion().equals("Docente") || usuario.getTipoUsuario().getDescripcion().equals("PROFESOR(A)") || usuario.getTipoUsuario().getDescripcion().equals("DOCENTE")){
+            consulta = "and user.nombres='"+usuario.getNombres()+"' and user.apellidos='"+usuario.getApellidos()+"'";
+        }else{
+            consulta = "";
+        }
         
         String hql="from Notas nota inner join fetch nota.matricula matr inner join fetch matr.solicitudInscripcion solin inner join fetch solin.estudiante est inner join fetch nota.modulo mod inner join fetch mod.promocion pr\n" +
-                   " inner join fetch mod.usuario user inner join fetch pr.maestria maest where mod.id="+idModulo+" and nota.estado='0' and user.nombres='"+usuario.getNombres()+"' and user.apellidos='"+usuario.getApellidos()+"' order by est.apellidos asc";
+                   " inner join fetch mod.usuario user inner join fetch pr.maestria maest where mod.id="+idModulo+" and nota.estado='0' "+consulta+"  order by est.apellidos asc";
         Query query = sesion.createQuery(hql);
         List<Notas> lstNotas=(List<Notas>) query.list();
         sesion.close();

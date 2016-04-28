@@ -18,7 +18,7 @@
                         <p:focus context="panel"/>
                         <p:panelGrid id="panel" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
 
-                            <p:outputLabel for="txtDocente" value="Docente:" styleClass="labelDerecha"  />
+                            <p:outputLabel for="frmModDocente" value="Docente:" styleClass="labelDerecha"  />
                             <p:selectOneMenu id="txtDocente" value="#{mbVUsuario.theme}" converter="themeConverter"
                                              effect="fade" var="t" filter="true" filterMatchMode="contains">
                                 <f:selectItems value="#{mbVUsuario.lstTheme}" var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme}" />

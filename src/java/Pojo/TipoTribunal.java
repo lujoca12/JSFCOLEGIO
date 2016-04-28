@@ -27,6 +27,10 @@ public class TipoTribunal  implements java.io.Serializable {
        this.descripcion = descripcion;
        this.detalleTribunals = detalleTribunals;
     }
+
+    public TipoTribunal(int i, String ninguno) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
    
     public int getId() {
         return this.id;

@@ -17,25 +17,31 @@
                         <p:growl id="msgsNotas" showDetail="true" />
                         <p:focus context="panel"/>
                         <p:panelGrid id="panel" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
-
                             <p:outputLabel for="cboModulo" value="Módulos:" styleClass="labelDerecha"/>
-                            <p:selectOneMenu id="cboModulo" value="#{mbVNotas.idModulo}">
-                                <f:selectItem itemLabel="(Escoja un Módulo)" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{mbVNotas.lstCboModulos}" var="modulos" itemLabel="#{modulos.modulo}" itemValue="#{modulos.idModulo}" />
-                                <p:ajax update="frmRegistrarNotas,msgsNotas" listener="#{mbVNotas.cargarTablaRegNotas}" />
-                            </p:selectOneMenu>
+                                <p:selectOneMenu id="cboModulo" value="#{mbVNotas.clsTblModulosReg}" converter="themeConverterModulos"
+                                                 effect="fade" var="tModulo" filter="true" filterMatchMode="contains">
+                                    <f:selectItems value="#{mbVNotas.lstCboModulos}" var="modulos" itemLabel="#{modulos.modulo}" itemValue="#{modulos}" />
+                                    <p:column style="width:10%">
+                                        <h:outputText styleClass="ui-theme ui-theme-#{tModulo.idModulo}" />
+                                    </p:column>
+
+                                    <p:column>
+                                        <h:outputText value="#{tModulo.modulo}" />
+                                    </p:column>
+                                    <p:ajax update="frmRegistrarNotas,msgsNotas" listener="#{mbVNotas.cargarTablaEdicionRegNotas}" />
+                                </p:selectOneMenu>
                             <p:message for="cboModulo" />
                         </p:panelGrid>
                     </p:panel>
                 </p:tab>
                 <br></br>
 
-                <p:panel id="panelRegistroNotas" rendered="#{mbVNotas.idModulo eq 0 ? false:true}">
+                <p:panel id="panelRegistroNotas" rendered="#{mbVNotas.clsTblModulosReg.idModulo gt 0 ? true:false}">
 
                     <h5 style="font-weight: bold;">#{mbVNotas.maestria}</h5>
 
                     <p:dataTable class="tblDatos" scrollable="false" var="notas" value="#{mbVNotas.lstTblNotas}"
-                                 emptyMessage="No hay Estudiantes para registrar notas">
+                                 emptyMessage="No hay Notas Registradas">
                         <p:column headerText="#" style="text-align: center; width: 5%;">
                             <h:outputText value="#{notas.n_registro}" />
                         </p:column>
@@ -67,7 +73,7 @@
                         <div>
                             <p:commandButton value="Eliminar" update="frmRegistrarNotas,msgsNotas" styleClass="anchoBotones" icon="ui-icon-disk"
                                              actionListener="#{mbVNotas.cargarTablaEdicionRegNotas()}" 
-                                             rendered="#{(mbVNotas.tipo_user eq 0)
+                                             rendered="#{(mbVNotas.tipo_user eq 0 and mbVNotas.estado eq 'A')
                                                         
                                                         }" >
                                 <p:confirm header="Registro de Calificaciones" message="Desea guardar las notas?" icon="ui-icon-alert" />

@@ -94,6 +94,7 @@ public class DaoTModulo implements InterfaceModulos{
 //        //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
 //        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");  
         String consulta = "";
+       
         if(usuario_id == 0)
             consulta = "";
         else
@@ -102,7 +103,8 @@ public class DaoTModulo implements InterfaceModulos{
         String hql="from Modulo modul inner join fetch modul.usuario user inner join fetch  user.tipoUsuario tuser inner join fetch modul.promocion pr inner join fetch pr.maestria maest \n" +
                     "where "+consulta+" \n" +
                     "(year(current_date) >= year(pr.fechaInicio) and year(current_date)<= year(pr.fechaFin))\n" +
-                    "and (tuser.descripcion like '%Prof%' or tuser.descripcion like '%prof%' or tuser.descripcion like '%Docen%' or tuser.descripcion like '%docent%') order by modul.descripcion asc";
+                    "and (current_date >= modul.fechaInicio and current_date <= modul.fechaFin) "
+                + "and (tuser.descripcion like '%Prof%' or tuser.descripcion like '%prof%' or tuser.descripcion like '%Docen%' or tuser.descripcion like '%docent%') order by modul.descripcion asc";
         Query query = sesion.createQuery(hql);
         List<Modulo> lstPermiso=(List<Modulo>) query.list();
         sesion.close();

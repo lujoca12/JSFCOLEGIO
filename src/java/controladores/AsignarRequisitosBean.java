@@ -222,15 +222,7 @@ public class AsignarRequisitosBean implements Serializable {
         }
     }
 
-    private int existeReqPromo(int IdReq, int IdPromo) {
-        int idRP = 0;
-        PermisosPromoDao d = new PermisosPromoDao();
-        List<RequisitosPromo> lstRp = d.getEstadoReqPromo(IdReq, IdPromo);
-        if (!lstRp.isEmpty()) {
-            idRP = lstRp.get(0).getId();
-        }
-        return idRP;
-    }
+   
 
     private void vaciarCajas() {
 

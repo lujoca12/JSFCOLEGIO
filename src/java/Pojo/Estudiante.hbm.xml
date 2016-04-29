@@ -6,7 +6,9 @@
     <class name="Pojo.Estudiante" table="estudiante" schema="public" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
-            <generator class="increment" />
+            <generator class="sequence" >
+                <param name="sequence">estudiante_id_seq</param>
+            </generator>
         </id>
         <property name="cedPasaporte" type="string">
             <column name="ced_pasaporte" length="20" not-null="true" />

@@ -76,7 +76,7 @@ public class RequisitosDao {
         this.tx = null;
         iniciaOperacion();
        
-        String hql="from RequisitosPromo rp inner join fetch rp.promocion pr inner join fetch pr.maestria m where rp.estado='1' and pr.id='"+IdPromo+"' and m.id='"+IdMaestria+"' "; 
+        String hql="from RequisitosPromo rp inner join fetch rp.requisitos r inner join fetch rp.promocion pr inner join fetch pr.maestria m where rp.estado='1' and pr.id='"+IdPromo+"' and m.id='"+IdMaestria+"' "; 
        
         Query query = sesion.createQuery(hql);
         //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);

@@ -24,6 +24,7 @@ public class PermisosPromoDao {
 
     private Session sesion;
     private Transaction tx;
+    private List<RequisitosPromo> result;
 
     private void iniciaOperacion() {
         try {
@@ -44,7 +45,7 @@ public class PermisosPromoDao {
         boolean band = false;
         String msg = "";
         try {
-            iniciaOperacion();
+            iniciaOperacion();    
             RequisitosPromo rp = new RequisitosPromo();
             Requisitos r = new Requisitos();
             Promocion p = new Promocion();
@@ -61,8 +62,15 @@ public class PermisosPromoDao {
                 } else {
                     rp.setEstado('0');
                 }
+                int x =getIdReqPromo(Integer.valueOf(Requisitos.get(i)), IdPromo);
+                if(x>0)
+                {
+                    result.get(0).setEstado(rp.getEstado());
+                    sesion.saveOrUpdate(result.get(0));
+                }else                
+                    sesion.saveOrUpdate(rp);
 
-                sesion.saveOrUpdate(rp);
+                
             }
 
             tx.commit();
@@ -78,19 +86,22 @@ public class PermisosPromoDao {
         return msg;
     }
 
-    public List<RequisitosPromo> getEstadoReqPromo(int IdReq, int IdPromo) {
-        this.sesion = null;
-        this.tx = null;
+    public int getIdReqPromo(int IdReq, int IdPromo) {
+       
+        int resp=0;
         boolean band = false;
-        iniciaOperacion();
-        String hql = "from RequisitosPromo as rp where rp.promocion.id =:promo and dp.requisitos.id=:req";
+        
+        String hql = "from RequisitosPromo as rp where rp.promocion.id =:promo and rp.requisitos.id=:req";
         Query query = sesion.createQuery(hql);
         query.setInteger("promo", IdPromo);
         query.setInteger("req", IdReq);
-        List<RequisitosPromo> result = (List<RequisitosPromo>) query.list();
-        sesion.close();
-
-        return result;
+        result = (List<RequisitosPromo>) query.list();
+        
+        if(result.isEmpty())
+            resp=0;
+        else   
+            resp= result.get(0).getId();
+        return resp;
     }
 
 }

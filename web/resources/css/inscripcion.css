@@ -74,3 +74,40 @@ td{
     margin: auto;
     margin-bottom: 20px;
 }
+.ui-panel{
+    padding: 0 !important; 
+}
+.ui-widget-header {
+    border: none !important;
+}
+.ui-widget-header {
+    box-shadow: none !important;
+}
+.ui-state-default {
+    -moz-box-shadow: none !important;
+     -webkit-box-shadow: none !important;
+     box-shadow: none !important;
+}
+.titulo{ font-size: 12pt; font-weight: bold; height: 30pt;}
+#marcoVistaPrevia{
+    
+    width: 200px;
+    height: 200px;
+}
+#vistaPrevia{
+    max-width: 200px;
+    max-height: 200px;  
+    min-height: 200px;
+    min-width: 200px; 
+}
+.input-foto{
+    max-width: 300px;
+}
+.thumb-image{
+    border: #ccc 1px solid;
+}
+.ui-fileupload-upload{
+    display: none;
+   
+}
+

@@ -6,7 +6,9 @@
     <class name="Pojo.Matricula" table="matricula" schema="public" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
-            <generator class="increment" />
+            <generator class="sequence" >
+                <param name="sequence">matricula_id_seq</param>
+            </generator>
         </id>
         <many-to-one name="solicitudInscripcion" class="Pojo.SolicitudInscripcion" fetch="select">
             <column name="id_solicitud" not-null="true" />

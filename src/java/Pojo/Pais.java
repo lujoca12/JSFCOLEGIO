@@ -13,6 +13,7 @@ public class Pais  implements java.io.Serializable {
 
      private int id;
      private String descripcion;
+     private String codigo;
      private Set universidads = new HashSet(0);
      private Set provincias = new HashSet(0);
 
@@ -23,11 +24,20 @@ public class Pais  implements java.io.Serializable {
     public Pais(int id) {
         this.id = id;
     }
-    public Pais(int id, String descripcion, Set universidads, Set provincias) {
+    public Pais(int id, String descripcion,String codigo, Set universidads, Set provincias) {
        this.id = id;
        this.descripcion = descripcion;
+       this.codigo = codigo;
        this.universidads = universidads;
        this.provincias = provincias;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
    
     public int getId() {

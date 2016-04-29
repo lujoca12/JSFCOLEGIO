@@ -13,11 +13,14 @@ import Pojo.RequisitosPromo;
 import java.io.Serializable;
 import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
@@ -43,6 +46,16 @@ public class RequisitosBean implements Serializable {
     private List<Requisitos> lstReq;
     private List<String> lstSelReq;
     private List<String> lstReqPro;
+    private Map<Integer,String> lstReqProNombre;
+
+    public Map<Integer, String> getLstReqProNombre() {
+        return lstReqProNombre;
+    }
+
+    public void setLstReqProNombre(Map<Integer, String> lstReqProNombre) {
+        this.lstReqProNombre = lstReqProNombre;
+    }
+    
 
     public List<String> getLstReqPro() {
         return lstReqPro;
@@ -208,5 +221,18 @@ public class RequisitosBean implements Serializable {
         }
         return lstReqPro;
     }
+    public Map<Integer,String> getListaReqProNombre(int IdPromo, int IdMaestria) throws Exception {
+
+        lstReqProNombre = new HashMap<>();
+        RequisitosDao daoRequisitos = new RequisitosDao();
+        List<RequisitosPromo> lstRequisitos = daoRequisitos.getRequisitosPromocion(String.valueOf(IdPromo),String.valueOf(IdMaestria));
+        for(RequisitosPromo rp : lstRequisitos)
+        {
+            lstReqProNombre.put(rp.getRequisitos().getId(),rp.getRequisitos().getDescripcion());
+        }
+        
+        return lstReqProNombre;
+    }
+    
 
 }

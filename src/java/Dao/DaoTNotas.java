@@ -103,7 +103,7 @@ public class DaoTNotas implements InterfaceNotas{
         //String hql="from Notas nota inner join fetch nota.modulo modul where nota.modulo = "+idModulo+" and "
           //      + "nota.matricula="+idMatricula+" order by modul.descripcion asc";
         String hql="from Notas nota inner join fetch nota.modulo modul where "
-                + "nota.matricula="+idMatricula+" nota.estado<>'E' order by modul.descripcion asc";
+                + "nota.matricula="+idMatricula+" and nota.estado<>'E' order by modul.descripcion asc";
         Query query = sesion.createQuery(hql);
         List<Notas> lstNotas=(List<Notas>) query.list();
         sesion.close();

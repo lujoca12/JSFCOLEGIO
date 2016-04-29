@@ -30,8 +30,10 @@ public class ClsNotas implements Serializable {
     private Date fecha;
     private boolean estado;
     private int idNota;
+    private String usuario;
+    private String responsable;
 
-    public ClsNotas(int idEstudiante, String nombresEstudiante, int idMatricula, String n_matricula, Date fechaMatricula, int idPromocion, String periodo, Date resolucion, int idMaestria, String descripMaestria, int n_registro, String nota, String observacion, Date fecha, boolean estado, int idNota) {
+    public ClsNotas(int idEstudiante, String nombresEstudiante, int idMatricula, String n_matricula, Date fechaMatricula, int idPromocion, String periodo, Date resolucion, int idMaestria, String descripMaestria, int n_registro, String nota, String observacion, Date fecha, boolean estado, int idNota,String usuario,String responsable) {
         this.idEstudiante = idEstudiante;
         this.nombresEstudiante = nombresEstudiante;
         this.idMatricula = idMatricula;
@@ -48,6 +50,8 @@ public class ClsNotas implements Serializable {
         this.fecha = fecha;
         this.estado = estado;
         this.idNota = idNota;
+        this.usuario = usuario;
+        this.responsable = responsable;
     }
 
     
@@ -178,6 +182,22 @@ public class ClsNotas implements Serializable {
 
     public void setIdNota(int idNota) {
         this.idNota = idNota;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getResponsable() {
+        return responsable;
+    }
+
+    public void setResponsable(String responsable) {
+        this.responsable = responsable;
     }
     
 }

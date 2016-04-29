@@ -144,7 +144,7 @@ public class MbVAsistencia implements Serializable {
             Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
             lstCboModulos.clear();
             DaoTModulo daoTmodulo = new DaoTModulo();
-            List<Modulo> lstModulo = daoTmodulo.getCboModulosNotas(usuario.getId());
+            List<Modulo> lstModulo = daoTmodulo.getCboModulosAsistencias(usuario.getId());
 
             if (lstModulo != null) {
                 if (lstModulo.size() > 0) {
@@ -213,7 +213,7 @@ public class MbVAsistencia implements Serializable {
                                 "",
                                 "",
                                 null,
-                                asist, 0));
+                                asist, 0,"",""));
                     }
             }else{
                 DaoTMatricula daoTmatricula = new DaoTMatricula();
@@ -243,7 +243,7 @@ public class MbVAsistencia implements Serializable {
                                 "",
                                 "",
                                 null,
-                                true, 0));
+                                true, 0,"",""));
                     }
                 }
                 

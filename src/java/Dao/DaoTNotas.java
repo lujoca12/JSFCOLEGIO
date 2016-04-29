@@ -116,8 +116,48 @@ public class DaoTNotas implements InterfaceNotas{
     }
 
     @Override
-    public boolean update(Notas tNotas) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean update(List<ClsNotas> lst, int idModulo) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        boolean band = false;
+        try {
+
+            Notas tNotas = null;
+            Matricula matricula = null;
+            Modulo modulo = null;
+            BigDecimal bigdec;
+            Date fecha = new Date();
+
+            for (int i = 0; i < lst.size(); i++) {
+                tNotas = new Notas();
+                tNotas.setId(lst.get(i).getIdNota());
+                tNotas.setEstado('E');
+                tNotas.setFecha(fecha);
+                matricula = new Matricula();
+                matricula.setId(lst.get(i).getIdMatricula());
+                tNotas.setMatricula(matricula);
+                modulo = new Modulo();
+                modulo.setId(idModulo);
+                tNotas.setModulo(modulo);
+                bigdec = new BigDecimal(Double.parseDouble(lst.get(i).getNota()));
+                tNotas.setNota(bigdec);
+                tNotas.setObservacion(lst.get(i).getObservacion());
+                tNotas.setResponsable(lst.get(i).getResponsable());
+                tNotas.setUsuario(lst.get(i).getUsuario());
+                sesion.update(tNotas);
+            }
+            tx.commit();
+            sesion.close();
+            band = true;
+
+        } catch (Exception e) {
+            tx.rollback();
+            band = false;
+        }
+
+        return band;
+        
     }
 
     @Override
@@ -135,7 +175,7 @@ public class DaoTNotas implements InterfaceNotas{
         //1 Quiere decir que cargar la consulta para edicion o Eliminacion de datos
         //0 Cargara la consulta normal
         if(estado.equals("1"))
-            consulta1 = " and nota.estado='A' and nota.estado='G' ";
+            consulta1 = " and (nota.estado='A' or nota.estado='G') ";
         else
             consulta1 = "";
                     

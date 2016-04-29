@@ -13,6 +13,8 @@ import Pojo.Modulo;
 import Pojo.Notas;
 import Pojo.Usuario;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.faces.context.FacesContext;
@@ -119,12 +121,16 @@ public class DaoTAsistencias implements InterfaceAsistencia{
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE,0);
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        String formatted = format1.format(cal.getTime());
         
         //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
         Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         
         String hql="from Asistencia asist inner join fetch asist.matricula matr inner join fetch matr.solicitudInscripcion solin inner join fetch solin.estudiante est inner join fetch asist.modulo mod inner join fetch mod.promocion pr\n" +
-                   " inner join fetch mod.usuario user inner join fetch pr.maestria maest where mod.id="+idModulo+" and user.nombres='"+usuario.getNombres()+"' and user.apellidos='"+usuario.getApellidos()+"' order by est.apellidos asc";
+                   " inner join fetch mod.usuario user inner join fetch pr.maestria maest where mod.id="+idModulo+" and asist.fecha ='"+formatted+"' and user.nombres='"+usuario.getNombres()+"' and user.apellidos='"+usuario.getApellidos()+"' order by est.apellidos asc";
         Query query = sesion.createQuery(hql);
         List<Asistencia> lstAsist=(List<Asistencia>) query.list();
         sesion.close();

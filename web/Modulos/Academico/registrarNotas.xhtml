@@ -55,6 +55,7 @@
                                          readonly="#{(mbVNotas.tipo_user eq 0 and mbVNotas.estado eq 'A') 
                                                      or (mbVNotas.tipo_user eq 1 and mbVNotas.estado eq 'A')
                                                      or (mbVNotas.tipo_user eq 1 and mbVNotas.estado eq 'G')
+                                                     or (mbVNotas.tipo_user eq 0 and mbVNotas.estado eq 'G')
                                                      or (mbVNotas.estado eq 'B' and mbVNotas.tipo_user eq 0)
                                                      or (mbVNotas.estado eq ' ' and mbVNotas.tipo_user eq 0)}" 
                                          onkeypress="return validarNum(event, true)" style="width:100%; text-align: center;">
@@ -84,9 +85,7 @@
                             </p:commandButton>
                             <p:commandButton value="Guardar" update="frmRegistrarNotas,msgsNotas" styleClass="anchoBotones" icon="ui-icon-disk"
                                              actionListener="#{mbVNotas.confirmar_notas_Secretaria()}" 
-                                             rendered="#{(mbVNotas.tipo_user eq 0 and mbVNotas.estado ne 'B' and mbVNotas.estado ne 'A' and mbVNotas.estado ne ' ')
-                                                        
-                                                        }" >
+                                             rendered="#{(mbVNotas.tipo_user eq 0 and mbVNotas.estado ne 'B' and mbVNotas.estado ne 'A' and mbVNotas.estado ne ' ')}" >
                                 <p:confirm header="Registro de Calificaciones" message="Desea guardar las notas?" icon="ui-icon-alert" />
                             </p:commandButton>
                         </div>

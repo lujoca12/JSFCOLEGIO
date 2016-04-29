@@ -19,6 +19,7 @@ import Pojo.Notas;
 import Pojo.SolicitudInscripcion;
 import Pojo.Usuario;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.inject.Named;
@@ -206,7 +207,7 @@ public class MbVNotas implements Serializable {
                             "",
                             "",
                             null,
-                            true, 0));
+                            true, 0,"",""));
                 }
             } else {
                 this.estudiante = "";
@@ -371,7 +372,7 @@ public class MbVNotas implements Serializable {
             if(this.clsTblModulosReg != null)
                 lstMatricula = daoTmatricula.getMatriculaRegNotas(this.clsTblModulosReg.getIdModulo());
             else
-                lstMatricula = daoTmatricula.getMatriculaRegNotas(this.clsTblModulosReg.getIdModulo());
+                lstMatricula = daoTmatricula.getMatriculaRegNotas(0);
             
             //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
             Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
@@ -417,7 +418,9 @@ public class MbVNotas implements Serializable {
                                         notas.getObservacion(),
                                         null,
                                         true,
-                                        notas.getId()));
+                                        notas.getId(),
+                                        notas.getUsuario(),
+                                        notas.getResponsable()));
                             }
                         }
                     }
@@ -444,7 +447,7 @@ public class MbVNotas implements Serializable {
                                 "0",
                                 "",
                                 null,
-                                true, 0));
+                                true, 0,"",""));
 
                     }
 
@@ -495,7 +498,7 @@ public class MbVNotas implements Serializable {
             if (this.clsTblModulosReg != null) {
                 lstNotas = daoTnotas.existe(this.clsTblModulosReg.getIdModulo(),"1");
             } else {
-                lstNotas = daoTnotas.existe(0,"0");
+                lstNotas = daoTnotas.existe(0,"1");
             }
 
             //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
@@ -536,7 +539,9 @@ public class MbVNotas implements Serializable {
                             notas.getObservacion(),
                             null,
                             true,
-                            notas.getId()));
+                            notas.getId(),
+                            notas.getUsuario(),
+                            notas.getResponsable()));
                 }
             }
 
@@ -551,7 +556,7 @@ public class MbVNotas implements Serializable {
         DaoTNotas daoTnotas = new DaoTNotas();
         try {
             if(lstTblNotas.size() > 0)
-                msg = daoTnotas.registrar(lstTblNotas, this.idModulo, accion, docente);
+                msg = daoTnotas.registrar(lstTblNotas, this.clsTblModulosReg.getIdModulo(), accion, docente);
                 
         } catch (Exception ex) {
             Logger.getLogger(MbVNotas.class.getName()).log(Level.SEVERE, null, ex);
@@ -592,11 +597,24 @@ public class MbVNotas implements Serializable {
     }
     public void eliminarNotas(){
         
+        DaoTNotas daoTnotas = new DaoTNotas();
+        try {
+            msg = daoTnotas.update(lstTblNotas,this.clsTblModulosReg.getIdModulo());
+        } catch (Exception ex) {
+            Logger.getLogger(MbVNotas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (msg) {
+            mensajesOk("Dato eliminado correctamente");
+        } else {
+            mensajesError("Error al eliminar dato");
+        }
+        vaciarCajas();
     }
 
     private void vaciarCajas() {
         this.idModulo = 0;
         cargarCboModulos();
+        this.clsTblModulosReg.setIdModulo(0);
         lstTblNotas = new ArrayList<>();
     }
 

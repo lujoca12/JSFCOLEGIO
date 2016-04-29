@@ -445,7 +445,7 @@ public class MbVUsuario implements Serializable {
                 mensajesError("Usuario ya existe");
             }
 
-        } catch (Exception e) {
+            } catch (Exception e) {
             vaciarCajas();
         }
         if (band) {

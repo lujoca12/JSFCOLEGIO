@@ -18,50 +18,42 @@
             <p:focus context="panel"/>
             <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
         
-        <p:outputLabel for="cboMaestria" value="Maestria:" styleClass="labelDerecha"/>
-        <p:selectOneMenu id="cboMaestria" required="true" value="#{mbVUsuario.idRol}">
-            <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
-             <f:selectItems value="#{mbVtesi.lstTodoMaestria}" />
-         </p:selectOneMenu>
+       
                               
-        <p:outputLabel for="txtUsuario" styleClass="labelDerecha" value="Título:" />
-        <p:inputText id="txtUsuario" value="#{mbVUsuario.tUsuario.nick}" maxlength="50" >
-            <f:validateLength minimum="5" maximum="10" />
-        </p:inputText>
-                        
-        
-        <p:outputLabel for="txtApellidos" styleClass="labelDerecha" value="Resumen:" />
-        <p:inputText id="txtApellidos" value="#{mbVUsuario.tUsuario.apellidos}" required="true" maxlength="100"/>
-        
-            
-        <p:outputLabel for="txtNombres" styleClass="labelDerecha" value="Autor:" />
-        <p:inputText id="txtNombres" value="#{mbVUsuario.tUsuario.nombres}" required="true" maxlength="50"/>
+        <p:outputLabel for="txtTitulo" styleClass="labelDerecha" value="Título:" />
+        <p:inputText id="txtTitulo" value="#{mbVtesis.tTesis.titulo}" maxlength="100" >
+            <f:validateLength minimum="5" maximum="100" />
+        </p:inputText>      
         
         <p:outputLabel for="cboAutor" value="Autor:" styleClass="labelDerecha"/>
-        <p:selectOneMenu id="cboAutor" required="true" value="#{mbVUsuario.idRol}">
+        <p:selectOneMenu id="cboAutor" required="true" value="#{mbVtesis.tTesis.autor}">
             <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
             <f:selectItems value="#{mbVtesis.lstEstudiantes}" />
-        </p:selectOneMenu>
-
-
-        
-        <p:outputLabel for="txtCedula" styleClass="labelDerecha" value="palabra clave:" />
-        <p:inputMask id="txtCedula" value="#{mbVUsuario.tUsuario.cedPasaporte}" required="true" mask="999999999-9"/>
-        
-        
-        <p:outputLabel for="txtDireccion" styleClass="labelDerecha" value="Dirección:" />
-        <p:inputText id="txtDireccion" value="#{mbVUsuario.tUsuario.direccion}" required="true" />
-        
-             
+         </p:selectOneMenu>        
+                                  
         <p:outputLabel for="txtFechaS" styleClass="labelDerecha" value="Fecha sustentación:" />
-        <p:calendar id="txtFechaS" value="#{mbVUsuario.tUsuario.fechaNac}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" />
-               
-       <p:outputLabel for="txtFecha" styleClass="labelDerecha" value="Fecha Subida:" />
-        <p:calendar id="txtFecha" value="#{mbVUsuario.tUsuario.fechaNac}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" />
-               
-       
+        <p:calendar id="txtFechaS" value="#{mbVtesis.tTesis.fechaSustentacion}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" />
+              
+        <p:outputLabel for="txtRuta" styleClass="labelDerecha" value="Ruta:" />
+        <p:inputText id="txtRuta" value="#{mbVtesis.tTesis.ruta}" maxlength="100" >
+            <f:validateLength minimum="5" maximum="100" />
+        </p:inputText>
         
+        <p:outputLabel for="txtResumen" styleClass="labelDerecha" value="Resumen:" />
+        <p:inputText id="txtResumen" value="#{mbVtesis.tTesis.resumen}" maxlength="100" >
+            <f:validateLength minimum="5" maximum="100" />
+        </p:inputText>
         
+        <p:outputLabel for="cboMaestria" value="Maestria:" styleClass="labelDerecha"/>
+        <p:selectOneMenu id="cboMaestria" required="true" value="#{mbVtesis.tTesis.maestria}">
+            <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+             <f:selectItems value="#{mbVtesis.lstTodoMaestria}" />
+         </p:selectOneMenu>
+        
+        <p:outputLabel for="txtFechaSubid" styleClass="labelDerecha" value="Fecha subida:" />
+        <p:calendar id="txtFechaSubid" value="#{mbVtesis.tTesis.fechaSubida}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" />
+         
+                            
         <h:outputText id="display" value="" />
         <p:commandButton value="Guardar" update="@form" styleClass="anchoBotones" icon="ui-icon-disk"
                          actionListener="#{mbVUsuario.registrarUsuarios()}" />

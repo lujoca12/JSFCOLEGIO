@@ -101,7 +101,7 @@ public class DaoTMaestrias implements InterfaceMaestrias{
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        String hql="from Maestria m where m.estado = '1' order by m.descripcion asc";
+        String hql="from Maestria m where m.estado = '1' order by m.id desc";
         Query query = sesion.createQuery(hql);
 
         List<Maestria> lstMaestrias=(List<Maestria>) query.list();

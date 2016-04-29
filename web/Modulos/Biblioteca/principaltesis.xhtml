@@ -4,9 +4,12 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"      
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      >
+          
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
+        <h:outputScript library="js" name="calendar_es.js" />
+        <h:outputScript name="jquery/jquery.js" library="primefaces" />
     </h:head>
     <h:body class="undernavigation">
         <ui:composition template="/templates/masterLayout.xhtml">
@@ -50,6 +53,46 @@
                         <button><h:link outcome="/Modulos/Biblioteca/RegistrarTesis" value="Registrar"></h:link></button>
                     </div>
                 </h:form>
+                
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center"> 
+                        Mostrando resultados    
+                    </div>
+                </div>
+                <h:form>
+                <p:panel id="panelTabla" style="height: 30%;">
+                    <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->   
+                    <p:dataTable class="tblDatos" id="tbltesis" var="lstTbl" value="#{mbVtesis.lstTablatesis}"
+                                 editable="true" scrollable="true" scrollHeight="150">
+                        <p:column headerText="Codigo" style="width: 10%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.idTesis}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="txtDescripcionMaestria" disabled="true" value="#{lstTbl.idTesis}" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Maestria" style="width: 50%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.titulo}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{lstTbl.titulo}" required="true" maxlength="150" style="width:100%"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column style="width:10%;">
+                            <p:rowEditor />   
+                        </p:column>
+                    </p:dataTable>
+                    <p:confirmDialog global="true" styleClass="change-position">
+                        <p:commandButton value="Confirmar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                        <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                    </p:confirmDialog>
+                </p:panel>
+                </h:form>
+                
 <!--        <div class="md-2">
             <h3>Otras opciones relacionadas</h3>
             <div id="facets" class="facetsBox row panel">

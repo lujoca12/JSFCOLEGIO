@@ -14,6 +14,7 @@ import Dao.DaoTMaestrias;
 import Dao.DaoTMenu;
 import Dao.DaoTTipoUsuario;
 import Dao.DaoTUsuario;
+import Dao.DaoTesis;
 
 import Pojo.Tribunal;
 import Pojo.DetalleTribunal;
@@ -37,7 +38,9 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
-
+import Clases.*;
+import Clases.ClsTablaTesis;
+import java.util.Date;
 import org.primefaces.model.TreeNode;
 import org.primefaces.model.DefaultTreeNode;
 
@@ -49,18 +52,52 @@ import org.primefaces.model.DefaultTreeNode;
 @ViewScoped
 public class MbVtesis implements Serializable{
 
+    
+     private int id;
+     private int idestudiante;
+     private int idmaestria;
+     private String titulo;
+     private String autor;
+     private Date fechaSustentacion;
+     private String ruta;
+     private String resumen;
+     private Date fechaSubida;
+    
+    
+    
     private Tesis tTesis;
     private String estudiante;
     private ArrayList<TipoTribunal> lstTheme;
     private List<SelectItem> lstTodoMaestria;
     private List<SelectItem> lstEstudiantes;
+    ClsTablaTesis ClsTablaTesis; 
+    private List<ClsTablaTesis> LstTablatesis;
 
     /**
      * Creates a new instance of MbVtesis
      */
     public MbVtesis() {
+        tTesis = new Tesis();
+        llenarTablaTesis();
+    }
+    
+    
+
+    private void vaciarCajas(){
+        tTesis = new Tesis();
+    }
+    public List<ClsTablaTesis> getLstTablatesis() {
+        return LstTablatesis;
+    }    
+
+    public Tesis gettTesis() {
+        return tTesis;
     }
 
+    public void settTesis(Tesis tTesis) {
+        this.tTesis = tTesis;
+    }
+       
     public String getEstudiante() {
         return estudiante;
     }
@@ -85,9 +122,7 @@ public class MbVtesis implements Serializable{
         return lstEstudiantes;
         
     }
-
-    
-    
+        
     public List<SelectItem> getLstTodoMaestria() {
        this.lstTodoMaestria = new ArrayList<SelectItem>();
         try {
@@ -105,7 +140,7 @@ public class MbVtesis implements Serializable{
         return lstTodoMaestria;
     }
         
-     public void llenarCboTipotribunal() {
+    public void llenarCboTipotribunal() {
         this.lstTheme = new ArrayList<TipoTribunal>();
         try {
             DaoTUsuario daoTusuario = new DaoTUsuario();
@@ -121,5 +156,43 @@ public class MbVtesis implements Serializable{
 
         }
     }
+    
+    public void llenarTablaTesis()
+    {
+          LstTablatesis = new ArrayList<>();
+        try {
+            LstTablatesis.clear();
+            
+            DaoTesis daoTesis = new DaoTesis();
+            List<Tesis> lsttesis = daoTesis.getTesis();
+            
+            if(lsttesis != null){
+                if(lsttesis.size() > 0){
+                    for(Tesis tesis : lsttesis){
+                        LstTablatesis.add(new ClsTablaTesis(tesis.getId(),
+                                tesis.getAutor(),
+                                tesis.getTitulo(),
+                                tesis.getRuta(),
+                                tesis.getResumen(),
+                                tesis.getMaestria(),
+                                tesis.getEstudiante()));                               
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
      
+    public void registrarTesis(){
+        DaoTesis daoTesis = new DaoTesis();
+        
+        try{
+        }
+        catch (Exception e){
+            vaciarCajas();
+        }
+    }
+    
+    
 }

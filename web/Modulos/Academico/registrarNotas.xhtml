@@ -59,6 +59,7 @@
                                                      or (mbVNotas.estado eq 'B' and mbVNotas.tipo_user eq 0)
                                                      or (mbVNotas.estado eq ' ' and mbVNotas.tipo_user eq 0)}" 
                                          onkeypress="return validarNum(event, true)" style="width:100%; text-align: center;">
+                                <f:validateDoubleRange maximum="10"/>
                             </p:inputText>
 
                         </p:column>

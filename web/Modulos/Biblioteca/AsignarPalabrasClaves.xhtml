@@ -25,48 +25,20 @@ and open the template in the editor.
                 <h:outputScript name="fileinput.min.js" library="js"/>
                 <h:outputScript name="verFoto.js" library="js"/>
         <div class="container">
-            <h2>BUSCAR "TESIS" POR AUTOR</h2>  
+            <h2>Verificar Tema de Tesis</h2>  
 
             <div id="browse_navigation" class="well text-center">
                 <form method="get" action="">
                     <input type="hidden" name="type" value="author"/>
                     <input type="hidden" name="order" value="ASC"/>
                     <input type="hidden" name="rpp" value="5"/>  
-                    <div class="row">        
-                        <div class="col-md-8">
-                            <a>0-9</a>  
-                            <a><span>A</span></a>
-                            <a><span>B</span></a> 
-                            <a><span>C</span></a> 
-                            <a><span>D</span></a> 
-                            <a><span>E</span></a>                              
-                            <a><span>F</span></a>                
-                            <a><span>H</span></a>                
-                            <a><span>J</span></a>                
-                            <a><span>K</span></a>                
-                            <a><span>L</span></a>                
-                            <a><span>M</span></a>                
-                            <a><span>N</span></a>                
-                            <a><span>O</span></a>                
-                            <a><span>P</span></a>                
-                            <a><span>Q</span></a>                
-                            <a><span>R</span></a>                
-                            <a><span>S</span></a>                
-                            <a><span>T</span></a>                
-                            <a><span>U</span></a>                
-                            <a><span>V</span></a>                
-                            <a><span>W</span></a>                
-                            <a><span>X</span></a>                
-                            <a><span>Y</span></a>                
-                            <a><span>Z</span></a>
+                    <div class="row"> 
+                        <div class="col-md-3">      
+                            <input class="form-control" placeholder="Introducir las primeras letras:" type="text" name="starts_with"/>
                         </div>
-
-                            <div class="col-md-3">     
-                                <input class="form-control" placeholder="O introducir las primeras letras:" type="text" name="starts_with"/>
-                            </div>
-                            <div class="col-md-1">
-                                <input type="submit" class="btn btn-primary" value="Buscar" />
-                            </div>
+                        <div class="col-md-1">
+                            <input type="submit" class="btn btn-primary" value="Buscar" />
+                        </div>
                     </div>
                 </form>
             </div>	
@@ -89,12 +61,7 @@ and open the template in the editor.
                         <option value="10" >10</option>                	
                         <option value="15" >15</option>                	
                         <option value="20" selected="selected">20</option>                	
-                        <option value="25" >25</option>                	
-                        <option value="30" >30</option>                	
-                        <option value="35" >35</option>                	
-                        <option value="40" >40</option>                	
-                        <option value="45" >45</option>                	
-                        <option value="50" >50</option>                
+                        <option value="25" >25</option>                	               
                             </select>
                         </div>
                         <div class="col-md-1">

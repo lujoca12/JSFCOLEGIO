@@ -110,4 +110,7 @@ td{
     display: none;
    
 }
-
+.form-control{
+    max-width: 300px;
+    min-width: 300px;
+}

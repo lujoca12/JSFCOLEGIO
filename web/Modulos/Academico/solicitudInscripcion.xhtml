@@ -25,7 +25,7 @@
                         <h1 style="text-align: center;">Solicitud de Inscripción</h1>     
 
                         <p:panel header="Seleccionar Maestría">                            
-                            <p:panelGrid id="panel" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
+                            <p:panelGrid id="panel" columns="3"  layout="grid" styleClass="ui-panelgrid-blank">
 
                                 <h:outputLabel for="maestria" value="Seleccionar Maestría: " styleClass="labelDerecha" />
                                 <h:selectOneMenu id="maestria" class="form-control " value="#{inscripcionBean.idMaestria}" >  
@@ -33,7 +33,7 @@
                                     <p:effect type="fade" event="change" for="datos">
                                         <f:param name="mode" value="'hide'" />
                                     </p:effect>
-                                    <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Seleccionar.." itemValue="" noSelectionOption="true" />
                                     <f:selectItems value="#{inscripcionBean.maestrias}"  />  
                                 </h:selectOneMenu>  
                                 <div></div>         
@@ -41,7 +41,7 @@
                                 <h:outputLabel for="promocion" value="Seleccionar Promocion: " styleClass="labelDerecha" />
                                 <h:selectOneMenu id="promocion" class="form-control " value="#{inscripcionBean.idPromo}"  >                             
                                     <p:ajax listener="#{inscripcionBean.onPromoChange}" update="datos" />
-                                    <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Seleccionar.." itemValue="" noSelectionOption="true" />
                                     <f:selectItems value="#{inscripcionBean.promociones}"  />  
                                 </h:selectOneMenu>  
                                 <div></div>  
@@ -58,17 +58,17 @@
 
 
                     </div>
-                    <p:wizard id="datos" flowListener="#{userWizard.onFlowProcess}" style="display:none;" backLabel="Regresar" nextLabel="Siguiente" step="requisitos" >
+                    <p:wizard id="datos" flowListener="#{userWizard.onFlowProcess}" style="display:none;" backLabel="Regresar" nextLabel="Siguiente"  >
 
                         <p:tab id="personal" title="Personal">
                             <p:panel header="Información Personal">
                                 <p:messages closable="true" />
                                 <h:panelGrid columns="4" cellspacing="5px" >
                                     <h:outputLabel for="cedPas" value="Cédula o Pasaporte: " />
-                                    <p:inputText  required="true" id="cedPas" class="form-control "/>
+                                    <p:inputText  required="true"  id="cedPas" class="form-control "/>
 
                                     <h:outputLabel for="estCivil" value="Estado Civil: " />
-                                    <h:selectOneMenu id="estCivil" class="form-control">
+                                    <h:selectOneMenu id="estCivil" class="form-control" >
                                         <f:selectItem itemLabel="Soltero" itemValue="S" />
                                         <f:selectItem itemLabel="Casado" itemValue="C" />
                                         <f:selectItem itemLabel="Divorciado" itemValue="D" />
@@ -77,49 +77,54 @@
                                     </h:selectOneMenu>
 
                                     <h:outputLabel for="nombres" value="Nombres: " />
-                                    <p:inputText  required="true" id="nombres" class="form-control "/>
+                                    <p:inputText  required="true"  id="nombres" class="form-control "/>
 
-                                    <h:outputLabel for="apellidos" value="Apellidos: " />
-                                    <p:inputText  required="true" id="apellidos" class="form-control "/>
+                                    <h:outputLabel for="apellidos" value="Apellidos: "  />
+                                    <p:inputText  required="true" id="apellidos"  class="form-control "/>
 
                                     <h:outputLabel for="fNac" value="Fecha de Nacimiento: " />
-                                    <p:calendar  id="fNac" required="true" navigator="true" mask="true" pattern="dd/MM/yyyy" mindate="01/01/1940" maxdate="#{validadorFecha.fechaMax}"  />                                  
+                                    <p:calendar  id="fNac" required="true"  navigator="true" mask="true" pattern="dd/MM/yyyy" mindate="01/01/1940" maxdate="#{validadorFecha.fechaMax}"  />                                  
 
                                     <h:outputLabel for="email" value="Email: " />
-                                    <p:inputText  required="true" id="email" class="form-control  "/>
+                                    <p:inputText  required="true" id="email"  class="form-control  "/>
                                     <h:outputLabel for="celular" value="Celular: " />
-                                    <p:inputMask id="celular"  required="true" class="form-control" mask="99-99999999" />
+                                    <p:inputMask id="celular"  required="true"  class="form-control" mask="99-99999999" />
                                     <h:outputLabel for="sexo" value="Sexo: " />
-                                    <h:selectOneMenu id="sexo" class="form-control">
+                                    <h:selectOneMenu id="sexo" class="form-control" >
                                         <f:selectItem itemLabel="Masculino" itemValue="M" />
                                         <f:selectItem itemLabel="Femenino" itemValue="F" />
                                     </h:selectOneMenu>
                                     <h:outputLabel for="paisO" value="País de Origen: "/>
                                     <h:selectOneMenu id="paisO" class="form-control" value="#{inscripcionBean.idPaisOrigen}">
                                         <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
-                                        <f:selectItems value="#{inscripcionBean.lstPais}"  />  
-                                        
+                                        <f:selectItems value="#{inscripcionBean.lstPais}"  /> 
+                                        <p:ajax event="change" update="group group2" />
                                     </h:selectOneMenu>
+                                    <h:inputHidden class="form-control"/>
+                                    <h:inputHidden class="form-control"/>
+                                    <h:panelGroup id="group">
+                                        <h:outputLabel for="provinciaNac"  rendered="#{inscripcionBean.idEcuador==inscripcionBean.idPaisOrigen}" value="Provincia de Nacimiento: "/>
+                                        <h:outputLabel for="cantonNac" rendered="#{inscripcionBean.idEcuador==inscripcionBean.idPaisOrigen}" value="Cantón de Nacimiento: " />
+                                        <h:outputLabel for="parroquiaNac" rendered="#{inscripcionBean.idEcuador==inscripcionBean.idPaisOrigen}" value="Parroquia de Nacimiento: "/>
+                                    </h:panelGroup>
+                                    <h:panelGroup id="group2">
+                                                  <h:selectOneMenu id="provinciaNac" rendered="#{inscripcionBean.idEcuador==inscripcionBean.idPaisOrigen}" class="form-control" value="#{inscripcionBean.idProvinciaNac}">
+                                            <p:ajax listener="#{inscripcionBean.onProvinciaNacChange()}" update="cantonNac" />                                        
+                                            <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                                            <f:selectItems value="#{inscripcionBean.provincias}"  />  
+                                        </h:selectOneMenu>
 
-                                    <h:outputLabel for="provinciaNac" value="Provincia de Nacimiento: "/>
-                                    <h:selectOneMenu id="provinciaNac" class="form-control" value="#{inscripcionBean.idProvinciaNac}">
-                                        <p:ajax listener="#{inscripcionBean.onProvinciaNacChange()}" update="cantonNac" />
-                                        
-                                        <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
-                                        <f:selectItems value="#{inscripcionBean.provincias}"  />  
-                                    </h:selectOneMenu>
-                                    <h:outputLabel for="cantonNac" value="Cantón de Nacimiento: " />
-                                    <h:selectOneMenu id="cantonNac" class="form-control" value="#{inscripcionBean.idCantonNac}">
-                                        <p:ajax listener="#{inscripcionBean.onCantonNacChange()}" update="parroquiaNac" />
-                                        <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
-                                        <f:selectItems value="#{inscripcionBean.cantones}"  />  
-                                    </h:selectOneMenu>
-                                    <h:outputLabel for="parroquiaNac" value="Parroquia de Nacimiento: "/>
-                                    <h:selectOneMenu id="parroquiaNac" class="form-control" required="true" value="#{inscripcionBean.idParroquiaNac}">
-                                       <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
-                                        <f:selectItems value="#{inscripcionBean.parroquias}"  /> 
-                                    </h:selectOneMenu>
+                                        <h:selectOneMenu id="cantonNac" rendered="#{inscripcionBean.idEcuador==inscripcionBean.idPaisOrigen}" class="form-control" value="#{inscripcionBean.idCantonNac}">
+                                            <p:ajax listener="#{inscripcionBean.onCantonNacChange()}" update="parroquiaNac" />
+                                            <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                                            <f:selectItems value="#{inscripcionBean.cantones}"  />  
+                                        </h:selectOneMenu>
 
+                                        <h:selectOneMenu id="parroquiaNac" rendered="#{inscripcionBean.idEcuador==inscripcionBean.idPaisOrigen}" class="form-control" required="true" value="#{inscripcionBean.idParroquiaNac}">
+                                            <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                                            <f:selectItems value="#{inscripcionBean.parroquias}"  /> 
+                                        </h:selectOneMenu>
+                                    </h:panelGroup>
                                 </h:panelGrid>
                             </p:panel>
                         </p:tab>
@@ -128,21 +133,23 @@
                                 <p:messages closable="true" />
                                 <h:panelGrid columns="4" >
                                     <h:outputLabel for="provinciaDom" value="Provincia: "/>
-                                    <h:selectOneMenu id="provinciaDom" class="form-control">
-                                        <f:selectItem itemLabel="Los Ríos" itemValue="M" />
-                                        <f:selectItem itemLabel="Otros" itemValue="F" />
+                                    <h:selectOneMenu id="provinciaDom" class="form-control" value="#{inscripcionBean.idProvinciaDom}">
+                                        <p:ajax listener="#{inscripcionBean.onProvinciaDomChange()}" update="cantonDom" />                                        
+                                        <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{inscripcionBean.provincias}"  />  
                                     </h:selectOneMenu>
 
                                     <h:outputLabel for="cantonDom" value="Cantón: "/>
-                                    <h:selectOneMenu id="cantonDom" class="form-control">
-                                        <f:selectItem itemLabel="Quevedo" itemValue="M" />
-                                        <f:selectItem itemLabel="Extranjero" itemValue="F" />
+                                    <h:selectOneMenu id="cantonDom" class="form-control" value="#{inscripcionBean.idCantonDom}">
+                                        <p:ajax listener="#{inscripcionBean.onCantonDomChange()}" update="parroquiaDom" />
+                                        <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{inscripcionBean.cantonesDom}"  /> 
                                     </h:selectOneMenu>
 
                                     <h:outputLabel for="parroquiaDom" value="Parroquia: "/>
-                                    <h:selectOneMenu id="parroquiaDom" class="form-control">
-                                        <f:selectItem itemLabel="Quevedo" itemValue="M" />
-                                        <f:selectItem itemLabel="Extranjero" itemValue="F" />
+                                    <h:selectOneMenu id="parroquiaDom" class="form-control" value="#{inscripcionBean.idParroquiaDom}">
+                                        <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{inscripcionBean.parroquiasDom}"  /> 
                                     </h:selectOneMenu>
 
                                     <h:outputLabel for="direccionDom" value="Dirección: " />
@@ -159,21 +166,23 @@
                                 <p:messages closable="true" />
                                 <h:panelGrid columns="4" >
                                     <h:outputLabel for="provinciaTra" value="Provincia: "/>
-                                    <h:selectOneMenu id="provinciaTra" class="form-control">
-                                        <f:selectItem itemLabel="Los Ríos" itemValue="M" />
-                                        <f:selectItem itemLabel="Otros" itemValue="F" />
+                                    <h:selectOneMenu id="provinciaTra" class="form-control" value="#{inscripcionBean.idProvinciaTra}">
+                                        <p:ajax listener="#{inscripcionBean.onProvinciaTraChange()}" update="cantonTra" />                                        
+                                        <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{inscripcionBean.provincias}"  />  
                                     </h:selectOneMenu>
 
                                     <h:outputLabel for="cantonTra" value="Cantón: "/>
-                                    <h:selectOneMenu id="cantonTra" class="form-control">
-                                        <f:selectItem itemLabel="Quevedo" itemValue="M" />
-                                        <f:selectItem itemLabel="Extranjero" itemValue="F" />
+                                    <h:selectOneMenu id="cantonTra" class="form-control" value="#{inscripcionBean.idCantonTra}">
+                                        <p:ajax listener="#{inscripcionBean.onCantonTraChange()}" update="parroquiaTra" />
+                                        <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{inscripcionBean.cantonesTra}"  /> 
                                     </h:selectOneMenu>
 
                                     <h:outputLabel for="parroquiaTra" value="Parroquia: "/>
-                                    <h:selectOneMenu id="parroquiaTra" class="form-control">
-                                        <f:selectItem itemLabel="Quevedo" itemValue="M" />
-                                        <f:selectItem itemLabel="Extranjero" itemValue="F" />
+                                    <h:selectOneMenu id="parroquiaTra" class="form-control" value="#{inscripcionBean.idParroquiaTra}">
+                                        <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{inscripcionBean.parroquiasTra}"  /> 
                                     </h:selectOneMenu>
 
                                     <h:outputLabel for="empresa" value="Empresa: " />
@@ -210,25 +219,21 @@
                                     <h:outputLabel for="nregistro" value="Número de registro del Senecyt: " />
                                     <p:inputText  required="true" id="nregistro" class="form-control "/>
 
+                                    <p:commandButton disabled="true" value="Submit" process="@this" />
                                 </h:panelGrid>
-                                
+
                             </p:panel>
                         </p:tab>
                         <p:tab id="requisitos" title="Requisitos" >
                             <p:panel header="Requisitos">
                                 <p:messages closable="true" />
-                                <h:panelGrid columns="1" width="100%" >                                    
-                                    <ui:repeat value="#{inscripcionBean.lstClsR}" var="r" >
-                                        <h:outputLabel  value="#{r.descripcion}" />
-                                        <p:fileUpload required="true" rendered="#{r.descripcion eq 'Foto'}" fileLimit="1"  allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
-                                        <p:fileUpload required="true" rendered="#{r.descripcion ne 'Foto'}" fileLimit="1"  allowTypes="/(\.|\/)(pdf)$/" />
-                                    </ui:repeat>
-                                    
+                                <h:panelGrid columns="1" width="100%" >     
+                                    <p:fileUpload required="true" fileUploadListener="#{inscripcionBean.handleFileUpload}" mode="advanced" allowTypes="/(\.|\/)(jpe?g|png|pdf)$/" fileLimit="5" />
                                 </h:panelGrid>
-                                <p:commandButton value="Submit" process="@this" />
+
                             </p:panel>
                         </p:tab>                        
-                        
+
                     </p:wizard>
 
 
@@ -247,55 +252,55 @@
 
                 <script type="text/javascript">
 
-                 /*    $(document).ready(function () {
+                    /*    $(document).ready(function () {
+                     
+                     $("#form\\:maestria").change(function () {
+                     var x = $("#form\\:maestria").val();
+                     $("#form\\:idM").val(x);
+                     });
+                     
+                     $("#form\\:promocion").change(function () {
+                     var x = $("#form\\:promocion").val();
+                     $("#form\\:idP").val(x);
+                     });
+                     */
 
-                              $("#form\\:maestria").change(function () {
-                         var x = $("#form\\:maestria").val();
-                         $("#form\\:idM").val(x);
-                         });
-                         
-                         $("#form\\:promocion").change(function () {
-                         var x = $("#form\\:promocion").val();
-                         $("#form\\:idP").val(x);
-                         });
-                         */
-
-                     /*   $("#rootwizard").hide();
-                        var val;
-                        $("#form\\:paisO").change(function () {
-                            val = $("#form\\:paisO").val();
-                            if (val !== "Ec")
-                            {
-                                $("#cantonNac").hide();
-                                $("#provinciaNac").hide();
-                                $("#parroquiaNac").hide();
-                            } else {
-                                $("#cantonNac").show();
-                                $("#provinciaNac").show();
-                                $("#parroquiaNac").show();
-                            }
-                        });
-                        $("#form\\:universidad").change(function () {
-                            val = $("#form\\:universidad").val();
-                            if (val !== "Otro")
-                            {
-                                $("#universidadNueva").hide();
-                            } else {
-                                $("#universidadNueva").show();
-                            }
-                        });
-                        $("#btn-maestria").click(function () {
-                            val = $("#form\\:maestria").val();
-                            if (val === "")
-                            {
-                                $("#rootwizard").hide();
-                            } else {
-                                $("#rootwizard").show();
-                            }
-
-                        });
-                    });
-                    */
+                    /*   $("#rootwizard").hide();
+                     var val;
+                     $("#form\\:paisO").change(function () {
+                     val = $("#form\\:paisO").val();
+                     if (val !== "Ec")
+                     {
+                     $("#cantonNac").hide();
+                     $("#provinciaNac").hide();
+                     $("#parroquiaNac").hide();
+                     } else {
+                     $("#cantonNac").show();
+                     $("#provinciaNac").show();
+                     $("#parroquiaNac").show();
+                     }
+                     });
+                     $("#form\\:universidad").change(function () {
+                     val = $("#form\\:universidad").val();
+                     if (val !== "Otro")
+                     {
+                     $("#universidadNueva").hide();
+                     } else {
+                     $("#universidadNueva").show();
+                     }
+                     });
+                     $("#btn-maestria").click(function () {
+                     val = $("#form\\:maestria").val();
+                     if (val === "")
+                     {
+                     $("#rootwizard").hide();
+                     } else {
+                     $("#rootwizard").show();
+                     }
+                     
+                     });
+                     });
+                     */
 
                 </script>
 

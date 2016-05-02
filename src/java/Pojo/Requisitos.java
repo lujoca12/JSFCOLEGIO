@@ -16,6 +16,8 @@ public class Requisitos  implements java.io.Serializable {
      private Character estado;
      private Character respaldo;
      private Set requisitosPromos = new HashSet(0);
+     private String formato;
+     private String tipoArchivo;
 
     public Requisitos() {
     }
@@ -24,13 +26,35 @@ public class Requisitos  implements java.io.Serializable {
     public Requisitos(int id) {
         this.id = id;
     }
-    public Requisitos(int id, String descripcion, Character estado, Character respaldo, Set requisitosPromos) {
+    public Requisitos(int id, String descripcion, Character estado, Character respaldo, Set requisitosPromos,String formato,String tipoArchivo) {
        this.id = id;
        this.descripcion = descripcion;
        this.estado = estado;
        this.respaldo = respaldo;
        this.requisitosPromos = requisitosPromos;
+       this.formato=formato;
+       this.tipoArchivo=tipoArchivo;
     }
+
+    
+    
+
+    public String getFormato() {
+        return formato;
+    }
+
+    public void setFormato(String formato) {
+        this.formato = formato;
+    }
+
+    public String getTipoArchivo() {
+        return tipoArchivo;
+    }
+
+    public void setTipoArchivo(String tipoArchivo) {
+        this.tipoArchivo = tipoArchivo;
+    }
+    
    
     public int getId() {
         return this.id;

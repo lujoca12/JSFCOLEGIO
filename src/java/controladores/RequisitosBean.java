@@ -47,6 +47,26 @@ public class RequisitosBean implements Serializable {
     private List<String> lstSelReq;
     private List<String> lstReqPro;
     private Map<Integer,String> lstReqProNombre;
+    private String formato;
+    private String tipoArhivo;
+
+    public String getFormato() {
+        return formato;
+    }
+
+    public void setFormato(String formato) {
+        this.formato = formato;
+    }
+
+    public String getTipoArhivo() {
+        return tipoArhivo;
+    }
+
+    public void setTipoArhivo(String tipoArhivo) {
+        this.tipoArhivo = tipoArhivo;
+    }
+    
+    
 
     public Map<Integer, String> getLstReqProNombre() {
         return lstReqProNombre;
@@ -135,6 +155,8 @@ public class RequisitosBean implements Serializable {
         try {
 
             requisito.setDescripcion(descripcion);
+            requisito.setFormato(formato);
+            requisito.setTipoArchivo(tipoArhivo);
             requisito.setEstado('1');
             if (respaldo) {
                 requisito.setRespaldo('1');

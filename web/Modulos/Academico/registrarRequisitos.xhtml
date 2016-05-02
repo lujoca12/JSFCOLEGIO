@@ -17,9 +17,23 @@
 
                         <p:outputLabel for="descripcion" value="Descripcion:" styleClass="labelDerecha"/>
                         <p:inputText id="descripcion" required="true" value="#{requisitosBean.descripcion}" maxlength="255" validatorMessage="Ingrese solo letras.">
-                                    <f:validateRegex pattern="[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]+"/>
+                            <f:validateRegex pattern="[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s]+"/>
                         </p:inputText>
                         <p:message for="descripcion"/>
+
+                        <p:outputLabel for="formato" value="Formato Solicitado:" styleClass="labelDerecha"/>
+                        <p:inputText id="formato" required="true" value="#{requisitosBean.formato}" maxlength="20" validatorMessage="Ingrese solo letras.">
+                            <f:validateRegex pattern="[a-zA-Z0-9]+"/>
+                        </p:inputText>
+                        <p:message for="formato"/>
+
+                        <p:outputLabel for="tipoArchivo" value="Tipo de Archivo:" styleClass="labelDerecha"/>
+                        <p:selectOneMenu id="tipoArchivo" value="#{requisitosBean.tipoArhivo}">
+                            <f:selectItem itemLabel="Seleccionar.." itemValue="" noSelectionOption="true" />
+                            <f:selectItem itemLabel="Imagen" itemValue="jpe?g|png"/>
+                            <f:selectItem itemLabel="Pdf" itemValue="pdf"/>
+                        </p:selectOneMenu>
+                        <p:message for="tipoArchivo"/>
 
                         <p:outputLabel for="respaldo" value="Se necesita respaldo?:" styleClass="labelDerecha"/>
                         <p:selectBooleanCheckbox id="respaldo" required="true" value="#{requisitosBean.respaldo}"/>

@@ -13,6 +13,9 @@ import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import Dao.InscripcionDao;
+import Dao.MatriculaDao;
+import Pojo.Matricula;
+import java.util.Date;
 
 /**
  *
@@ -27,6 +30,17 @@ public class AsignarEntrevistaBean implements Serializable {
      */
     private List<Estudiante> estudiantes;
     private List<SolicitudInscripcion> lstSInscripcion;
+    private SolicitudInscripcion SelectedInscripcion;
+
+    public SolicitudInscripcion getSelectedInscripcion() {
+        return SelectedInscripcion;
+    }
+
+    public void setSelectedInscripcion(SolicitudInscripcion SelectedInscripcion) {
+        this.SelectedInscripcion = SelectedInscripcion;
+    }
+    
+    
 
     public List<Estudiante> getEstudiantes() {
         return estudiantes;
@@ -56,6 +70,36 @@ public class AsignarEntrevistaBean implements Serializable {
             InscripcionDao d=new InscripcionDao();
             lstSInscripcion=d.getInscripcionesEstudiantes();
         } catch (Exception ex) {
+        }
+    }
+    
+    public void guardarMatricula(){
+        try{
+            Matricula m = new Matricula();
+            m.setEstado('1');
+            Date fecha = new Date();
+            m.setFechaMatricula(fecha);
+            m.setSolicitudInscripcion(SelectedInscripcion);
+            SelectedInscripcion.setEstado('A');
+            SelectedInscripcion.setFechaRevision(fecha);
+            MatriculaDao mDao = new MatriculaDao();
+            mDao.insertar(m,SelectedInscripcion);
+            lstSInscripcion.remove(SelectedInscripcion);
+        }catch(Exception ex){
+            
+        }
+    }
+    public void rechazarMatricula(){
+        try{            
+            
+            SelectedInscripcion.setEstado('R');
+            Date fecha = new Date();
+            SelectedInscripcion.setFechaRevision(fecha);
+            MatriculaDao mDao = new MatriculaDao();
+            mDao.rechazar(SelectedInscripcion);
+            lstSInscripcion.remove(SelectedInscripcion);
+        }catch(Exception ex){
+            
         }
     }
 

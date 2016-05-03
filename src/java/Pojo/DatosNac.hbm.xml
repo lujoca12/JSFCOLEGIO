@@ -6,7 +6,9 @@
     <class name="Pojo.DatosNac" table="datos_nac" schema="public" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
-            <generator class="assigned" />
+            <generator class="sequence" >
+                <param name="sequence">datos_nac_id_seq</param>
+            </generator>
         </id>
         <many-to-one name="estudiante" class="Pojo.Estudiante" fetch="select">
             <column name="id_estudiante" />

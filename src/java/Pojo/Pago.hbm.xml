@@ -6,7 +6,9 @@
     <class name="Pojo.Pago" table="pago" schema="public" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
-            <generator class="assigned" />
+            <generator class="sequence" >
+                <param name="sequence">pago_id_seq</param>
+            </generator>
         </id>
         <many-to-one name="matricula" class="Pojo.Matricula" fetch="select">
             <column name="id_matricula" not-null="true" />

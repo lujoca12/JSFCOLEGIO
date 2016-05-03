@@ -8,6 +8,7 @@ import Pojo.Canton;
 import Pojo.Pais;
 import Pojo.Parroquia;
 import Pojo.Provincia;
+import Pojo.Universidad;
 
 import java.io.Serializable;
 import java.util.List;
@@ -55,6 +56,54 @@ public class LocalizacionDao {
         sesion.close();
         return lst; 
     }
+    public Parroquia getParroquia(String Id){
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+       
+        String hql="from Parroquia p where p.id = '"+Id+"' order by p.descripcion asc";
+       
+        Query query = sesion.createQuery(hql);
+        //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        List<Parroquia> lst=(List<Parroquia>) query.list();
+        Parroquia pa = null;
+        for(Parroquia p : lst)
+            pa=p;
+        sesion.close();
+        return pa; 
+    }
+    public String getNombrePais(String Id){
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+       
+        String hql="from Pais p where p.id = '"+Id+"' order by p.descripcion asc";
+       
+        Query query = sesion.createQuery(hql);
+        //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        List<Pais> lst=(List<Pais>) query.list();
+        String pais="" ;
+        for(Pais p : lst)
+            pais=p.getDescripcion();
+        sesion.close();
+        return pais; 
+    }
+    public Pais getPais(String Id){
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+       
+        String hql="from Pais p where p.id = '"+Id+"' order by p.descripcion asc";
+       
+        Query query = sesion.createQuery(hql);
+        //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        List<Pais> lst=(List<Pais>) query.list();
+        Pais pais=null;
+        for(Pais p : lst)
+            pais=p;
+        sesion.close();
+        return pais; 
+    }
     public List<Provincia> getProvincias(){
         this.sesion = null;
         this.tx = null;
@@ -96,4 +145,5 @@ public class LocalizacionDao {
         }
         return lst;
     }
+    
 }

@@ -17,29 +17,56 @@
                     <f:facet name="header">
                         Asignacion de Entrevistas
                     </f:facet>
-                    <p:column headerText="Id">
+                    <p:column headerText="Apellidos">
                         <h:outputText value="#{s.estudiante.apellidos}" />
                     </p:column>
+                    <p:column headerText="Nombres">
+                        <h:outputText value="#{s.estudiante.nombres}" />
+                    </p:column>
 
-                    <p:column headerText="Year">
+                    <p:column headerText="Maestria">
                         <h:outputText value="#{s.promocion.maestria.descripcion}" />
                     </p:column>
 
-                    <p:column headerText="Brand">
+                    <p:column headerText="Promocion">
                         <h:outputText value="#{s.promocion.descripcion}" />
                     </p:column>
 
-                    <p:column headerText="Color">
+                    <p:column headerText="Fecha de Realizacion">
                         <h:outputText value="#{s.fechaRealizacion}" />
+                    </p:column>
+                    <p:column style="width:32px;text-align: center">
+                        <p:commandButton update=":form:carDetail" oncomplete="PF('carDialog').show()" icon="ui-icon-search" title="View">
+                            <f:setPropertyActionListener value="#{s}" target="#{asignarEntrevistaBean.selectedInscripcion}" />
+                        </p:commandButton>
                     </p:column>
                 </p:dataTable>
 
-            </h:form>
-            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 
-            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-                <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
-            </p:dialog>
+                <p:dialog header="Car Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <p:outputPanel id="carDetail" style="text-align:center;">
+                        <p:panelGrid  columns="2" rendered="#{not empty asignarEntrevistaBean.selectedInscripcion}" >
+                            <p:column headerText="Apellidos">
+                                <h:outputLabel value="Lugar de la Entrevista: "/>
+                            </p:column>
+                            <p:column headerText="Nombres">
+                                <h:inputText  />
+                            </p:column>
+
+                            <p:column headerText="Maestria">
+                                 <h:outputLabel value="Fecha : "/>
+                            </p:column>
+
+                            <p:column headerText="Promocion">
+                                <p:calendar pattern="MM/dd/yyyy HH:mm:ss"/>
+                            </p:column>
+                        </p:panelGrid>
+                        <p:commandButton value="Aceptar"/>
+                    </p:outputPanel>
+                </p:dialog>
+
+            </h:form>
+            
         </div>
     </h:body>
 </html>

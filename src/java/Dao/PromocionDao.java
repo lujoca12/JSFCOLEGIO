@@ -71,5 +71,22 @@ public class PromocionDao {
         }
         return lst;
     }
+    
+    public Promocion getPromocion(String Id){
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+       
+        String hql="from Promocion p where p.id = '"+Id+"' order by p.descripcion asc";
+       
+        Query query = sesion.createQuery(hql);
+        //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        List<Promocion> lst=(List<Promocion>) query.list();
+        Promocion u=null;
+        for(Promocion p : lst)
+            u=p;
+        sesion.close();
+        return u; 
+    }
 
 }

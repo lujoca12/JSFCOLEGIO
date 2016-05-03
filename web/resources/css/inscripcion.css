@@ -70,7 +70,7 @@ td{
     color:  #c6101b;
 }
 .encabezado{
-    width: 700px;    
+    width: 400px;    
     margin: auto;
     margin-bottom: 20px;
 }
@@ -106,10 +106,7 @@ td{
 .thumb-image{
     border: #ccc 1px solid;
 }
-.ui-fileupload-upload{
-    display: none;
-   
-}
+
 .form-control{
     max-width: 300px;
     min-width: 300px;

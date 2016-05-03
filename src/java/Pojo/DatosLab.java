@@ -16,6 +16,7 @@ public class DatosLab  implements java.io.Serializable {
      private String direccion;
      private String telefono;
      private String email;
+     private String cargo;
 
     public DatosLab() {
     }
@@ -24,7 +25,7 @@ public class DatosLab  implements java.io.Serializable {
     public DatosLab(int id) {
         this.id = id;
     }
-    public DatosLab(int id, Estudiante estudiante, Parroquia parroquia, String empresa, String direccion, String telefono, String email) {
+    public DatosLab(int id, Estudiante estudiante, Parroquia parroquia, String empresa, String direccion, String telefono, String email,String cargo) {
        this.id = id;
        this.estudiante = estudiante;
        this.parroquia = parroquia;
@@ -32,6 +33,15 @@ public class DatosLab  implements java.io.Serializable {
        this.direccion = direccion;
        this.telefono = telefono;
        this.email = email;
+       this.cargo = cargo;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
     }
    
     public int getId() {

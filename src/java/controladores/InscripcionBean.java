@@ -6,11 +6,16 @@
 package controladores;
 
 import Clases.ClsRequisito;
+import Dao.InscripcionDao;
 import Dao.LocalizacionDao;
 import Dao.PromocionDao;
 import Dao.RequisitosDao;
+import Dao.UniversidadesDao;
 import Pojo.Archivos;
 import Pojo.Canton;
+import Pojo.DatosDom;
+import Pojo.DatosLab;
+import Pojo.DatosNac;
 import Pojo.Estudiante;
 import Pojo.Pais;
 import Pojo.Parroquia;
@@ -19,6 +24,8 @@ import Pojo.Provincia;
 import Pojo.Requisitos;
 import Pojo.RequisitosPromo;
 import Pojo.SolicitudInscripcion;
+import Pojo.Titulo;
+import Pojo.Universidad;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -42,6 +50,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.faces.model.SelectItemGroup;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import org.hibernate.Hibernate;
@@ -63,6 +72,7 @@ public class InscripcionBean implements Serializable {
     private List<ClsRequisito> lstClsR;
     private List<SelectItem> lstPais;
     private List<SelectItem> lstProvincia;
+    private List<SelectItem> lstUniversidades;
 
     private String idPromo;
     private String idMaestria;
@@ -86,17 +96,22 @@ public class InscripcionBean implements Serializable {
     private Map<String, Map<String, String>> data = new HashMap<>();
     private Map<String, Map<String, String>> data2 = new HashMap<>();
     private Map<String, Map<String, String>> dataProCan = new HashMap<>();
-    private Map<String, Map<String, String>> dataCanPar = new HashMap<>();   
+    private Map<String, Map<String, String>> dataCanPar = new HashMap<>();
 
     private List<String> reqSelec;
     private List<SelectItem> listaRequisitos;
-    private Estudiante estudiante;
+    private Estudiante estudiante = new Estudiante();
+    private DatosNac datosNac = new DatosNac();
+    private DatosDom datosDom = new DatosDom();
+    private DatosLab datosLab = new DatosLab();
     private SolicitudInscripcion sInscripcion;
-    private Archivos archivos;
+    private Archivos archivos = new Archivos();
+    private Titulo titulo = new Titulo();
+    private Universidad universidad = new Universidad();
     private String idPaisOrigen;
-    private String idProvinciaNac;
-    private String idCantonNac;
-    private String idParroquiaNac;
+    private String idProvinciaNac = "";
+    private String idCantonNac = "";
+    private String idParroquiaNac = "";
     private String idProvinciaDom;
     private String idCantonDom;
     private String idParroquiaDom;
@@ -105,6 +120,103 @@ public class InscripcionBean implements Serializable {
     private String idParroquiaTra;
     private String idUniversidad;
     private String idEcuador;
+    private String universidadNueva;
+    private String idPaisUniversidad;
+    private String tituloDescr;
+    private String numeroSenecyt;
+    private int numeroReq;
+
+    public int getNumeroReq() {
+        return numeroReq;
+    }
+
+    public void setNumeroReq(int numeroReq) {
+        this.numeroReq = numeroReq;
+    }
+    
+    
+
+    public String getTituloDescr() {
+        return tituloDescr;
+    }
+
+    public void setTituloDescr(String tituloDescr) {
+        this.tituloDescr = tituloDescr;
+    }
+
+    public String getNumeroSenecyt() {
+        return numeroSenecyt;
+    }
+
+    public void setNumeroSenecyt(String numeroSenecyt) {
+        this.numeroSenecyt = numeroSenecyt;
+    }
+
+    
+
+    public Universidad getUniversidad() {
+        return universidad;
+    }
+
+    public void setUniversidad(Universidad universidad) {
+        this.universidad = universidad;
+    }
+
+    public String getIdPaisUniversidad() {
+        return idPaisUniversidad;
+    }
+
+    public void setIdPaisUniversidad(String idPaisUniversidad) {
+        this.idPaisUniversidad = idPaisUniversidad;
+    }
+
+    public String getUniversidadNueva() {
+        return universidadNueva;
+    }
+
+    public void setUniversidadNueva(String universidadNueva) {
+        this.universidadNueva = universidadNueva;
+    }
+
+    public List<SelectItem> getLstUniversidades() {
+        return lstUniversidades;
+    }
+
+    public void setLstUniversidades(List<SelectItem> lstUniversidades) {
+        this.lstUniversidades = lstUniversidades;
+    }
+
+    public Titulo getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(Titulo titulo) {
+        this.titulo = titulo;
+    }
+
+    public DatosNac getDatosNac() {
+        return datosNac;
+    }
+
+    public void setDatosNac(DatosNac datosNac) {
+        this.datosNac = datosNac;
+    }
+
+    public DatosDom getDatosDom() {
+        return datosDom;
+    }
+
+    public void setDatosDom(DatosDom datosDom) {
+        this.datosDom = datosDom;
+    }
+
+    public DatosLab getDatosLab() {
+        return datosLab;
+    }
+
+    public void setDatosLab(DatosLab datosLab) {
+        this.datosLab = datosLab;
+    }
 
     public String getIdEcuador() {
         return idEcuador;
@@ -161,8 +273,6 @@ public class InscripcionBean implements Serializable {
     public void setParroquiasTra(Map<String, String> parroquiasTra) {
         this.parroquiasTra = parroquiasTra;
     }
-    
-    
 
     public List<SelectItem> getLstProvincia() {
         return lstProvincia;
@@ -458,6 +568,22 @@ public class InscripcionBean implements Serializable {
     @PostConstruct
     public void init() {
         try {
+            //datos de las universidades
+            UniversidadesDao uDao = new UniversidadesDao();
+            lstUniversidades = new ArrayList<>();
+            SelectItemGroup g1 = new SelectItemGroup("Ecuador");
+            SelectItem[] temp = uDao.getUniversidades(true);
+            if (temp != null) {
+                g1.setSelectItems(temp);
+                lstUniversidades.add(g1);
+            }
+            SelectItemGroup g2 = new SelectItemGroup("Extranjero");
+            SelectItem[] temp2 = uDao.getUniversidades(false);
+            if (temp2 != null) {
+                g2.setSelectItems(temp2);
+                lstUniversidades.add(g2);
+            }
+
             //datos de los combos de maestria y promociones ademas de los requisitos solicitados
             maestrias = new HashMap<>();
             listaPromocion = new ArrayList<>();
@@ -489,11 +615,12 @@ public class InscripcionBean implements Serializable {
             for (Pais p : paises) {
                 SelectItem item = new SelectItem(p.getId(), p.getDescripcion());
                 lstPais.add(item);
-                if(p.getDescripcion().equalsIgnoreCase("ecuador"))
-                    idEcuador=String.valueOf(p.getId());
+                if (p.getDescripcion().equalsIgnoreCase("ecuador")) {
+                    idEcuador = String.valueOf(p.getId());
+                }
             }
             //prov canton parroq
-            provincias = new HashMap<>();
+            provincias = new LinkedHashMap<>();
             lstProvincia = new ArrayList<>();
             List<SelectItem> itemsProv = new ArrayList<>();
             List<Provincia> prov = locDao.getProvincias();
@@ -505,11 +632,11 @@ public class InscripcionBean implements Serializable {
                 provincias.put(i.getLabel(), i.getValue().toString());
                 List<Canton> lstC = locDao.getCantonProvicia(Integer.valueOf(i.getValue().toString()));
 
-                Map<String, String> map3 = new HashMap<>();
+                Map<String, String> map3 = new LinkedHashMap<>();
                 for (Canton c : lstC) {
                     map3.put(c.getDescripcion(), String.valueOf(c.getId()));
                     List<Parroquia> lstPa = locDao.getParroquiaCanton(c.getId());
-                    Map<String, String> map4 = new HashMap<>();
+                    Map<String, String> map4 = new LinkedHashMap<>();
                     for (Parroquia pa : lstPa) {
                         map4.put(pa.getDescripcion(), String.valueOf(pa.getId()));
                     }
@@ -517,7 +644,6 @@ public class InscripcionBean implements Serializable {
                 }
                 dataProCan.put(i.getValue().toString(), map3);
             }
-           
 
         } catch (Exception ex) {
             Logger.getLogger(AsignarRequisitosBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -554,6 +680,7 @@ public class InscripcionBean implements Serializable {
                     lstClsR.add(new ClsRequisito(Integer.valueOf(requisitos.get(key)), key));
 
                 }
+                numeroReq=lstClsR.size();
 
             } else {
                 requisitos = new HashMap<>();
@@ -591,7 +718,7 @@ public class InscripcionBean implements Serializable {
             Logger.getLogger(AsignarRequisitosBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void onProvinciaDomChange() {
         try {
             cantonesDom = new HashMap<>();
@@ -619,7 +746,7 @@ public class InscripcionBean implements Serializable {
             Logger.getLogger(AsignarRequisitosBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void onProvinciaTraChange() {
         try {
             cantonesTra = new HashMap<>();
@@ -654,14 +781,79 @@ public class InscripcionBean implements Serializable {
             lstReqProNombre = reqB.getListaReqProNombre(Integer.valueOf(idPromo), Integer.valueOf(idMaestria));
         }
     }
-    
+
+    public void guardar() {
+        try {
+            //estudiante ya se ha obtenido los datos solo hay q poner el paisOrigen
+            LocalizacionDao lDao = new LocalizacionDao();
+            Parroquia p;
+            estudiante.setPaisOrigen(lDao.getNombrePais(idPaisOrigen));
+            //datosNac
+            if (!"".equals(idProvinciaNac) && !"".equals(idParroquiaNac) && !"".equals(idCantonNac)) {
+                datosNac.setFechaNac(estudiante.getFechaNac());
+                datosNac.setEstudiante(estudiante);
+                p = lDao.getParroquia(idParroquiaNac);
+                datosNac.setParroquia(p);
+            } else {
+                datosNac = null;
+            }
+            //datosDom
+            if (!"".equals(idProvinciaDom) && !"".equals(idParroquiaDom) && !"".equals(idCantonDom)) {
+                datosDom.setEstudiante(estudiante);
+                p = lDao.getParroquia(idParroquiaDom);
+                datosDom.setParroquia(p);
+            } else {
+                datosDom = null;
+            }
+            //datosLab
+            if (!"".equals(idProvinciaTra) && !"".equals(idParroquiaTra) && !"".equals(idCantonTra)) {
+                datosLab.setEstudiante(estudiante);
+                p = lDao.getParroquia(idParroquiaTra);
+                datosLab.setParroquia(p);
+            } else {
+                datosLab = null;
+            }
+            //Academica
+            if (idUniversidad.equals("Nueva")) {
+                universidad.setDescripcion(universidadNueva);
+                Pais paisP = lDao.getPais(idPaisUniversidad);
+                universidad.setPais(paisP);
+                titulo.setUniversidad(universidad);
+                titulo.setNSenecyt(numeroSenecyt);
+            } else {
+                UniversidadesDao uDao = new UniversidadesDao();                
+                titulo.setUniversidad(uDao.getUniversidad(idUniversidad));                
+                titulo.setNSenecyt(numeroSenecyt);
+                titulo.setDescripcion(tituloDescr);
+            }
+            sInscripcion = new SolicitudInscripcion();
+            sInscripcion.setEstado('E');            
+            Date dateobj = new Date();            
+            sInscripcion.setFechaRealizacion(dateobj);
+            sInscripcion.setEstudiante(estudiante);
+            PromocionDao pDao = new PromocionDao();            
+            sInscripcion.setPromocion(pDao.getPromocion(idPromo));
+            InscripcionDao iDao = new InscripcionDao();
+            if (iDao.insertar(estudiante, datosNac, datosDom, datosLab, sInscripcion, titulo, universidad)) {
+                FacesMessage message = new FacesMessage("Succesful", "Datos guardados");
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            } else {
+                FacesMessage message = new FacesMessage("Error", "Ha habido un problema");
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            }
+
+        } catch (Exception ex) {
+
+        }
+    }
+
     public void handleFileUpload(FileUploadEvent event) {
 
         UploadedFile file = event.getFile();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date dateobj = new Date();
-        String nombreFecha = (df.format(dateobj).replaceAll(":", "-"));       
-         Path path = Paths.get("D:\\Postgrado\\inscripciones\\requisitos\\"+nombreFecha.trim());
+        String nombreFecha = estudiante.getCedPasaporte()+(df.format(dateobj).replaceAll(":", "-"));
+        Path path = Paths.get("D:\\Postgrado\\inscripciones\\requisitos\\" + nombreFecha.trim());
         //if directory exists?
         if (!Files.exists(path)) {
             try {
@@ -673,7 +865,7 @@ public class InscripcionBean implements Serializable {
         }
         String filename = file.getFileName();
 //         String extension = f.getContentType();
-        Path ruta = Paths.get(path +"\\"+ filename);
+        Path ruta = Paths.get(path + "\\" + filename);
 
         try (InputStream input = file.getInputstream()) {
             Files.copy(input, ruta, StandardCopyOption.REPLACE_EXISTING);

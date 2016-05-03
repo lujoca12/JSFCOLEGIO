@@ -25,7 +25,7 @@
                         <h1 style="text-align: center;">Solicitud de Inscripción</h1>     
 
                         <p:panel header="Seleccionar Maestría">                            
-                            <p:panelGrid id="panel" columns="3"  layout="grid" styleClass="ui-panelgrid-blank">
+                            <p:panelGrid id="panel" columns="1"   layout="grid" styleClass="ui-panelgrid-blank">
 
                                 <h:outputLabel for="maestria" value="Seleccionar Maestría: " styleClass="labelDerecha" />
                                 <h:selectOneMenu id="maestria" class="form-control " value="#{inscripcionBean.idMaestria}" >  
@@ -36,7 +36,7 @@
                                     <f:selectItem itemLabel="Seleccionar.." itemValue="" noSelectionOption="true" />
                                     <f:selectItems value="#{inscripcionBean.maestrias}"  />  
                                 </h:selectOneMenu>  
-                                <div></div>         
+
 
                                 <h:outputLabel for="promocion" value="Seleccionar Promocion: " styleClass="labelDerecha" />
                                 <h:selectOneMenu id="promocion" class="form-control " value="#{inscripcionBean.idPromo}"  >                             
@@ -44,31 +44,31 @@
                                     <f:selectItem itemLabel="Seleccionar.." itemValue="" noSelectionOption="true" />
                                     <f:selectItems value="#{inscripcionBean.promociones}"  />  
                                 </h:selectOneMenu>  
-                                <div></div>  
-                                <h:inputHidden/>  
-                                <p:commandButton type="button" value="Show" style="display:block" icon="ui-icon-image">
+
+
+                                <p:commandButton type="button" value="Mostrar" style="display:block;margin:auto;" icon="ui-icon-image">
                                     <p:effect type="fade" event="click" for="datos">
                                         <f:param name="mode" value="'show'" />
                                     </p:effect>
                                 </p:commandButton>
-                                <div></div>  
+
                             </p:panelGrid>
                         </p:panel>
 
 
 
                     </div>
-                    <p:wizard id="datos" flowListener="#{userWizard.onFlowProcess}" style="display:none;" backLabel="Regresar" nextLabel="Siguiente"  >
+                    <p:wizard id="datos" flowListener="#{userWizard.onFlowProcess}" style="display:none;" backLabel="Regresar" nextLabel="Siguiente" step="requisitos"  >
 
                         <p:tab id="personal" title="Personal">
                             <p:panel header="Información Personal">
                                 <p:messages closable="true" />
                                 <h:panelGrid columns="4" cellspacing="5px" >
                                     <h:outputLabel for="cedPas" value="Cédula o Pasaporte: " />
-                                    <p:inputText  required="true"  id="cedPas" class="form-control "/>
+                                    <p:inputText  required="true"  id="cedPas" class="form-control " value="#{inscripcionBean.estudiante.cedPasaporte}"/>
 
                                     <h:outputLabel for="estCivil" value="Estado Civil: " />
-                                    <h:selectOneMenu id="estCivil" class="form-control" >
+                                    <h:selectOneMenu id="estCivil" class="form-control" value="#{inscripcionBean.estudiante.estadoCivil}">
                                         <f:selectItem itemLabel="Soltero" itemValue="S" />
                                         <f:selectItem itemLabel="Casado" itemValue="C" />
                                         <f:selectItem itemLabel="Divorciado" itemValue="D" />
@@ -77,20 +77,20 @@
                                     </h:selectOneMenu>
 
                                     <h:outputLabel for="nombres" value="Nombres: " />
-                                    <p:inputText  required="true"  id="nombres" class="form-control "/>
+                                    <p:inputText  required="true"  id="nombres" class="form-control " value="#{inscripcionBean.estudiante.nombres}"/>
 
                                     <h:outputLabel for="apellidos" value="Apellidos: "  />
-                                    <p:inputText  required="true" id="apellidos"  class="form-control "/>
+                                    <p:inputText  required="true" id="apellidos"  class="form-control " value="#{inscripcionBean.estudiante.apellidos}"/>
 
                                     <h:outputLabel for="fNac" value="Fecha de Nacimiento: " />
-                                    <p:calendar  id="fNac" required="true"  navigator="true" mask="true" pattern="dd/MM/yyyy" mindate="01/01/1940" maxdate="#{validadorFecha.fechaMax}"  />                                  
+                                    <p:calendar  id="fNac" required="true"  navigator="true" mask="true" value="#{inscripcionBean.estudiante.fechaNac}" pattern="dd/MM/yyyy" mindate="01/01/1940" maxdate="#{validadorFecha.fechaMax}"  />                                  
 
                                     <h:outputLabel for="email" value="Email: " />
-                                    <p:inputText  required="true" id="email"  class="form-control  "/>
+                                    <p:inputText  required="true" id="email"  class="form-control  " value="#{inscripcionBean.estudiante.email}"/>
                                     <h:outputLabel for="celular" value="Celular: " />
-                                    <p:inputMask id="celular"  required="true"  class="form-control" mask="99-99999999" />
+                                    <p:inputMask id="celular"  required="true"  class="form-control" mask="9999999999" value="#{inscripcionBean.estudiante.celular}"/>
                                     <h:outputLabel for="sexo" value="Sexo: " />
-                                    <h:selectOneMenu id="sexo" class="form-control" >
+                                    <h:selectOneMenu id="sexo" class="form-control" value="#{inscripcionBean.estudiante.sexo}" >
                                         <f:selectItem itemLabel="Masculino" itemValue="M" />
                                         <f:selectItem itemLabel="Femenino" itemValue="F" />
                                     </h:selectOneMenu>
@@ -98,33 +98,39 @@
                                     <h:selectOneMenu id="paisO" class="form-control" value="#{inscripcionBean.idPaisOrigen}">
                                         <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
                                         <f:selectItems value="#{inscripcionBean.lstPais}"  /> 
-                                        <p:ajax event="change" update="group group2" />
+                                        <p:ajax event="change" update="group group2 group3 group4 group5 group6" />
                                     </h:selectOneMenu>
-                                    <h:inputHidden class="form-control"/>
-                                    <h:inputHidden class="form-control"/>
+
                                     <h:panelGroup id="group">
                                         <h:outputLabel for="provinciaNac"  rendered="#{inscripcionBean.idEcuador==inscripcionBean.idPaisOrigen}" value="Provincia de Nacimiento: "/>
-                                        <h:outputLabel for="cantonNac" rendered="#{inscripcionBean.idEcuador==inscripcionBean.idPaisOrigen}" value="Cantón de Nacimiento: " />
-                                        <h:outputLabel for="parroquiaNac" rendered="#{inscripcionBean.idEcuador==inscripcionBean.idPaisOrigen}" value="Parroquia de Nacimiento: "/>
                                     </h:panelGroup>
                                     <h:panelGroup id="group2">
-                                                  <h:selectOneMenu id="provinciaNac" rendered="#{inscripcionBean.idEcuador==inscripcionBean.idPaisOrigen}" class="form-control" value="#{inscripcionBean.idProvinciaNac}">
+                                        <h:selectOneMenu id="provinciaNac" rendered="#{inscripcionBean.idEcuador==inscripcionBean.idPaisOrigen}" class="form-control" value="#{inscripcionBean.idProvinciaNac}">
                                             <p:ajax listener="#{inscripcionBean.onProvinciaNacChange()}" update="cantonNac" />                                        
                                             <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
                                             <f:selectItems value="#{inscripcionBean.provincias}"  />  
                                         </h:selectOneMenu>
-
+                                    </h:panelGroup>
+                                    <h:panelGroup id="group3">
+                                        <h:outputLabel for="cantonNac" rendered="#{inscripcionBean.idEcuador==inscripcionBean.idPaisOrigen}" value="Cantón de Nacimiento: " />
+                                    </h:panelGroup>
+                                    <h:panelGroup id="group4">
                                         <h:selectOneMenu id="cantonNac" rendered="#{inscripcionBean.idEcuador==inscripcionBean.idPaisOrigen}" class="form-control" value="#{inscripcionBean.idCantonNac}">
                                             <p:ajax listener="#{inscripcionBean.onCantonNacChange()}" update="parroquiaNac" />
                                             <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
                                             <f:selectItems value="#{inscripcionBean.cantones}"  />  
                                         </h:selectOneMenu>
-
+                                    </h:panelGroup>
+                                    <h:panelGroup id="group5">
+                                        <h:outputLabel for="parroquiaNac" rendered="#{inscripcionBean.idEcuador==inscripcionBean.idPaisOrigen}" value="Parroquia de Nacimiento: "/>
+                                    </h:panelGroup>
+                                    <h:panelGroup id="group6">
                                         <h:selectOneMenu id="parroquiaNac" rendered="#{inscripcionBean.idEcuador==inscripcionBean.idPaisOrigen}" class="form-control" required="true" value="#{inscripcionBean.idParroquiaNac}">
                                             <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
                                             <f:selectItems value="#{inscripcionBean.parroquias}"  /> 
                                         </h:selectOneMenu>
                                     </h:panelGroup>
+
                                 </h:panelGrid>
                             </p:panel>
                         </p:tab>
@@ -153,10 +159,10 @@
                                     </h:selectOneMenu>
 
                                     <h:outputLabel for="direccionDom" value="Dirección: " />
-                                    <p:inputText  required="true" id="direccionDom" class="form-control "/>
+                                    <p:inputText  required="true" id="direccionDom" class="form-control " value="#{inscripcionBean.datosDom.direccion}"/>
 
                                     <h:outputLabel for="telefono" value="Teléfono: " />
-                                    <p:inputMask id="telefono"  required="true" class="form-control" mask="99-99999999" />
+                                    <p:inputMask id="telefono"  required="true" class="form-control" mask="9999999999" value="#{inscripcionBean.datosDom.telefono}"/>
 
                                 </h:panelGrid>
                             </p:panel>
@@ -186,16 +192,19 @@
                                     </h:selectOneMenu>
 
                                     <h:outputLabel for="empresa" value="Empresa: " />
-                                    <p:inputText  required="true" id="empresa" class="form-control "/>
+                                    <p:inputText  required="true" id="empresa" class="form-control " value="#{inscripcionBean.datosLab.empresa}"/>
+
+                                    <h:outputLabel for="cargo" value="Cargo: " />
+                                    <p:inputText  required="true" id="cargo" class="form-control " value="#{inscripcionBean.datosLab.cargo}"/>
 
                                     <h:outputLabel for="telefonoTra" value="Teléfono: " />
-                                    <p:inputMask id="telefonoTra"  required="true" class="form-control" mask="99-99999999" />
+                                    <p:inputMask id="telefonoTra"  required="true" class="form-control" mask="9999999999" value="#{inscripcionBean.datosLab.telefono}"/>
 
                                     <h:outputLabel for="direccionTra" value="Dirección: " />
-                                    <p:inputText  required="true" id="direccionTra" class="form-control "/>
+                                    <p:inputText  required="true" id="direccionTra" class="form-control " value="#{inscripcionBean.datosLab.direccion}"/>
 
                                     <h:outputLabel for="emailTra" value="Email: " />
-                                    <p:inputText  required="true" id="emailTra" class="form-control  "/>
+                                    <p:inputText  required="true" id="emailTra" class="form-control  " value="#{inscripcionBean.datosLab.email}" />
 
                                 </h:panelGrid>
                             </p:panel>
@@ -205,21 +214,34 @@
                                 <p:messages closable="true" />
                                 <h:panelGrid columns="4" >
                                     <h:outputLabel for="titulo" value="Título: " />
-                                    <p:inputText  required="true" id="titulo" class="form-control "/>
+                                    <p:inputText  required="true" id="titulo" class="form-control " value="#{inscripcionBean.tituloDescr}"/>
 
                                     <h:outputLabel for="universidad" value="Universidad: "/>
-                                    <h:selectOneMenu id="universidad" class="form-control">
-                                        <f:selectItem itemLabel="Universidad Tecnica Estatal de Quevedo" itemValue="Universidad Tecnica Estatal de Quevedo" />
-                                        <f:selectItem itemLabel="Otro" itemValue="Otro"  />
+                                    <h:selectOneMenu id="universidad" class="form-control" value="#{inscripcionBean.idUniversidad}">
+                                        <f:selectItem itemLabel="Seleccionar una" itemValue=""/>
+                                        <f:selectItem itemLabel="Crear Universidad" itemValue="Nueva"  />
+                                        <f:selectItems value="#{inscripcionBean.lstUniversidades}"/>
+                                        <p:ajax event="change" update="gUL gUT gPU gPUC"  />
                                     </h:selectOneMenu>
-
-                                    <h:outputLabel for="universidadNueva" value="Nombre Universidad: " />
-                                    <p:inputText  required="true" id="universidadNueva" class="form-control "/>
-
+                                    <h:panelGroup id="gUL">                                    
+                                        <h:outputLabel for="universidadNueva" rendered="#{inscripcionBean.idUniversidad eq 'Nueva'}" value="Nombre Universidad: " />
+                                    </h:panelGroup>
+                                    <h:panelGroup id="gUT">
+                                        <p:inputText  required="true" rendered="#{inscripcionBean.idUniversidad eq 'Nueva'}" value="#{inscripcionBean.universidadNueva}" id="universidadNueva" class="form-control "/>
+                                    </h:panelGroup>
+                                    <h:panelGroup id="gPU">
+                                        <h:outputLabel for="paisU" rendered="#{inscripcionBean.idUniversidad eq 'Nueva'}" value="País de la Universidad: "/>
+                                    </h:panelGroup>
+                                    <h:panelGroup id="gPUC">
+                                        <h:selectOneMenu id="paisU" class="form-control" rendered="#{inscripcionBean.idUniversidad eq 'Nueva'}" value="#{inscripcionBean.idPaisUniversidad}">
+                                            <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                                            <f:selectItems value="#{inscripcionBean.lstPais}"  />                                        
+                                        </h:selectOneMenu>
+                                    </h:panelGroup>
                                     <h:outputLabel for="nregistro" value="Número de registro del Senecyt: " />
-                                    <p:inputText  required="true" id="nregistro" class="form-control "/>
+                                    <p:inputText  required="true" id="nregistro" class="form-control " value="#{inscripcionBean.numeroSenecyt}"/>
 
-                                    <p:commandButton disabled="true" value="Submit" process="@this" />
+                                    <p:commandButton actionListener="#{inscripcionBean.guardar}" update="messages"  value="Guardar Datos" process="@this" />
                                 </h:panelGrid>
 
                             </p:panel>
@@ -227,8 +249,14 @@
                         <p:tab id="requisitos" title="Requisitos" >
                             <p:panel header="Requisitos">
                                 <p:messages closable="true" />
-                                <h:panelGrid columns="1" width="100%" >     
-                                    <p:fileUpload required="true" fileUploadListener="#{inscripcionBean.handleFileUpload}" mode="advanced" allowTypes="/(\.|\/)(jpe?g|png|pdf)$/" fileLimit="5" />
+                                <h:panelGrid columns="1" width="100%" >   
+                                    <p:dataList value="#{inscripcionBean.lstClsR}" var="r" type="ordered">
+                                        <f:facet name="header">
+                                            Requisitos
+                                        </f:facet>
+                                        #{r.descripcion}
+                                    </p:dataList>
+                                    <p:fileUpload required="true" fileUploadListener="#{inscripcionBean.handleFileUpload}" mode="advanced" allowTypes="/(\.|\/)(jpe?g|png|pdf)$/" fileLimit="#{inscripcionBean.numeroReq}" />
                                 </h:panelGrid>
 
                             </p:panel>

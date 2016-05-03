@@ -51,7 +51,7 @@ public class DaoTAsistencias implements InterfaceAsistencia{
     }
 
     @Override
-    public boolean registrar(List<ClsNotas> lstNotas, int idModulo) throws Exception {
+    public boolean registrar(List<ClsNotas> lstNotas, int idModulo, Date fecha) throws Exception {
         boolean band = false;
         try {
             //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
@@ -62,7 +62,7 @@ public class DaoTAsistencias implements InterfaceAsistencia{
             Matricula matricula = null;
             Modulo modulo = null;
             
-            Date fecha = new Date();
+            //Date fecha = new Date();
             for (int i = 0; i < lstNotas.size(); i++) {
                 tAsistencia = new Asistencia();
                 tAsistencia.setUsuario(usuario.getApellidos()+" "+usuario.getNombres());
@@ -113,24 +113,78 @@ public class DaoTAsistencias implements InterfaceAsistencia{
 
     @Override
     public boolean update(Asistencia tAsistencia) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean band = false;
+        try {
+            iniciaOperacion();
+            sesion.update(tAsistencia);
+
+            tx.commit();
+            sesion.close();
+            band = true;
+        } catch (Exception e) {
+            tx.rollback();
+            band = false;
+        }
+        
+        return band;
     }
     
     @Override
-    public List<Asistencia> existe(int idModulo) throws Exception {
+    public boolean delete(List<ClsNotas> lstNotas, int idModulo) throws Exception {
+        boolean band = false;
+        try {
+            //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
+            Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+            
+            iniciaOperacion();
+            Asistencia tAsistencia = null;
+            Matricula matricula = null;
+            Modulo modulo = null;
+            
+            //Date fecha = new Date();
+            for (int i = 0; i < lstNotas.size(); i++) {
+                tAsistencia = new Asistencia();
+                tAsistencia.setUsuario(usuario.getApellidos()+" "+usuario.getNombres());
+                
+                tAsistencia.setEstado('E');
+                
+                tAsistencia.setFecha(lstNotas.get(i).getFecha());
+                matricula = new Matricula();
+                matricula.setId(lstNotas.get(i).getIdMatricula());
+                tAsistencia.setMatricula(matricula);
+                modulo = new Modulo();
+                modulo.setId(idModulo);
+                tAsistencia.setModulo(modulo);
+                tAsistencia.setObservacion(lstNotas.get(i).getObservacion());
+                tAsistencia.setId(lstNotas.get(i).getIdNota());
+                sesion.update(tAsistencia);
+            }
+            tx.commit();
+            sesion.close();
+            band = true;
+        } catch (Exception e) {
+            tx.rollback();
+            band = false;
+        }
+        
+        return band;
+    }
+    
+    @Override
+    public List<Asistencia> existe(int idModulo, Date fecha) throws Exception {
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE,0);
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-        String formatted = format1.format(cal.getTime());
+//        Calendar cal = Calendar.getInstance();
+//        cal.add(Calendar.DATE,0);
+//        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+//        String formatted = format1.format(cal.getTime());
         
         //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
         Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         
         String hql="from Asistencia asist inner join fetch asist.matricula matr inner join fetch matr.solicitudInscripcion solin inner join fetch solin.estudiante est inner join fetch asist.modulo mod inner join fetch mod.promocion pr\n" +
-                   " inner join fetch mod.usuario user inner join fetch pr.maestria maest where mod.id="+idModulo+" and asist.fecha ='"+formatted+"' and user.nombres='"+usuario.getNombres()+"' and user.apellidos='"+usuario.getApellidos()+"' order by est.apellidos asc";
+                   " inner join fetch mod.usuario user inner join fetch pr.maestria maest where mod.id="+idModulo+" and asist.fecha ='"+fecha+"' and asist.estado<>'E' and user.nombres='"+usuario.getNombres()+"' and user.apellidos='"+usuario.getApellidos()+"' order by est.apellidos asc";
         Query query = sesion.createQuery(hql);
         List<Asistencia> lstAsist=(List<Asistencia>) query.list();
         sesion.close();

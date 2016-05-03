@@ -1,12 +1,133 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
+        <h:outputScript library="js" name="calendar_es.js" />
     </h:head>
     <h:body>
-        Modificar Asistencias
+
+        <div class="ui-fluid">
+            <h:form id="frmEdicionAsist">
+
+
+
+                <p:tab id="personal" title="RegistrarAsistencia">
+                    <p:panel header="Edición Asistencia">
+                        <p:growl id="msgsAsist" showDetail="true" />
+                        <p:focus context="panel"/>
+                        <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
+
+                            <p:outputLabel for="cboModulo" value="Módulos:" styleClass="labelDerecha"/>
+                            <p:selectOneMenu required="true" id="cboModulo" value="#{mbVAsistencia.idModulo}">
+                                <f:selectItem itemLabel="(Escoja un Módulo)" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{mbVAsistencia.lstCboModulos}" var="modulos" itemLabel="#{modulos.modulo}" itemValue="#{modulos.idModulo}" />
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel  for="txtFechaInicio" value="Fecha:" styleClass="labelDerecha" />
+                            <p:calendar required="true" id="txtFechaInicio" locale="es" value="#{mbVAsistencia.fecha}" effect="fold" pattern="dd-MM-yyyy" mask="true" >
+                                <f:validator validatorId="primeDateRangeValidator1" />
+                            </p:calendar>
+                            
+                            <h:outputText id="display" value="" />
+                            <p:commandButton value="Mostrar" update="frmEdicionAsist,msgsAsist" styleClass="anchoBotones" icon="ui-icon-search"
+                                             actionListener="#{mbVAsistencia.cargarTablaEdiAsistencia}" />
+                        </p:panelGrid>
+                    </p:panel>
+                </p:tab>
+                <br></br>
+                
+                <p:panel id="panelRegistroNotas" rendered="#{mbVAsistencia.idModulo eq 0 ? false:true}">
+                    
+                    <p:dataTable class="tblDatos" id="tblModulos" var="notas" value="#{mbVAsistencia.lstTblNotas}"
+                                 editable="true" scrollable="true" scrollHeight="150" emptyMessage="No hay Datos">
+
+                        <p:ajax event="rowEdit" listener="#{mbVAsistencia.onRowEdit}" update=":frmEdicionAsist:msgsAsist" />
+                        <p:ajax event="rowEditCancel" listener="#{mbVAsistencia.onRowCancel}" update=":frmEdicionAsist:msgsAsist" />
+
+                        <p:column headerText="#" style="width: 5%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{notas.n_registro}" /></f:facet>
+                                <f:facet name="input">
+                                    <h:outputText value="#{notas.n_registro}" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Estudiante" style="width: 40%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{notas.nombresEstudiante}" /></f:facet>
+                                <f:facet name="input">
+                                    <h:outputText value="#{notas.nombresEstudiante}" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="Asistencia" style="text-align: center; width: 13%;">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <p:selectBooleanCheckbox disabled="true" value="#{notas.estado}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:selectBooleanCheckbox value="#{notas.estado}" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Observación" style="width: 30%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{notas.observacion}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{notas.observacion}" style="width:100%"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column style="width:14%;">
+                            <p:rowEditor />   
+                        </p:column>
+                        
+                    </p:dataTable>
+                    <p:message for="display1"/>
+                    <p:commandButton value="Eliminar" update="frmEdicionAsist,tblModulos" styleClass="anchoBotones" icon="ui-icon-trash"
+                                     actionListener="#{mbVAsistencia.onDelete()}">
+                        <p:confirm header="Eliminación de Asistencias" message="Esta completamente seguro de realizar esta acción" icon="ui-icon-alert" />
+                    </p:commandButton>
+                    <h:outputText id="display1" value="" />
+                    
+                    <p:confirmDialog global="true" styleClass="change-position">
+                        <p:commandButton value="Confirmar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                        <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                    </p:confirmDialog>
+                    
+                    
+
+                    <br></br>
+                    
+
+
+                    
+
+                    
+
+                </p:panel>
+
+                <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                    <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+                </p:dialog>
+
+            </h:form>
+
+
+
+
+        </div>
+
+
     </h:body>
 </html>
 

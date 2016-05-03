@@ -6,12 +6,15 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
-
+        <h:outputScript library="js" name="calendar_es.js" />
     </h:head>
     <h:body>
 
         <div class="ui-fluid">
             <h:form id="frmRegistrarAsist">
+
+
+
                 <p:tab id="personal" title="RegistrarAsistencia">
                     <p:panel header="Registrar Asistencia">
                         <p:growl id="msgsAsist" showDetail="true" />
@@ -29,7 +32,23 @@
                     </p:panel>
                 </p:tab>
                 <br></br>
+                
+                    
+                
                 <p:panel id="panelRegistroNotas" rendered="#{mbVAsistencia.idModulo eq 0 ? false:true}">
+                    <p:panelGrid id="panel1" columns="2" columnClasses="ui-grid-col-10,ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank">
+                        <p:outputLabel  for="txtFechaInicio" value="Fecha:" styleClass="labelDerecha" />
+                        <p:calendar required="true" id="txtFechaInicio" locale="es" value="#{mbVAsistencia.fecha}" effect="fold" pattern="dd-MM-yyyy" mask="true" >
+                            
+                            <p:ajax event="blur" update="frmRegistrarAsist,msgsAsist" listener="#{mbVAsistencia.cargarTablaRegAsistencia}" />
+                            <f:validator validatorId="primeDateRangeValidator1" />
+                        </p:calendar>
+                    </p:panelGrid>
+                        
+                    
+                    <br></br>
+                    
+
 
                     <p:dataTable class="tblDatos" scrollable="false" var="notas" value="#{mbVAsistencia.lstTblNotas}"
                                  emptyMessage="No hay Estudiantes para registrar asistencia">
@@ -40,41 +59,41 @@
                         <p:column headerText="Estudiante" style="text-align: center; width: 30%;">
                             <h:outputText value="#{notas.nombresEstudiante}" />
                         </p:column>
-                        
+
                         <p:column headerText="Asistencia" style="text-align: center; width: 10%;">
                             <p:selectBooleanCheckbox disabled="#{mbVAsistencia.estado eq 1 ? true:false}" value="#{notas.estado}" />
                         </p:column>
-                        
+
                         <p:column headerText="Observación" style="text-align: center; width: 55%;">
                             <p:inputText disabled="#{mbVAsistencia.estado eq 1 ? true:false}" value="#{notas.observacion}" style="width:100%"/>
                         </p:column>
 
                     </p:dataTable>
-                    
+
                     <br></br>
                     <p:message for="display"/>
                     <p:commandButton rendered="#{mbVAsistencia.estado eq 1 ? false:true}" value="Guardar" update="frmRegistrarAsist,msgsAsist" styleClass="anchoBotones" icon="ui-icon-disk"
                                      actionListener="#{mbVAsistencia.registrar()}">
                         <p:confirm header="Registro de Asistencias" message="Esta completamente seguro de realizar esta acción" icon="ui-icon-alert" />
                     </p:commandButton>
-                        
-                    
+
+
                     <h:outputText id="display" value="" />
-                    
+
                     <p:confirmDialog global="true" styleClass="change-position">
                         <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
                         <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
                     </p:confirmDialog>
 
                 </p:panel>
-                
-                
-                
+
+                <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                    <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+                </p:dialog>
+
             </h:form>
-            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
-            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-                <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
-            </p:dialog>
+
 
 
 

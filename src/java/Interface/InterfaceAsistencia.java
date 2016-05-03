@@ -7,6 +7,7 @@ package Interface;
 
 import Clases.ClsNotas;
 import Pojo.Asistencia;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,9 +15,10 @@ import java.util.List;
  * @author server
  */
 public interface InterfaceAsistencia {
-    public boolean registrar(List<ClsNotas> lstNotas, int idModulo) throws Exception;
+    public boolean registrar(List<ClsNotas> lstNotas, int idModulo, Date fecha) throws Exception;
     public List<Asistencia> getTodasAsistencias() throws Exception;
-    public List<Asistencia> existe(int idModulo) throws Exception;
+    public List<Asistencia> existe(int idModulo,Date fecha) throws Exception;
     public Asistencia getAsistencias(String idMaestria) throws Exception;
     public boolean update(Asistencia tAsistencia) throws Exception;
+    public boolean delete(List<ClsNotas> lstNotas, int idModulo) throws Exception;
 }

@@ -17,13 +17,16 @@ import Pojo.Usuario;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import org.primefaces.event.RowEditEvent;
 
 /**
  *
@@ -50,13 +53,25 @@ public class MbVAsistencia implements Serializable {
     
     private int idProm = 0;
     private int idModulo = 0;
+    private Date fecha;
     private boolean msg;
 
     public MbVAsistencia() {
         tAsistencia = new Asistencia();
         cargarCboModulos();
+        //SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        fecha = new Date();
+        
     }
 
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+    
     public ClsTablaModulosRegistrados getClsTblModulosReg() {
         return clsTblModulosReg;
     }
@@ -179,7 +194,7 @@ public class MbVAsistencia implements Serializable {
             lstTblNotas.clear();
             
             DaoTAsistencias daoTasistencia = new DaoTAsistencias();
-            List<Asistencia> lstAsistencia = daoTasistencia.existe(this.idModulo);
+            List<Asistencia> lstAsistencia = daoTasistencia.existe(this.idModulo, this.fecha);
             
             
             boolean asist = false;
@@ -255,11 +270,71 @@ public class MbVAsistencia implements Serializable {
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void cargarTablaEdiAsistencia() {
+        lstTblNotas = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        int añoInicio = 0;
+        int añoFin = 0;
+        int cont = 0;
+        
+        try {
+            lstTblNotas.clear();
+            
+            DaoTAsistencias daoTasistencia = new DaoTAsistencias();
+            List<Asistencia> lstAsistencia = daoTasistencia.existe(this.idModulo, this.fecha);
+            
+            
+            boolean asist = false;
+            
+            if(lstAsistencia.size() > 0){
+                this.estado = 1;
+               
+                for (Asistencia asistencia : lstAsistencia) {
+                        calendar.setTime(asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getFechaInicio());
+                        añoInicio = calendar.get(Calendar.YEAR);
+                        cont++;
+                        calendar.setTime(asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getFechaFin());
+                        añoFin = calendar.get(Calendar.YEAR);
+                        estudiante = asistencia.getMatricula().getSolicitudInscripcion().getEstudiante().getApellidos() + " " + asistencia.getMatricula().getSolicitudInscripcion().getEstudiante().getNombres();
+                        if(asistencia.getEstado().equals('1'))
+                            asist = true;
+                        else
+                            asist = false;
+                        
+                        lstTblNotas.add(new ClsNotas(asistencia.getMatricula().getSolicitudInscripcion().getEstudiante().getId(),
+                                estudiante,
+                                asistencia.getMatricula().getId(),
+                                asistencia.getMatricula().getNMatricula(),
+                                asistencia.getMatricula().getFechaMatricula(),
+                                asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getId(),
+                                añoInicio + "-" + añoFin,
+                                asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getFechaResolucion(),
+                                asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getId(),
+                                asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
+                                cont,
+                                "",
+                                "",
+                                this.fecha,
+                                asist, 
+                                asistencia.getId(),"",""));
+                    }
+            }else{
+                this.estado = 0;
+                mensajesOk("No hay Asistencia registrada con esta fecha");
+            }
+
+            
+
+        } catch (Exception ex) {
+            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public void registrar() {
         DaoTAsistencias daoTasistencia = new DaoTAsistencias();
         try {
-            msg = daoTasistencia.registrar(lstTblNotas, this.idModulo);
+            msg = daoTasistencia.registrar(lstTblNotas, this.idModulo, fecha);
         } catch (Exception ex) {
             Logger.getLogger(MbVNotas.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -268,6 +343,57 @@ public class MbVAsistencia implements Serializable {
             mensajesOk("Datos procesados correctamente");
         } else {
             mensajesError("Error al procesar datos");
+        }
+        vaciarCajas();
+    }
+    public void onRowEdit(RowEditEvent event) {
+        DaoTAsistencias daoTasistencia = new DaoTAsistencias();
+        tAsistencia = new Asistencia();
+        
+                
+        tAsistencia.setId(((ClsNotas) event.getObject()).getIdNota());
+        if(((ClsNotas) event.getObject()).getEstado())
+            tAsistencia.setEstado('1');
+        else
+            tAsistencia.setEstado('0');
+        
+        tAsistencia.setFecha(((ClsNotas) event.getObject()).getFecha());
+        Matricula matricula = new Matricula();
+        matricula.setId(((ClsNotas) event.getObject()).getIdMatricula());
+        tAsistencia.setMatricula(matricula);
+        Modulo modulo = new Modulo();
+        modulo.setId(this.idModulo);
+        tAsistencia.setModulo(modulo);
+        tAsistencia.setObservacion(((ClsNotas) event.getObject()).getObservacion());
+        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        
+        tAsistencia.setUsuario(usuario.getApellidos()+" "+usuario.getNombres());
+        
+        try {
+            msg = daoTasistencia.update(tAsistencia);
+        } catch (Exception ex) {
+            Logger.getLogger(MbVNotas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (msg) {
+            mensajesOk("Datos actualizados correctamente");
+        } else {
+            mensajesError("Error al actualizar datos");
+        }
+        vaciarCajas();
+    }
+    public void onDelete() {
+        DaoTAsistencias daoTasistencia = new DaoTAsistencias();
+        try {
+            msg = daoTasistencia.delete(lstTblNotas, this.idModulo);
+        } catch (Exception ex) {
+            Logger.getLogger(MbVNotas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (msg) {
+            mensajesOk("Datos Eliminados correctamente");
+        } else {
+            mensajesError("Error al eliminar datos");
         }
         vaciarCajas();
     }

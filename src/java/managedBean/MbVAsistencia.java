@@ -322,6 +322,7 @@ public class MbVAsistencia implements Serializable {
             }else{
                 this.estado = 0;
                 mensajesOk("No hay Asistencia registrada con esta fecha");
+                vaciarCajas();
             }
 
             
@@ -380,8 +381,15 @@ public class MbVAsistencia implements Serializable {
         } else {
             mensajesError("Error al actualizar datos");
         }
-        vaciarCajas();
+        
+        //vaciarCajas();
+        cargarTablaEdiAsistencia();
     }
+    
+    public void onRowCancel(RowEditEvent event) {
+
+    }
+    
     public void onDelete() {
         DaoTAsistencias daoTasistencia = new DaoTAsistencias();
         try {
@@ -401,6 +409,7 @@ public class MbVAsistencia implements Serializable {
     private void vaciarCajas() {
         this.idModulo = 0;
         cargarCboModulos();
+        
         lstTblNotas = new ArrayList<>();
     }
 

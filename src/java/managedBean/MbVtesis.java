@@ -5,27 +5,18 @@
  */
 package managedBean;
 
-import Clases.ClsProfesor;
-import Clases.Document;
-
-import Dao.DaoTDetallePermiso;
 import Dao.DaoTEstudiante;
 import Dao.DaoTMaestrias;
-import Dao.DaoTMenu;
-import Dao.DaoTTipoUsuario;
 import Dao.DaoTUsuario;
 import Dao.DaoTesis;
 
-import Pojo.Tribunal;
-import Pojo.DetalleTribunal;
-import Pojo.PalabrasClave;
 import Pojo.Tesis;
 import Pojo.TipoTribunal;
 import Pojo.Usuario;
 import Pojo.Maestria;
 import Pojo.Estudiante;
 
-import encriptacion.Class_Encript;
+import controladores.MaestriaBean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,16 +24,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
-import Clases.*;
 import Clases.ClsTablaTesis;
 import java.util.Date;
-import org.primefaces.model.TreeNode;
-import org.primefaces.model.DefaultTreeNode;
+import java.util.HashMap;
+import java.util.Map;
+import javax.annotation.PostConstruct;
 
 /**
  *
@@ -51,6 +40,11 @@ import org.primefaces.model.DefaultTreeNode;
 @Named(value = "mbVtesis")
 @ViewScoped
 public class MbVtesis implements Serializable{
+    
+    private Map<String, String> maestrias;
+    private String idMaestria;
+    private Map<String, Map<String, String>> data = new HashMap<>();
+    private MaestriaBean mBean;
 
     
      private int id;
@@ -63,8 +57,7 @@ public class MbVtesis implements Serializable{
      private String resumen;
      private Date fechaSubida;
     
-    
-    
+        
     private Tesis tTesis;
     private String estudiante;
     private ArrayList<TipoTribunal> lstTheme;
@@ -76,16 +69,63 @@ public class MbVtesis implements Serializable{
     /**
      * Creates a new instance of MbVtesis
      */
-    public MbVtesis() {
-        tTesis = new Tesis();
+    public MbVtesis(){
+        init();
         llenarTablaTesis();
+
+        tTesis = new Tesis();
     }
     
     
-
+    @PostConstruct
+    public void init(){
+        maestrias = new HashMap<>();
+        mBean = new MaestriaBean();
+        mBean.init();
+        List<SelectItem> items = mBean.getListaMaestrias();
+        
+    }
+    
+        
     private void vaciarCajas(){
         tTesis = new Tesis();
     }
+
+    public Map<String, String> getMaestrias() {
+        return maestrias;
+    }
+
+    public void setMaestrias(Map<String, String> maestrias) {
+        this.maestrias = maestrias;
+    }
+
+    public String getIdMaestria() {
+        return idMaestria;
+    }
+
+    public void setIdMaestria(String idMaestria) {
+        this.idMaestria = idMaestria;
+    }
+
+    public Map<String, Map<String, String>> getData() {
+        return data;
+    }
+
+    public void setData(Map<String, Map<String, String>> data) {
+        this.data = data;
+    }
+
+    public MaestriaBean getmBean() {
+        return mBean;
+    }
+
+    public void setmBean(MaestriaBean mBean) {
+        this.mBean = mBean;
+    }
+    
+    
+    
+    
     public List<ClsTablaTesis> getLstTablatesis() {
         return LstTablatesis;
     }    
@@ -107,10 +147,10 @@ public class MbVtesis implements Serializable{
         try {
             
             DaoTEstudiante DaoEstudia = new DaoTEstudiante();
-            DaoTMaestrias DaoTMaestria = new DaoTMaestrias();
+            DaoTMaestrias DaoTMaestria1 = new DaoTMaestrias();
 
             List<Estudiante> lstTEstudia = DaoEstudia.getEstudiantes();
-            List<Maestria> lstTMaestria = DaoTMaestria.getMaestrias();                      
+            List<Maestria> lstTMaestria = DaoTMaestria1.getMaestrias();                      
             lstEstudiantes.clear();
             for (Estudiante tipoUser : lstTEstudia) {
                 SelectItem usuarioItem = new SelectItem(tipoUser.getId(), tipoUser.getNombres());
@@ -186,6 +226,17 @@ public class MbVtesis implements Serializable{
      
     public void registrarTesis(){
         DaoTesis daoTesis = new DaoTesis();
+        tTesis.setAutor(autor);
+        
+//        tTesis.setEstudiante(estudiante);
+        tTesis.setFechaSubida(fechaSubida);
+        tTesis.setFechaSustentacion(fechaSustentacion);
+        
+        idmaestria = Integer.getInteger(idMaestria);
+//        tTesis.setMaestria(idmaestria);
+        tTesis.setResumen(resumen);
+        tTesis.setRuta(ruta);
+        tTesis.setTitulo(titulo);
         
         try{
         }

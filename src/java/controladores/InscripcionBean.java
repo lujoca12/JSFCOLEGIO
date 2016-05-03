@@ -655,7 +655,6 @@ public class InscripcionBean implements Serializable {
         }
     }
     
-
     public void handleFileUpload(FileUploadEvent event) {
 
         UploadedFile file = event.getFile();

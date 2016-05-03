@@ -5,12 +5,59 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"      
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h5="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      >
+    <h:head>
         <title>TODO supply a title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
+    </h:head>
+    <h:body>
         <div>TODO write content</div>
-    </body>
+        <ui:composition template="/templates/masterLayout.xhtml">
+            <ui:define name="leftContent"></ui:define>
+            <ui:define name="content">  
+                <h:outputStylesheet name="green.css" library="css"/>
+                <h:outputScript name="ajax.js" library="js" />
+                <h:outputScript name="jquery/jquery.js" library="primefaces" />
+                <br></br>
+                <br></br>
+                <div class="ui-fluid">
+                    <h:form id="form">
+                        <p:growl id="msgs" showDetail="true" />
+                        <p:tab id="personal" title="ConsultaTesis"> 
+                        </p:tab>
+                        <div class="panel panel-primary" style="margin-left: 20px; margin-right: 20px;">
+                            <div class="panel-heading" >
+                                Consulta de Tesis
+                            </div>
+                            <p:tab title="Consulta de Tesis">
+                                <p:remoteCommand name="test" update="form,msgs" actionListener="#{mbVNotas.consultarMaestrias()}"/>
+                                <p:panelGrid id="panel" columns="3" layout="grid" styleClass="ui-panelgrid-blank">
+                                    <p:outputLabel for="txtCedEstud" style="font-weight: bold !important;" styleClass="labelDerecha" value="Palabra Clave:" />
+                                    
+                                    <p:inputMask id="txtCedEstud" value="#{mbVNotas.cedula}" required="true" mask="999999999-9"/>
+                                    <p:commandButton value="Listar" update="form,msgs" styleClass="anchoBotonesConsulta" icon="ui-icon-search"
+                                                     actionListener="#{mbVNotas.consultarMaestrias()}" />
+                                </p:panelGrid>
+                            </p:tab>  
+                        </div>
+                        <p:panel id="panelBusquedaGenerada" rendered="#{mbVNotas.estudiante eq '' ? false:true}">
+                            <div class="panel panel-primary" >
+                                <p:panel style="padding: 0 !important;" >
+                                    
+                                </p:panel>
+                            </div>
+                        </p:panel>
+                    </h:form>
+                </div>
+        
+        </ui:define>
+        </ui:composition>
+    </h:body>
 </html>

@@ -45,9 +45,9 @@
         </p:inputText>
         
         <p:outputLabel for="cboMaestria" value="Maestria:" styleClass="labelDerecha"/>
-        <p:selectOneMenu id="cboMaestria" required="true" value="#{mbVtesis.tTesis.maestria}">
+        <p:selectOneMenu id="cboMaestria" required="true" value="#{mbVtesis.idMaestria}">
             <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
-             <f:selectItems value="#{mbVtesis.lstTodoMaestria}" />
+            <f:selectItems value="#{mbVtesis.lstTodoMaestria}" />
          </p:selectOneMenu>
         
         <p:outputLabel for="txtFechaSubid" styleClass="labelDerecha" value="Fecha subida:" />
@@ -56,7 +56,7 @@
                             
         <h:outputText id="display" value="" />
         <p:commandButton value="Guardar" update="@form" styleClass="anchoBotones" icon="ui-icon-disk"
-                         actionListener="#{mbVUsuario.registrarUsuarios()}" />
+                         actionListener="#{mbVtesis.registrarTesis()}" />
         
         
     </p:panelGrid>

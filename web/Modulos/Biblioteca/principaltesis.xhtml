@@ -54,8 +54,9 @@
                         <button><h:link outcome="/Modulos/Biblioteca/RegistrarTesis" value="Registrar"></h:link></button>
                     </div>
                     <div>
-                        <h3>registrar tesis</h3>
+                        <h3>Otros</h3>
                         <button><h:link outcome="/Modulos/Biblioteca/AsignarPalabrasClaves" value="palabras claves"></h:link></button>
+                        <button><h:link outcome="/Modulos/Biblioteca/VerificarNombretesis" value="consulta tesis"></h:link></button>
                     </div>
                 </h:form>
                 
@@ -76,19 +77,6 @@
                                     <p:inputText id="txtDescripcionMaestria" disabled="true" value="#{lstTbl.idTesis}" />
                                 </f:facet>
                             </p:cellEditor>
-                        </p:column>
-
-                        <p:column headerText="Maestria" style="width: 50%;">
-                            <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{lstTbl.titulo}" /></f:facet>
-                                <f:facet name="input">
-                                    <p:inputText value="#{lstTbl.titulo}" required="true" maxlength="150" style="width:100%"/>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-
-                        <p:column style="width:10%;">
-                            <p:rowEditor />   
                         </p:column>
                     </p:dataTable>
                     <p:confirmDialog global="true" styleClass="change-position">

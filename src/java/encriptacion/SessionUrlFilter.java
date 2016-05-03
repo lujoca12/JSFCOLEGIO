@@ -56,7 +56,7 @@ public class SessionUrlFilter implements Filter{
             "faces/Modulos/Biblioteca/RegistrarTesis.xhtml",
             "faces/exito.xhtml",
             "faces/Modulos/Biblioteca/AsignarPalabrasClaves.xhtml",
-                
+             "faces/Modulos/Biblioteca/VerificarNombretesis.xhtml"   
         };
         
         boolean redireccionarPeticion;

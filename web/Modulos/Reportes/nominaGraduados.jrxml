@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9f138c65-76c0-4ce9-bf2b-d60d6104065a">
+	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.x" value="24"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="idMaestria" class="java.lang.Integer"/>
+	<parameter name="logoPostgrado" class="java.lang.String"/>
+	<parameter name="logoUteq" class="java.lang.String"/>
+	<queryString language="hql">
+		<![CDATA[select estud.cedPasaporte as cedula, estud.nombres as nombres,  
+estud.apellidos as apellidos, pr.fechaInicio as fechaInicio, 
+pr.fechaFin as fechaFin, matr.fechaGraduacion as fechaGraduacion, 
+tesis.titulo as temaTesis, maest.descripcion as maestria, 
+canton.descripcion as canton
+from Estudiante estud inner join estud.solicitudInscripcions solic 
+inner join estud.tesises tesis inner join solic.matriculas matr 
+inner join solic.promocion pr 
+inner join pr.maestria maest 
+inner join estud.datosDoms datosDom 
+inner join datosDom.parroquia parr 
+inner join parr.canton canton 
+where maest.id = 1 and matr.fechaGraduacion <> null]]>
+	</queryString>
+	<field name="cedula" class="java.lang.String"/>
+	<field name="nombres" class="java.lang.String"/>
+	<field name="apellidos" class="java.lang.String"/>
+	<field name="fechaInicio" class="java.util.Date"/>
+	<field name="fechaFin" class="java.util.Date"/>
+	<field name="fechaGraduacion" class="java.util.Date"/>
+	<field name="temaTesis" class="java.lang.String"/>
+	<field name="maestria" class="java.lang.String"/>
+	<field name="canton" class="java.lang.String"/>
+	<variable name="rows" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{nombres}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="87" splitType="Stretch">
+			<frame>
+				<reportElement x="130" y="1" width="555" height="82" uuid="8290633b-2893-4f46-abd2-dd2c4496de12"/>
+				<frame>
+					<reportElement x="71" y="8" width="417" height="43" uuid="f2bf1e66-2ea9-45b6-8f6a-4f160424f274"/>
+					<staticText>
+						<reportElement x="3" y="0" width="414" height="20" uuid="4d6bdd96-4a1e-4b90-b564-9e3164e861dc"/>
+						<textElement textAlignment="Center">
+							<font fontName="Arial" size="14" isBold="true"/>
+						</textElement>
+						<text><![CDATA[UNIVERSIDAD TÉCNICA ESTATAL DE QUEVEDO]]></text>
+					</staticText>
+					<staticText>
+						<reportElement x="133" y="20" width="155" height="20" uuid="dc20ae61-ec4c-4798-9ad9-450736662e4b"/>
+						<textElement textAlignment="Center">
+							<font fontName="Arial" size="12" isBold="true"/>
+						</textElement>
+						<text><![CDATA[UNIDAD DE POSTGRADO]]></text>
+					</staticText>
+				</frame>
+				<line>
+					<reportElement mode="Opaque" x="0" y="74" width="555" height="1" backcolor="#000000" uuid="0efab84b-f434-4ec8-8a72-ef256e953eaf"/>
+					<graphicElement>
+						<pen lineWidth="1.0"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="209" y="62" width="142" height="20" uuid="788a58cc-7690-46dc-86dc-811666631a47"/>
+					<textElement>
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[Quevedo - Los Rios - Ecuador]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="110" y="37" width="88" height="20" uuid="5952bdb3-2859-49f0-a42c-2f13a8a7f842"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[Telefax:        2759 244]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="110" y="52" width="88" height="20" uuid="c22ad95c-d948-4857-8341-3ceda7d6a068"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[Conmutador: 2751 430]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="363" y="37" width="97" height="20" uuid="6eda86a7-90ba-415d-978b-b8e14c1344b2"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[P.O.BOX Guayaquil: 5620]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="363" y="52" width="97" height="20" uuid="4d893853-eb45-4836-83fd-47a7a5700f69"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[P.O.BOX Quevedo 73]]></text>
+				</staticText>
+				<image>
+					<reportElement x="9" y="11" width="50" height="46" uuid="b7675516-6ca4-4c97-8e7d-241ae0bdf099"/>
+					<imageExpression><![CDATA[new File($P{logoUteq})]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="498" y="11" width="50" height="46" uuid="7e984c0a-23d7-456b-b4c7-642288558d32"/>
+					<imageExpression><![CDATA[new File($P{logoPostgrado})]]></imageExpression>
+				</image>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement x="281" y="4" width="166" height="20" uuid="fa189cb6-cb94-45e2-9183-aef0c38baaba"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMINA DE GRADUADOS - ]]></text>
+			</staticText>
+			<textField pattern="YYYY">
+				<reportElement x="447" y="4" width="100" height="20" uuid="3f81971b-69fe-4b87-b287-c1ff8dc07dd2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaInicio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement style="table_TH" x="19" y="1" width="111" height="20" uuid="e8eb937d-a45c-4d01-857e-a55e0ed0e99b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[APELLIDOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_TH" x="129" y="1" width="116" height="20" uuid="943753ca-da79-4a8d-8764-dec4a3273847"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_TH" x="245" y="1" width="48" height="20" uuid="e33695f6-fbe0-4eaa-9bd5-e469a3320ed1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CEDULA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_TH" x="292" y="1" width="48" height="20" uuid="a016871f-7913-440c-a50b-789ae3ac9c7d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[F. INICIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_TH" x="339" y="1" width="60" height="20" uuid="15cdff29-461d-4ef6-ac8f-15516eac8574"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[F. CULMINACION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_TH" x="459" y="1" width="170" height="20" uuid="8c865b28-6799-4e65-8012-8e1d75e30646"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TEMA TESIS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_TH" x="628" y="1" width="127" height="20" uuid="f6533c84-1ac5-4ea2-9a45-9ee30314e5e8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MAESTRIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_TH" x="754" y="1" width="46" height="20" uuid="a2d18996-1a3f-4b07-9da9-430adc1ded7e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANTON]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_TH" x="0" y="1" width="20" height="20" uuid="fb39e2ce-e99d-45ef-9884-c87f9bd43f7f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_TH" x="399" y="1" width="60" height="20" uuid="8d730f98-1d0e-44f2-826f-7d67563ec814"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[fechaGraduacion]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="table_CH" x="19" y="0" width="111" height="20" backcolor="#FFFFFF" uuid="019abfd7-1a9c-4e6c-968d-6edb6d9e3b32"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{apellidos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_CH" x="129" y="0" width="116" height="20" backcolor="#FFFFFF" uuid="d6b66010-8535-4197-bf30-c4f0ba519629"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_CH" x="245" y="0" width="48" height="20" backcolor="#FFFFFF" uuid="1a098532-c9e3-47e5-9509-ea9fe5a9a189"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_CH" x="292" y="0" width="48" height="20" backcolor="#FFFFFF" uuid="c42b7f7d-971c-4f5d-9d85-8ce20350ab08"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaInicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_CH" x="628" y="0" width="127" height="20" backcolor="#FFFFFF" uuid="fe936c38-499b-4383-8d82-5be85a40d24b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{maestria}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_CH" x="754" y="0" width="46" height="20" backcolor="#FFFFFF" uuid="6b439f8d-2989-486f-94ce-00ed6d168e4f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{canton}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_CH" x="0" y="0" width="20" height="20" backcolor="#FFFFFF" uuid="d66dcdb7-710e-451f-a790-15846a3f7e1a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{rows}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_CH" x="339" y="0" width="60" height="20" backcolor="#FFFFFF" uuid="8a27278c-dd94-4957-bd73-3e5c115413a8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaFin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_CH" x="459" y="0" width="169" height="20" backcolor="#FFFFFF" uuid="640c3948-af91-496e-9665-9a43f7a833b6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{temaTesis}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_CH" x="399" y="0" width="60" height="20" backcolor="#FFFFFF" uuid="aa2dc0cf-a780-4280-8733-7d9b0a8a7f16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaGraduacion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

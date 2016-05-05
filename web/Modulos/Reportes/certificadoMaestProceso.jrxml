@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="72a97996-a07d-4a3f-a0f6-a2fe27384592">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="217"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="logoUteq" class="java.lang.String"/>
+	<parameter name="logoPostgrado" class="java.lang.String"/>
+	<parameter name="cedulaEstudiante" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[' ']]></defaultValueExpression>
+	</parameter>
+	<queryString language="hql">
+		<![CDATA[select maest.descripcion as maestria, estud.apellidos as apellidos, estud.nombres as nombres, nota.nota as nota, 
+nota.notaTexto as notaTexto, mod.descripcion as modulo, mod.creditos as creditos, mod.n_modulo as n_modulo, 
+pr.descripcion as n_promocion  
+from Notas nota 
+inner join nota.modulo mod 
+inner join nota.matricula matr  
+inner join matr.solicitudInscripcion solic 
+inner join solic.estudiante estud 
+inner join solic.promocion pr 
+inner join pr.maestria maest 
+where estud.cedPasaporte = $P{cedulaEstudiante} 
+order by  mod.n_modulo asc]]>
+	</queryString>
+	<field name="maestria" class="java.lang.String"/>
+	<field name="apellidos" class="java.lang.String"/>
+	<field name="nombres" class="java.lang.String"/>
+	<field name="nota" class="java.math.BigDecimal"/>
+	<field name="notaTexto" class="java.lang.String"/>
+	<field name="modulo" class="java.lang.String"/>
+	<field name="creditos" class="java.math.BigDecimal"/>
+	<field name="n_modulo" class="java.lang.String"/>
+	<field name="n_promocion" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="84" splitType="Stretch">
+			<frame>
+				<reportElement x="0" y="0" width="555" height="82" uuid="ea2f72ce-b96d-4178-8a64-2d8569e672bc"/>
+				<frame>
+					<reportElement x="70" y="8" width="417" height="43" uuid="dd278233-588c-4de6-b753-9b61ec809326"/>
+					<staticText>
+						<reportElement x="3" y="0" width="414" height="20" uuid="ec4a26ca-9633-4f9d-9cd4-8dfc60610520"/>
+						<textElement textAlignment="Center">
+							<font fontName="Arial" size="14" isBold="true"/>
+						</textElement>
+						<text><![CDATA[UNIVERSIDAD TÉCNICA ESTATAL DE QUEVEDO]]></text>
+					</staticText>
+					<staticText>
+						<reportElement x="133" y="20" width="155" height="20" uuid="5ded5ae1-6047-4e09-81e5-2eab40e4cd04"/>
+						<textElement textAlignment="Center">
+							<font fontName="Arial" size="12" isBold="true"/>
+						</textElement>
+						<text><![CDATA[UNIDAD DE POSTGRADO]]></text>
+					</staticText>
+				</frame>
+				<line>
+					<reportElement mode="Opaque" x="0" y="74" width="555" height="1" backcolor="#000000" uuid="6dd44cad-42f7-4e1a-b4ab-2db090f7dfe2"/>
+					<graphicElement>
+						<pen lineWidth="1.0"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="209" y="62" width="142" height="20" uuid="6aa7d1e8-91d9-4479-bcaf-1ecd59b26023"/>
+					<textElement>
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[Quevedo - Los Rios - Ecuador]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="110" y="37" width="88" height="20" uuid="471eacaa-5200-42e6-8e99-3b0140ede0db"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[Telefax:        2759 244]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="110" y="52" width="88" height="20" uuid="638be86f-f947-4f21-a83e-705f817e8097"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[Conmutador: 2751 430]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="365" y="37" width="97" height="20" uuid="e9da0a1e-8a6c-4833-b635-e893466f1b21"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[P.O.BOX Guayaquil: 5620]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="365" y="52" width="97" height="20" uuid="1ad98f3b-23be-45d6-acc7-d4701f29c655"/>
+					<textElement>
+						<font fontName="Arial" size="8"/>
+					</textElement>
+					<text><![CDATA[P.O.BOX Quevedo 73]]></text>
+				</staticText>
+				<image>
+					<reportElement x="8" y="11" width="50" height="46" uuid="c1fbfa04-5f9d-4a17-813f-cba8968ee413"/>
+					<imageExpression><![CDATA[new File($P{logoUteq})]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="498" y="11" width="50" height="46" uuid="1c1804ca-16d7-4e93-a727-eff4746c7d28"/>
+					<imageExpression><![CDATA[new File($P{logoPostgrado})]]></imageExpression>
+				</image>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="108" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="553" height="14" uuid="2b76d2ef-a800-475a-986e-1a4ac3569766"/>
+				<textElement textAlignment="Justified">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[El suscrito Secretario(a) Académico de la Unidad de Postgrado de la Universidad Técnica Estatal de Quevedo.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="175" y="20" width="155" height="19" uuid="31cdf91e-8228-4486-a83d-fb868451e2b8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font fontName="Arial" size="12" isBold="true" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[CERTIFICA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1" y="41" width="553" height="67" uuid="f26c88c8-a4e3-450c-aa55-95d3b037ce15"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA["Que en archivos del registro de asistencia y calificaciones consta, que el Ingeniero(a) "+$F{apellidos}.toUpperCase()+" "+$F{nombres}.toUpperCase().trim()+", "+
+"culminó la Maestría en "+$F{maestria}.trim()+" ("+$F{n_promocion}+" promoción), actualmente se encuentra en proceso de elaboración de tesis, "+
+"obteniendo las siguientes calificaciones:"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="70" height="20" backcolor="#FFFFFF" uuid="c77b80bb-205e-4643-9b82-859d284a1f81"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{n_modulo}+":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="0" width="322" height="20" backcolor="#FFFFFF" uuid="f804c885-d1ae-4903-836f-3d28ddd7432f"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{modulo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="392" y="0" width="40" height="20" backcolor="#FFFFFF" uuid="740d15ad-dd76-47c2-a509-ecaf3ea394ec"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nota}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="433" y="0" width="55" height="20" backcolor="#FFFFFF" uuid="73bc2158-2e9d-4bfb-b43e-88fd9338b228"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[puntos]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="90" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="1" width="553" height="27" uuid="2e86cfe7-05f3-41e9-a161-808353e0ae62"/>
+				<textElement textAlignment="Justified">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Es todo cuanto puedo certificar en honor a la verdad.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="178" y="53" width="199" height="20" uuid="09c6cf71-56be-43da-a268-95822909f698"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Lcdo(a). Bolivar Yépez Yánez, M.Sc.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="178" y="68" width="199" height="20" uuid="1c98b661-7505-4eec-abc7-801843a980d6"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Secretario(a) Académico Postgrado - UTEQ]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

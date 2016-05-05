@@ -7,6 +7,7 @@ package Dao;
 
 import Interface.InterfaceTesis;
 import Pojo.Maestria;
+import Pojo.Matricula;
 import Pojo.Tesis;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -56,12 +57,26 @@ public class DaoTesis implements InterfaceTesis{
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        String hql="from tesis";
+        String hql="from Tesis";
         Query query = sesion.createQuery(hql);
 
         List<Tesis> lstTesis=(List<Tesis>) query.list();
         sesion.close();
         return lstTesis;
+    }
+
+    @Override
+    public List<Tesis> getTesisPalabrasclaves(String palabra) throws Exception {
+       this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+       // String hql="from Usuario as u inner join fetch u.tipoUsuario as tu where tu.descripcion like '%Prof%' and u.estado='1' order by u.apellidos asc";
+        String hql= "from PalabrasClave p inner join p.tesis where p.id='"+palabra+"'";
+        Query query = sesion.createQuery(hql);
+        List<Tesis> lst=(List<Tesis>) query.list();
+        sesion.close();
+        return lst;
+
     }
 
     

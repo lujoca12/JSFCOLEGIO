@@ -63,34 +63,29 @@ public class MbVtesis implements Serializable{
     private ArrayList<TipoTribunal> lstTheme;
     private List<SelectItem> lstTodoMaestria;
     private List<SelectItem> lstEstudiantes;
-    ClsTablaTesis ClsTablaTesis; 
+    ClsTablaTesis clsTablaTesis; 
     private List<ClsTablaTesis> LstTablatesis;
 
     /**
      * Creates a new instance of MbVtesis
      */
     public MbVtesis(){
-        init();
         llenarTablaTesis();
-
         tTesis = new Tesis();
     }
-    
-    
-    @PostConstruct
-    public void init(){
-        maestrias = new HashMap<>();
-        mBean = new MaestriaBean();
-        mBean.init();
-        List<SelectItem> items = mBean.getListaMaestrias();
-        
-    }
-    
-        
+            
     private void vaciarCajas(){
         tTesis = new Tesis();
     }
 
+    public ClsTablaTesis getClsTablaTesis() {
+        return clsTablaTesis;
+    }
+
+    public void setClsTablaTesis(ClsTablaTesis clsTablaTesis) {
+        this.clsTablaTesis = clsTablaTesis;
+    }
+    
     public Map<String, String> getMaestrias() {
         return maestrias;
     }
@@ -201,23 +196,25 @@ public class MbVtesis implements Serializable{
     {
           LstTablatesis = new ArrayList<>();
         try {
-            LstTablatesis.clear();
-            
+            LstTablatesis.clear();            
             DaoTesis daoTesis = new DaoTesis();
-            List<Tesis> lsttesis = daoTesis.getTesis();
-            
+            List<Tesis> lsttesis = daoTesis.getTesis();            
             if(lsttesis != null){
                 if(lsttesis.size() > 0){
-                    for(Tesis tesis : lsttesis){
-                        LstTablatesis.add(new ClsTablaTesis(tesis.getId(),
-                                tesis.getAutor(),
-                                tesis.getTitulo(),
-                                tesis.getRuta(),
-                                tesis.getResumen(),
-                                tesis.getMaestria(),
-                                tesis.getEstudiante()));                               
+                    for(Tesis tes : lsttesis){   
+                        LstTablatesis.add(new ClsTablaTesis(tes.getId(),
+                                tes.getAutor(), 
+                                tes.getTitulo(), 
+                                tes.getFechaSustentacion(),
+                                tes.getFechaSubida() , 
+                                tes.getRuta(),
+                                tes.getResumen(), 
+                                tes.getMaestria(),
+                                tes.getEstudiante()));
+                      //LstTablatesis.add(new ClsTablaTesis(id, autor, titulo, fechaSubida, fechaSubida, ruta, resumen, idMaestria, idEstudiante));
                     }
                 }
+                lsttesis.clear();
             }
         } catch (Exception ex) {
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);

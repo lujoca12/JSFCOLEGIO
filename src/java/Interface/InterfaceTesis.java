@@ -14,8 +14,10 @@ import java.util.List;
  */
 public interface InterfaceTesis {
     
-        public List<Tesis> getTodasTesis() throws Exception;
-            public List<Tesis> getTesis() throws Exception;
+    public List<Tesis> getTodasTesis() throws Exception;
+    public List<Tesis> getTesis() throws Exception;
+    public List<Tesis> getTesisPalabrasclaves(String palabra) throws Exception;
+            
 
 
     

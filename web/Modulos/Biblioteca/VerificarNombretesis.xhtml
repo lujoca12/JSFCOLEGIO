@@ -37,20 +37,39 @@ and open the template in the editor.
                                 Consulta de Tesis
                             </div>
                             <p:tab title="Consulta de Tesis">
-                                <p:remoteCommand name="test" update="form,msgs" actionListener="#{mbVNotas.consultarMaestrias()}"/>
+                                <p:remoteCommand name="test" update="form,msgs" actionListener="#{mbVPalabrasClave.consultarTesis()}"/>
                                 <p:panelGrid id="panel" columns="3" layout="grid" styleClass="ui-panelgrid-blank">
                                     <p:outputLabel for="txtCedEstud" style="font-weight: bold !important;" styleClass="labelDerecha" value="Palabra Clave:" />
-                                    
-                                    <p:inputMask id="txtCedEstud" value="#{mbVNotas.cedula}" required="true" mask="999999999-9"/>
+                                    <p:inputText id="txtCedEstud" value="#{mbVPalabrasClave.palabra}" required="true" />
                                     <p:commandButton value="Listar" update="form,msgs" styleClass="anchoBotonesConsulta" icon="ui-icon-search"
-                                                     actionListener="#{mbVNotas.consultarMaestrias()}" />
+                                                     actionListener="#{mbVPalabrasClave.consultarTesis()}" />
                                 </p:panelGrid>
                             </p:tab>  
                         </div>
                         <p:panel id="panelBusquedaGenerada" rendered="#{mbVNotas.estudiante eq '' ? false:true}">
                             <div class="panel panel-primary" >
                                 <p:panel style="padding: 0 !important;" >
+                                    <h5 style="text-align: left; font-weight: bold !important; padding-bottom: 0px !important;">
+                                        
+                                    </h5>
+                                    <p:separator />
+                                    <p:dataTable class="tblNotas DataTable datatableHover" scrollable="false" var="notas" value="#{mbVPalabrasClave.lstTbPalabras}" emptyMessage="No hay datos">
+                                        <p:column headerText="Maestria" style="text-align: center;">
+                                            <h:outputText value="#{notas.descripMaestria}" />
+                                        </p:column>
+
+                                    <p:column headerText="Periodo" style="text-align: center;">
+                                        <h:outputText value="#{notas.periodo}" />
+                                    </p:column>
+
+                                    <p:column headerText="Opciones" style="text-align: center;">
+                                        
+                                        <p:commandLink update="@form" actionListener="#{mbVNotas.consultarNotas(notas)}">
+                                            <h:outputText style="color: #00a65a;" value="Ver notas" />
+                                        </p:commandLink>
+                                    </p:column>
                                     
+                                </p:dataTable>
                                 </p:panel>
                             </div>
                         </p:panel>

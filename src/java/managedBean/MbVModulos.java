@@ -161,7 +161,7 @@ public class MbVModulos implements Serializable {
                 "Mòdulo XI", "Mòdulo XII", "Mòdulo XIII", "Mòdulo XIV", "Mòdulo XV",
                 "Mòdulo XVI", "Mòdulo XVII", "Mòdulo XVIII", "Mòdulo XIX", "Mòdulo XX",
                 "Mòdulo XXI", "Mòdulo XXII", "Mòdulo XXIII", "Mòdulo XXIV", "Mòdulo XXV",
-                "Otro"
+                "Sustentación de Tesis", "Trabajo de Investigación","Proyecto de Tesis"
             };
             lstTodosModulos.clear();
             for (int i = 0; i < modulos.length; i++) {

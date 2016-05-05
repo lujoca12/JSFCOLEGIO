@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2201f372-e150-4f8c-8381-608800651f5e">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="142"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -330,8 +330,16 @@
 		<defaultValueExpression><![CDATA[' ']]></defaultValueExpression>
 	</parameter>
 	<queryString language="hql">
-		<![CDATA[select maest.descripcion as maestria, estud.apellidos as apellidos, estud.nombres as nombres, nota.nota as nota, nota.notaTexto as notaTexto, mod.descripcion as modulo, mod.creditos as creditos from Maestria maest inner join maest.promocions pr inner join pr.solicitudInscripcions solic inner join solic.estudiante estud
-inner join pr.modulos mod inner join mod.notases nota where estud.cedPasaporte = $P{cedulaEstudiante} order by mod.n_modulo asc]]>
+		<![CDATA[select maest.descripcion as maestria, estud.apellidos as apellidos, estud.nombres as nombres, nota.nota as nota, 
+nota.notaTexto as notaTexto, mod.descripcion as modulo, mod.creditos as creditos, mod.n_modulo as n_modulo 
+from Notas nota 
+inner join nota.modulo mod 
+inner join nota.matricula matr 
+inner join matr.solicitudInscripcion solic 
+inner join solic.estudiante estud 
+inner join solic.promocion pr 
+inner join pr.maestria maest 
+where estud.cedPasaporte = $P{cedulaEstudiante} order by  mod.n_modulo asc]]>
 	</queryString>
 	<field name="maestria" class="java.lang.String"/>
 	<field name="apellidos" class="java.lang.String"/>
@@ -340,12 +348,22 @@ inner join pr.modulos mod inner join mod.notases nota where estud.cedPasaporte =
 	<field name="notaTexto" class="java.lang.String"/>
 	<field name="modulo" class="java.lang.String"/>
 	<field name="creditos" class="java.math.BigDecimal"/>
+	<field name="n_modulo" class="java.lang.String"/>
 	<variable name="creditos" class="java.lang.Integer" incrementType="Column" calculation="Sum"/>
 	<variable name="creditos_1" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
 		<variableExpression><![CDATA[$F{creditos}]]></variableExpression>
 	</variable>
 	<variable name="nota_1" class="java.math.BigDecimal" resetType="Column" calculation="Average">
 		<variableExpression><![CDATA[$F{nota}]]></variableExpression>
+	</variable>
+	<variable name="promedio" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$V{trabajoInv}.add($V{sustentTesis}).add($V{nota_1})]]></variableExpression>
+	</variable>
+	<variable name="trabajoInv" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new Boolean($F{n_modulo}== null) ? 0.0:new Boolean($F{n_modulo}== "Trabajo de Investigación")? $F{nota}:0.0]]></variableExpression>
+	</variable>
+	<variable name="sustentTesis" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new Boolean($F{n_modulo}== null) ? 0.0:new Boolean($F{n_modulo}== "Sustentación de Tesis")? $F{nota}:0.0]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -435,10 +453,17 @@ inner join pr.modulos mod inner join mod.notases nota where estud.cedPasaporte =
 			<textField>
 				<reportElement x="0" y="33" width="553" height="43" uuid="ea00f9f0-a0b5-4965-8e51-5167f6b188ed"/>
 				<textElement textAlignment="Justified"/>
-				<textFieldExpression><![CDATA["Que en archivos del registro de calificaciones consta que el Ingeniero(a) "+$F{apellidos}.toUpperCase()+" "+$F{nombres}.toUpperCase()+", "+
-"obtuvo el grado académico de Magister en "+$F{maestria}+", con los siguientes "+
+				<textFieldExpression><![CDATA["Que en archivos del registro de calificaciones consta que el Ingeniero(a) "+$F{apellidos}.toUpperCase()+" "+$F{nombres}.toUpperCase().trim()+", "+
+"obtuvo el grado académico de Magister en "+$F{maestria}.trim()+", con los siguientes "+
 "créditos y calificaciones:"]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="200" y="16" width="155" height="19" uuid="4aaa3558-915f-4c6f-aef6-42f3ea2d8986"/>
+				<textElement textAlignment="Center" markup="styled">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CERTIFICA]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -510,7 +535,7 @@ inner join pr.modulos mod inner join mod.notases nota where estud.cedPasaporte =
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="66" splitType="Stretch">
+		<band height="80" splitType="Stretch">
 			<staticText>
 				<reportElement style="table_TH" x="260" y="0" width="57" height="19" backcolor="#FFFFFF" uuid="f411627b-6b6a-4f7d-b4b6-1c9808a46498"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -549,41 +574,70 @@ inner join pr.modulos mod inner join mod.notases nota where estud.cedPasaporte =
 				<text><![CDATA[MAESTRÍA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="table_CH" x="8" y="33" width="195" height="15" backcolor="#FFFFFF" uuid="e291c22f-d8cd-42be-92ac-87dae05ef7e6"/>
+				<reportElement style="table_CH" x="8" y="34" width="195" height="15" backcolor="#FFFFFF" uuid="e291c22f-d8cd-42be-92ac-87dae05ef7e6"/>
 				<text><![CDATA[TRABAJO DE INVESTIGACIÓN]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="table_CH" x="8" y="47" width="195" height="15" backcolor="#FFFFFF" uuid="d698d521-10ac-41ad-8c96-94b816279e39"/>
+				<reportElement style="table_CH" x="8" y="64" width="195" height="15" backcolor="#FFFFFF" uuid="d698d521-10ac-41ad-8c96-94b816279e39"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[PROMEDIO GENERAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="table_CH" x="203" y="33" width="57" height="14" backcolor="#FFFFFF" uuid="75261eda-a3ba-45da-81f5-3fb2b0f7ba55"/>
+				<reportElement style="table_CH" x="203" y="34" width="57" height="15" backcolor="#FFFFFF" uuid="75261eda-a3ba-45da-81f5-3fb2b0f7ba55"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="table_CH" x="203" y="47" width="57" height="15" backcolor="#FFFFFF" uuid="78b1ddd6-8e9c-4e96-a94c-cfbbcde32acd"/>
+				<reportElement style="table_CH" x="203" y="64" width="57" height="15" backcolor="#FFFFFF" uuid="78b1ddd6-8e9c-4e96-a94c-cfbbcde32acd"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<textField pattern="###0.00">
-				<reportElement style="table_CH" x="260" y="19" width="57" height="14" backcolor="#FFFFFF" uuid="a804ccfb-0a03-4d1c-bcb3-67a073f7174a"/>
+				<reportElement style="table_CH" x="260" y="19" width="57" height="15" backcolor="#FFFFFF" uuid="a804ccfb-0a03-4d1c-bcb3-67a073f7174a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{nota_1}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement style="table_CH" x="317" y="19" width="231" height="14" backcolor="#FFFFFF" uuid="cdc37ffd-4b7a-47e3-816a-147cb85ca691"/>
+				<reportElement style="table_CH" x="317" y="19" width="231" height="15" backcolor="#FFFFFF" uuid="cdc37ffd-4b7a-47e3-816a-147cb85ca691"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="table_CH" x="317" y="33" width="231" height="14" backcolor="#FFFFFF" uuid="cfbe19f9-e40f-46bd-8eed-35b8e606313a"/>
+				<reportElement style="table_CH" x="317" y="34" width="231" height="15" backcolor="#FFFFFF" uuid="cfbe19f9-e40f-46bd-8eed-35b8e606313a"/>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="table_CH" x="317" y="47" width="231" height="14" backcolor="#FFFFFF" uuid="19bb76dd-0aae-4759-aab7-61adc3915099"/>
+				<reportElement style="table_CH" x="317" y="64" width="231" height="15" backcolor="#FFFFFF" uuid="19bb76dd-0aae-4759-aab7-61adc3915099"/>
 				<text><![CDATA[]]></text>
 			</staticText>
+			<staticText>
+				<reportElement style="table_CH" x="8" y="49" width="195" height="15" backcolor="#FFFFFF" uuid="9874ecd0-c017-49b8-961b-f270b91ce3a3"/>
+				<text><![CDATA[SUSTENTACIÓN DE TESIS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_CH" x="317" y="49" width="231" height="15" backcolor="#FFFFFF" uuid="0d2a2a53-55f6-4a31-b55a-351910bcbfbc"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table_CH" x="203" y="49" width="57" height="15" backcolor="#FFFFFF" uuid="611e1016-4c4a-4b88-92d1-9a4f7400b5a6"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="table_CH" x="260" y="34" width="57" height="15" backcolor="#FFFFFF" uuid="2f349e65-5607-4651-bbec-33ac2180a001"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{trabajoInv}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_CH" x="260" y="49" width="57" height="15" backcolor="#FFFFFF" uuid="119e335e-e90a-4d32-8e24-8ef63f3ec454"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{sustentTesis}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table_CH" x="260" y="64" width="57" height="15" backcolor="#FFFFFF" uuid="1807bee8-485d-4495-8220-1d8fae37097d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{promedio}]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnFooter>
 	<pageFooter>

@@ -45,8 +45,7 @@
                 </p:panel>
 
             </h:form>
-            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
- 
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" /> 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
                 <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
             </p:dialog>

@@ -15,6 +15,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -27,7 +29,9 @@ import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.servlet.http.Part;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultUploadedFile;
 import org.primefaces.model.UploadedFile;
+
 
 /**
  *
@@ -38,6 +42,75 @@ import org.primefaces.model.UploadedFile;
 public class prueba implements Serializable {
 
     private String nombre;
+    private Part archivo;
+    private Collection<Part> archivos;
+    private UploadedFile file;
+    private List<UploadedFile> files = new ArrayList<>();
+
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+        this.files.add(file);
+    }
+
+    public List<UploadedFile> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<UploadedFile> files) {
+        this.files = files;
+    }
+    
+
+   
+    
+
+    public void save() {
+        try {
+            for(UploadedFile f : files){
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date dateobj = new Date();
+
+                    String nombreFecha = ("chiting" + "-" + df.format(dateobj).replaceAll(":", "-")).trim();
+                    File directorio = new File("d:/Postgrado/inscripciones/requisitos/" + nombreFecha);
+                    if (!directorio.exists()) {
+                        directorio.mkdir();
+                    }
+
+                    String filename = f.getFileName();
+                    // String extension = f.getContentType();
+                    Path ruta = Paths.get(directorio + filename);
+
+                    try (InputStream input = f.getInputstream()) {
+                        Files.copy(input, ruta, StandardCopyOption.REPLACE_EXISTING);
+                    }
+                FacesMessage message = new FacesMessage("Succesful", f.getFileName() + " is uploaded.");
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            }
+        } catch (Exception ex) {
+            FacesMessage message = new FacesMessage("Error", ex.toString());
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
+
+    public Collection<Part> getArchivos() {
+        return archivos;
+    }
+
+    public void setArchivos(Collection<Part> archivos) {
+        this.archivos = archivos;
+    }
+
+    public Part getArchivo() {
+        return archivo;
+    }
+
+    public void setArchivo(Part archivo) {
+        this.archivos.add(archivo);
+    }
 
     public String getNombre() {
         return nombre;
@@ -58,8 +131,8 @@ public class prueba implements Serializable {
         UploadedFile file = event.getFile();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date dateobj = new Date();
-        String nombreFecha = (df.format(dateobj).replaceAll(":", "-"));       
-         Path path = Paths.get("D:\\Postgrado\\inscripciones\\requisitos\\"+nombreFecha.trim());
+        String nombreFecha = (df.format(dateobj).replaceAll(":", "-"));
+        Path path = Paths.get("D:\\Postgrado\\inscripciones\\requisitos\\" + nombreFecha.trim());
         //if directory exists?
         if (!Files.exists(path)) {
             try {
@@ -71,7 +144,7 @@ public class prueba implements Serializable {
         }
         String filename = file.getFileName();
 //         String extension = f.getContentType();
-        Path ruta = Paths.get(path +"\\"+ filename);
+        Path ruta = Paths.get(path + "\\" + filename);
 
         try (InputStream input = file.getInputstream()) {
             Files.copy(input, ruta, StandardCopyOption.REPLACE_EXISTING);
@@ -122,21 +195,32 @@ public class prueba implements Serializable {
     }
 
     public void guardar() {
-//        try {
-//            for (Part pa : archivos) {
-//                Path destino = Paths.get("d:/temp/" + pa.getSubmittedFileName());
-//                InputStream bytes = null;
-//                if (pa != null) {
-//                    bytes = pa.getInputStream();
-//                    Files.copy(bytes, destino);
-//                    FacesMessage message = new FacesMessage("Succesful", " is uploaded.");
-//                    FacesContext.getCurrentInstance().addMessage(null, message);
-//
-//                }
-//            }
-//        } catch (Exception ex) {
-//            FacesMessage message = new FacesMessage("Succesful", ex.toString());
-//            FacesContext.getCurrentInstance().addMessage(null, message);
-//        }
+        try {
+
+            for (Part pa : archivos) {
+                Path destino = Paths.get("d:/temp/" + archivo.getSubmittedFileName());
+                InputStream bytes = null;
+                if (archivo != null) {
+                    bytes = archivo.getInputStream();
+                    Files.copy(bytes, destino);
+                    FacesMessage message = new FacesMessage("Succesful", " is uploaded.");
+                    FacesContext.getCurrentInstance().addMessage(null, message);
+
+                }
+            }
+        } catch (Exception ex) {
+            FacesMessage message = new FacesMessage("Succesful", ex.toString());
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
+
+    public void pf(FileUploadEvent event) {
+        FacesMessage message = new FacesMessage("Succesful", " is PF." + event.getFile().getFileName());
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+    public void asd() {
+        FacesMessage message = new FacesMessage("Succesful", " is PF.");
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 }

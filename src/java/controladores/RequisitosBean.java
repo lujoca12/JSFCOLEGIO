@@ -233,7 +233,7 @@ public class RequisitosBean implements Serializable {
     }
 
     public List<String> getListaReqPro(String IdPromo, String IdMaestria) throws Exception {
-
+        
         lstReqPro = new ArrayList<>();
         RequisitosDao daoRequisitos = new RequisitosDao();
         List<RequisitosPromo> lstRequisitos = daoRequisitos.getRequisitosPromocion(IdPromo, IdMaestria);
@@ -242,6 +242,7 @@ public class RequisitosBean implements Serializable {
             lstReqPro.add(String.valueOf(rp.getRequisitos().getId()));
         }
         return lstReqPro;
+        
     }
     public Map<Integer,String> getListaReqProNombre(int IdPromo, int IdMaestria) throws Exception {
 

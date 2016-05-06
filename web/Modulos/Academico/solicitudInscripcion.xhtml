@@ -46,8 +46,8 @@
                                 </h:selectOneMenu>  
 
 
-                                <p:commandButton type="button" value="Mostrar" style="display:block;margin:auto;" icon="ui-icon-image">
-                                    <p:effect type="fade" event="click" for="datos">
+                                <p:commandButton id="mostrar" type="button" value="Mostrar" disabled="true" style="display:block;margin:auto;" icon="ui-icon-image">
+                                    <p:effect type="fade" event="click" for="datos" >
                                         <f:param name="mode" value="'show'" />
                                     </p:effect>
                                 </p:commandButton>
@@ -241,7 +241,7 @@
                                     <h:outputLabel for="nregistro" value="Número de registro del Senecyt: " />
                                     <p:inputText  required="true" id="nregistro" class="form-control " value="#{inscripcionBean.numeroSenecyt}"/>
 
-                                    <p:commandButton actionListener="#{inscripcionBean.guardar}" update="messages"  value="Guardar Datos" process="@this" />
+                                   
                                 </h:panelGrid>
 
                             </p:panel>
@@ -249,16 +249,16 @@
                         <p:tab id="requisitos" title="Requisitos" >
                             <p:panel header="Requisitos">
                                 <p:messages closable="true" />
-                                <h:panelGrid columns="1" width="100%" >   
-                                    <p:dataList value="#{inscripcionBean.lstClsR}" var="r" type="ordered">
-                                        <f:facet name="header">
-                                            Requisitos
-                                        </f:facet>
-                                        #{r.descripcion}
+                                <h:panelGrid columns="1" width="100%" >  
+                                    
+                                    <p:dataList  value="#{inscripcionBean.reqPro}" rendered="#{inscripcionBean.reqPro ne null}" var="r" type="ordered">
+                                       
+                                        <h:outputText value="#{r.requisitos.descripcion}" style="font-weight:  bold"/> : (Solo archivos <h:outputText value="#{r.requisitos.tipoArchivo}" /> )
+                                        <p:fileUpload  style="margin-bottom: 10px;" mode="simple" value="#{inscripcionBean.file}"   accept="#{r.requisitos.tipoArchivo}"  /> 
                                     </p:dataList>
-                                    <p:fileUpload required="true" fileUploadListener="#{inscripcionBean.handleFileUpload}" mode="advanced" allowTypes="/(\.|\/)(jpe?g|png|pdf)$/" fileLimit="#{inscripcionBean.numeroReq}" />
+                                  
                                 </h:panelGrid>
-
+                                <p:commandButton actionListener="#{inscripcionBean.save()}" update="messages" ajax="false"  value="Guardar Datos" process="@this" />
                             </p:panel>
                         </p:tab>                        
 
@@ -280,55 +280,22 @@
 
                 <script type="text/javascript">
 
-                    /*    $(document).ready(function () {
+                       $(document).ready(function () {
+                           
+                           $("#form\\:maestria").change(function(){
+                               if($(this).val=="" || $("#form\\:promocion").val=="" )
+                               {
+                                   $("#form\\:mostrar").attr("disabled");
+                               }
+                               else
+                               {
+                                   $("#form\\:mostrar").removeAttr("disabled");
+                               }
+                           });
                      
-                     $("#form\\:maestria").change(function () {
-                     var x = $("#form\\:maestria").val();
-                     $("#form\\:idM").val(x);
+                    
                      });
                      
-                     $("#form\\:promocion").change(function () {
-                     var x = $("#form\\:promocion").val();
-                     $("#form\\:idP").val(x);
-                     });
-                     */
-
-                    /*   $("#rootwizard").hide();
-                     var val;
-                     $("#form\\:paisO").change(function () {
-                     val = $("#form\\:paisO").val();
-                     if (val !== "Ec")
-                     {
-                     $("#cantonNac").hide();
-                     $("#provinciaNac").hide();
-                     $("#parroquiaNac").hide();
-                     } else {
-                     $("#cantonNac").show();
-                     $("#provinciaNac").show();
-                     $("#parroquiaNac").show();
-                     }
-                     });
-                     $("#form\\:universidad").change(function () {
-                     val = $("#form\\:universidad").val();
-                     if (val !== "Otro")
-                     {
-                     $("#universidadNueva").hide();
-                     } else {
-                     $("#universidadNueva").show();
-                     }
-                     });
-                     $("#btn-maestria").click(function () {
-                     val = $("#form\\:maestria").val();
-                     if (val === "")
-                     {
-                     $("#rootwizard").hide();
-                     } else {
-                     $("#rootwizard").show();
-                     }
-                     
-                     });
-                     });
-                     */
 
                 </script>
 

@@ -47,13 +47,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import org.hibernate.Hibernate;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
@@ -68,12 +66,11 @@ public class InscripcionBean implements Serializable {
     /**
      * Creates a new instance of InscripcionBean
      */
-    private List<Requisitos> lstReq;
+    private List<RequisitosPromo> reqPro;
     private List<ClsRequisito> lstClsR;
     private List<SelectItem> lstPais;
     private List<SelectItem> lstProvincia;
     private List<SelectItem> lstUniversidades;
-
     private String idPromo;
     private String idMaestria;
     private Map<Integer, String> lstReqProNombre;
@@ -89,7 +86,6 @@ public class InscripcionBean implements Serializable {
     private Map<String, String> provinciasTra;
     private Map<String, String> cantonesTra;
     private Map<String, String> parroquiasTra;
-
     private RequisitosBean reqB;
     private List<SelectItem> listaPromocion;
     private MaestriaBean mBean;
@@ -97,7 +93,6 @@ public class InscripcionBean implements Serializable {
     private Map<String, Map<String, String>> data2 = new HashMap<>();
     private Map<String, Map<String, String>> dataProCan = new HashMap<>();
     private Map<String, Map<String, String>> dataCanPar = new HashMap<>();
-
     private List<String> reqSelec;
     private List<SelectItem> listaRequisitos;
     private Estudiante estudiante = new Estudiante();
@@ -125,6 +120,36 @@ public class InscripcionBean implements Serializable {
     private String tituloDescr;
     private String numeroSenecyt;
     private int numeroReq;
+    private UploadedFile file;
+    private List<UploadedFile> files;
+
+    public List<RequisitosPromo> getReqPro() {
+        return reqPro;
+    }
+
+    public void setReqPro(List<RequisitosPromo> reqPro) {
+        this.reqPro = reqPro;
+    }
+
+    
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+        this.files.add(file);
+    }
+
+    public List<UploadedFile> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<UploadedFile> files) {
+        this.files = files;
+    }
+    
+    
 
     public int getNumeroReq() {
         return numeroReq;
@@ -151,8 +176,6 @@ public class InscripcionBean implements Serializable {
     public void setNumeroSenecyt(String numeroSenecyt) {
         this.numeroSenecyt = numeroSenecyt;
     }
-
-    
 
     public Universidad getUniversidad() {
         return universidad;
@@ -465,15 +488,6 @@ public class InscripcionBean implements Serializable {
     public void setData(Map<String, Map<String, String>> data) {
         this.data = data;
     }
-
-    public List<Requisitos> getLstReq() {
-        return lstReq;
-    }
-
-    public void setLstReq(List<Requisitos> lstReq) {
-        this.lstReq = lstReq;
-    }
-
     public String getIdPromo() {
         return idPromo;
     }
@@ -563,6 +577,33 @@ public class InscripcionBean implements Serializable {
     }
 
     public InscripcionBean() {
+    }
+    public void save() {
+        try {
+            for(UploadedFile f : files){
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date dateobj = new Date();
+
+                    String nombreFecha = ("chiting" + "-" + df.format(dateobj).replaceAll(":", "-")).trim();
+                    File directorio = new File("d:/Postgrado/inscripciones/requisitos/" + nombreFecha);
+                    if (!directorio.exists()) {
+                        directorio.mkdir();
+                    }
+
+                    String filename = f.getFileName();
+                    // String extension = f.getContentType();
+                    Path ruta = Paths.get(directorio + filename);
+
+                    try (InputStream input = f.getInputstream()) {
+                        Files.copy(input, ruta, StandardCopyOption.REPLACE_EXISTING);
+                    }
+                FacesMessage message = new FacesMessage("Succesful", f.getFileName() + " is uploaded.");
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            }
+        } catch (Exception ex) {
+            FacesMessage message = new FacesMessage("Error", ex.toString());
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
     }
 
     @PostConstruct
@@ -668,19 +709,18 @@ public class InscripcionBean implements Serializable {
         try {
             requisitos = new HashMap<>();
             lstClsR = new ArrayList<>();
+            reqPro = new ArrayList<>();
             if (idPromo != null && !idPromo.equals("")) {
-//                reqB = new RequisitosBean();
-//                reqB.init();
-//                listaRequisitos = reqB.getListaRequisitos();
-//                reqSelec = reqB.getListaReqPro(idPromo, idMaestria);
-                requisitos = data2.get(idPromo);
-                Iterator it = requisitos.keySet().iterator();
-                while (it.hasNext()) {
-                    String key = it.next().toString();
-                    lstClsR.add(new ClsRequisito(Integer.valueOf(requisitos.get(key)), key));
-
-                }
-                numeroReq=lstClsR.size();
+                
+//                requisitos = data2.get(idPromo);
+//                Iterator it = requisitos.keySet().iterator();
+//                while (it.hasNext()) {
+//                    String key = it.next().toString();
+//                    lstClsR.add(new ClsRequisito(Integer.valueOf(requisitos.get(key)), key));
+                    RequisitosDao rpD = new RequisitosDao();
+                    reqPro = rpD.getRequisitosPromocion(idPromo, idMaestria);
+//                }
+//                numeroReq=lstClsR.size();
 
             } else {
                 requisitos = new HashMap<>();

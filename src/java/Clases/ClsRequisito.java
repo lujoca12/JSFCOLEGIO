@@ -12,7 +12,16 @@ package Clases;
 public class ClsRequisito {
     private int id;
     private String descripcion;
+    private String tipoArchivo;
 
+    public String getTipoArchivo() {
+        return tipoArchivo;
+    }
+
+    public void setTipoArchivo(String tipoArchivo) {
+        this.tipoArchivo = tipoArchivo;
+    }
+        
     public int getId() {
         return id;
     }
@@ -32,14 +41,22 @@ public class ClsRequisito {
     public ClsRequisito() {
     }
 
+    public ClsRequisito(int id, String descripcion,String tipoArchivo) {
+        this.id = id;
+        this.descripcion = descripcion;
+        this.tipoArchivo=tipoArchivo;
+    }
+
     public ClsRequisito(int id, String descripcion) {
         this.id = id;
         this.descripcion = descripcion;
     }
+    
 
     public ClsRequisito(int id) {
         this.id = id;
     }
+    
     
     
 }

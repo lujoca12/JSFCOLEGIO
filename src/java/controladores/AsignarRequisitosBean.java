@@ -33,7 +33,7 @@ import javax.faces.view.ViewScoped;
 @ViewScoped
 public class AsignarRequisitosBean implements Serializable {
 
-    private Map<String, Map<String, String>> data = new HashMap<String, Map<String, String>>();
+    private Map<String, Map<String, String>> data = new HashMap<>();
     private String msg = "";
     private Map<String, String> maestrias;
     private Map<String, String> promociones;
@@ -169,36 +169,35 @@ public class AsignarRequisitosBean implements Serializable {
     }
 
     public void onMaestriaChange() throws Exception {
-        try{
-        listaRequisitos = null;reqSelec = new ArrayList<>();
-        promociones = new HashMap<>();
-        if (idMaestria != null && !idMaestria.equals("")) {
-            promociones = data.get(idMaestria);
-        } else {
+        try {
+            listaRequisitos = null;
+            reqSelec = new ArrayList<>();
             promociones = new HashMap<>();
-        }
-        }catch(Exception ex)
-        {
+            if (idMaestria != null && !idMaestria.equals("")) {
+                promociones = data.get(idMaestria);
+            } else {
+                promociones = new HashMap<>();
+            }
+        } catch (Exception ex) {
             Logger.getLogger(AsignarRequisitosBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
     public void onPromoChange() throws Exception {
-       try{ 
-        reqSelec = new ArrayList<>();
-        if (idPromo != null && !idPromo.equals("")) {
+        try {
+            reqSelec = new ArrayList<>();
+            if (idPromo != null && !idPromo.equals("")) {
 
-            reqB = new RequisitosBean();
-            reqB.init();
-            listaRequisitos = reqB.getListaRequisitos();
-            reqSelec = reqB.getListaReqPro(idPromo, idMaestria);
+                reqB = new RequisitosBean();
+                reqB.init();
+                listaRequisitos = reqB.getListaRequisitos();
+                reqSelec = reqB.getListaReqPro(idPromo, idMaestria);
 
-        } else {
-            listaRequisitos = null;
-        }
-       }catch(Exception ex)
-        {
+            } else {
+                listaRequisitos = null;
+            }
+        } catch (Exception ex) {
             Logger.getLogger(AsignarRequisitosBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -221,8 +220,6 @@ public class AsignarRequisitosBean implements Serializable {
             mensajesError("Error al procesar datos");
         }
     }
-
-   
 
     private void vaciarCajas() {
 

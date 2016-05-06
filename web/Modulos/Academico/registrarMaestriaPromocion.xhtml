@@ -19,9 +19,11 @@
                         <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
                             
                             <p:outputLabel for="cboMaestria" value="Maestria:" styleClass="labelDerecha"  />
-                            <p:selectOneMenu id="cboMaestria" value="#{mbVMaestrias.themeMaestria}" converter="themeConverterMaestria" required="true"
+                            <p:selectOneMenu id="cboMaestria" value="#{mbVMaestrias.themeMaestria}" 
+                                             converter="themeConverterMaestria" required="true"
                                              effect="fade" var="tProfesor" filter="true" filterMatchMode="contains">
-                                <f:selectItems value="#{mbVMaestrias.lstThemeMaestria}" var="themeProf" itemLabel="#{themeProf.displayName}" itemValue="#{themeProf}" />
+                                <f:selectItems value="#{mbVMaestrias.lstThemeMaestria}" var="themeProf" 
+                                               itemLabel="#{themeProf.displayName}" itemValue="#{themeProf}" />
                                 <p:column style="width:10%">
                                     <h:outputText styleClass="ui-theme ui-theme-#{tProfesor.name}" />
                                 </p:column>

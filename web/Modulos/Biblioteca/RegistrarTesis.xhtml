@@ -14,65 +14,65 @@
         <h:form id="frmRegistrarTesis">
             <p:tab id="tesis" title="RegistrarTesis">
                 <p:panel header="Registrar Tesis">
-            <p:growl id="msgsDocente" showDetail="true" />
-            <p:focus context="panel"/>
-            <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
-        
-       
-                              
-        <p:outputLabel for="txtTitulo" styleClass="labelDerecha" value="Título:" />
-        <p:inputText id="txtTitulo" value="#{mbVtesis.tTesis.titulo}" maxlength="100" >
-            <f:validateLength minimum="5" maximum="100" />
-        </p:inputText>      
-        
-        <p:outputLabel for="cboAutor" value="Autor:" styleClass="labelDerecha"/>
-        <p:selectOneMenu id="cboAutor" required="true" value="#{mbVtesis.tTesis.autor}">
-            <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
-            <f:selectItems value="#{mbVtesis.lstEstudiantes}" />
-         </p:selectOneMenu>        
-                                  
-        <p:outputLabel for="txtFechaS" styleClass="labelDerecha" value="Fecha sustentación:" />
-        <p:calendar id="txtFechaS" value="#{mbVtesis.tTesis.fechaSustentacion}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" />
-              
-        <p:outputLabel for="txtRuta" styleClass="labelDerecha" value="Ruta:" />
-        <p:inputText id="txtRuta" value="#{mbVtesis.tTesis.ruta}" maxlength="100" >
-            <f:validateLength minimum="5" maximum="100" />
-        </p:inputText>
-        
-        <p:outputLabel for="txtResumen" styleClass="labelDerecha" value="Resumen:" />
-        <p:inputText id="txtResumen" value="#{mbVtesis.tTesis.resumen}" maxlength="100" >
-            <f:validateLength minimum="5" maximum="100" />
-        </p:inputText>
-        
-        <p:outputLabel for="cboMaestria" value="Maestria:" styleClass="labelDerecha"/>
-        <p:selectOneMenu id="cboMaestria" required="true" value="#{mbVtesis.idMaestria}">
-            <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
-            <f:selectItems value="#{mbVtesis.lstTodoMaestria}" />
-         </p:selectOneMenu>
-        
-        <p:outputLabel for="txtFechaSubid" styleClass="labelDerecha" value="Fecha subida:" />
-        <p:calendar id="txtFechaSubid" value="#{mbVtesis.tTesis.fechaSubida}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" />
-         
-                            
-        <h:outputText id="display" value="" />
-        <p:commandButton value="Guardar" update="@form" styleClass="anchoBotones" icon="ui-icon-disk"
+                    <p:growl id="msgs" showDetail="true" />
+                    <p:focus context="panel"/>
+                    <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
+                        <p:outputLabel for="txtTitulo" styleClass="labelDerecha" value="Título:" />
+                        <p:inputText id="txtTitulo" value="#{mbVtesis.tTesis.titulo}" maxlength="100" >
+                            <f:validateLength minimum="5" maximum="100" />
+                        </p:inputText> 
+                        
+                        <p:outputLabel for="cboAutor" value="Autor:" styleClass="labelDerecha"/>
+                        <p:selectOneMenu id="cboAutor" value="#{mbVtesis.clsTablaTesis}" 
+                                         required="true"
+                                         effect="fade" var="ttesis" filter="true" filterMatchMode="contains">
+                            <f:selectItems value="#{mbVtesis.lstTablatesis}" var="VarTesis" 
+                                           itemLabel="#{VarTesis.titulo}" itemValue="#{VarTesis}" />
+                            <p:column style="width:10%">                
+                                <h:outputText styleClass="ui-theme ui-theme-#{ttesis.idTesis}" />
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{ttesis.titulo}" />
+                            </p:column>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel for="txtFechaS" styleClass="labelDerecha" value="Fecha sustentación:" />
+                        <p:calendar id="txtFechaS" value="#{mbVtesis.tTesis.fechaSustentacion}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" />   
+                        <p:outputLabel for="txtRuta" styleClass="labelDerecha" value="Ruta:" />   
+                        <p:inputText id="txtRuta" value="#{mbVtesis.tTesis.ruta}" maxlength="100" >
+                            <f:validateLength minimum="5" maximum="100" />
+                        </p:inputText>
+                        
+                        <p:outputLabel for="txtResumen" styleClass="labelDerecha" value="Resumen:" />
+                        <p:inputText id="txtResumen" value="#{mbVtesis.tTesis.resumen}" maxlength="100" >
+                            <f:validateLength minimum="5" maximum="100" />
+                        </p:inputText>
+                        
+                        <p:outputLabel for="cboMaestria" value="Maestría:" styleClass="labelDerecha"/>
+                        <p:selectOneMenu id="cboMaestria" value="#{mbVtesis.clsMaestria}" 
+                                         required="true" effect="fade" var="tmaestria" filter="true" filterMatchMode="contains">
+                            <f:selectItems value="#{mbVtesis.lstThemeMaestria}" var="VarMaestria" 
+                                           itemLabel="#{VarMaestria.displayName}" itemValue="#{VarMaestria}" />
+                            <p:column style="width:10%">                
+                                <h:outputText styleClass="ui-theme ui-theme-#{tmaestria.name}" />
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{tmaestria.displayName}" />
+                            </p:column>
+                        </p:selectOneMenu>
+                        <p:outputLabel for="txtFechaSubid" styleClass="labelDerecha" value="Fecha subida:" />
+                        <p:calendar id="txtFechaSubid" value="#{mbVtesis.tTesis.fechaSubida}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" />
+                        <h:outputText id="display" value="" />
+                        <p:commandButton value="Guardar" update="@form" styleClass="anchoBotones" icon="ui-icon-disk"
                          actionListener="#{mbVtesis.registrarTesis()}" />
-        
-        
-    </p:panelGrid>
+                    </p:panelGrid>
                 </p:panel>
             </p:tab>
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
                 <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
             </p:dialog>
- </h:form>
-            
-    
-    
-    
-</div>
-
-        
+        </h:form>  
+    </div>
     </h:body>
 </html>

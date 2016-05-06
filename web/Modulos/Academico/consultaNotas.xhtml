@@ -26,28 +26,23 @@
                 <div class="ui-fluid">
                 <h:form id="form">
                     <p:growl id="msgs" showDetail="true" />
-                    <p:tab id="personal" title="ConsultaNotas">
-                        
-                    </p:tab>
-                
+                    <p:tab id="personal" title="ConsultaNotas">                        
+                    </p:tab>                
                     <div class="panel panel-primary" style="margin-left: 20px; margin-right: 20px;">
                         <div class="panel-heading" >
                             Consulta de notas
                         </div>
-                           
-                            <p:tab title="Consulta de notas">
+                        <p:tab title="Consulta de notas">
                                 <p:remoteCommand name="test" update="form,msgs" actionListener="#{mbVNotas.consultarMaestrias()}"/>
                                 <p:panelGrid id="panel" columns="3" layout="grid" styleClass="ui-panelgrid-blank">
                                     <p:outputLabel for="txtCedEstud" style="font-weight: bold !important;" styleClass="labelDerecha" value="Cédula Estudiante:" />
                                     
                                     <p:inputMask id="txtCedEstud" value="#{mbVNotas.cedula}" required="true" mask="999999999-9"/>
-                                    <p:commandButton value="Listar matriculas" update="form,msgs" styleClass="anchoBotonesConsulta" icon="ui-icon-search"
-                                                     actionListener="#{mbVNotas.consultarMaestrias()}" />
+                                    <p:commandButton value="Listar" update="form,msgs" styleClass="anchoBotonesConsulta" 
+                                                     icon="ui-icon-search" actionListener="#{mbVNotas.consultarMaestrias()}" />
 
                                 </p:panelGrid>
-                                
                             </p:tab>  
-                        
                     </div>
                     <p:panel id="panelMatriculaGenerada" rendered="#{mbVNotas.estudiante eq '' ? false:true}">
                         <div class="panel panel-primary" >

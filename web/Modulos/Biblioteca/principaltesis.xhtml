@@ -69,10 +69,7 @@
                 <p:panel id="panelTabla" style="height: 30%;">
                     <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->   
                     <p:dataTable class="tblDatos" id="tbltesis" var="lstTbl" value="#{mbVtesis.lstTablatesis}"
-                                 editable="true" scrollable="true">
-                        <p:column headerText="Codigo" style="width: 1%" >
-                            <h:outputText value="#{lstTbl.idTesis}" />
-                        </p:column>         
+                                 editable="true" scrollable="true">      
                         <p:column headerText="Autor" style="width: 10%" >
                             <h:outputText value="#{lstTbl.autor}" />
                         </p:column>

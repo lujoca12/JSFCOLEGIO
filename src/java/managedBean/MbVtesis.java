@@ -28,10 +28,13 @@ import javax.inject.Named;
 import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import Clases.ClsTablaTesis;
+import Clases.ClsMaestria;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -40,6 +43,8 @@ import javax.annotation.PostConstruct;
 @Named(value = "mbVtesis")
 @ViewScoped
 public class MbVtesis implements Serializable{
+    
+    private boolean msg=false;
     
     private Map<String, String> maestrias;
     private String idMaestria;
@@ -56,13 +61,19 @@ public class MbVtesis implements Serializable{
      private String ruta;
      private String resumen;
      private Date fechaSubida;
+     
+     
     
-        
+    private Maestria tMaestria;    
     private Tesis tTesis;
-    private String estudiante;
+    private Estudiante tEstudiante;
     private ArrayList<TipoTribunal> lstTheme;
     private List<SelectItem> lstTodoMaestria;
     private List<SelectItem> lstEstudiantes;
+    
+    ClsMaestria clsMaestria;
+    private List<ClsMaestria> lstThemeMaestria;
+    
     ClsTablaTesis clsTablaTesis; 
     private List<ClsTablaTesis> LstTablatesis;
 
@@ -71,12 +82,70 @@ public class MbVtesis implements Serializable{
      */
     public MbVtesis(){
         llenarTablaTesis();
+        llenarCboMaestria();
+        tMaestria= new Maestria();
         tTesis = new Tesis();
+        tEstudiante= new Estudiante();
     }
             
     private void vaciarCajas(){
         tTesis = new Tesis();
     }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+    
+    
+
+    public Date getFechaSustentacion() {
+        return fechaSustentacion;
+    }
+
+    public void setFechaSustentacion(Date fechaSustentacion) {
+        this.fechaSustentacion = fechaSustentacion;
+    }
+
+    public Date getFechaSubida() {
+        return fechaSubida;
+    }
+
+    public void setFechaSubida(Date fechaSubida) {
+        this.fechaSubida = fechaSubida;
+    }
+    
+    
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+    
+    
+
+    public ClsMaestria getClsMaestria() {
+        return clsMaestria;
+    }
+
+    public void setClsMaestria(ClsMaestria clsMaestria) {
+        this.clsMaestria = clsMaestria;
+    }
+
+    public List<ClsMaestria> getLstThemeMaestria() {
+        return lstThemeMaestria;
+    }
+
+    public void setLstThemeMaestria(List<ClsMaestria> lstThemeMaestria) {
+        this.lstThemeMaestria = lstThemeMaestria;
+    }
+    
 
     public ClsTablaTesis getClsTablaTesis() {
         return clsTablaTesis;
@@ -132,10 +201,25 @@ public class MbVtesis implements Serializable{
     public void settTesis(Tesis tTesis) {
         this.tTesis = tTesis;
     }
-       
-    public String getEstudiante() {
-        return estudiante;
+
+    public Estudiante gettEstudiante() {
+        return tEstudiante;
     }
+
+    public void settEstudiante(Estudiante tEstudiante) {
+        this.tEstudiante = tEstudiante;
+    }
+    
+
+    public Maestria gettMaestria() {
+        return tMaestria;
+    }
+
+    public void settMaestria(Maestria tMaestria) {
+        this.tMaestria = tMaestria;
+    }
+          
+    
 
     public List<SelectItem> getLstEstudiantes() {
        this.lstEstudiantes = new ArrayList<SelectItem>();
@@ -214,33 +298,182 @@ public class MbVtesis implements Serializable{
                       //LstTablatesis.add(new ClsTablaTesis(id, autor, titulo, fechaSubida, fechaSubida, ruta, resumen, idMaestria, idEstudiante));
                     }
                 }
-                lsttesis.clear();
             }
         } catch (Exception ex) {
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
      
+    public void consultarTesisAutor(){
+        if(this.autor==""){
+        }else{
+            CargarTesisAutor();
+        }        
+    }
+    public void CargarTesisAutor(){
+        LstTablatesis= new ArrayList<>();
+        try{
+            LstTablatesis.clear();
+           DaoTesis dtesis = new DaoTesis();
+           List<Tesis> lsttesis= dtesis.getTesisxAutor(this.autor);
+           if (lsttesis.size() > 0) {
+               for(Tesis tesi : lsttesis){
+                   LstTablatesis.add(new ClsTablaTesis(
+                           tesi.getId(), 
+                           tesi.getAutor(), 
+                           tesi.getTitulo(),
+                           tesi.getFechaSustentacion(), 
+                           tesi.getFechaSubida(), 
+                           tesi.getRuta(), 
+                           tesi.getResumen(), 
+                           tesi.getMaestria(), 
+                           tesi.getEstudiante()) );
+                  // LstTablatesis.add(new ClsTablaTesis(id, autor, titulo, fechaSubida, fechaSubida, ruta, resumen, tMaestria, tEstudiante) );
+               }
+           }           
+        }
+        catch (Exception e){
+            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, e);
+        }
+        
+    }
+    public void consultarTesisTitulo(){
+        if(this.titulo == null){
+        }else{
+            CargarTesisTitulo();
+        }
+    }
+     public void CargarTesisTitulo(){
+         LstTablatesis= new ArrayList<>();
+        try{
+            LstTablatesis.clear();
+           DaoTesis dtesis = new DaoTesis();
+           List<Tesis> lsttesis= dtesis.getTesisxTitulo(this.titulo);
+           if (lsttesis.size() > 0) {
+               for(Tesis tesi : lsttesis){
+                   LstTablatesis.add(new ClsTablaTesis(
+                           tesi.getId(), 
+                           tesi.getAutor(), 
+                           tesi.getTitulo(),
+                           tesi.getFechaSustentacion(), 
+                           tesi.getFechaSubida(), 
+                           tesi.getRuta(), 
+                           tesi.getResumen(), 
+                           tesi.getMaestria(), 
+                           tesi.getEstudiante()) );
+                  // LstTablatesis.add(new ClsTablaTesis(id, autor, titulo, fechaSubida, fechaSubida, ruta, resumen, tMaestria, tEstudiante) );
+               }
+           }           
+        }
+        catch (Exception e){
+            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, e);
+        }
+     }
+    
+    public void consultarTesisFechaSus(){
+        if(this.fechaSustentacion == null){
+        }else{
+            CargarTesisFechaSust();
+        }
+    }
+    public void CargarTesisFechaSust(){
+        LstTablatesis= new ArrayList<>();
+        try{
+            LstTablatesis.clear();
+           DaoTesis dtesis = new DaoTesis();
+           List<Tesis> lsttesis= dtesis.getTesisxFechaSust(this.fechaSustentacion);
+           if (lsttesis.size() > 0) {
+               for(Tesis tesi : lsttesis){
+                   LstTablatesis.add(new ClsTablaTesis(
+                           tesi.getId(), 
+                           tesi.getAutor(), 
+                           tesi.getTitulo(),
+                           tesi.getFechaSustentacion(), 
+                           tesi.getFechaSubida(), 
+                           tesi.getRuta(), 
+                           tesi.getResumen(), 
+                           tesi.getMaestria(), 
+                           tesi.getEstudiante()) );
+                  // LstTablatesis.add(new ClsTablaTesis(id, autor, titulo, fechaSubida, fechaSubida, ruta, resumen, tMaestria, tEstudiante) );
+               }
+           }           
+        }
+        catch (Exception e){
+            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }    
+    public void llenarCboMaestria(){
+        
+        this.lstThemeMaestria = new ArrayList<ClsMaestria>();
+         try {
+            DaoTMaestrias daoTmaestria = new DaoTMaestrias();
+            
+            List<Maestria> lstMaestria = daoTmaestria.getMaestrias();
+            this.lstThemeMaestria.clear();
+            this.lstThemeMaestria.add(new ClsMaestria(-1,"Ninguno","Ninguno",0,0,0));
+            
+            for(Maestria maestria: lstMaestria){
+                this.lstThemeMaestria.add(new ClsMaestria(maestria.getId(),
+                        maestria.getDescripcion(),
+                        maestria.getDescripcion(),
+                        maestria.getId(),
+                        0,
+                        0));
+            }
+        } catch (Exception ex) {
+            
+        }
+    }
+    
     public void registrarTesis(){
+        
+        //Variable para saber si esta registrada
+        boolean repetida = false;
+        
         DaoTesis daoTesis = new DaoTesis();
         tTesis.setAutor(autor);
         
-//        tTesis.setEstudiante(estudiante);
+        tTesis.setEstudiante(tEstudiante);
         tTesis.setFechaSubida(fechaSubida);
         tTesis.setFechaSustentacion(fechaSustentacion);
         
-        idmaestria = Integer.getInteger(idMaestria);
-//        tTesis.setMaestria(idmaestria);
+        //idmaestria = Integer.getInteger(idMaestria);
+        tTesis.setMaestria(tMaestria);
         tTesis.setResumen(resumen);
         tTesis.setRuta(ruta);
         tTesis.setTitulo(titulo);
         
         try{
+            List<Tesis> lstTesis=(List<Tesis>) daoTesis.getTesisxTitulo(tTesis.getTitulo());
+            if(lstTesis.size() > 0){
+                repetida = true;
+            }
+            else{
+                //Si la maestria no existe se la registra
+                msg =  daoTesis.registrarTesis(tTesis);
+            }
         }
         catch (Exception e){
             vaciarCajas();
         }
+        if(repetida){
+            mensajesError("Registro repetido");            
+        }else{
+            vaciarCajas();
+            if(msg)
+                mensajesOk("Datos procesados bien");
+            else
+                mensajesError("error al intentar procesar");
+                }
     }
     
+     private void mensajesOk(String msg){
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje de la Aplicacion", msg);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+    private void mensajesError(String msg){
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje de la Aplicacion", msg);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
     
 }

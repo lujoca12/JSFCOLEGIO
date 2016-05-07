@@ -38,6 +38,7 @@
                         
                         <p:outputLabel for="txtFechaS" styleClass="labelDerecha" value="Fecha sustentación:" />
                         <p:calendar id="txtFechaS" value="#{mbVtesis.tTesis.fechaSustentacion}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" />   
+                        
                         <p:outputLabel for="txtRuta" styleClass="labelDerecha" value="Ruta:" />   
                         <p:inputText id="txtRuta" value="#{mbVtesis.tTesis.ruta}" maxlength="100" >
                             <f:validateLength minimum="5" maximum="100" />

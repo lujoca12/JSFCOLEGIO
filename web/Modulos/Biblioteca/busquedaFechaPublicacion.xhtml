@@ -35,6 +35,11 @@ and open the template in the editor.
                         <input type="hidden" name="etal" value="-1" />		
                 <p>Ir a una fecha de inicio:</p>
                 <div class="row">
+                    <div>
+                        <p:outputLabel for="txtFechaSubid" styleClass="labelDerecha" value="Fecha subida:" />
+                        <p:calendar id="txtFechaSubid" value="#{mbVtesis.tTesis.fechaSubida}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" />
+                        <h:outputText id="display" value="" />
+                    </div>
                         <div class="col-md-4">
                                 <select class="form-control" name="year">
                             <option selected="selected" value="-1">(Elige año)</option>                            

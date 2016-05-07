@@ -11,46 +11,76 @@ and open the template in the editor.
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h5="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:jsf="http://xmlns.jcp.org/jsf">
-    <head>
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      >
+    <h:head>
         <title>TODO supply a title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>        
+    </h:head>
+    <h:body>
+        <div>TODO write content</div>
         <ui:composition template="/templates/masterLayout.xhtml">
             <ui:define name="leftContent"></ui:define>
-            <ui:define name="content"> 
-                 <h:outputStylesheet name="inscripcion.css" library="css"/>
-                <h:outputStylesheet name="fileinput.css" library="css"/>
-                <h:outputScript name="fileinput.min.js" library="js"/>
-                <h:outputScript name="verFoto.js" library="js"/>
+            <ui:define name="content">  
                 <h:outputStylesheet name="green.css" library="css"/>
                 <h:outputScript name="ajax.js" library="js" />
                 <h:outputScript name="jquery/jquery.js" library="primefaces" />
+                <br></br>
+                <br></br>
                 <div class="ui-fluid">
                     <h:form id="form">
                         <p:growl id="msgs" showDetail="true" />
-                        <p:tab id="personal" title="ConsultaNotas">                        
-                        </p:tab>                
+                        <p:tab id="personal" title="ConsultaTesis"> 
+                        </p:tab>
                         <div class="panel panel-primary" style="margin-left: 20px; margin-right: 20px;">
                             <div class="panel-heading" >
-                            BUSCAR "TESIS" POR AUTOR
+                                Consulta de Tesis por "Autor"
                             </div>
-                            <p:tab title="Consulta de notas">
+                            <p:tab title="Consulta de Tesis">
                                 <p:remoteCommand name="test" update="form,msgs" actionListener="#{mbVtesis.consultarTesisAutor()}"/>
                                 <p:panelGrid id="panel" columns="3" layout="grid" styleClass="ui-panelgrid-blank">
-                                    <p:outputLabel for="txtCedEstud" style="font-weight: bold !important;" styleClass="labelDerecha" value="Cédula Estudiante:" />
-                                    <p:inputText id="txtCedEstud" value="#{mbVtesis.autor}" required="true" maxlength="100">
-                                        <f:validateLength minimum="1" maximum="100" />
-                                    </p:inputText>
-                                    <p:commandButton value="Listar" update="form,msgs" styleClass="anchoBotonesConsulta" 
-                                                     icon="ui-icon-search" actionListener="#{mbVtesis.consultarTesisAutor()}" />
+                                    <p:outputLabel for="txtCedEstud" style="font-weight: bold !important;" styleClass="labelDerecha" value="Autor:" />
+                                    <p:inputText id="txtCedEstud" value="#{mbVtesis.autor}" required="true" />
+                                    <p:commandButton value="Listar" update="form,msgs" styleClass="anchoBotonesConsulta" icon="ui-icon-search"
+                                                     actionListener="#{mbVtesis.consultarTesisAutor()}" />
                                 </p:panelGrid>
-                            </p:tab>
+                            </p:tab>  
                         </div>
+                        <p:panel id="panelBusquedaGenerada">
+                            <div class="panel panel-primary" >
+                                <p:panel style="padding: 0 !important; height: 50%" >
+                                    <p:separator />
+                                    <p:dataTable class="tblNotas DataTable datatableHover" scrollable="false" 
+                                                 var="notas" value="#{mbVtesis.lstTablatesis}" 
+                                                 emptyMessage="No hay datos"
+                                                 paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 rowsPerPageTemplate="5,10,15">
+                                        <p:column headerText="Autor" style="text-align: center;">
+                                            <h:outputText value="#{notas.autor}" />
+                                        </p:column>
+                                        <p:column headerText="Fecha sustentacion" style="text-align: center;">
+                                            <h:outputText value="#{notas.fechaSus}" />
+                                        </p:column>
+                                        <p:column headerText="Tesis" style="text-align: center;">
+                                            <h:outputText value="#{notas.titulo}" />
+                                        </p:column>
+                                        <p:column headerText="Resumen" style="text-align: center;">
+                                            <h:outputText value="#{notas.resumen}" />
+                                        </p:column>
+                                        
+                                        <p:column headerText="maestria" style="text-align: center;">
+                                            <h:outputText value="#{notas.ruta}" />
+                                        </p:column>
+                                    
+                                </p:dataTable>
+                                </p:panel>
+                            </div>
+                        </p:panel>
                     </h:form>
                 </div>
-            </ui:define>
+        
+        </ui:define>
         </ui:composition>
-    </body>
+    </h:body>
 </html>

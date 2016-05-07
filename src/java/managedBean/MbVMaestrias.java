@@ -259,7 +259,6 @@ public class MbVMaestrias implements Serializable{
         }
     }
     
-
     public void registrar(){
 
         DaoTPromocion daoTpromocion = new DaoTPromocion();
@@ -323,7 +322,7 @@ public class MbVMaestrias implements Serializable{
                 repetida = true;
             }
             else{
-                //Si la maestria no existe se la registra
+                //Si la tesis no existe se la registra
                 msg =  daoTmaestrias.registrar(tMaestria);
             }
             

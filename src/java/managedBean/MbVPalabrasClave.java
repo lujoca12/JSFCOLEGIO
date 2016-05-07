@@ -24,6 +24,7 @@ public class MbVPalabrasClave implements Serializable{
     
     private String palabra = "";
     private String descripcion = "";
+    private String autor="";
     private List<String> lstTbPalabras;
 
     /**
@@ -47,11 +48,9 @@ public class MbVPalabrasClave implements Serializable{
     public void setLstTbPalabras(List<String> lstTbPalabras) {
         this.lstTbPalabras = lstTbPalabras;
     }
-    
-    
-    
+            
     public void consultarTesis() {
-        if (this.palabra == "" && this.palabra !=null) {
+        if (this.palabra == "") {
         } else {
             cargarTblTesis();
         }
@@ -63,8 +62,11 @@ public class MbVPalabrasClave implements Serializable{
            lstTbPalabras.clear();
            DaoTesis daotesis = new DaoTesis();
            List<Tesis> lsttesis = daotesis.getTesisPalabrasclaves(this.palabra);
+           daotesis = new DaoTesis();
            if(lsttesis.size() > 0){
                for(Tesis tesis : lsttesis){
+                   lstTbPalabras.add(palabra);
+                   
                    
                }
            }

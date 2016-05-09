@@ -447,13 +447,13 @@ function restablecerMm(e){
         test1(); return false;
     }
 }
-    var validarNum = function (event, _float){
-        event = event || window.event;
-        var charCode = event.keyCode || event.which;
-        var first = (charCode <= 57 && charCode >= 48);
-        if(_float){
-            var element = event.srcElement || event.target;
-            return first || (element.value.indexOf('.') == -1 ? charCode == 46 : false);
-        }
-        return first;
+    var validarNum = function (event, _float) {
+    event = event || window.event;
+    var charCode = event.keyCode || event.which;
+    var first = (charCode <= 57 && charCode >= 48);
+    if (_float) {
+        var element = event.srcElement || event.target;
+        return first || (element.value.indexOf('.') == -1 ? charCode == 46 : false);
     }
+    return first;
+}

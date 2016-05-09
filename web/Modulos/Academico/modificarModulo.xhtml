@@ -14,13 +14,13 @@
                 <p:growl id="msgs" showDetail="true"/>
                 <p:panel id="panelTabla" style="height: 30%;">
                     <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->
-                    <p:dataTable class="tblDatos" id="tblModulos" var="lstTbl" value="#{mbVModulos.lstTblModulosReg}"
+                    <p:dataTable class="tblDatos fuenteTamanio" id="tblModulos" var="lstTbl" value="#{mbVModulos.lstTblModulosReg}"
                                  editable="true" scrollable="true" scrollHeight="150" emptyMessage="No hay Datos">
 
                         <p:ajax event="rowEdit" listener="#{mbVModulos.onRowEdit}" update=":form:msgs" />
                         <p:ajax event="rowEditCancel" listener="#{mbVModulos.onRowCancel}" update=":form:msgs" />
 
-                        <p:column headerText="Maestria" style="width: 30%;">
+                        <p:column headerText="Maestria" >
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.maestria}" /></f:facet>
                                 <f:facet name="input">
@@ -40,7 +40,7 @@
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="Módulo" style="width: 25%;">
+                        <p:column headerText="Módulo">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.n_modulo}" /></f:facet>
                                 <f:facet name="input">
@@ -52,14 +52,16 @@
                             </p:cellEditor>
                         </p:column>
                         
-                        <p:column headerText="Descripciòn" style="width: 25%;">
+                        <p:column headerText="Descripciòn">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.modulo}" /></f:facet>
                                 <f:facet name="input"><p:inputText value="#{lstTbl.modulo}" style="width:100%"/></f:facet>
                             </p:cellEditor>
                         </p:column>
+                        
+                        
 
-                        <p:column headerText="Docente" style="width: 20%;">
+                        <p:column headerText="Docente">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.usuario}" /></f:facet>
                                 <f:facet name="input">
@@ -79,7 +81,7 @@
                             </p:cellEditor>
                         </p:column>
                         
-                        <p:column headerText="F. Inicio" style="width: 20%;">
+                        <p:column headerText="F. Inicio">
                             <p:cellEditor>
                                 <f:facet name="output">
                                     <h:outputText value="#{lstTbl.fechaInicio}" />
@@ -95,7 +97,7 @@
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="F. Fin" style="width: 20%;">
+                        <p:column headerText="F. Fin">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.fechaFin}" /></f:facet>
                                 <f:facet name="input">
@@ -106,20 +108,58 @@
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
-
-                        <p:column headerText="Creditos" style="width: 12%;">
+                        
+                        <p:column headerText="F.I. examen">
                             <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{lstTbl.creditos}"   /></f:facet>
+                                <f:facet name="output">
+                                    <h:outputText value="#{lstTbl.fechaInicioExamen}" />
+                                </f:facet>
                                 <f:facet name="input">
-                                    <p:inputText value="#{lstTbl.creditos}" style="width:100%" onkeypress="return isNumberKey(event)" label="text">
+                                    <p:calendar id="txtFechaInicioExamen" onkeypress="return permite(event, 'none')" locale="es" value="#{lstTbl.fechaInicioExamen}" effect="fold" pattern="dd-MM-yyyy" mask="true" >
+                                        <p:ajax event="dateSelect" update="txtFechaFin" />
+                                        <p:ajax event="blur" update="txtFechaFin" />
+                                        <f:attribute name="txtFechaFin" value="#{lstTbl.fechaFinExamen}"/>
+                                        <f:validator validatorId="primeDateRangeValidator1" />
+                                    </p:calendar>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="F.F. examen">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.fechaFinExamen}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:calendar id="txtFechaFinExamen" mindate="#{lstTbl.fechaInicioExamen}" locale="es" value="#{lstTbl.fechaFinExamen}" onkeypress="return permite(event, 'none')" effect="fold" pattern="dd-MM-yyyy" mask="true" >
+                                        <f:attribute name="txtFechaInicio" value="#{lstTbl.fechaInicioExamen}"/>
+                                        <f:validator validatorId="primeDateRangeValidator1" />
+                                    </p:calendar>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="Horas" style="text-align: center;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.totalHorasModulo}"   /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{lstTbl.totalHorasModulo}" style="width:100%" label="text" onkeypress="return soloNumeros(event)">
                                     </p:inputText>
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
-                        <p:column style="width:10%;">
+
+                        <p:column headerText="Creditos" style="text-align: center;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.creditos}"   /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{lstTbl.creditos}" style="width:100%" label="text" onkeypress="return validarNum(event, true)">
+                                    </p:inputText>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column style="width:60px;">
                             <p:rowEditor />   
                         </p:column>
-                        <p:column style="width:8%;">
+                        <p:column style="width:20px;">
                             <p:commandButton id="btnEliminar"
                                              action="#{mbVModulos.onDelete(lstTbl)}"
                                              update="form,tblModulos"

@@ -193,6 +193,7 @@ public class MbVModulos implements Serializable {
             if (lstModulo != null) {
                 if (lstModulo.size() > 0) {
                     for (Modulo modulo : lstModulo) {
+                        
                         lstTblModulosReg.add(new ClsTablaModulosRegistrados(modulo.getPromocion().getMaestria().getId(),
                                 modulo.getPromocion().getMaestria().getDescripcion() + " (Dir.(a)" + modulo.getPromocion().getUsuario() + ")",
                                 modulo.getPromocion().getId(),
@@ -202,11 +203,11 @@ public class MbVModulos implements Serializable {
                                 modulo.getCreditos().toString(),
                                 modulo.getId(),
                                 modulo.getN_modulo(),
-                                modulo.getFechaInicio(),
-                                modulo.getFechaFin(),
-                                modulo.getFechaInicioExamen(),
-                                modulo.getFechaFinExamen(),
-                                modulo.getTotalHorasModulo().toString()
+                                modulo.getFechaInicio() == null ? null:modulo.getFechaInicio(),
+                                modulo.getFechaFin() == null ? null:modulo.getFechaFin(),
+                                modulo.getFechaInicioExamen() == null ? null:modulo.getFechaInicioExamen(),
+                                modulo.getFechaFinExamen() == null ? null:modulo.getFechaFinExamen(),
+                                modulo.getTotalHorasModulo() == null ? null:modulo.getTotalHorasModulo().toString()
                                 ));
                     }
                 }
@@ -364,8 +365,12 @@ public class MbVModulos implements Serializable {
             BigDecimal bigdec;
             bigdec = new BigDecimal(Double.parseDouble(((ClsTablaModulosRegistrados) event.getObject()).getCreditos()));
             modulo.setCreditos(bigdec);
+            bigdec = new BigDecimal(Double.parseDouble(((ClsTablaModulosRegistrados) event.getObject()).getTotalHorasModulo()));
+            modulo.setTotalHorasModulo(bigdec);
             modulo.setFechaInicio(((ClsTablaModulosRegistrados) event.getObject()).getFechaInicio());
             modulo.setFechaFin(((ClsTablaModulosRegistrados) event.getObject()).getFechaFin());
+            modulo.setFechaInicioExamen(((ClsTablaModulosRegistrados) event.getObject()).getFechaInicioExamen());
+            modulo.setFechaFinExamen(((ClsTablaModulosRegistrados) event.getObject()).getFechaFinExamen());
             modulo.setN_modulo(((ClsTablaModulosRegistrados) event.getObject()).getN_modulo());
             msg = daoTmodulo.update(modulo);
             cargarTablaModulos();

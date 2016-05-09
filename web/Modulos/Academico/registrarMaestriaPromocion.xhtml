@@ -50,7 +50,11 @@
 
 
                             <p:outputLabel for="txtFechaInicio" value="Fecha inicio:" styleClass="labelDerecha" />
-                            <p:calendar id="txtFechaInicio" onkeypress="return permite(event, 'none')" locale="es" value="#{mbVMaestrias.tPromocion.fechaInicio}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" >
+                            <p:calendar id="txtFechaInicio" 
+                                        onkeypress="return permite(event, 'none')" 
+                                        locale="es" 
+                                        value="#{mbVMaestrias.tPromocion.fechaInicio}" 
+                                        effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" >
                                 <p:ajax event="dateSelect" update="txtFechaFin" />
                                 <p:ajax event="blur" update="txtFechaFin" />
                                 <f:attribute name="txtFechaFin" value="#{mbVMaestrias.tPromocion.fechaFin}"/>
@@ -59,7 +63,10 @@
 
 
                             <p:outputLabel for="txtFechaFin" value="Fecha fin:" styleClass="labelDerecha" />
-                            <p:calendar id="txtFechaFin" mindate="#{mbVMaestrias.tPromocion.fechaInicio}" locale="es" value="#{mbVMaestrias.tPromocion.fechaFin}" onkeypress="return permite(event, 'none')" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" >
+                            <p:calendar id="txtFechaFin" mindate="#{mbVMaestrias.tPromocion.fechaInicio}"
+                                        locale="es" value="#{mbVMaestrias.tPromocion.fechaFin}"
+                                        onkeypress="return permite(event, 'none')" effect="fold" 
+                                        required="true" pattern="dd-MM-yyyy" mask="true" >
                                 <f:attribute name="txtFechaInicio" value="#{mbVMaestrias.tPromocion.fechaInicio}"/>
                                 <f:validator validatorId="primeDateRangeValidator" />
                             </p:calendar>

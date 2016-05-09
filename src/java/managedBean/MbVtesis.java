@@ -473,18 +473,20 @@ public class MbVtesis implements Serializable{
         
         DaoTesis daoTesis = new DaoTesis();
         tTesis.setAutor(this.clsestudiante.getNombres());
+        
         tEstudiante.setId(this.clsestudiante.getId());
-        tTesis.setEstudiante(tEstudiante);
+        tTesis.setEstudiante(tEstudiante);        
         
         tTesis.setFechaSubida(this.tTesis.getFechaSubida());
-        tTesis.setFechaSustentacion(fechaSustentacion);
+        tTesis.setFechaSustentacion(this.tTesis.getFechaSustentacion());
         
-        //idmaestria = Integer.getInteger(idMaestria);
+        tMaestria.setId(this.clsMaestria.getId());
         tTesis.setMaestria(tMaestria);
-        tTesis.setResumen(resumen);
-        tTesis.setRuta(ruta);
-        tTesis.setTitulo(titulo);
         
+        tTesis.setResumen(this.tTesis.getResumen());
+        tTesis.setRuta(this.tTesis.getRuta());
+        tTesis.setTitulo(this.tTesis.getTitulo());
+        titulo="";
         try{
             List<Tesis> lstTesis=(List<Tesis>) daoTesis.getTesisxTitulo(tTesis.getTitulo());
             if(lstTesis.size() > 0){

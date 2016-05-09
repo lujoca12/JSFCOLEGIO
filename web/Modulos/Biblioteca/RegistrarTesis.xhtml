@@ -17,6 +17,7 @@
                     <p:growl id="msgs" showDetail="true" />
                     <p:focus context="panel"/>
                     <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
+                        
                         <p:outputLabel for="txtTitulo" styleClass="labelDerecha" value="Título:" />
                         <p:inputText id="txtTitulo" value="#{mbVtesis.tTesis.titulo}" maxlength="100" >
                             <f:validateLength minimum="5" maximum="100" />
@@ -37,7 +38,8 @@
                         </p:selectOneMenu>
                         
                         <p:outputLabel for="txtFechaS" styleClass="labelDerecha" value="Fecha sustentación:" />
-                        <p:calendar id="txtFechaS" value="#{mbVtesis.tTesis.fechaSustentacion}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" />   
+                        <p:calendar id="txtFechaS" value="#{mbVtesis.tTesis.fechaSustentacion}" 
+                                    effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" />   
                         
                         <p:outputLabel for="txtRuta" styleClass="labelDerecha" value="Ruta:" />   
                         <p:inputText id="txtRuta" value="#{mbVtesis.tTesis.ruta}" maxlength="100" >

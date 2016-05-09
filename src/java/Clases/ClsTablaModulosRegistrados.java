@@ -26,9 +26,12 @@ public class ClsTablaModulosRegistrados implements Serializable {
     private String n_modulo;
     private Date fechaInicio;
     private Date fechaFin;
+    private Date fechaInicioExamen;
+    private Date fechaFinExamen;
+    private String totalHorasModulo;
     
 
-    public ClsTablaModulosRegistrados(int idMaestria, String maestria, int idPromocion, String modulo, int idUsuario, String usuario, String creditos, int idModulo, String n_modulo, Date fechaInicio, Date fechaFin) {
+    public ClsTablaModulosRegistrados(int idMaestria, String maestria, int idPromocion, String modulo, int idUsuario, String usuario, String creditos, int idModulo, String n_modulo, Date fechaInicio, Date fechaFin, Date fechaInicioExamen, Date fechaFinExamen, String totalHorasModulo) {
         this.idMaestria = idMaestria;
         this.maestria = maestria;
         this.idPromocion = idPromocion;
@@ -40,6 +43,9 @@ public class ClsTablaModulosRegistrados implements Serializable {
         this.n_modulo = n_modulo;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+        this.fechaInicioExamen = fechaInicioExamen;
+        this.fechaFinExamen = fechaFinExamen;
+        this.totalHorasModulo = totalHorasModulo;
     }
 
     public int getIdMaestria() {
@@ -129,5 +135,30 @@ public class ClsTablaModulosRegistrados implements Serializable {
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
     }
+
+    public Date getFechaInicioExamen() {
+        return fechaInicioExamen;
+    }
+
+    public void setFechaInicioExamen(Date fechaInicioExamen) {
+        this.fechaInicioExamen = fechaInicioExamen;
+    }
+
+    public Date getFechaFinExamen() {
+        return fechaFinExamen;
+    }
+
+    public void setFechaFinExamen(Date fechaFinExamen) {
+        this.fechaFinExamen = fechaFinExamen;
+    }
+
+    public String getTotalHorasModulo() {
+        return totalHorasModulo;
+    }
+
+    public void setTotalHorasModulo(String totalHorasModulo) {
+        this.totalHorasModulo = totalHorasModulo;
+    }
+    
     
 }

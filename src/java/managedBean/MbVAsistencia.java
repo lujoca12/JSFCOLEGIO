@@ -174,7 +174,10 @@ public class MbVAsistencia implements Serializable {
                                 modulo.getId(),
                                 modulo.getN_modulo(),
                                 modulo.getFechaInicio(),
-                                modulo.getFechaFin()));
+                                modulo.getFechaFin(),
+                                modulo.getFechaInicioExamen(),
+                                modulo.getFechaFinExamen(),
+                                modulo.getTotalHorasModulo().toString()));
                     }
                 }
             }

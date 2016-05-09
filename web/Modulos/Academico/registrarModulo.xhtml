@@ -58,6 +58,7 @@
                                 </p:column>
                             </p:selectOneMenu>
                             
+                            
                             <p:outputLabel for="txtFechaInicio" value="Fecha inicio:" styleClass="labelDerecha" />
                             <p:calendar id="txtFechaInicio" onkeypress="return permite(event, 'none')" locale="es" value="#{mbVModulos.tModulo.fechaInicio}" effect="fold" pattern="dd-MM-yyyy" mask="true" >
                                 <p:ajax event="dateSelect" update="txtFechaFin" />
@@ -72,6 +73,25 @@
                                 <f:attribute name="txtFechaInicio" value="#{mbVModulos.tModulo.fechaInicio}"/>
                                 <f:validator validatorId="primeDateRangeValidator1" />
                             </p:calendar>
+                            
+                            <p:outputLabel for="txtFechaInicioExamen" value="Fecha inicio examen:" styleClass="labelDerecha" />
+                            <p:calendar id="txtFechaInicioExamen" maxdate="#{mbVModulos.tModulo.fechaFin}" mindate="#{mbVModulos.tModulo.fechaInicio}" onkeypress="return permite(event, 'none')" locale="es" value="#{mbVModulos.tModulo.fechaInicioExamen}" effect="fold" pattern="dd-MM-yyyy" mask="true" >
+                                <p:ajax event="dateSelect" update="txtFechaFinExamen" />
+                                <p:ajax event="blur" update="txtFechaFinExamen" />
+                                <f:attribute name="txtFechaFinExamen" value="#{mbVModulos.tModulo.fechaFinExamen}"/>
+                                <f:validator validatorId="primeDateRangeValidator1" />
+                            </p:calendar>
+
+
+                            <p:outputLabel for="txtFechaFinExamen" value="Fecha fin examen:" styleClass="labelDerecha" />
+                            <p:calendar id="txtFechaFinExamen" maxdate="#{mbVModulos.tModulo.fechaFin}" mindate="#{mbVModulos.tModulo.fechaInicioExamen}" locale="es" value="#{mbVModulos.tModulo.fechaFinExamen}" onkeypress="return permite(event, 'none')" effect="fold" pattern="dd-MM-yyyy" mask="true" >
+                                <f:attribute name="txtFechaInicioExamen" value="#{mbVModulos.tModulo.fechaInicioExamen}"/>
+                                <f:validator validatorId="primeDateRangeValidator1" />
+                            </p:calendar>
+                            
+                            <p:outputLabel for="txtHoras" styleClass="labelDerecha" value="Total Horas módulo:" />
+                            <p:inputText id="txtHoras" value="#{mbVModulos.totalHorasModulo}" required="false" onkeypress="return soloNumeros(event)">
+                            </p:inputText>
 
 
                             <p:outputLabel for="txtCreditos" styleClass="labelDerecha" value="Creditos:" />

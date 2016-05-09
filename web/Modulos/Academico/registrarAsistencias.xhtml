@@ -40,7 +40,7 @@
                         <p:outputLabel  for="txtFechaInicio" value="Fecha:" styleClass="labelDerecha" />
                         <p:calendar required="true" id="txtFechaInicio" locale="es" value="#{mbVAsistencia.fecha}" effect="fold" pattern="dd-MM-yyyy" mask="true" >
                             
-                            <p:ajax event="blur" update="frmRegistrarAsist,msgsAsist" listener="#{mbVAsistencia.cargarTablaRegAsistencia}" />
+                            <p:ajax  event="blur" update="frmRegistrarAsist,msgsAsist" listener="#{mbVAsistencia.cargarTablaRegAsistencia}" />
                             <f:validator validatorId="primeDateRangeValidator1" />
                         </p:calendar>
                     </p:panelGrid>

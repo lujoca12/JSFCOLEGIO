@@ -23,6 +23,9 @@ public class Modulo  implements java.io.Serializable {
      private Date fechaInicio;
      private Date fechaFin;
      private String n_modulo;
+     private Date fechaInicioExamen;
+     private Date fechaFinExamen;
+     private BigDecimal totalHorasModulo;
      
 
     public Modulo() {
@@ -34,7 +37,7 @@ public class Modulo  implements java.io.Serializable {
         this.promocion = promocion;
         this.usuario = usuario;
     }
-    public Modulo(int id, Promocion promocion, Usuario usuario, BigDecimal creditos, String descripcion, Set asistencias, Set notases, Date fechaInicio, Date fechaFin, String n_modulo) {
+    public Modulo(int id, Promocion promocion, Usuario usuario, BigDecimal creditos, String descripcion, Set asistencias, Set notases, Date fechaInicio, Date fechaFin, String n_modulo,Date fechaInicioExamen, Date fechaFinExamen, BigDecimal totalHorasModulo) {
        this.id = id;
        this.promocion = promocion;
        this.usuario = usuario;
@@ -45,6 +48,9 @@ public class Modulo  implements java.io.Serializable {
        this.fechaInicio = fechaInicio;
        this.fechaFin = fechaFin;
        this.n_modulo = n_modulo;
+       this.fechaInicioExamen = fechaInicioExamen;
+       this.fechaFinExamen = fechaFinExamen;
+       this.totalHorasModulo = totalHorasModulo;
     }
    
     public int getId() {
@@ -120,10 +126,30 @@ public class Modulo  implements java.io.Serializable {
     public void setN_modulo(String n_modulo) {
         this.n_modulo = n_modulo;
     }
-    
 
+    public Date getFechaInicioExamen() {
+        return fechaInicioExamen;
+    }
 
+    public void setFechaInicioExamen(Date fechaInicioExamen) {
+        this.fechaInicioExamen = fechaInicioExamen;
+    }
 
+    public Date getFechaFinExamen() {
+        return fechaFinExamen;
+    }
+
+    public void setFechaFinExamen(Date fechaFinExamen) {
+        this.fechaFinExamen = fechaFinExamen;
+    }
+
+    public BigDecimal getTotalHorasModulo() {
+        return totalHorasModulo;
+    }
+
+    public void setTotalHorasModulo(BigDecimal totalHorasModulo) {
+        this.totalHorasModulo = totalHorasModulo;
+    }
 }
 
 

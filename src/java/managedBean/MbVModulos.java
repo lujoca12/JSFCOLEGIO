@@ -58,6 +58,7 @@ public class MbVModulos implements Serializable {
     private Modulo tModulo;
     private List<Modulo> lstModulo;
     private String creditos;
+    private String totalHorasModulo;
 
     public MbVModulos() {
         cargarTablaModulos();
@@ -152,6 +153,14 @@ public class MbVModulos implements Serializable {
         this.creditos = creditos;
     }
 
+    public String getTotalHorasModulo() {
+        return totalHorasModulo;
+    }
+
+    public void setTotalHorasModulo(String totalHorasModulo) {
+        this.totalHorasModulo = totalHorasModulo;
+    }
+    
     public List<SelectItem> getLstTodosModulos() {
         this.lstTodosModulos = new ArrayList<SelectItem>();
         try {
@@ -194,7 +203,11 @@ public class MbVModulos implements Serializable {
                                 modulo.getId(),
                                 modulo.getN_modulo(),
                                 modulo.getFechaInicio(),
-                                modulo.getFechaFin()));
+                                modulo.getFechaFin(),
+                                modulo.getFechaInicioExamen(),
+                                modulo.getFechaFinExamen(),
+                                modulo.getTotalHorasModulo().toString()
+                                ));
                     }
                 }
             }
@@ -270,6 +283,8 @@ public class MbVModulos implements Serializable {
             BigDecimal bigdec;
             bigdec = new BigDecimal(Double.parseDouble(creditos));
             tModulo.setCreditos(bigdec);
+            bigdec = new BigDecimal(Double.parseDouble(totalHorasModulo));
+            tModulo.setTotalHorasModulo(bigdec);
             tModulo.setPromocion(promocion);
 
             Usuario usuario = new Usuario();
@@ -305,6 +320,7 @@ public class MbVModulos implements Serializable {
         tModulo = new Modulo();
         llenarCboDocente();
         creditos = "";
+        totalHorasModulo = "";
         //llenarCboMaestria();
 
     }

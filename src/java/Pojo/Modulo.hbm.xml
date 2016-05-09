@@ -41,5 +41,14 @@
         <property name="n_modulo" type="string">
             <column name="modulo" length="15" />
         </property>
+        <property name="fechaInicioExamen" type="date">
+            <column name="fecha_inicio_examen" length="13" />
+        </property>
+        <property name="fechaFinExamen" type="date">
+            <column name="fecha_fin_examen" length="13" />
+        </property>
+        <property name="totalHorasModulo" type="big_decimal">
+            <column name="total_horas_modulo" precision="4" />
+        </property>
     </class>
 </hibernate-mapping>

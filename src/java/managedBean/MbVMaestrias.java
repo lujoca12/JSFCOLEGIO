@@ -177,7 +177,9 @@ public class MbVMaestrias implements Serializable{
             this.lstTheme.clear();
             this.lstTheme.add(new ClsProfesor(-1,"Ninguno","Ninguno"));
             for(Usuario user: lstUsuario){
-                this.lstTheme.add(new ClsProfesor(user.getId(), user.getApellidos()+" "+user.getNombres(), user.getApellidos()+" "+user.getNombres()));
+                this.lstTheme.add(new ClsProfesor(user.getId(), 
+                        user.getApellidos()+" "+user.getNombres(), 
+                        user.getApellidos()+" "+user.getNombres()));
             }
         } catch (Exception ex) {
             

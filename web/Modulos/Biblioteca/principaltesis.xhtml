@@ -33,34 +33,37 @@
                     </div>
                 </div>                
         <h:form >
-            <div class="panel panel-default">
+            <div class="panel panel-primary">
                 <div class="panel-heading">Buscar</div>
                 <div class="panel-body">   
                     <p:tab title="Buscar">
-                        <h:panelGroup>
-                            <button><h:link outcome="/Modulos/Biblioteca/busquedaFecha" value="Fecha de Publicación"></h:link></button>
-                            <button><h:link outcome="/Modulos/Biblioteca/busquedaAutor" value="Autor"></h:link></button>                            
-                            <button><h:link outcome="/Modulos/Biblioteca/busquedaTitulo" value="Título"></h:link></button>
-                            <button><h:link outcome="/Modulos/Biblioteca/busquedaMaestria" value="Maestría"></h:link></button>
-                            
-                        </h:panelGroup>
+                        <h:panelGrid id="panel" columns="4" styleClass="ui-panelgrid-blank">
+                            <p:button outcome="/Modulos/Biblioteca/busquedaFecha" value="Fecha de Sustentación"/>
+                            <p:button outcome="/Modulos/Biblioteca/busquedaAutor" value="Autor"/>
+                            <p:button outcome="/Modulos/Biblioteca/busquedaTitulo" value="Título"/>
+                            <p:button outcome="/Modulos/Biblioteca/busquedaMaestria" value="Maestría"/>
+                        </h:panelGrid>
                     </p:tab>  
                 </div>
             </div>          
         </h:form>
                 <h:form>
-                    <div>
-                        <h3>registrar tesis</h3>
-                        <button><h:link outcome="/Modulos/Biblioteca/RegistrarTesis" value="Registrar"></h:link></button>
-                    </div>
-                    <div>
-                        <h3>Otros</h3>
-                        <button><h:link outcome="/Modulos/Biblioteca/AsignarPalabrasClaves" value="palabras claves"></h:link></button>
-                        <button><h:link outcome="/Modulos/Biblioteca/VerificarNombretesis" value="consulta tesis"></h:link></button>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Registrar tesis</div>
+                        <div class="panel-body"> 
+                            <p:button outcome="/Modulos/Biblioteca/RegistrarTesis" value="Registrar"/>  
+                        </div>
+                    </div>    
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">Otros</div>
+                        <div class="panel-body"> 
+                            <p:button outcome="/Modulos/Biblioteca/AsignarPalabrasClaves" value="palabras claves"/>
+                            <p:button outcome = "/Modulos/Biblioteca/VerificarNombretesis" value="consulta tesis" />
+                        </div>
                     </div>
                 </h:form>
                 
-                <div class="panel panel-primary">
+                <div class="panel panel-options">
                     <div class="panel-heading text-center"> 
                         Mostrando resultados    
                     </div>
@@ -69,7 +72,10 @@
                 <p:panel id="panelTabla" style="height: 30%;">
                     <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->   
                     <p:dataTable class="tblDatos" id="tbltesis" var="lstTbl" value="#{mbVtesis.lstTablatesis}"
-                                 editable="true" scrollable="true">      
+                                 editable="true" scrollable="true"
+                                 rows="12" paginator="true"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,20">      
                         <p:column headerText="Autor" style="width: 10%" >
                             <h:outputText value="#{lstTbl.autor}" />
                         </p:column>

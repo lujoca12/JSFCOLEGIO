@@ -29,6 +29,7 @@ import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import Clases.ClsTablaTesis;
 import Clases.ClsMaestria;
+import Clases.ClsEstudiante;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -76,11 +77,15 @@ public class MbVtesis implements Serializable{
     
     ClsTablaTesis clsTablaTesis; 
     private List<ClsTablaTesis> LstTablatesis;
+    
+    ClsEstudiante clsestudiante;
+    private List<ClsEstudiante> lstestudiante;
 
     /**
      * Creates a new instance of MbVtesis
      */
     public MbVtesis(){
+        llenarCboEstudiantes();
         llenarTablaTesis();
         llenarCboMaestria();
         tMaestria= new Maestria();
@@ -91,6 +96,24 @@ public class MbVtesis implements Serializable{
     private void vaciarCajas(){
         tTesis = new Tesis();
     }
+
+    public ClsEstudiante getClsestudiante() {
+        return clsestudiante;
+    }
+
+    public void setClsestudiante(ClsEstudiante clsestudiante) {
+        this.clsestudiante = clsestudiante;
+    }
+
+    public List<ClsEstudiante> getLstestudiante() {
+        return lstestudiante;
+    }
+
+    public void setLstestudiante(List<ClsEstudiante> lstestudiante) {
+        this.lstestudiante = lstestudiante;
+    }
+    
+    
 
     public String getTitulo() {
         return titulo;
@@ -219,7 +242,25 @@ public class MbVtesis implements Serializable{
         this.tMaestria = tMaestria;
     }
           
-    
+    public void llenarCboEstudiantes(){
+        this.lstestudiante = new ArrayList<ClsEstudiante>();
+        try{
+            DaoTEstudiante daoestudiante = new DaoTEstudiante();
+            
+            List<Estudiante> lstestu = daoestudiante.getEstudiantes();
+            this.lstestudiante.clear();
+            for(Estudiante e : lstestu){
+                this.lstestudiante.add(new ClsEstudiante(
+                        e.getId(), 
+                        e.getNombres()+" "+e.getApellidos(), 
+                        e.getNombres()+" "+e.getApellidos()));
+                //this.lstestudiante.add(new ClsEstudiante(e.getId(), idmaestria, titulo, autor, titulo, titulo, titulo, ruta, fechaSubida, msg, msg));
+            }
+            
+        }catch (Exception e){
+            
+        }
+    }
 
     public List<SelectItem> getLstEstudiantes() {
        this.lstEstudiantes = new ArrayList<SelectItem>();
@@ -431,10 +472,11 @@ public class MbVtesis implements Serializable{
         boolean repetida = false;
         
         DaoTesis daoTesis = new DaoTesis();
-        tTesis.setAutor(autor);
-        
+        tTesis.setAutor(this.clsestudiante.getNombres());
+        tEstudiante.setId(this.clsestudiante.getId());
         tTesis.setEstudiante(tEstudiante);
-        tTesis.setFechaSubida(fechaSubida);
+        
+        tTesis.setFechaSubida(this.tTesis.getFechaSubida());
         tTesis.setFechaSustentacion(fechaSustentacion);
         
         //idmaestria = Integer.getInteger(idMaestria);

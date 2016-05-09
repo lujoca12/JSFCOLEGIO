@@ -39,7 +39,7 @@ and open the template in the editor.
                             <p:tab title="Consulta de Tesis">
                                 <p:remoteCommand name="test" update="form,msgs" actionListener="#{mbVtesis.consultarTesisTitulo()}"/>
                                 <p:panelGrid id="panel" columns="3" layout="grid" styleClass="ui-panelgrid-blank">
-                                    <p:outputLabel for="txtCedEstud" style="font-weight: bold !important;" styleClass="labelDerecha" value="Autor:" />
+                                    <p:outputLabel for="txtCedEstud" style="font-weight: bold !important;" styleClass="labelDerecha" value="Título:" />
                                     <p:inputText id="txtCedEstud" value="#{mbVtesis.titulo}" required="true" />
                                     <p:commandButton value="Listar" update="form,msgs" styleClass="anchoBotonesConsulta" icon="ui-icon-search"
                                                      actionListener="#{mbVtesis.consultarTesisTitulo()}" />

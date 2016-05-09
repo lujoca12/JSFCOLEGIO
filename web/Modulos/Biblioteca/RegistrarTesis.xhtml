@@ -23,16 +23,16 @@
                         </p:inputText> 
                         
                         <p:outputLabel for="cboAutor" value="Autor:" styleClass="labelDerecha"/>
-                        <p:selectOneMenu id="cboAutor" value="#{mbVtesis.clsTablaTesis}" 
-                                         required="true"
-                                         effect="fade" var="ttesis" filter="true" filterMatchMode="contains">
-                            <f:selectItems value="#{mbVtesis.lstTablatesis}" var="VarTesis" 
-                                           itemLabel="#{VarTesis.titulo}" itemValue="#{VarTesis}" />
+                        <p:selectOneMenu id="cboAutor" value="#{mbVtesis.clsestudiante}" 
+                                         converter="themeConverterEstudiante" required="true"
+                                         effect="fade" var="t" filter="true" filterMatchMode="contains">
+                            <f:selectItems value="#{mbVtesis.lstestudiante}" var="VarTesis" 
+                                           itemLabel="#{VarTesis.nombres}" itemValue="#{VarTesis}" />
                             <p:column style="width:10%">                
-                                <h:outputText styleClass="ui-theme ui-theme-#{ttesis.idTesis}" />
+                                <h:outputText styleClass="ui-theme ui-theme-#{t.apellidos}" />
                             </p:column>
                             <p:column>
-                                <h:outputText value="#{ttesis.titulo}" />
+                                <h:outputText value="#{t.nombres}" />
                             </p:column>
                         </p:selectOneMenu>
                         
@@ -51,7 +51,8 @@
                         
                         <p:outputLabel for="cboMaestria" value="Maestría:" styleClass="labelDerecha"/>
                         <p:selectOneMenu id="cboMaestria" value="#{mbVtesis.clsMaestria}" 
-                                         required="true" effect="fade" var="tmaestria" filter="true" filterMatchMode="contains">
+                                         converter="themeConverterMaestria" required="true" 
+                                         effect="fade" var="tmaestria" filter="true" filterMatchMode="contains">
                             <f:selectItems value="#{mbVtesis.lstThemeMaestria}" var="VarMaestria" 
                                            itemLabel="#{VarMaestria.displayName}" itemValue="#{VarMaestria}" />
                             <p:column style="width:10%">                

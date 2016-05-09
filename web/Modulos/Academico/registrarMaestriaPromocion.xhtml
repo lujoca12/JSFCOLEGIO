@@ -34,9 +34,11 @@
                             </p:selectOneMenu>
                             
                             <p:outputLabel for="txtDirector" value="Director:" styleClass="labelDerecha"  />
-                            <p:selectOneMenu id="txtDirector" value="#{mbVMaestrias.theme}" converter="themeConverter" required="true"
+                            <p:selectOneMenu id="txtDirector" value="#{mbVMaestrias.theme}" 
+                                             converter="themeConverter" required="true"
                                              effect="fade" var="t" filter="true" filterMatchMode="contains">
-                                <f:selectItems value="#{mbVMaestrias.lstTheme}" var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme}" />
+                                <f:selectItems value="#{mbVMaestrias.lstTheme}" var="theme" 
+                                               itemLabel="#{theme.displayName}" itemValue="#{theme}" />
                                 <p:column style="width:10%">
                                     <h:outputText styleClass="ui-theme ui-theme-#{t.name}" />
                                 </p:column>

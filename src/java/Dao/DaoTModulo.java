@@ -102,7 +102,7 @@ public class DaoTModulo implements InterfaceModulos{
         }
         else{
             consulta = "user.id="+usuario_id+" and";
-            fecha="and (current_date >= modul.fechaInicio and current_date <= modul.fechaFin) ";
+            fecha="and (current_date >= modul.fechaInicioExamen and current_date <= modul.fechaFinExamen) ";
         }
 
         String hql="from Modulo modul inner join fetch modul.usuario user inner join fetch  user.tipoUsuario tuser inner join fetch modul.promocion pr inner join fetch pr.maestria maest \n" +

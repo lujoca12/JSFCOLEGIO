@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import org.primefaces.model.StreamedContent;
 
 /**
  *
@@ -34,6 +35,10 @@ public class MbVActaEmision implements Serializable {
     private List<ClsMaestria> lstThemeMaestria;
     
     private boolean msg = false;
+    
+    private StreamedContent streamedContent = null;
+    
+    
     
     public MbVActaEmision() {
         llenarCboMaestria();
@@ -49,6 +54,18 @@ public class MbVActaEmision implements Serializable {
 
     public List<ClsMaestria> getLstThemeMaestria() {
         return lstThemeMaestria;
+    }
+
+    public boolean isMsg() {
+        return msg;
+    }
+
+    public void setMsg(boolean msg) {
+        this.msg = msg;
+    }
+
+    public StreamedContent getStreamedContent() {
+        return streamedContent;
     }
 
     public void llenarCboMaestria(){
@@ -85,7 +102,7 @@ public class MbVActaEmision implements Serializable {
     public void cargarReporte(){
         DaoRepActaEmision daoReport = new DaoRepActaEmision();
         if(themeMaestria != null){
-            msg = daoReport.reporte(this.themeMaestria.getId());
+           this.streamedContent = daoReport.reporte(this.themeMaestria.getId());
 
             if (msg) {
                 mensajesOk("Reporte cargado correctamente");

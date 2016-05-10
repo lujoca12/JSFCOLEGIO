@@ -28,6 +28,8 @@ import net.sf.jasperreports.view.JasperViewer;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import util.HibernateUtil;
 
 /**
@@ -61,8 +63,9 @@ public class DaoRepActaEmision {
         throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
     }
     
-    public boolean reporte(int idMaestria){
-        boolean band = false;
+    public StreamedContent reporte(int idMaestria){
+        //boolean band = false;
+        StreamedContent media = null;
         ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance()
         .getExternalContext().getContext();
         String realPath = ctx.getRealPath("/");
@@ -85,20 +88,24 @@ public class DaoRepActaEmision {
             JasperExportManager.exportReportToPdfStream(jPrint, baos);
             HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
             response.reset();
+            
             response.setContentType("Aplicacion/pdf");
             response.setContentLength(baos.size());
             response.setHeader("Content-disposition", "inline; filename="+file+"");
             response.getOutputStream().write(baos.toByteArray());
+            
+            media = new DefaultStreamedContent(new ByteArrayInputStream(baos.toByteArray()));
             response.getOutputStream().flush();
             response.getOutputStream().close();
             FacesContext.getCurrentInstance().responseComplete();
-            band = true;
+           // band = true;
             
         } catch (Exception ex) {
             System.out.println(ex.toString());
-            band = false;
+            //band = false;
         }
         
-        return band;
+        //return band;
+        return media;
     }
 }

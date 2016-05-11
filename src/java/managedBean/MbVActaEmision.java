@@ -19,8 +19,11 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
 /**
@@ -28,19 +31,21 @@ import org.primefaces.model.StreamedContent;
  * @author server
  */
 @Named(value = "mbVActaEmision")
-@ViewScoped
+@SessionScoped
 public class MbVActaEmision implements Serializable {
 
     private ClsMaestria themeMaestria; 
     private List<ClsMaestria> lstThemeMaestria;
     
     private boolean msg = false;
+    private int estado = 0;
     
-    private StreamedContent streamedContent = null;
+    private StreamedContent media;
     
     
-    
-    public MbVActaEmision() {
+    @PostConstruct
+    public void load() {
+        media = null;
         llenarCboMaestria();
     }
 
@@ -64,10 +69,27 @@ public class MbVActaEmision implements Serializable {
         this.msg = msg;
     }
 
-    public StreamedContent getStreamedContent() {
-        return streamedContent;
+    public StreamedContent getMedia() {
+//        DaoRepActaEmision daoReport = new DaoRepActaEmision();
+//        
+//           media = daoReport.reporte(1);
+        
+        return media;
     }
 
+    public void setMedia(StreamedContent media) {
+        this.media = media;
+    }
+
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+    
     public void llenarCboMaestria(){
         this.lstThemeMaestria = new ArrayList<ClsMaestria>();
          try {
@@ -100,16 +122,18 @@ public class MbVActaEmision implements Serializable {
     }
     
     public void cargarReporte(){
+        media = null;
         DaoRepActaEmision daoReport = new DaoRepActaEmision();
         if(themeMaestria != null){
-           this.streamedContent = daoReport.reporte(this.themeMaestria.getId());
-
-            if (msg) {
-                mensajesOk("Reporte cargado correctamente");
-            } else {
-                mensajesError("error al cargar Reporte");
-            }
-        }
+           media = daoReport.reporte(this.themeMaestria.getId());
+           estado = 1;
+//            if (msg) {
+//                mensajesOk("Reporte cargado correctamente");
+//            } else {
+//                mensajesError("error al cargar Reporte");
+//            }
+        }else
+            estado = 0;
             
     }
     

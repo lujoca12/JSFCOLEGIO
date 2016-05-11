@@ -272,6 +272,7 @@
                     </div>
                     <hr></hr>
                     <h:form id="formMenuIzquierdo" class="page-container">
+                        <p:remoteCommand name="formMenuIzquierdo" autoRun="true" action="#{mbVMenu.load()}" />
                         <p:growl autoUpdate="true"/>
                         
                         <p:panelMenu  model="#{mbVMenu.menuModel}" />

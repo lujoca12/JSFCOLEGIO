@@ -86,18 +86,26 @@ public class DaoRepActaEmision {
            // JasperReport JReporte = JasperCompileManager.compileReport(realPath+"actaAdmision.jasper");
             jPrint = JasperFillManager.fillReport(realPath+"actaAdmision.jasper", param);
             JasperExportManager.exportReportToPdfStream(jPrint, baos);
-            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-            response.reset();
             
-            response.setContentType("Aplicacion/pdf");
-            response.setContentLength(baos.size());
-            response.setHeader("Content-disposition", "inline; filename="+file+"");
-            response.getOutputStream().write(baos.toByteArray());
-            
-            media = new DefaultStreamedContent(new ByteArrayInputStream(baos.toByteArray()));
-            response.getOutputStream().flush();
-            response.getOutputStream().close();
-            FacesContext.getCurrentInstance().responseComplete();
+             baos.flush();
+        baos.close();
+
+        InputStream is = new ByteArrayInputStream(baos.toByteArray());
+        media = new DefaultStreamedContent(is, "application/pdf", file);
+//            HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+//            response.reset();
+//            
+//            response.setContentType("Aplicacion/pdf");
+//            response.setContentLength(baos.size());
+//            response.setHeader("Content-disposition", "inline; filename="+file+"");
+//            response.getOutputStream().write(baos.toByteArray());
+//            
+//            
+//            media = new DefaultStreamedContent(new ByteArrayInputStream(baos.toByteArray()), "application/pdf",file);
+//            
+//            response.getOutputStream().flush();
+//            response.getOutputStream().close();
+//            FacesContext.getCurrentInstance().responseComplete();
            // band = true;
             
         } catch (Exception ex) {

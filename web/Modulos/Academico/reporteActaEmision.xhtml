@@ -10,6 +10,7 @@
     <h:body>
         <div class="ui-fluid">
             <h:form id="form">
+                <p:remoteCommand name="form" autoRun="true" action="#{mbVActaEmision.load()}" />
                 <p:tab id="personal" title="ReporteActaEmision">
                     <p:panel header="Reporte Acta Emisión">
                         <p:growl id="msgs" showDetail="true" />
@@ -29,8 +30,8 @@
                                 </p:column>
                                
                             </p:selectOneMenu>
-                            <p:commandButton value="Ver Reporte" update="frmRegistrarNotas,msgsNotas" styleClass="anchoBotones" icon="ui-icon-disk"
-                                             actionListener="#{mbVActaEmision.cargarReporte}" ajax="false" onclick="this.form.target='_self'" >
+                            <p:commandButton value="Ver Reporte" update="form,msgs" styleClass="anchoBotones" icon="ui-icon-disk"
+                                             actionListener="#{mbVActaEmision.cargarReporte}" ajax="true"  >
                             </p:commandButton>
                             <!--<h:commandLink>
                                 <p:graphicImage onclick="this.form.target='_self'" value="#{resource['img/pdf.png']}" width="24"/>
@@ -38,11 +39,15 @@
                             </h:commandLink>-->
                         </p:panelGrid>
                     </p:panel>
-                    <p:panelGrid id="panel2" columns="1" columnClasses="ui-grid-col-12" layout="grid" styleClass="ui-panelgrid-blank">
-                            <p:media value="/resources/guide.pdf" player="pdf" width="100%" height="800px"/> 
-                        </p:panelGrid>
+                    
                 </p:tab>
+                    <p:media cache="false" rendered="#{mbVActaEmision.media ne null}" value="#{mbVActaEmision.media}" player="pdf" width="100%" height="800px"/> 
                 
+                <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                    <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+                </p:dialog>
             </h:form>
             
         </div>

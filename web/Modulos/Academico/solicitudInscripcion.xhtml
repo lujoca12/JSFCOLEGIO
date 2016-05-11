@@ -28,8 +28,8 @@
                             <p:panelGrid id="panel" columns="1"   layout="grid" styleClass="ui-panelgrid-blank">
 
                                 <h:outputLabel for="maestria" value="Seleccionar Maestría: " styleClass="labelDerecha" />
-                                <h:selectOneMenu id="maestria" class="form-control " value="#{inscripcionBean.idMaestria}" >  
-                                    <p:ajax listener="#{inscripcionBean.onMaestriaChange}" update="promocion" />
+                                <h:selectOneMenu id="maestria" class="form-control " value="#{inscripcionBean.idMaestria}"   >  
+                                    <p:ajax listener="#{inscripcionBean.onMaestriaChange}" update="promocion panel" />
                                     <p:effect type="fade" event="change" for="datos">
                                         <f:param name="mode" value="'hide'" />
                                     </p:effect>
@@ -39,15 +39,15 @@
 
 
                                 <h:outputLabel for="promocion" value="Seleccionar Promocion: " styleClass="labelDerecha" />
-                                <h:selectOneMenu id="promocion" class="form-control " value="#{inscripcionBean.idPromo}"  >                             
-                                    <p:ajax listener="#{inscripcionBean.onPromoChange}" update="datos" />
+                                <h:selectOneMenu id="promocion" class="form-control " value="#{inscripcionBean.idPromo}"   >                             
+                                    <p:ajax listener="#{inscripcionBean.onPromoChange}" update="datos panel" />
                                     <f:selectItem itemLabel="Seleccionar.." itemValue="" noSelectionOption="true" />
                                     <f:selectItems value="#{inscripcionBean.promociones}"  />  
                                 </h:selectOneMenu>  
 
 
-                                <p:commandButton id="mostrar" type="button" value="Mostrar" disabled="true" style="display:block;margin:auto;" icon="ui-icon-image">
-                                    <p:effect type="fade" event="click" for="datos" >
+                                <p:commandButton id="mostrar" ajax="true" type="button" value="Mostrar" disabled="#{inscripcionBean.btnMostrar}" style="display:block;margin:auto;" icon="ui-icon-image">
+                                    <p:effect type="fade"  event="click" for="datos" >
                                         <f:param name="mode" value="'show'" />
                                     </p:effect>
                                 </p:commandButton>
@@ -251,16 +251,18 @@
                                 <p:messages closable="true" />
                                 <h:panelGrid columns="1" width="100%" >  
                                     
-                                    <p:dataList  value="#{inscripcionBean.reqPro}" rendered="#{inscripcionBean.reqPro ne null}" var="r" type="ordered">
-                                       
-                                        <h:outputText value="#{r.requisitos.descripcion}" style="font-weight:  bold"/> : (Solo archivos <h:outputText value="#{r.requisitos.tipoArchivo}" /> )
-                                        <p:fileUpload  style="margin-bottom: 10px;" mode="simple" value="#{inscripcionBean.file}"   accept="#{r.requisitos.tipoArchivo}"  /> 
-                                    </p:dataList>
+                                    <c:forEach   items="#{inscripcionBean.reqPro}"  var="r" >                                       
+                                        <h:outputText value="#{r.requisitos.pedidoArchivo}" style="font-weight:  bold"/> 
+                                        <p:fileUpload  h5:required="true" mode="simple"  style="margin-bottom: 10px;"  value="#{inscripcionBean.file}"   accept="#{r.requisitos.tipoArchivo}" h5:title="#{r.requisitos.pedidoArchivo}"  /> 
+                                    </c:forEach>
                                   
                                 </h:panelGrid>
-                                <p:commandButton actionListener="#{inscripcionBean.save()}" update="messages" ajax="false"  value="Guardar Datos" process="@this" />
+                                <p:commandButton type="submit" action="#{inscripcionBean.guardar()}" update="messages" ajax="false"  value="Guardar Datos" process="@this" />
                             </p:panel>
-                        </p:tab>                        
+                        </p:tab>       
+                        <p:tab id="asd">
+                            asd
+                        </p:tab>
 
                     </p:wizard>
 
@@ -282,16 +284,7 @@
 
                        $(document).ready(function () {
                            
-                           $("#form\\:maestria").change(function(){
-                               if($(this).val=="" || $("#form\\:promocion").val=="" )
-                               {
-                                   $("#form\\:mostrar").attr("disabled");
-                               }
-                               else
-                               {
-                                   $("#form\\:mostrar").removeAttr("disabled");
-                               }
-                           });
+                           
                      
                     
                      });

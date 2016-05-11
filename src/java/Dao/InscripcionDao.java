@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Dao;
+import Pojo.Archivos;
 import Pojo.DatosDom;
 import Pojo.DatosLab;
 import Pojo.DatosNac;
@@ -73,11 +74,25 @@ public class InscripcionDao {
         iniciaOperacion();
        
         String hql="from SolicitudInscripcion si inner join fetch si.estudiante e inner join fetch si.promocion pr inner join fetch pr.maestria m"
-                + " where si.fechaRevision=null order by si.fechaRealizacion asc";
+                + "where si.fechaRevision=null and si.estado='E' order by si.fechaRealizacion asc";
        
         Query query = sesion.createQuery(hql);
         //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         List<SolicitudInscripcion> lst=(List<SolicitudInscripcion>) query.list();
+        sesion.close();
+        return lst;
+    }
+    public List<Archivos> getArchivosInscripciones() throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+       
+        String hql="from Archivos a inner join a.solicitudInscripcion inner join fetch a.requisitosPromo rp inner join fetch rp.requisitos "
+                + " where si.fechaRevision=null and si.estado='E' order by si.fechaRealizacion asc";
+       
+        Query query = sesion.createQuery(hql);
+        //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        List<Archivos> lst=(List<Archivos>) query.list();
         sesion.close();
         return lst;
     }

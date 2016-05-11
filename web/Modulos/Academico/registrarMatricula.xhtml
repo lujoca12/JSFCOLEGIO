@@ -9,8 +9,8 @@
     </h:head>
     <h:body>
         <div class="ui-fluid">
-            <h:form id="form">               
-
+            <h:form id="form">  
+                <p:growl id="msgs" showDetail="true"/>
                 <p:dataTable id="table" var="s" value="#{asignarEntrevistaBean.lstSInscripcion}" rows="10"
                              paginator="true"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -18,6 +18,9 @@
                     <f:facet name="header">
                         Registrar Matriculas
                     </f:facet>
+                    <p:column style="width:35px">
+                        <p:rowToggler />
+                    </p:column>
                     <p:column headerText="Apellidos">
                         <h:outputText value="#{s.estudiante.apellidos}" />
                     </p:column>
@@ -41,21 +44,35 @@
                             <f:setPropertyActionListener value="#{s}" target="#{asignarEntrevistaBean.selectedInscripcion}" />
                         </p:commandButton>
                     </p:column>
+                    <p:rowExpansion >
+                        <p:panelGrid columns="2">
+                            <p:dataList value="#{s.archivoses}"></p:dataList>
+                           
+                        </p:panelGrid>
+                    </p:rowExpansion>
                 </p:dataTable>
 
 
-                <p:dialog header="Car Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:dialog header="Registrar Matricula" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                     <p:outputPanel id="carDetail" style="text-align:center;">
                         <p:panelGrid  columns="2" rendered="#{not empty asignarEntrevistaBean.selectedInscripcion}" >
-                            
+                            <h:outputLabel value="Observacion: "/>
+                            <p:inputTextarea rows="5" cols="30"  counter="display" maxlength="255" value="#{asignarEntrevistaBean.observacion}" counterTemplate="{0} characters remaining." autoResize="false" />
+                            <h:inputHidden/>
+                            <h:outputText id="display" />
                         </p:panelGrid>
-                        <p:commandButton  actionListener="#{asignarEntrevistaBean.guardarMatricula()}" value="Aprobar" update="table" oncomplete="PF('carDialog').hide()"/>
-                        <p:commandButton value="Rechazar" actionListener="#{asignarEntrevistaBean.rechazarMatricula()}" update="table" oncomplete="PF('carDialog').hide()" />
+                        <p:commandButton style="background-color: green"  actionListener="#{asignarEntrevistaBean.guardarMatricula()}" value="Aprobar" update="table" oncomplete="PF('carDialog').hide()"/>
+                        <p:commandButton style="background-color: darkred" value="Rechazar" actionListener="#{asignarEntrevistaBean.rechazarMatricula()}" update="table" oncomplete="PF('carDialog').hide()" />
                     </p:outputPanel>
                 </p:dialog>
 
             </h:form>
-            
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+            </p:dialog>
+
         </div>
     </h:body>
 </html>

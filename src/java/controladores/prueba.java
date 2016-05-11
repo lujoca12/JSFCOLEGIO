@@ -28,6 +28,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.servlet.http.Part;
+import org.apache.commons.io.FilenameUtils;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultUploadedFile;
 import org.primefaces.model.UploadedFile;
@@ -71,23 +72,22 @@ public class prueba implements Serializable {
     public void save() {
         try {
             for(UploadedFile f : files){
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    Date dateobj = new Date();
-
-                    String nombreFecha = ("chiting" + "-" + df.format(dateobj).replaceAll(":", "-")).trim();
-                    File directorio = new File("d:/Postgrado/inscripciones/requisitos/" + nombreFecha);
-                    if (!directorio.exists()) {
-                        directorio.mkdir();
-                    }
-
+//                DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                    Date dateobj = new Date();
+//                    String nombreFecha = ("chiting" + "-" + df.format(dateobj).replaceAll(":", "-")).trim();
+//                    File directorio = new File("d:/Postgrado/inscripciones/requisitos/" + nombreFecha);
+//                    if (!directorio.exists()) {
+//                        directorio.mkdir();
+//                    }
+//
                     String filename = f.getFileName();
-                    // String extension = f.getContentType();
-                    Path ruta = Paths.get(directorio + filename);
-
-                    try (InputStream input = f.getInputstream()) {
-                        Files.copy(input, ruta, StandardCopyOption.REPLACE_EXISTING);
-                    }
-                FacesMessage message = new FacesMessage("Succesful", f.getFileName() + " is uploaded.");
+                     String extension = FilenameUtils.getExtension(filename);
+//                    Path ruta = Paths.get(directorio + filename);
+//
+//                    try (InputStream input = f.getInputstream()) {
+//                        Files.copy(input, ruta, StandardCopyOption.REPLACE_EXISTING);
+//                    }
+                FacesMessage message = new FacesMessage("Succesful", filename + " is uploaded.-- "+extension);
                 FacesContext.getCurrentInstance().addMessage(null, message);
             }
         } catch (Exception ex) {

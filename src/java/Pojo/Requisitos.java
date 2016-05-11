@@ -91,8 +91,15 @@ public class Requisitos  implements java.io.Serializable {
     public void setRequisitosPromos(Set requisitosPromos) {
         this.requisitosPromos = requisitosPromos;
     }
-
-
+    
+    public String getIdCombinado(){
+        
+        return formato+"-"+String.valueOf(id);
+    }
+    
+    public String getPedidoArchivo(){
+        return descripcion +" : Solo archivos tipo "+tipoArchivo;
+    }
 
 
 }

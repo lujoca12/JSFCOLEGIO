@@ -6,6 +6,7 @@
 package controladores;
 
 import Clases.ClsRequisito;
+import Dao.ArchivosDao;
 import Dao.InscripcionDao;
 import Dao.LocalizacionDao;
 import Dao.PromocionDao;
@@ -52,6 +53,7 @@ import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import org.apache.commons.io.FilenameUtils;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
@@ -87,7 +89,6 @@ public class InscripcionBean implements Serializable {
     private Map<String, String> cantonesTra;
     private Map<String, String> parroquiasTra;
     private RequisitosBean reqB;
-    private List<SelectItem> listaPromocion;
     private MaestriaBean mBean;
     private Map<String, Map<String, String>> data = new HashMap<>();
     private Map<String, Map<String, String>> data2 = new HashMap<>();
@@ -121,7 +122,30 @@ public class InscripcionBean implements Serializable {
     private String numeroSenecyt;
     private int numeroReq;
     private UploadedFile file;
-    private List<UploadedFile> files;
+    private List<UploadedFile> files = new ArrayList<>();
+    private boolean btnMostrar = true;
+    private String descripcionMaetria;
+    private String descripcionPromo;
+    private List<SelectItem> items;
+    private List<Promocion> lstPromocion;
+    private String filename ="";
+    private String extension="";
+
+    public String getDescripcionPromo() {
+        return descripcionPromo;
+    }
+
+    public void setDescripcionPromo(String descripcionPromo) {
+        this.descripcionPromo = descripcionPromo;
+    }
+
+    public boolean isBtnMostrar() {
+        return btnMostrar;
+    }
+
+    public void setBtnMostrar(boolean btnMostrar) {
+        this.btnMostrar = btnMostrar;
+    }
 
     public List<RequisitosPromo> getReqPro() {
         return reqPro;
@@ -131,7 +155,6 @@ public class InscripcionBean implements Serializable {
         this.reqPro = reqPro;
     }
 
-    
     public UploadedFile getFile() {
         return file;
     }
@@ -148,8 +171,6 @@ public class InscripcionBean implements Serializable {
     public void setFiles(List<UploadedFile> files) {
         this.files = files;
     }
-    
-    
 
     public int getNumeroReq() {
         return numeroReq;
@@ -158,8 +179,6 @@ public class InscripcionBean implements Serializable {
     public void setNumeroReq(int numeroReq) {
         this.numeroReq = numeroReq;
     }
-    
-    
 
     public String getTituloDescr() {
         return tituloDescr;
@@ -488,6 +507,7 @@ public class InscripcionBean implements Serializable {
     public void setData(Map<String, Map<String, String>> data) {
         this.data = data;
     }
+
     public String getIdPromo() {
         return idPromo;
     }
@@ -544,14 +564,6 @@ public class InscripcionBean implements Serializable {
         this.reqB = reqB;
     }
 
-    public List<SelectItem> getListaPromocion() {
-        return listaPromocion;
-    }
-
-    public void setListaPromocion(List<SelectItem> listaPromocion) {
-        this.listaPromocion = listaPromocion;
-    }
-
     public MaestriaBean getmBean() {
         return mBean;
     }
@@ -578,32 +590,66 @@ public class InscripcionBean implements Serializable {
 
     public InscripcionBean() {
     }
-    public void save() {
-        try {
-            for(UploadedFile f : files){
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    Date dateobj = new Date();
 
-                    String nombreFecha = ("chiting" + "-" + df.format(dateobj).replaceAll(":", "-")).trim();
-                    File directorio = new File("d:/Postgrado/inscripciones/requisitos/" + nombreFecha);
-                    if (!directorio.exists()) {
-                        directorio.mkdir();
-                    }
-
-                    String filename = f.getFileName();
-                    // String extension = f.getContentType();
-                    Path ruta = Paths.get(directorio + filename);
-
-                    try (InputStream input = f.getInputstream()) {
-                        Files.copy(input, ruta, StandardCopyOption.REPLACE_EXISTING);
-                    }
-                FacesMessage message = new FacesMessage("Succesful", f.getFileName() + " is uploaded.");
-                FacesContext.getCurrentInstance().addMessage(null, message);
+    public boolean errorArchivos() {
+        int x = 0;
+        boolean error = false;        
+        for (UploadedFile f : files) {
+            extension = FilenameUtils.getExtension(f.getFileName());
+            if (!reqPro.get(x).getRequisitos().getTipoArchivo().contains(extension)) {
+                error = true;
             }
-        } catch (Exception ex) {
+            x++;
+        }
+        return error;
+    }
+
+    public void guardarArchivos() {
+
+        try {
+            
+            for (SelectItem i : items) {
+                    if (i.getValue().toString().equals(idMaestria)) {
+                        descripcionMaetria = i.getLabel();
+                    }
+                }
+                PromocionDao pD = new PromocionDao();
+                descripcionPromo = pD.getPromocion(idPromo).getDescripcion().toString();
+
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date dateobj = new Date();
+                String nombreCarpeta = (descripcionMaetria + "-" + descripcionPromo + "-" + estudiante.getApellidos() + " " + estudiante.getNombres() + "-" + df.format(dateobj).replaceAll(":", "-")).trim();
+                File directorio = new File("d:/Postgrado/inscripciones/requisitos/" + nombreCarpeta + "/");
+                if (!directorio.exists()) {
+                    directorio.mkdir();
+                }
+                int cont = 0;
+               ArchivosDao aDao = new ArchivosDao();
+                for (UploadedFile f : files) {
+                    filename = reqPro.get(cont).getRequisitos().getFormato();
+                    extension = FilenameUtils.getExtension(f.getFileName());                    
+                    Path ruta = Paths.get(directorio + "/" + filename + "." + extension);
+                    InputStream input = f.getInputstream();
+                    Files.copy(input, ruta, StandardCopyOption.REPLACE_EXISTING);                    
+                    archivos = new Archivos();                                        
+                    archivos.setRuta(ruta.toString());
+                    archivos.setRequisitosPromo(reqPro.get(cont));
+                    archivos.setSolicitudInscripcion(sInscripcion);   
+                    aDao.insertar(archivos);
+                    cont++;
+                }
+            
+            // resultado= "/faces/index?faces-redirect=true";
+        } catch (IOException ex) {
+            Logger.getLogger(InscripcionBean.class.getName()).log(Level.SEVERE, null, ex);
             FacesMessage message = new FacesMessage("Error", ex.toString());
             FacesContext.getCurrentInstance().addMessage(null, message);
+            //resultado ="";
+        } catch (Exception ex) {
+            Logger.getLogger(InscripcionBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+        files.clear();
+
     }
 
     @PostConstruct
@@ -627,16 +673,17 @@ public class InscripcionBean implements Serializable {
 
             //datos de los combos de maestria y promociones ademas de los requisitos solicitados
             maestrias = new HashMap<>();
-            listaPromocion = new ArrayList<>();
+            items = new ArrayList<>();
+            lstPromocion = new ArrayList<>();
             mBean = new MaestriaBean();
             mBean.init();
-            List<SelectItem> items = mBean.getListaMaestrias();
+            items = mBean.getListaMaestrias();
             PromocionDao daoTPromocion = new PromocionDao();
             RequisitosDao daoRequisitos = new RequisitosDao();
 
             for (SelectItem i : items) {
                 maestrias.put(i.getLabel(), i.getValue().toString());
-                List<Promocion> lstPromocion = daoTPromocion.getPromocionesMaestrias(Integer.valueOf(i.getValue().toString()));
+                lstPromocion = daoTPromocion.getPromocionesMaestrias(Integer.valueOf(i.getValue().toString()));
                 Map<String, String> map = new HashMap<>();
                 for (Promocion p : lstPromocion) {
                     map.put(p.getDescripcion().toString(), String.valueOf(p.getId()));
@@ -699,6 +746,7 @@ public class InscripcionBean implements Serializable {
             } else {
                 promociones = new HashMap<>();
             }
+            btnMostrar = true;
         } catch (Exception ex) {
             Logger.getLogger(AsignarRequisitosBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -711,19 +759,20 @@ public class InscripcionBean implements Serializable {
             lstClsR = new ArrayList<>();
             reqPro = new ArrayList<>();
             if (idPromo != null && !idPromo.equals("")) {
-                
+
 //                requisitos = data2.get(idPromo);
 //                Iterator it = requisitos.keySet().iterator();
 //                while (it.hasNext()) {
 //                    String key = it.next().toString();
 //                    lstClsR.add(new ClsRequisito(Integer.valueOf(requisitos.get(key)), key));
-                    RequisitosDao rpD = new RequisitosDao();
-                    reqPro = rpD.getRequisitosPromocion(idPromo, idMaestria);
+                RequisitosDao rpD = new RequisitosDao();
+                reqPro = rpD.getRequisitosPromocion(idPromo, idMaestria);
 //                }
 //                numeroReq=lstClsR.size();
-
+                btnMostrar = false;
             } else {
                 requisitos = new HashMap<>();
+                btnMostrar = true;
             }
         } catch (Exception ex) {
             Logger.getLogger(AsignarRequisitosBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -824,61 +873,67 @@ public class InscripcionBean implements Serializable {
 
     public void guardar() {
         try {
-            //estudiante ya se ha obtenido los datos solo hay q poner el paisOrigen
-            LocalizacionDao lDao = new LocalizacionDao();
-            Parroquia p;
-            estudiante.setPaisOrigen(lDao.getNombrePais(idPaisOrigen));
-            //datosNac
-            if (!"".equals(idProvinciaNac) && !"".equals(idParroquiaNac) && !"".equals(idCantonNac)) {
-                datosNac.setFechaNac(estudiante.getFechaNac());
-                datosNac.setEstudiante(estudiante);
-                p = lDao.getParroquia(idParroquiaNac);
-                datosNac.setParroquia(p);
+            if (errorArchivos()) {
+                //estudiante ya se ha obtenido los datos solo hay q poner el paisOrigen
+                LocalizacionDao lDao = new LocalizacionDao();
+                Parroquia p;
+                estudiante.setPaisOrigen(lDao.getNombrePais(idPaisOrigen));
+                //datosNac
+                if (!"".equals(idProvinciaNac) && !"".equals(idParroquiaNac) && !"".equals(idCantonNac)) {
+                    datosNac.setFechaNac(estudiante.getFechaNac());
+                    datosNac.setEstudiante(estudiante);
+                    p = lDao.getParroquia(idParroquiaNac);
+                    datosNac.setParroquia(p);
+                } else {
+                    datosNac = null;
+                }
+                //datosDom
+                if (!"".equals(idProvinciaDom) && !"".equals(idParroquiaDom) && !"".equals(idCantonDom)) {
+                    datosDom.setEstudiante(estudiante);
+                    p = lDao.getParroquia(idParroquiaDom);
+                    datosDom.setParroquia(p);
+                } else {
+                    datosDom = null;
+                }
+                //datosLab
+                if (!"".equals(idProvinciaTra) && !"".equals(idParroquiaTra) && !"".equals(idCantonTra)) {
+                    datosLab.setEstudiante(estudiante);
+                    p = lDao.getParroquia(idParroquiaTra);
+                    datosLab.setParroquia(p);
+                } else {
+                    datosLab = null;
+                }
+                //Academica
+                if (idUniversidad.equals("Nueva")) {
+                    universidad.setDescripcion(universidadNueva);
+                    Pais paisP = lDao.getPais(idPaisUniversidad);
+                    universidad.setPais(paisP);
+                    titulo.setUniversidad(universidad);
+                    titulo.setNSenecyt(numeroSenecyt);
+                } else {
+                    UniversidadesDao uDao = new UniversidadesDao();
+                    titulo.setUniversidad(uDao.getUniversidad(idUniversidad));
+                    titulo.setNSenecyt(numeroSenecyt);
+                    titulo.setDescripcion(tituloDescr);
+                }
+                sInscripcion = new SolicitudInscripcion();
+                sInscripcion.setEstado('E');
+                Date dateobj = new Date();
+                sInscripcion.setFechaRealizacion(dateobj);
+                sInscripcion.setEstudiante(estudiante);
+                PromocionDao pDao = new PromocionDao();
+                sInscripcion.setPromocion(pDao.getPromocion(idPromo));
+                InscripcionDao iDao = new InscripcionDao();
+                if (iDao.insertar(estudiante, datosNac, datosDom, datosLab, sInscripcion, titulo, universidad)) {
+                    guardarArchivos();
+                    FacesMessage message = new FacesMessage("Succesful", "Datos guardados");
+                    FacesContext.getCurrentInstance().addMessage(null, message);
+                } else {
+                    FacesMessage message = new FacesMessage("Error", "Ha habido un problema");
+                    FacesContext.getCurrentInstance().addMessage(null, message);
+                }
             } else {
-                datosNac = null;
-            }
-            //datosDom
-            if (!"".equals(idProvinciaDom) && !"".equals(idParroquiaDom) && !"".equals(idCantonDom)) {
-                datosDom.setEstudiante(estudiante);
-                p = lDao.getParroquia(idParroquiaDom);
-                datosDom.setParroquia(p);
-            } else {
-                datosDom = null;
-            }
-            //datosLab
-            if (!"".equals(idProvinciaTra) && !"".equals(idParroquiaTra) && !"".equals(idCantonTra)) {
-                datosLab.setEstudiante(estudiante);
-                p = lDao.getParroquia(idParroquiaTra);
-                datosLab.setParroquia(p);
-            } else {
-                datosLab = null;
-            }
-            //Academica
-            if (idUniversidad.equals("Nueva")) {
-                universidad.setDescripcion(universidadNueva);
-                Pais paisP = lDao.getPais(idPaisUniversidad);
-                universidad.setPais(paisP);
-                titulo.setUniversidad(universidad);
-                titulo.setNSenecyt(numeroSenecyt);
-            } else {
-                UniversidadesDao uDao = new UniversidadesDao();                
-                titulo.setUniversidad(uDao.getUniversidad(idUniversidad));                
-                titulo.setNSenecyt(numeroSenecyt);
-                titulo.setDescripcion(tituloDescr);
-            }
-            sInscripcion = new SolicitudInscripcion();
-            sInscripcion.setEstado('E');            
-            Date dateobj = new Date();            
-            sInscripcion.setFechaRealizacion(dateobj);
-            sInscripcion.setEstudiante(estudiante);
-            PromocionDao pDao = new PromocionDao();            
-            sInscripcion.setPromocion(pDao.getPromocion(idPromo));
-            InscripcionDao iDao = new InscripcionDao();
-            if (iDao.insertar(estudiante, datosNac, datosDom, datosLab, sInscripcion, titulo, universidad)) {
-                FacesMessage message = new FacesMessage("Succesful", "Datos guardados");
-                FacesContext.getCurrentInstance().addMessage(null, message);
-            } else {
-                FacesMessage message = new FacesMessage("Error", "Ha habido un problema");
+                FacesMessage message = new FacesMessage("Error", "Revise los formatos de los archivos que intenta subir");
                 FacesContext.getCurrentInstance().addMessage(null, message);
             }
 
@@ -887,36 +942,6 @@ public class InscripcionBean implements Serializable {
         }
     }
 
-    public void handleFileUpload(FileUploadEvent event) {
-
-        UploadedFile file = event.getFile();
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date dateobj = new Date();
-        String nombreFecha = estudiante.getCedPasaporte()+(df.format(dateobj).replaceAll(":", "-"));
-        Path path = Paths.get("D:\\Postgrado\\inscripciones\\requisitos\\" + nombreFecha.trim());
-        //if directory exists?
-        if (!Files.exists(path)) {
-            try {
-                Files.createDirectories(path);
-            } catch (IOException e) {
-                //fail to create directory
-                e.printStackTrace();
-            }
-        }
-        String filename = file.getFileName();
-//         String extension = f.getContentType();
-        Path ruta = Paths.get(path + "\\" + filename);
-
-        try (InputStream input = file.getInputstream()) {
-            Files.copy(input, ruta, StandardCopyOption.REPLACE_EXISTING);
-            FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
-            FacesContext.getCurrentInstance().addMessage(null, message);
-        } catch (IOException ex) {
-            Logger.getLogger(prueba.class.getName()).log(Level.SEVERE, null, ex);
-            FacesMessage message = new FacesMessage("Succesful", ex.toString());
-            FacesContext.getCurrentInstance().addMessage(null, message);
-        }
-
-    }
+    
 
 }

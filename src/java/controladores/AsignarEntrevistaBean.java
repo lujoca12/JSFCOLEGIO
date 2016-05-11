@@ -14,8 +14,11 @@ import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import Dao.InscripcionDao;
 import Dao.MatriculaDao;
+import Pojo.Archivos;
 import Pojo.Matricula;
 import java.util.Date;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -30,7 +33,27 @@ public class AsignarEntrevistaBean implements Serializable {
      */
     private List<Estudiante> estudiantes;
     private List<SolicitudInscripcion> lstSInscripcion;
+    private List<Archivos> lstArchivos;
     private SolicitudInscripcion SelectedInscripcion;
+    private String observacion;
+
+    public List<Archivos> getLstArchivos() {
+        return lstArchivos;
+    }
+
+    public void setLstArchivos(List<Archivos> lstArchivos) {
+        this.lstArchivos = lstArchivos;
+    }
+    
+    
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
+    }
 
     public SolicitudInscripcion getSelectedInscripcion() {
         return SelectedInscripcion;
@@ -39,8 +62,6 @@ public class AsignarEntrevistaBean implements Serializable {
     public void setSelectedInscripcion(SolicitudInscripcion SelectedInscripcion) {
         this.SelectedInscripcion = SelectedInscripcion;
     }
-    
-    
 
     public List<Estudiante> getEstudiantes() {
         return estudiantes;
@@ -58,8 +79,6 @@ public class AsignarEntrevistaBean implements Serializable {
         this.lstSInscripcion = lstSInscripcion;
     }
 
-    
-
     public AsignarEntrevistaBean() {
 
     }
@@ -67,14 +86,14 @@ public class AsignarEntrevistaBean implements Serializable {
     @PostConstruct
     public void init() {
         try {
-            InscripcionDao d=new InscripcionDao();
-            lstSInscripcion=d.getInscripcionesEstudiantes();
+            InscripcionDao d = new InscripcionDao();
+            lstSInscripcion = d.getInscripcionesEstudiantes();
         } catch (Exception ex) {
         }
     }
-    
-    public void guardarMatricula(){
-        try{
+
+    public void guardarMatricula() {
+        try {
             Matricula m = new Matricula();
             m.setEstado('1');
             Date fecha = new Date();
@@ -82,24 +101,29 @@ public class AsignarEntrevistaBean implements Serializable {
             m.setSolicitudInscripcion(SelectedInscripcion);
             SelectedInscripcion.setEstado('A');
             SelectedInscripcion.setFechaRevision(fecha);
+            SelectedInscripcion.setObservacion(observacion);
             MatriculaDao mDao = new MatriculaDao();
-            mDao.insertar(m,SelectedInscripcion);
+            mDao.insertar(m, SelectedInscripcion);
             lstSInscripcion.remove(SelectedInscripcion);
-        }catch(Exception ex){
-            
+            FacesMessage message = new FacesMessage("Succesful", "Datos guardados");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } catch (Exception ex) {
+            FacesMessage message = new FacesMessage("Erorr", "Error al guardarlos datos");
+            FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
-    public void rechazarMatricula(){
-        try{            
-            
+
+    public void rechazarMatricula() {
+        try {
+
             SelectedInscripcion.setEstado('R');
             Date fecha = new Date();
             SelectedInscripcion.setFechaRevision(fecha);
             MatriculaDao mDao = new MatriculaDao();
             mDao.rechazar(SelectedInscripcion);
             lstSInscripcion.remove(SelectedInscripcion);
-        }catch(Exception ex){
-            
+        } catch (Exception ex) {
+
         }
     }
 

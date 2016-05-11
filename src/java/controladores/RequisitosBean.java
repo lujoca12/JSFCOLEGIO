@@ -46,7 +46,7 @@ public class RequisitosBean implements Serializable {
     private List<Requisitos> lstReq;
     private List<String> lstSelReq;
     private List<String> lstReqPro;
-    private Map<Integer,String> lstReqProNombre;
+    private Map<Integer, String> lstReqProNombre;
     private String formato;
     private String tipoArhivo;
 
@@ -65,8 +65,6 @@ public class RequisitosBean implements Serializable {
     public void setTipoArhivo(String tipoArhivo) {
         this.tipoArhivo = tipoArhivo;
     }
-    
-    
 
     public Map<Integer, String> getLstReqProNombre() {
         return lstReqProNombre;
@@ -75,7 +73,6 @@ public class RequisitosBean implements Serializable {
     public void setLstReqProNombre(Map<Integer, String> lstReqProNombre) {
         this.lstReqProNombre = lstReqProNombre;
     }
-    
 
     public List<String> getLstReqPro() {
         return lstReqPro;
@@ -155,6 +152,9 @@ public class RequisitosBean implements Serializable {
         try {
 
             requisito.setDescripcion(descripcion);
+            //formato se usa para describir el tipo de archivo que se le pedira al estudiante en la solicitud de inscripcion
+            formato = descripcion.replaceAll("\\s+", "");
+            formato = removeCaractEspeciales(formato).toLowerCase();
             requisito.setFormato(formato);
             requisito.setTipoArchivo(tipoArhivo);
             requisito.setEstado('1');
@@ -164,9 +164,10 @@ public class RequisitosBean implements Serializable {
                 requisito.setRespaldo('0');
             }
 
-            Drequisitos.insertar(requisito);
+           if(true== Drequisitos.insertar(requisito)){
             mensajesOk("Datos procesados correctamente.");
             vaciarCajas();
+           }
         } catch (Exception e) {
             //Logger.getLogger(MbVMaestrias.class.getName()).log(Level.SEVERE, null, e);
             mensajesError("Error al procesar datos");
@@ -189,7 +190,6 @@ public class RequisitosBean implements Serializable {
 //            mensajesError("Error al procesar datos");
 //        }
 //    }
-
     private void vaciarCajas() {
         descripcion = "";
         respaldo = false;
@@ -233,29 +233,40 @@ public class RequisitosBean implements Serializable {
     }
 
     public List<String> getListaReqPro(String IdPromo, String IdMaestria) throws Exception {
-        
+
         lstReqPro = new ArrayList<>();
         RequisitosDao daoRequisitos = new RequisitosDao();
         List<RequisitosPromo> lstRequisitos = daoRequisitos.getRequisitosPromocion(IdPromo, IdMaestria);
-        for(RequisitosPromo rp : lstRequisitos)
-        {
+        for (RequisitosPromo rp : lstRequisitos) {
             lstReqPro.add(String.valueOf(rp.getRequisitos().getId()));
         }
         return lstReqPro;
-        
+
     }
-    public Map<Integer,String> getListaReqProNombre(int IdPromo, int IdMaestria) throws Exception {
+
+    public Map<Integer, String> getListaReqProNombre(int IdPromo, int IdMaestria) throws Exception {
 
         lstReqProNombre = new HashMap<>();
         RequisitosDao daoRequisitos = new RequisitosDao();
-        List<RequisitosPromo> lstRequisitos = daoRequisitos.getRequisitosPromocion(String.valueOf(IdPromo),String.valueOf(IdMaestria));
-        for(RequisitosPromo rp : lstRequisitos)
-        {
-            lstReqProNombre.put(rp.getRequisitos().getId(),rp.getRequisitos().getDescripcion());
+        List<RequisitosPromo> lstRequisitos = daoRequisitos.getRequisitosPromocion(String.valueOf(IdPromo), String.valueOf(IdMaestria));
+        for (RequisitosPromo rp : lstRequisitos) {
+            lstReqProNombre.put(rp.getRequisitos().getId(), rp.getRequisitos().getDescripcion());
         }
-        
+
         return lstReqProNombre;
     }
-    
+
+    public String removeCaractEspeciales(String input) {
+        // Cadena de caracteres original a sustituir.
+        String original = "áàäéèëíìïóòöúùuñÁÀÄÉÈËÍÌÏÓÒÖÚÙÜÑçÇ";
+        // Cadena de caracteres ASCII que reemplazarán los originales.
+        String ascii = "aaaeeeiiiooouuunAAAEEEIIIOOOUUUNcC";
+        String output = input;
+        for (int i = 0; i < original.length(); i++) {
+            // Reemplazamos los caracteres especiales.
+            output = output.replace(original.charAt(i), ascii.charAt(i));
+        }//for i
+        return output;
+    }//remove1
 
 }

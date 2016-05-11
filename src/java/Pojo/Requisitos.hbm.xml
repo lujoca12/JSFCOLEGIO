@@ -26,10 +26,10 @@
             <one-to-many class="Pojo.RequisitosPromo" />
         </set>
         <property name="tipoArchivo" type="string">
-            <column name="tipo_archivo" length="20" />
+            <column name="tipo_archivo" length="50" />
         </property>
         <property name="formato" type="string">
-            <column name="formato" length="50" />
+            <column name="formato" length="100" />
         </property>
     </class>
 </hibernate-mapping>

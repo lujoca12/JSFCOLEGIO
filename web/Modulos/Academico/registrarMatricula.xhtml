@@ -3,24 +3,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
+
     </h:head>
-    <h:body>
+    <h:body>       
         <div class="ui-fluid">
             <h:form id="form">  
+                <h:outputStylesheet name="matricula.css" library="css"/>
                 <p:growl id="msgs" showDetail="true"/>
-                <p:dataTable id="table" var="s" value="#{asignarEntrevistaBean.lstSInscripcion}" rows="10"
+                <p:dataTable style="margin-bottom: 25px;" id="solicitudes" var="s" value="#{asignarEntrevistaBean.lstSInscripcion}"  rows="10" selectionMode="single" selection="#{asignarEntrevistaBean.selectedInscripcion}" rowKey="#{s.estudiante.id}"
                              paginator="true"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              rowsPerPageTemplate="5,10,15">
                     <f:facet name="header">
-                        Registrar Matriculas
-                    </f:facet>
-                    <p:column style="width:35px">
-                        <p:rowToggler />
-                    </p:column>
+                        Listas de Solicitudes por Revisar
+                    </f:facet>                      
                     <p:column headerText="Apellidos">
                         <h:outputText value="#{s.estudiante.apellidos}" />
                     </p:column>
@@ -39,35 +40,44 @@
                     <p:column headerText="Fecha de Realizacion">
                         <h:outputText value="#{s.fechaRealizacion}" />
                     </p:column>
-                    <p:column style="width:32px;text-align: center">
-                        <p:commandButton update=":form:carDetail" oncomplete="PF('carDialog').show()" icon="ui-icon-search" title="View">
-                            <f:setPropertyActionListener value="#{s}" target="#{asignarEntrevistaBean.selectedInscripcion}" />
-                        </p:commandButton>
+
+
+                    <f:facet name="footer">
+                        <p:commandButton process="solicitudes" action="#{asignarEntrevistaBean.obtenerRequisitos()}" update="form:requisitos form:carDetail" icon="ui-icon-search" value="Seleccionar"  />
+                    </f:facet>
+
+                </p:dataTable>
+
+                <p:dataTable style="margin-bottom: 25px;" id="requisitos" value="#{asignarEntrevistaBean.archivos}" var="a">
+                    <f:facet name="header">
+                        Listas de Requisitos por Solicitud
+                    </f:facet>
+                    <p:column headerText="Descripcion">
+                        <h:outputText value="#{a.descripcion}" />
                     </p:column>
-                    <p:rowExpansion >
-                        <p:panelGrid columns="2">
-                            <p:dataList value="#{s.archivoses}"></p:dataList>
-                           
-                        </p:panelGrid>
-                    </p:rowExpansion>
+                    <p:column headerText="Archivos">
+                        <p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                            <p:fileDownload value="#{a.file}" />
+                        </p:commandButton>
+                    </p:column>                    
                 </p:dataTable>
 
 
-                <p:dialog header="Registrar Matricula" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                    <p:outputPanel id="carDetail" style="text-align:center;">
-                        <p:panelGrid  columns="2" rendered="#{not empty asignarEntrevistaBean.selectedInscripcion}" >
-                            <h:outputLabel value="Observacion: "/>
-                            <p:inputTextarea rows="5" cols="30"  counter="display" maxlength="255" value="#{asignarEntrevistaBean.observacion}" counterTemplate="{0} characters remaining." autoResize="false" />
-                            <h:inputHidden/>
-                            <h:outputText id="display" />
-                        </p:panelGrid>
-                        <p:commandButton style="background-color: green"  actionListener="#{asignarEntrevistaBean.guardarMatricula()}" value="Aprobar" update="table" oncomplete="PF('carDialog').hide()"/>
-                        <p:commandButton style="background-color: darkred" value="Rechazar" actionListener="#{asignarEntrevistaBean.rechazarMatricula()}" update="table" oncomplete="PF('carDialog').hide()" />
-                    </p:outputPanel>
-                </p:dialog>
+
+                <p:outputPanel id="carDetail" styleClass="panel-cont">
+                    <p:panelGrid  styleClass="datos-ob" columns="2" rendered="#{not empty asignarEntrevistaBean.selectedInscripcion}" >
+                        <h:outputLabel value="Observacion: "/>
+                        <p:inputTextarea rows="5" cols="30"  counter="display" maxlength="255" value="#{asignarEntrevistaBean.observacion}" counterTemplate="{0} characters remaining." autoResize="false" />
+                        <h:inputHidden/>
+                        <h:outputText id="display" />
+                    </p:panelGrid>
+                    <p:commandButton  style="height: 50px;"  actionListener="#{asignarEntrevistaBean.guardarMatricula()}" value="Aprobar" update="solicitudes requisitos carDetail" />
+                    <p:commandButton style="height: 50px;"  value="Rechazar" actionListener="#{asignarEntrevistaBean.rechazarMatricula()}" update="solicitudes requisitos carDetail" />
+                </p:outputPanel>
+
 
             </h:form>
-            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"  />
 
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
                 <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />

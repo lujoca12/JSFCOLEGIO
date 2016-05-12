@@ -42,5 +42,6 @@
     <mapping resource="Pojo/DetalleTribunal.hbm.xml"/>
     <mapping resource="Pojo/TipoUsuario.hbm.xml"/>
     <mapping resource="Pojo/PalabrasClave.hbm.xml"/>
+    <mapping resource="Pojo/Postgrado.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h5="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <div class="ui-fluid">
+            <h:form id="form">               
+
+                <p:panel header="Registrar Email">
+                    <p:growl id="msgs" showDetail="true"/>
+                    <p:panelGrid id="panel" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
+
+                        <p:outputLabel for="email" value="Email: " styleClass="labelDerecha"/>
+                        <p:inputText id="email" type="email"  h5:required="true" value="#{emailBean.email}" maxlength="255" validatorMessage="Ingrese un correo vvalido.">                            
+                        </p:inputText>
+                        <p:message for="email"/>                      
+
+                        <p:outputLabel for="txtClave" styleClass="labelDerecha" value="Clave:" />
+                        <p:password id="txtClave" value="#{emailBean.clave}" required="true" feedback="true" match="txtRClave" inline="true" maxlength="20" />
+                        <p:message for="txtClave"/> 
+
+                        <p:outputLabel for="txtRClave" styleClass="labelDerecha" value="Repetir clave:" />
+                        <p:password id="txtRClave" value="#{emailBean.clave}" required="true" feedback="true" inline="true"  maxlength="20"/>
+                        <p:message for="txtRClave"/>                        
+
+                    </p:panelGrid>
+                </p:panel>
+                <p:commandButton value="Guardar" update="form,msgs" styleClass="anchoBotones" icon="ui-icon-disk"
+                                 actionListener="#{emailBean.guardar()}" />
+               
+            </h:form>
+        </div>
+    </h:body>
+</html>
+

@@ -124,12 +124,23 @@ public class InscripcionBean implements Serializable {
     private UploadedFile file;
     private List<UploadedFile> files = new ArrayList<>();
     private boolean btnMostrar = true;
+    private boolean btnGuardar = false;
     private String descripcionMaetria;
     private String descripcionPromo;
     private List<SelectItem> items;
     private List<Promocion> lstPromocion;
     private String filename ="";
     private String extension="";
+
+    public boolean isBtnGuardar() {
+        return btnGuardar;
+    }
+
+    public void setBtnGuardar(boolean btnGuardar) {
+        this.btnGuardar = btnGuardar;
+    }
+    
+    
 
     public String getDescripcionPromo() {
         return descripcionPromo;
@@ -598,6 +609,8 @@ public class InscripcionBean implements Serializable {
             extension = FilenameUtils.getExtension(f.getFileName());
             if (!reqPro.get(x).getRequisitos().getTipoArchivo().contains(extension)) {
                 error = true;
+                files.clear();
+                break;
             }
             x++;
         }
@@ -873,7 +886,7 @@ public class InscripcionBean implements Serializable {
 
     public void guardar() {
         try {
-            if (errorArchivos()) {
+            if (!errorArchivos()) {
                 //estudiante ya se ha obtenido los datos solo hay q poner el paisOrigen
                 LocalizacionDao lDao = new LocalizacionDao();
                 Parroquia p;
@@ -928,17 +941,20 @@ public class InscripcionBean implements Serializable {
                     guardarArchivos();
                     FacesMessage message = new FacesMessage("Succesful", "Datos guardados");
                     FacesContext.getCurrentInstance().addMessage(null, message);
+                    btnGuardar=true;
                 } else {
                     FacesMessage message = new FacesMessage("Error", "Ha habido un problema");
                     FacesContext.getCurrentInstance().addMessage(null, message);
+                    btnGuardar=false;
                 }
             } else {
                 FacesMessage message = new FacesMessage("Error", "Revise los formatos de los archivos que intenta subir");
                 FacesContext.getCurrentInstance().addMessage(null, message);
+                btnGuardar=false;
             }
 
         } catch (Exception ex) {
-
+            System.out.println(ex.toString());
         }
     }
 

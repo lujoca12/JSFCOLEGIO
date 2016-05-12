@@ -17,12 +17,13 @@ import util.HibernateUtil;
 import Pojo.SolicitudInscripcion;
 import Pojo.Titulo;
 import Pojo.Universidad;
+import java.io.Serializable;
 import java.util.List;
 /**
  *
  * @author chiti
  */
-public class InscripcionDao {
+public class InscripcionDao implements Serializable{
     private Session sesion;
     private Transaction tx;
     
@@ -74,7 +75,7 @@ public class InscripcionDao {
         iniciaOperacion();
        
         String hql="from SolicitudInscripcion si inner join fetch si.estudiante e inner join fetch si.promocion pr inner join fetch pr.maestria m"
-                + "where si.fechaRevision=null and si.estado='E' order by si.fechaRealizacion asc";
+                + "  where si.fechaRevision=null and si.estado='E' order by si.fechaRealizacion asc";
        
         Query query = sesion.createQuery(hql);
         //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
@@ -82,13 +83,12 @@ public class InscripcionDao {
         sesion.close();
         return lst;
     }
-    public List<Archivos> getArchivosInscripciones() throws Exception {
+    public List<Archivos> getArchivosInscripciones(String IdInscripcion) throws Exception {
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
        
-        String hql="from Archivos a inner join a.solicitudInscripcion inner join fetch a.requisitosPromo rp inner join fetch rp.requisitos "
-                + " where si.fechaRevision=null and si.estado='E' order by si.fechaRealizacion asc";
+        String hql="from Archivos a inner join fetch a.requisitosPromo rp inner join fetch rp.requisitos where a.solicitudInscripcion.id ='"+IdInscripcion+"'";
        
         Query query = sesion.createQuery(hql);
         //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);

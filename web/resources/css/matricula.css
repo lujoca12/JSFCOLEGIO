@@ -1,0 +1,26 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 12/05/2016, 1:49:02
+    Author     : chiti
+*/
+.panel-cont{
+    text-align:center; width: 500px;margin:auto;
+}
+.datos-ob{
+    margin :auto !important;
+    margin-bottom: 20px !important;
+}
+/*.ui-state-default {
+    -moz-box-shadow: none !important;
+     -webkit-box-shadow: none !important;
+     box-shadow: none !important;
+}
+.ui-button{
+    background-color: #0073b7;
+    box-shadow: none !important;
+}*/
+

@@ -257,12 +257,10 @@
                                     </c:forEach>
                                   
                                 </h:panelGrid>
-                                <p:commandButton type="submit" action="#{inscripcionBean.guardar()}" update="messages" ajax="false"  value="Guardar Datos" process="@this" />
+                                <p:commandButton type="submit" action="#{inscripcionBean.guardar()}" disabled="#{inscripcionBean.btnGuardar}" update="messages datos" ajax="false"  value="Guardar Datos" process="@this" />
                             </p:panel>
                         </p:tab>       
-                        <p:tab id="asd">
-                            asd
-                        </p:tab>
+                        
 
                     </p:wizard>
 

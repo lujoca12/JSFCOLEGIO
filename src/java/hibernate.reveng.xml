@@ -35,4 +35,5 @@
   <table-filter match-name="permiso"/>
   <table-filter match-name="matricula"/>
   <table-filter match-name="universidad"/>
+  <table-filter match-name="postgrado"/>
 </hibernate-reverse-engineering>

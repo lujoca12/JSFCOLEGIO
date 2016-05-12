@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2201f372-e150-4f8c-8381-608800651f5e">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="143"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -377,14 +377,14 @@ where estud.cedPasaporte = $P{cedulaEstudiante} order by  mod.n_modulo asc]]>
 					<staticText>
 						<reportElement x="3" y="0" width="414" height="20" uuid="db6de5c3-feaf-4845-a79a-0d69bf24fdac"/>
 						<textElement textAlignment="Center">
-							<font fontName="Arial" size="14" isBold="true"/>
+							<font fontName="SansSerif" size="14" isBold="true"/>
 						</textElement>
 						<text><![CDATA[UNIVERSIDAD TÉCNICA ESTATAL DE QUEVEDO]]></text>
 					</staticText>
 					<staticText>
 						<reportElement x="133" y="20" width="155" height="20" uuid="4db4676e-7e7d-4110-848d-d5bad337c926"/>
 						<textElement textAlignment="Center">
-							<font fontName="Arial" size="12" isBold="true"/>
+							<font fontName="SansSerif" size="12" isBold="true"/>
 						</textElement>
 						<text><![CDATA[UNIDAD DE POSTGRADO]]></text>
 					</staticText>
@@ -460,7 +460,7 @@ where estud.cedPasaporte = $P{cedulaEstudiante} order by  mod.n_modulo asc]]>
 			<staticText>
 				<reportElement x="200" y="16" width="155" height="19" uuid="4aaa3558-915f-4c6f-aef6-42f3ea2d8986"/>
 				<textElement textAlignment="Center" markup="styled">
-					<font fontName="Arial" size="12" isBold="true"/>
+					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CERTIFICA]]></text>
 			</staticText>
@@ -471,35 +471,35 @@ where estud.cedPasaporte = $P{cedulaEstudiante} order by  mod.n_modulo asc]]>
 			<staticText>
 				<reportElement style="table_CH" x="8" y="0" width="195" height="19" backcolor="#FFFFFF" uuid="10874dee-9535-459d-a715-ae4009d7d536"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="true"/>
+					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[MÓDULOS]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="table_TH" x="203" y="0" width="57" height="19" backcolor="#FFFFFF" uuid="4ffff755-4cb5-443f-bc86-d0d26c4536a7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="true"/>
+					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CRÉDITOS]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="table_TH" x="260" y="0" width="57" height="19" backcolor="#FFFFFF" uuid="112ce93c-874a-43b6-95e4-06dd3b15ef28"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="true"/>
+					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOTAS NÚMEROS]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="table_TH" x="317" y="0" width="128" height="19" backcolor="#FFFFFF" uuid="1b594159-bcc0-4438-9418-362ad280f318"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="true"/>
+					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOTAS LETRAS]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="table_TH" x="445" y="0" width="103" height="19" backcolor="#FFFFFF" uuid="4c5e6850-cd7e-4afa-a92e-fb0fc5ef0c90"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="true"/>
+					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[OBSERVACIÓN]]></text>
 			</staticText>
@@ -539,21 +539,21 @@ where estud.cedPasaporte = $P{cedulaEstudiante} order by  mod.n_modulo asc]]>
 			<staticText>
 				<reportElement style="table_TH" x="260" y="0" width="57" height="19" backcolor="#FFFFFF" uuid="f411627b-6b6a-4f7d-b4b6-1c9808a46498"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="true"/>
+					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOTAS NÚMEROS]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="table_TH" x="203" y="0" width="57" height="19" backcolor="#FFFFFF" uuid="f33e9e80-82f7-4f81-8902-1346a220d0a1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="true"/>
+					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CRÉDITOS]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="table_TH" x="317" y="0" width="231" height="19" backcolor="#FFFFFF" uuid="ef417e6c-1b95-4c85-82cb-1f7a57e6c318"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="8" isBold="true"/>
+					<font fontName="SansSerif" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOTAS LETRAS]]></text>
 			</staticText>
@@ -580,7 +580,7 @@ where estud.cedPasaporte = $P{cedulaEstudiante} order by  mod.n_modulo asc]]>
 			<staticText>
 				<reportElement style="table_CH" x="8" y="64" width="195" height="15" backcolor="#FFFFFF" uuid="d698d521-10ac-41ad-8c96-94b816279e39"/>
 				<textElement textAlignment="Center">
-					<font isBold="true"/>
+					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PROMEDIO GENERAL]]></text>
 			</staticText>
@@ -643,14 +643,14 @@ where estud.cedPasaporte = $P{cedulaEstudiante} order by  mod.n_modulo asc]]>
 	<pageFooter>
 		<band height="119" splitType="Stretch">
 			<staticText>
-				<reportElement x="180" y="84" width="199" height="20" uuid="edcd1bb3-6255-4a8c-b520-ddf27f14f363"/>
+				<reportElement x="173" y="87" width="209" height="20" uuid="edcd1bb3-6255-4a8c-b520-ddf27f14f363"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial"/>
+					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Secretario(a) Académico Postgrado - UTEQ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="180" y="69" width="199" height="20" uuid="653b8ea4-972a-4d57-806b-7d849bec1914"/>
+				<reportElement x="179" y="69" width="199" height="20" uuid="653b8ea4-972a-4d57-806b-7d849bec1914"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>

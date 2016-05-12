@@ -110,7 +110,7 @@ public class MbVActaEmision implements Serializable {
                 int anioFin = calendar.get(Calendar.YEAR);
                 
                 this.lstThemeMaestria.add(new ClsMaestria(promocion.getMaestria().getId(),
-                        promocion.getMaestria().getDescripcion() + " (" + anioInicio +"-"+ anioFin + ")",
+                        "Maestría en "+promocion.getMaestria().getDescripcion() + " (" + anioInicio +"-"+ anioFin + ")",
                         promocion.getMaestria().getDescripcion(), 
                         promocion.getMaestria().getId(),
                         anioInicio, 
@@ -124,17 +124,20 @@ public class MbVActaEmision implements Serializable {
     public void cargarReporte(){
         media = null;
         DaoRepActaEmision daoReport = new DaoRepActaEmision();
-        if(themeMaestria != null){
+        if(themeMaestria != null)
            media = daoReport.reporte(this.themeMaestria.getId());
-           estado = 1;
-//            if (msg) {
-//                mensajesOk("Reporte cargado correctamente");
-//            } else {
-//                mensajesError("error al cargar Reporte");
-//            }
-        }else
-            estado = 0;
-            
+    }
+    public void cargarReporteNominaGraduados(){
+        media = null;
+        DaoRepActaEmision daoReport = new DaoRepActaEmision();
+        if(themeMaestria != null)
+           media = daoReport.reporteNominaGraduados(this.themeMaestria.getId());
+    }
+    public void cargarReporteRecordAcademico(){
+        media = null;
+        DaoRepActaEmision daoReport = new DaoRepActaEmision();
+        if(themeMaestria != null)
+           media = daoReport.reporteNominaGraduados(this.themeMaestria.getId());
     }
     
     private void mensajesOk(String msg){

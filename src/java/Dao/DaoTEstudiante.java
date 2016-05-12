@@ -75,7 +75,7 @@ public class DaoTEstudiante implements InterfaceEstudiante{
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        String hql = "from Estudiante est";
+        String hql = "from Estudiante est order by est.apellidos asc";
         Query query = sesion.createQuery(hql);
         List<Estudiante> lstEstudiante=(List<Estudiante>) query.list();
         sesion.close();

@@ -10,28 +10,28 @@
     <h:body>
         <div class="ui-fluid">
             <h:form id="form">
-                <p:remoteCommand name="form" autoRun="true" action="#{mbVActaEmision.load()}" />
+                <p:remoteCommand name="form" autoRun="true" action="#{mbVEstudiante.load()}" />
                 <p:tab id="personal" title="ReporteActaEmision">
-                    <p:panel header="Reporte Acta Emisión">
+                    <p:panel header="Reporte Maestría por Estudiante">
                         <p:growl id="msgs" showDetail="true" />
                         <p:focus context="panel"/>
                         <p:panelGrid id="panel" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
                             
                             <p:outputLabel for="cboMaestria" value="Maestria:" styleClass="labelDerecha"  />
-                            <p:selectOneMenu id="cboMaestria" value="#{mbVActaEmision.themeMaestria}" converter="themeConverterMaestria"
+                            <p:selectOneMenu id="cboMaestria" value="#{mbVEstudiante.themeMaestria}" converter="themeConverterEstudiante"
                                              effect="fade" var="tProfesor" filter="true" filterMatchMode="contains">
-                                <f:selectItems value="#{mbVActaEmision.lstThemeMaestria}" var="themeProf" itemLabel="#{themeProf.displayName}" itemValue="#{themeProf}" />
+                                <f:selectItems value="#{mbVEstudiante.lstThemeMaestria}" var="themeProf" itemLabel="#{themeProf.nombres}" itemValue="#{themeProf}" />
                                 <p:column style="width:10%">
-                                    <h:outputText styleClass="ui-theme ui-theme-#{tProfesor.name}" />
+                                    <h:outputText styleClass="ui-theme ui-theme-#{tProfesor.cedula}" />
                                 </p:column>
 
                                 <p:column>
-                                    <h:outputText value="#{tProfesor.displayName}" />
+                                    <h:outputText value="#{tProfesor.nombres}" />
                                 </p:column>
                                
                             </p:selectOneMenu>
                             <p:commandButton value="Ver Reporte" update="form,msgs" styleClass="anchoBotones" icon="ui-icon-search"
-                                             actionListener="#{mbVActaEmision.cargarReporte}" ajax="true"  >
+                                             actionListener="#{mbVEstudiante.cargarReporteMaestria}" ajax="true"  >
                             </p:commandButton>
                             <!--<h:commandLink>
                                 <p:graphicImage onclick="this.form.target='_self'" value="#{resource['img/pdf.png']}" width="24"/>
@@ -41,7 +41,8 @@
                     </p:panel>
                     
                 </p:tab>
-                    <p:media cache="false" rendered="#{mbVActaEmision.media ne null}" value="#{mbVActaEmision.media}" player="pdf" width="100%" height="800px"/> 
+                
+                    <p:media cache="false" rendered="#{mbVEstudiante.media ne null}" value="#{mbVEstudiante.media}" player="pdf" width="100%" height="800px"/> 
                 
                 <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
 

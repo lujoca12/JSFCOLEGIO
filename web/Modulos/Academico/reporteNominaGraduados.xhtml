@@ -12,7 +12,7 @@
             <h:form id="form">
                 <p:remoteCommand name="form" autoRun="true" action="#{mbVActaEmision.load()}" />
                 <p:tab id="personal" title="ReporteActaEmision">
-                    <p:panel header="Reporte Acta Emisión">
+                    <p:panel header="Reporte Nomina de Graduados">
                         <p:growl id="msgs" showDetail="true" />
                         <p:focus context="panel"/>
                         <p:panelGrid id="panel" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
@@ -31,7 +31,7 @@
                                
                             </p:selectOneMenu>
                             <p:commandButton value="Ver Reporte" update="form,msgs" styleClass="anchoBotones" icon="ui-icon-search"
-                                             actionListener="#{mbVActaEmision.cargarReporte}" ajax="true"  >
+                                             actionListener="#{mbVActaEmision.cargarReporteNominaGraduados}" ajax="true"  >
                             </p:commandButton>
                             <!--<h:commandLink>
                                 <p:graphicImage onclick="this.form.target='_self'" value="#{resource['img/pdf.png']}" width="24"/>

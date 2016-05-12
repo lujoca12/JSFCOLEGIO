@@ -116,4 +116,164 @@ public class DaoRepActaEmision {
         //return band;
         return media;
     }
+    //Nomina de graduados
+    public StreamedContent reporteNominaGraduados(int idMaestria){
+        //boolean band = false;
+        StreamedContent media = null;
+        ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance()
+        .getExternalContext().getContext();
+        String realPath = ctx.getRealPath("/");
+        realPath += "Modulos\\Reportes\\";
+        
+        iniciaOperacion();
+        
+        param.put(JRHibernateQueryExecuterFactory.PARAMETER_HIBERNATE_SESSION, sesion);
+        param.put("logoUteq",realPath+"logoUTEQoriginal1.jpg");
+        param.put("logoPostgrado",realPath+"logoPostgrado.jpg");
+        param.put("idMaestria",idMaestria);
+        
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        
+        String file = "reporte" + sf.format(date.getTime())+ ".pdf";
+        JasperPrint jPrint = null;
+        try {
+           // JasperReport JReporte = JasperCompileManager.compileReport(realPath+"actaAdmision.jasper");
+            jPrint = JasperFillManager.fillReport(realPath+"nominaGraduados.jasper", param);
+            JasperExportManager.exportReportToPdfStream(jPrint, baos);
+            
+             baos.flush();
+        baos.close();
+
+        InputStream is = new ByteArrayInputStream(baos.toByteArray());
+        media = new DefaultStreamedContent(is, "application/pdf", file);
+            
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+            //band = false;
+        }
+        
+        //return band;
+        return media;
+    }
+    //Record Academico
+    public StreamedContent reporteRecordAcademico(int idMaestria){
+        //boolean band = false;
+        StreamedContent media = null;
+        ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance()
+        .getExternalContext().getContext();
+        String realPath = ctx.getRealPath("/");
+        realPath += "Modulos\\Reportes\\";
+        
+        iniciaOperacion();
+        
+        param.put(JRHibernateQueryExecuterFactory.PARAMETER_HIBERNATE_SESSION, sesion);
+        param.put("logoUteq",realPath+"logoUTEQoriginal1.jpg");
+        param.put("logoPostgrado",realPath+"logoPostgrado.jpg");
+        param.put("idMaestria",idMaestria);
+        
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        
+        String file = "reporte" + sf.format(date.getTime())+ ".pdf";
+        JasperPrint jPrint = null;
+        try {
+           // JasperReport JReporte = JasperCompileManager.compileReport(realPath+"actaAdmision.jasper");
+            jPrint = JasperFillManager.fillReport(realPath+"recordAcademico.jasper", param);
+            JasperExportManager.exportReportToPdfStream(jPrint, baos);
+            
+             baos.flush();
+        baos.close();
+
+        InputStream is = new ByteArrayInputStream(baos.toByteArray());
+        media = new DefaultStreamedContent(is, "application/pdf", file);
+            
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+            //band = false;
+        }
+        
+        //return band;
+        return media;
+    }
+    
+    //Certificado de Maestria en proceso por estudiante
+    public StreamedContent reporteMaestriaProceso(String cedula){
+        //boolean band = false;
+        StreamedContent media = null;
+        ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance()
+        .getExternalContext().getContext();
+        String realPath = ctx.getRealPath("/");
+        realPath += "Modulos\\Reportes\\";
+        
+        iniciaOperacion();
+        
+        param.put(JRHibernateQueryExecuterFactory.PARAMETER_HIBERNATE_SESSION, sesion);
+        param.put("logoUteq",realPath+"logoUTEQoriginal1.jpg");
+        param.put("logoPostgrado",realPath+"logoPostgrado.jpg");
+        param.put("cedulaEstudiante",cedula);
+        
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        
+        String file = "reporte" + sf.format(date.getTime())+ ".pdf";
+        JasperPrint jPrint = null;
+        try {
+           // JasperReport JReporte = JasperCompileManager.compileReport(realPath+"actaAdmision.jasper");
+            jPrint = JasperFillManager.fillReport(realPath+"certificadoMaestProceso.jasper", param);
+            JasperExportManager.exportReportToPdfStream(jPrint, baos);
+            
+             baos.flush();
+        baos.close();
+
+        InputStream is = new ByteArrayInputStream(baos.toByteArray());
+        media = new DefaultStreamedContent(is, "application/pdf", file);
+
+            
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+            //band = false;
+        }
+        
+        //return band;
+        return media;
+    }
+    
+    //Certificado de Maestria en proceso por estudiante
+    public StreamedContent reporteMaestriaEstudiante(String cedula){
+        //boolean band = false;
+        StreamedContent media = null;
+        ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance()
+        .getExternalContext().getContext();
+        String realPath = ctx.getRealPath("/");
+        realPath += "Modulos\\Reportes\\";
+        
+        iniciaOperacion();
+        
+        param.put(JRHibernateQueryExecuterFactory.PARAMETER_HIBERNATE_SESSION, sesion);
+        param.put("logoUteq",realPath+"logoUTEQoriginal1.jpg");
+        param.put("logoPostgrado",realPath+"logoPostgrado.jpg");
+        param.put("cedulaEstudiante",cedula);
+        
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        
+        String file = "reporte" + sf.format(date.getTime())+ ".pdf";
+        JasperPrint jPrint = null;
+        try {
+           // JasperReport JReporte = JasperCompileManager.compileReport(realPath+"actaAdmision.jasper");
+            jPrint = JasperFillManager.fillReport(realPath+"certificadoMaestria.jasper", param);
+            JasperExportManager.exportReportToPdfStream(jPrint, baos);
+            
+             baos.flush();
+        baos.close();
+
+        InputStream is = new ByteArrayInputStream(baos.toByteArray());
+        media = new DefaultStreamedContent(is, "application/pdf", file);
+        
+            
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+            //band = false;
+        }
+        
+        //return band;
+        return media;
+    }
 }

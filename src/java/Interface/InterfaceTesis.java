@@ -6,6 +6,7 @@
 package Interface;
 
 import Pojo.Tesis;
+import Pojo.PalabrasClave;
 import java.util.List;
 import java.util.Date;
 
@@ -22,5 +23,6 @@ public interface InterfaceTesis {
     public boolean  registrarTesis(Tesis ttesis) throws Exception;
     public List<Tesis> getTesisxAutor(String autor) throws Exception;    
     public List<Tesis> getTesisxFechaSust(Date fecha) throws Exception;
+    public boolean registrarPalabrasClave(PalabrasClave tpalabrasclave) throws Exception;
    // public List<Tesis> getTesisxTitulo(String titulo) throws Exception;    
 }

@@ -149,12 +149,21 @@ public class DaoTesis implements InterfaceTesis{
         List<Tesis> lsttesis=(List<Tesis>) query.list();
         return lsttesis;
     }
-    
-
 
     
-    
-    
-    
-    
+    @Override
+    public boolean registrarPalabrasClave(PalabrasClave tpalabrasclave) throws Exception {
+        boolean band = false;
+        try{
+            iniciaOperacion();
+            sesion.save(tpalabrasclave);
+            tx.commit();
+            sesion.close();
+            band=true;
+        }catch(Exception e){
+            tx.rollback();
+            band=false;
+        }       
+        return band;
+    }
 }

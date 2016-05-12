@@ -53,7 +53,10 @@
                         </p:column>
 
                         <p:column style="width:10%;">
-                            <p:rowEditor />   
+                            <p:commandLink update=":xhtml:busquedatesis" oncomplete="PF('carDialog').show()" title="View Detail">
+                                <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />
+                                <f:setPropertyActionListener value="#{car}" target="#{dataGridView.selectedCar}" />
+                            </p:commandLink>   
                         </p:column>
                     </p:dataTable>
                     <p:confirmDialog global="true" styleClass="change-position">

@@ -30,6 +30,7 @@ import javax.faces.view.ViewScoped;
 import Clases.ClsTablaTesis;
 import Clases.ClsMaestria;
 import Clases.ClsEstudiante;
+import Pojo.PalabrasClave;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -63,7 +64,8 @@ public class MbVtesis implements Serializable{
      private String resumen;
      private Date fechaSubida;
      
-     
+     private String pc1,pc2,pc3,pc4,pc5;
+     private PalabrasClave tpalabrasclave;
     
     private Maestria tMaestria;    
     private Tesis tTesis;
@@ -90,12 +92,29 @@ public class MbVtesis implements Serializable{
         llenarCboMaestria();
         tMaestria= new Maestria();
         tTesis = new Tesis();
+        tpalabrasclave = new PalabrasClave();
         tEstudiante= new Estudiante();
     }
             
     private void vaciarCajas(){
         tTesis = new Tesis();
+        tpalabrasclave = new PalabrasClave();
     }
+
+    public String getPc1() {
+        return pc1;
+    }
+
+    public PalabrasClave getTpalabrasclave() {
+        return tpalabrasclave;
+    }
+
+    public void setTpalabrasclave(PalabrasClave tpalabrasclave) {
+        this.tpalabrasclave = tpalabrasclave;
+    }
+   
+    
+    
 
     public ClsEstudiante getClsestudiante() {
         return clsestudiante;
@@ -249,6 +268,8 @@ public class MbVtesis implements Serializable{
             
             List<Estudiante> lstestu = daoestudiante.getEstudiantes();
             this.lstestudiante.clear();
+            this.lstestudiante.add(new ClsEstudiante(-1,"Ninguno","Ninguno"));
+            
             for(Estudiante e : lstestu){
                 this.lstestudiante.add(new ClsEstudiante(
                         e.getId(), 
@@ -466,27 +487,26 @@ public class MbVtesis implements Serializable{
         }
     }
     
-    public void registrarTesis(){
-        
+    public void registrarTesis(){        
         //Variable para saber si esta registrada
-        boolean repetida = false;
+        boolean repetida = false;       
+        boolean pcc = false;
         
-        DaoTesis daoTesis = new DaoTesis();
+        DaoTesis daoTesis = new DaoTesis();    
         tTesis.setAutor(this.clsestudiante.getNombres());
         
-        tEstudiante.setId(this.clsestudiante.getId());
+        tEstudiante.setId(this.clsestudiante.getId());  
         tTesis.setEstudiante(tEstudiante);        
         
         tTesis.setFechaSubida(this.tTesis.getFechaSubida());
         tTesis.setFechaSustentacion(this.tTesis.getFechaSustentacion());
         
-        tMaestria.setId(this.clsMaestria.getId());
+        tMaestria.setId(this.clsMaestria.getId());       
         tTesis.setMaestria(tMaestria);
         
-        tTesis.setResumen(this.tTesis.getResumen());
+        tTesis.setResumen(this.tTesis.getResumen());       
         tTesis.setRuta(this.tTesis.getRuta());
-        tTesis.setTitulo(this.tTesis.getTitulo());
-        titulo="";
+        tTesis.setTitulo(this.tTesis.getTitulo());        
         try{
             List<Tesis> lstTesis=(List<Tesis>) daoTesis.getTesisxTitulo(tTesis.getTitulo());
             if(lstTesis.size() > 0){
@@ -503,9 +523,42 @@ public class MbVtesis implements Serializable{
         if(repetida){
             mensajesError("Registro repetido");            
         }else{
-            vaciarCajas();
+          //  pcc = registrarPC(tTesis);
+            vaciarCajas();            
             if(msg)
-                mensajesOk("Datos procesados bien");
+                mensajesOk("Datos procesados bien");            
+            else
+                mensajesError("error al intentar procesar");
+                }
+    }
+    
+    public void registrarPC(Tesis ttesi){
+        boolean repetida=false;
+        DaoTesis daoTesis = new DaoTesis();
+        tpalabrasclave.setDescripcion(tpalabrasclave.getDescripcion());
+        tpalabrasclave.setTesis(ttesi);
+        
+        try{       
+            List<Tesis> lstTesis=(List<Tesis>) daoTesis.getTesisxTitulo(tTesis.getTitulo());
+            if(lstTesis.size() > 0){
+                repetida = true;
+            }
+            else{
+                //Si la maestria no existe se la registra
+               // msg =  daoTesis.registrarTesis(tTesis);
+                msg= daoTesis.registrarPalabrasClave(tpalabrasclave);
+            }    
+            
+        }catch (Exception e){
+            
+        }               
+        if(repetida){
+            mensajesError("Registro repetido");            
+        }else{
+          //  pcc = registrarPC(tTesis);
+            vaciarCajas();            
+            if(msg)
+                mensajesOk("Datos procesados bien");            
             else
                 mensajesError("error al intentar procesar");
                 }

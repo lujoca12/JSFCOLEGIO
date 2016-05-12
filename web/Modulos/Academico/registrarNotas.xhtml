@@ -84,7 +84,8 @@
                                              rendered="#{mbVNotas.lstTblNotas.size() gt 0 and mbVNotas.tipo_user gt 0 and mbVNotas.estado ne 'A' and mbVNotas.estado ne 'G'}" >
                                 <p:confirm header="Registro de Calificaciones" message="Desea guardar las notas?" icon="ui-icon-alert" />
                             </p:commandButton>
-                            <p:commandButton value="Guardar" update="frmRegistrarNotas,msgsNotas" styleClass="anchoBotones" icon="ui-icon-disk"
+                            <p:commandButton value="Guardar" update="frmRegistrarNotas,msgsNotas" styleClass="anchoBotones" 
+                                             icon="ui-icon-disk"
                                              actionListener="#{mbVNotas.confirmar_notas_Secretaria()}" 
                                              rendered="#{(mbVNotas.tipo_user eq 0 and mbVNotas.estado ne 'B' and mbVNotas.estado ne 'A' and mbVNotas.estado ne ' ')}" >
                                 <p:confirm header="Registro de Calificaciones" message="Desea guardar las notas?" icon="ui-icon-alert" />

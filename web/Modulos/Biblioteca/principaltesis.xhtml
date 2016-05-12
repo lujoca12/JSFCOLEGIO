@@ -73,7 +73,7 @@
                     <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->   
                     <p:dataTable class="tblDatos" id="tbltesis" var="lstTbl" value="#{mbVtesis.lstTablatesis}"
                                  editable="true" scrollable="true"
-                                 rows="12" paginator="true"
+                                 rows="10" paginator="true"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  rowsPerPageTemplate="5,10,20">      
                         <p:column headerText="Autor" style="width: 10%" >
@@ -87,6 +87,10 @@
                         </p:column>
                         <p:column headerText="fecha Sutentación" style="width: 10%" >
                             <h:outputText value="#{lstTbl.fechaSus}" />
+                        </p:column>
+                        <p:column style="width:10%;">
+                            <p:commandLink value="" />
+                            <p:rowEditor />   
                         </p:column>
                     </p:dataTable>
                     <p:confirmDialog global="true" styleClass="change-position">

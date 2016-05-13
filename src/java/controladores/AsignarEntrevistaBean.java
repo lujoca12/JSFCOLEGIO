@@ -21,6 +21,7 @@ import java.awt.event.ActionEvent;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -229,6 +230,7 @@ public class AsignarEntrevistaBean implements Serializable {
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
@@ -238,18 +240,19 @@ public class AsignarEntrevistaBean implements Serializable {
         });
 
         try {
-
+SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE MMMM d HH:mm:ss z yyyy");
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("postgradouteq@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse("chiting23@gmail.com"));
             message.setSubject("Entrevista Maestria");
-            message.setText("La entrevista tendrá lugar en el "+lugar+" a las "+fechaHora.toString());
+            message.setText("La entrevista tendrá lugar en el "+lugar+" a las "+dateFormat.format(fechaHora));
 
             Transport.send(message);
             FacesMessage m = new FacesMessage("Succesful", "Correo enviado");
             FacesContext.getCurrentInstance().addMessage(null, m);
             lstSInscripcion.remove(SelectedInscripcion);
+            fechaHora=null;
         } catch (AddressException e) {
             System.out.println(e.toString());
             // ...

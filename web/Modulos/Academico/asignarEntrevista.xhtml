@@ -4,7 +4,38 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:head>        
+    <h:head> 
+        <script>
+
+
+        PrimeFaces.locales['es'] = {
+                closeText: 'Cerrar',
+                prevText: 'Anterior',
+                nextText: 'Siguiente',
+                monthNames: ['Enero','Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+                dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
+                dayNamesShort: ['Dom','Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                dayNamesMin: ['D','L','M','M','J','V','S'],
+                weekHeader: 'Semana',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: false,
+                yearSuffix: '',
+                timeOnlyTitle: 'Sólo hora',
+                timeText: 'Tiempo',
+                hourText: 'Hora',
+                minuteText: 'Minuto',
+                secondText: 'Segundo',
+                currentText: 'Fecha actual',
+                ampm: false,
+                month: 'Mes',
+                week: 'Semana',
+                day: 'Día',
+                allDayText : 'Todo el día'
+        };
+        
+        </script>
     </h:head>
     <h:body>
         <div class="ui-fluid">
@@ -58,7 +89,7 @@
                             </p:column>
 
                             <p:column headerText="Promocion">
-                                <p:calendar value="#{asignarEntrevistaBean.fechaHora}" pattern="MM/dd/yyyy HH:mm:ss"/>
+                                <p:calendar value="#{asignarEntrevistaBean.fechaHora}" pattern="dd/MM/yyyy HH:mm:ss" locale="es"/>
                             </p:column>
                         </p:panelGrid>
                         <p:commandButton actionListener="#{asignarEntrevistaBean.enviarEmail()}" update="msgs solicitudes" oncomplete="PF('carDialog').hide()" value="Aceptar"/>

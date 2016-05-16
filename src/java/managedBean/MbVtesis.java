@@ -10,7 +10,7 @@ import Dao.DaoTMaestrias;
 import Dao.DaoTUsuario;
 import Dao.DaoTesis;
 
-import Pojo.Tesis;
+import Pojo.Proyecto;
 import Pojo.TipoTribunal;
 import Pojo.Usuario;
 import Pojo.Maestria;
@@ -68,7 +68,7 @@ public class MbVtesis implements Serializable{
      private PalabrasClave tpalabrasclave;
     
     private Maestria tMaestria;    
-    private Tesis tTesis;
+    private Proyecto tTesis;
     private Estudiante tEstudiante;
     private ArrayList<TipoTribunal> lstTheme;
     private List<SelectItem> lstTodoMaestria;
@@ -91,13 +91,13 @@ public class MbVtesis implements Serializable{
         llenarTablaTesis();
         llenarCboMaestria();
         tMaestria= new Maestria();
-        tTesis = new Tesis();
+        tTesis = new Proyecto();
         tpalabrasclave = new PalabrasClave();
         tEstudiante= new Estudiante();
     }
             
     private void vaciarCajas(){
-        tTesis = new Tesis();
+        tTesis = new Proyecto();
         tpalabrasclave = new PalabrasClave();
     }
 
@@ -236,11 +236,11 @@ public class MbVtesis implements Serializable{
         return LstTablatesis;
     }    
 
-    public Tesis gettTesis() {
+    public Proyecto gettTesis() {
         return tTesis;
     }
 
-    public void settTesis(Tesis tTesis) {
+    public void settTesis(Proyecto tTesis) {
         this.tTesis = tTesis;
     }
 
@@ -344,10 +344,10 @@ public class MbVtesis implements Serializable{
         try {
             LstTablatesis.clear();            
             DaoTesis daoTesis = new DaoTesis();
-            List<Tesis> lsttesis = daoTesis.getTesis();            
+            List<Proyecto> lsttesis = daoTesis.getProyecto();            
             if(lsttesis != null){
                 if(lsttesis.size() > 0){
-                    for(Tesis tes : lsttesis){   
+                    for(Proyecto tes : lsttesis){   
                         LstTablatesis.add(new ClsTablaTesis(tes.getId(),
                                 tes.getAutor(), 
                                 tes.getTitulo(), 
@@ -377,9 +377,9 @@ public class MbVtesis implements Serializable{
         try{
             LstTablatesis.clear();
            DaoTesis dtesis = new DaoTesis();
-           List<Tesis> lsttesis= dtesis.getTesisxAutor(this.autor);
+           List<Proyecto> lsttesis= dtesis.getProyectoxAutor(this.autor);
            if (lsttesis.size() > 0) {
-               for(Tesis tesi : lsttesis){
+               for(Proyecto tesi : lsttesis){
                    LstTablatesis.add(new ClsTablaTesis(
                            tesi.getId(), 
                            tesi.getAutor(), 
@@ -410,9 +410,9 @@ public class MbVtesis implements Serializable{
         try{
             LstTablatesis.clear();
            DaoTesis dtesis = new DaoTesis();
-           List<Tesis> lsttesis= dtesis.getTesisxTitulo(this.titulo);
+           List<Proyecto> lsttesis= dtesis.getProyectoxTitulo(this.titulo);
            if (lsttesis.size() > 0) {
-               for(Tesis tesi : lsttesis){
+               for(Proyecto tesi : lsttesis){
                    LstTablatesis.add(new ClsTablaTesis(
                            tesi.getId(), 
                            tesi.getAutor(), 
@@ -443,9 +443,9 @@ public class MbVtesis implements Serializable{
         try{
             LstTablatesis.clear();
            DaoTesis dtesis = new DaoTesis();
-           List<Tesis> lsttesis= dtesis.getTesisxFechaSust(this.fechaSustentacion);
+           List<Proyecto> lsttesis= dtesis.getProyectoxFechaSust(this.fechaSustentacion);
            if (lsttesis.size() > 0) {
-               for(Tesis tesi : lsttesis){
+               for(Proyecto tesi : lsttesis){
                    LstTablatesis.add(new ClsTablaTesis(
                            tesi.getId(), 
                            tesi.getAutor(), 
@@ -496,25 +496,25 @@ public class MbVtesis implements Serializable{
         tTesis.setAutor(this.clsestudiante.getNombres());
         
         tEstudiante.setId(this.clsestudiante.getId());  
-        tTesis.setEstudiante(tEstudiante);        
+        //tTesis. setEstudiante(tEstudiante);        
         
         tTesis.setFechaSubida(this.tTesis.getFechaSubida());
         tTesis.setFechaSustentacion(this.tTesis.getFechaSustentacion());
         
         tMaestria.setId(this.clsMaestria.getId());       
-        tTesis.setMaestria(tMaestria);
+        //tTesis.setMaestria(tMaestria);
         
         tTesis.setResumen(this.tTesis.getResumen());       
         tTesis.setRuta(this.tTesis.getRuta());
         tTesis.setTitulo(this.tTesis.getTitulo());        
         try{
-            List<Tesis> lstTesis=(List<Tesis>) daoTesis.getTesisxTitulo(tTesis.getTitulo());
+            List<Proyecto> lstTesis=(List<Proyecto>) daoTesis.getProyectoxTitulo(tTesis.getTitulo());
             if(lstTesis.size() > 0){
                 repetida = true;
             }
             else{
                 //Si la maestria no existe se la registra
-                msg =  daoTesis.registrarTesis(tTesis);
+                msg =  daoTesis.registrarProyecto(tTesis);
             }
         }
         catch (Exception e){
@@ -532,14 +532,14 @@ public class MbVtesis implements Serializable{
                 }
     }
     
-    public void registrarPC(Tesis ttesi){
+    public void registrarPC(Proyecto ttesi){
         boolean repetida=false;
         DaoTesis daoTesis = new DaoTesis();
         tpalabrasclave.setDescripcion(tpalabrasclave.getDescripcion());
-        tpalabrasclave.setTesis(ttesi);
+        tpalabrasclave.setProyecto(ttesi);
         
         try{       
-            List<Tesis> lstTesis=(List<Tesis>) daoTesis.getTesisxTitulo(tTesis.getTitulo());
+            List<Proyecto> lstTesis=(List<Proyecto>) daoTesis.getProyectoxTitulo(tTesis.getTitulo());
             if(lstTesis.size() > 0){
                 repetida = true;
             }

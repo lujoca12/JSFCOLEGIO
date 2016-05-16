@@ -61,10 +61,10 @@ public class MbVPalabrasClave implements Serializable{
        try{
            lstTbPalabras.clear();
            DaoTesis daotesis = new DaoTesis();
-           List<Tesis> lsttesis = daotesis.getTesisPalabrasclaves(this.palabra);
+           List<Proyecto> lsttesis = daotesis.getProyectoPalabrasclaves(this.palabra);
            daotesis = new DaoTesis();
            if(lsttesis.size() > 0){
-               for(Tesis tesis : lsttesis){
+               for(Proyecto tesis : lsttesis){
                    lstTbPalabras.add(palabra);
                    
                    

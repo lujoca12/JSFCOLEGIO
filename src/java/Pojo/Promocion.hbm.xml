@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 11/04/2016 15:34:34 by Hibernate Tools 4.3.1 -->
+<!-- Generated 16-may-2016 9:34:21 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Pojo.Promocion" table="promocion" schema="public" optimistic-lock="version">
         <id name="id" type="int">
@@ -37,6 +37,12 @@
         <property name="usuario" type="string">
             <column name="usuario" length="100" />
         </property>
+        <property name="resolucion" type="string">
+            <column name="resolucion" length="25" />
+        </property>
+        <property name="estado" type="java.lang.Character">
+            <column name="estado" length="1" />
+        </property>
         <set name="requisitosPromos" table="requisitos_promo" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="id_promocion" not-null="true" />
@@ -61,11 +67,5 @@
             </key>
             <one-to-many class="Pojo.SolicitudInscripcion" />
         </set>
-        <property name="n_resolucion" type="string">
-            <column name="resolucion" length="25" />
-        </property>
-        <property name="estado" type="java.lang.Character">
-            <column name="estado" length="1" />
-        </property>
     </class>
 </hibernate-mapping>

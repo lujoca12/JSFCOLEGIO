@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 11/04/2016 15:34:25 by Hibernate Tools 4.3.1
+// Generated 16-may-2016 9:34:07 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -14,8 +14,8 @@ public class Maestria  implements java.io.Serializable {
      private int id;
      private String descripcion;
      private Character estado;
-     private Set tesises = new HashSet(0);
      private Set promocions = new HashSet(0);
+     private Set actas = new HashSet(0);
 
     public Maestria() {
     }
@@ -24,12 +24,12 @@ public class Maestria  implements java.io.Serializable {
     public Maestria(int id) {
         this.id = id;
     }
-    public Maestria(int id, String descripcion, Character estado, Set tesises, Set promocions) {
+    public Maestria(int id, String descripcion, Character estado, Set promocions, Set actas) {
        this.id = id;
        this.descripcion = descripcion;
        this.estado = estado;
-       this.tesises = tesises;
        this.promocions = promocions;
+       this.actas = actas;
     }
    
     public int getId() {
@@ -53,19 +53,19 @@ public class Maestria  implements java.io.Serializable {
     public void setEstado(Character estado) {
         this.estado = estado;
     }
-    public Set getTesises() {
-        return this.tesises;
-    }
-    
-    public void setTesises(Set tesises) {
-        this.tesises = tesises;
-    }
     public Set getPromocions() {
         return this.promocions;
     }
     
     public void setPromocions(Set promocions) {
         this.promocions = promocions;
+    }
+    public Set getActas() {
+        return this.actas;
+    }
+    
+    public void setActas(Set actas) {
+        this.actas = actas;
     }
 
 

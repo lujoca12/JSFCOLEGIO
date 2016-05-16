@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 16-may-2016 9:34:21 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.Sustentacion" table="sustentacion" schema="public" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="increment" />
+        </id>
+        <many-to-one name="acta" class="Pojo.Acta" fetch="select">
+            <column name="id_acta" />
+        </many-to-one>
+        <many-to-one name="proyecto" class="Pojo.Proyecto" fetch="select">
+            <column name="id_proyecto" />
+        </many-to-one>
+        <property name="fecha" type="date">
+            <column name="fecha" length="13" />
+        </property>
+        <property name="nota" type="big_decimal">
+            <column name="nota" precision="4" />
+        </property>
+        <set name="tribunals" table="tribunal" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_sustentacion" />
+            </key>
+            <one-to-many class="Pojo.Tribunal" />
+        </set>
+    </class>
+</hibernate-mapping>

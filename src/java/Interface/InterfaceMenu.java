@@ -8,7 +8,6 @@ package Interface;
 import Pojo.DetallePermiso;
 import Pojo.Permiso;
 import Pojo.Usuario;
-import Pojo.registrarpermisosxusuarios;
 import java.util.List;
 
 /**

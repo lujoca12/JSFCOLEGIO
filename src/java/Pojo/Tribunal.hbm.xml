@@ -1,24 +1,24 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 11/04/2016 15:34:34 by Hibernate Tools 4.3.1 -->
+<!-- Generated 16-may-2016 9:34:21 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Pojo.Tribunal" table="tribunal" schema="public" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
-        <property name="fecha" type="date">
-            <column name="fecha" length="13" />
+        <many-to-one name="persona" class="Pojo.Persona" fetch="select">
+            <column name="id_persona" />
+        </many-to-one>
+        <many-to-one name="sustentacion" class="Pojo.Sustentacion" fetch="select">
+            <column name="id_sustentacion" />
+        </many-to-one>
+        <many-to-one name="tipoTribunal" class="Pojo.TipoTribunal" fetch="select">
+            <column name="id_tipo_tribunal" />
+        </many-to-one>
+        <property name="nota" type="big_decimal">
+            <column name="nota" precision="4" />
         </property>
-        <property name="nota" type="string">
-            <column name="nota" length="25" />
-        </property>
-        <set name="detalleTribunals" table="detalle_tribunal" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="id_tribunal" />
-            </key>
-            <one-to-many class="Pojo.DetalleTribunal" />
-        </set>
     </class>
 </hibernate-mapping>

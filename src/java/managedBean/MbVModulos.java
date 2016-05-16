@@ -202,7 +202,7 @@ public class MbVModulos implements Serializable {
                                 modulo.getUsuario().getApellidos() + " " + modulo.getUsuario().getNombres(),
                                 modulo.getCreditos().toString(),
                                 modulo.getId(),
-                                modulo.getN_modulo(),
+                                modulo.getModulo(),
                                 modulo.getFechaInicio() == null ? null:modulo.getFechaInicio(),
                                 modulo.getFechaFin() == null ? null:modulo.getFechaFin(),
                                 modulo.getFechaInicioExamen() == null ? null:modulo.getFechaInicioExamen(),
@@ -371,7 +371,7 @@ public class MbVModulos implements Serializable {
             modulo.setFechaFin(((ClsTablaModulosRegistrados) event.getObject()).getFechaFin());
             modulo.setFechaInicioExamen(((ClsTablaModulosRegistrados) event.getObject()).getFechaInicioExamen());
             modulo.setFechaFinExamen(((ClsTablaModulosRegistrados) event.getObject()).getFechaFinExamen());
-            modulo.setN_modulo(((ClsTablaModulosRegistrados) event.getObject()).getN_modulo());
+            modulo.setModulo(((ClsTablaModulosRegistrados) event.getObject()).getN_modulo());
             msg = daoTmodulo.update(modulo);
             cargarTablaModulos();
 

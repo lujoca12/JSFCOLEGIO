@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 11/04/2016 15:34:34 by Hibernate Tools 4.3.1 -->
+<!-- Generated 16-may-2016 9:34:21 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Pojo.Pais" table="pais" schema="public" optimistic-lock="version">
         <id name="id" type="int">
@@ -12,6 +12,9 @@
         </id>
         <property name="descripcion" type="string">
             <column name="descripcion" length="50" />
+        </property>
+        <property name="codigo" type="string">
+            <column name="codigo" length="5" />
         </property>
         <set name="universidads" table="universidad" inverse="true" lazy="true" fetch="select">
             <key>
@@ -25,8 +28,5 @@
             </key>
             <one-to-many class="Pojo.Provincia" />
         </set>
-        <property name="codigo" type="string">
-            <column name="codigo" length="5" />
-        </property>
     </class>
 </hibernate-mapping>

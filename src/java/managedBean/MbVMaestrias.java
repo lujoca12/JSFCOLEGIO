@@ -231,7 +231,7 @@ public class MbVMaestrias implements Serializable{
                                 promocion.getMaestria().getDescripcion(),promocion.getMaestria().getEstado(),
                                 promocion.getId(),promocion.getDescripcion(),promocion.getFechaResolucion(),promocion.getFechaInicio(),
                                 promocion.getFechaFin(),promocion.getCupo(),promocion.getNCuotas(),promocion.getIdUsuario(),promocion.getUsuario(),
-                                promocion.getN_resolucion()));
+                                promocion.getResolucion()));
                     }
                 }
             }
@@ -383,7 +383,7 @@ public class MbVMaestrias implements Serializable{
         maestria.setId(((ClsTablaMaestriaPromocion) event.getObject()).getIdMaestria());
         promocion.setId(((ClsTablaMaestriaPromocion) event.getObject()).getIdPromocion());
         promocion.setMaestria(maestria);
-        promocion.setN_resolucion(((ClsTablaMaestriaPromocion) event.getObject()).getN_resolucion());
+        promocion.setResolucion(((ClsTablaMaestriaPromocion) event.getObject()).getN_resolucion());
         try {
             msg = daoTpromocion.update(promocion);
             cargarTablaMaestriaPromocion();
@@ -436,7 +436,7 @@ public class MbVMaestrias implements Serializable{
         promocion.setFechaResolucion(clsTblMaestrias.getFechaResolucion());
         promocion.setIdUsuario(clsTblMaestrias.getIdUsuario());
         promocion.setNCuotas(clsTblMaestrias.getCuotas());
-        promocion.setN_resolucion(clsTblMaestrias.getN_resolucion());
+        promocion.setResolucion(clsTblMaestrias.getN_resolucion());
         promocion.setUsuario(clsTblMaestrias.getNombresUsuarios());
         Maestria maestria = new Maestria();
         maestria.setId(clsTblMaestrias.getIdMaestria());

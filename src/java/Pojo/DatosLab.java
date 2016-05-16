@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 11/04/2016 15:34:25 by Hibernate Tools 4.3.1
+// Generated 16-may-2016 9:34:07 by Hibernate Tools 4.3.1
 
 
 
@@ -25,7 +25,7 @@ public class DatosLab  implements java.io.Serializable {
     public DatosLab(int id) {
         this.id = id;
     }
-    public DatosLab(int id, Estudiante estudiante, Parroquia parroquia, String empresa, String direccion, String telefono, String email,String cargo) {
+    public DatosLab(int id, Estudiante estudiante, Parroquia parroquia, String empresa, String direccion, String telefono, String email, String cargo) {
        this.id = id;
        this.estudiante = estudiante;
        this.parroquia = parroquia;
@@ -34,14 +34,6 @@ public class DatosLab  implements java.io.Serializable {
        this.telefono = telefono;
        this.email = email;
        this.cargo = cargo;
-    }
-
-    public String getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
     }
    
     public int getId() {
@@ -92,6 +84,13 @@ public class DatosLab  implements java.io.Serializable {
     
     public void setEmail(String email) {
         this.email = email;
+    }
+    public String getCargo() {
+        return this.cargo;
+    }
+    
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
     }
 
 

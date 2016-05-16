@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 11/04/2016 15:34:34 by Hibernate Tools 4.3.1 -->
+<!-- Generated 16-may-2016 9:34:21 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Pojo.Modulo" table="modulo" schema="public" optimistic-lock="version">
         <id name="id" type="int">
@@ -20,6 +20,15 @@
         <property name="descripcion" type="string">
             <column name="descripcion" length="100" />
         </property>
+        <property name="fechaInicio" type="date">
+            <column name="fecha_inicio" length="13" />
+        </property>
+        <property name="fechaFin" type="date">
+            <column name="fecha_fin" length="13" />
+        </property>
+        <property name="modulo" type="string">
+            <column name="modulo" length="15" />
+        </property>
         <set name="asistencias" table="asistencia" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="id_modulo" not-null="true" />
@@ -32,15 +41,6 @@
             </key>
             <one-to-many class="Pojo.Notas" />
         </set>
-        <property name="fechaInicio" type="date">
-            <column name="fecha_inicio" length="13" />
-        </property>
-        <property name="fechaFin" type="date">
-            <column name="fecha_fin" length="13" />
-        </property>
-        <property name="n_modulo" type="string">
-            <column name="modulo" length="15" />
-        </property>
         <property name="fechaInicioExamen" type="date">
             <column name="fecha_inicio_examen" length="13" />
         </property>

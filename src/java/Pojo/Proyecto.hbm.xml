@@ -1,18 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 11/04/2016 15:34:34 by Hibernate Tools 4.3.1 -->
+<!-- Generated 16-may-2016 9:34:21 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="Pojo.Tesis" table="tesis" schema="public" optimistic-lock="version">
+    <class name="Pojo.Proyecto" table="proyecto" schema="public" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
             <generator class="increment" />
         </id>
-        <many-to-one name="estudiante" class="Pojo.Estudiante" fetch="select">
-            <column name="id_estudiante" />
-        </many-to-one>
-        <many-to-one name="maestria" class="Pojo.Maestria" fetch="select">
-            <column name="id_maestria" not-null="true" />
+        <many-to-one name="titulacion" class="Pojo.Titulacion" fetch="select">
+            <column name="id_titulacion" />
         </many-to-one>
         <property name="titulo" type="string">
             <column name="titulo" />
@@ -32,11 +29,20 @@
         <property name="fechaSubida" type="date">
             <column name="fecha_subida" length="13" />
         </property>
+        <property name="maestria" type="string">
+            <column name="maestria" />
+        </property>
         <set name="palabrasClaves" table="palabras_clave" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="id_tesis" not-null="true" />
+                <column name="id_proyecto" not-null="true" />
             </key>
             <one-to-many class="Pojo.PalabrasClave" />
+        </set>
+        <set name="sustentacions" table="sustentacion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_proyecto" />
+            </key>
+            <one-to-many class="Pojo.Sustentacion" />
         </set>
     </class>
 </hibernate-mapping>

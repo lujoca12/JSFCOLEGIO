@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 16-may-2016 9:34:21 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.Titulacion" table="titulacion" schema="public" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="increment" />
+        </id>
+        <many-to-one name="matricula" class="Pojo.Matricula" fetch="select">
+            <column name="id_matricula" />
+        </many-to-one>
+        <many-to-one name="tipoTitulacion" class="Pojo.TipoTitulacion" fetch="select">
+            <column name="id_tipo_titulacion" />
+        </many-to-one>
+        <property name="nota" type="big_decimal">
+            <column name="nota" precision="4" />
+        </property>
+        <property name="fechaInicio" type="date">
+            <column name="fecha_inicio" length="13" />
+        </property>
+        <property name="fechaFin" type="date">
+            <column name="fecha_fin" length="13" />
+        </property>
+        <set name="proyectos" table="proyecto" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_titulacion" />
+            </key>
+            <one-to-many class="Pojo.Proyecto" />
+        </set>
+    </class>
+</hibernate-mapping>

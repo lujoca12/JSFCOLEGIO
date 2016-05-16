@@ -9,7 +9,6 @@ import Dao.DaoTMenu;
 import Pojo.DetallePermiso;
 import Pojo.Permiso;
 import Pojo.Usuario;
-import Pojo.registrarpermisosxusuarios;
 import java.awt.Menu;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;

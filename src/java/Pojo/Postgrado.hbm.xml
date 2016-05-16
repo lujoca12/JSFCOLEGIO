@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 16-may-2016 9:34:21 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="Pojo.Postgrado" table="postgrado">
+    <class name="Pojo.Postgrado" table="postgrado" schema="public" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
             <generator class="sequence" >
@@ -9,7 +11,7 @@
             </generator>
         </id>
         <property name="email" type="string">
-            <column name="email" length="255" />
+            <column name="email" />
         </property>
         <property name="claveEmail" type="string">
             <column name="clave_email" length="50" />

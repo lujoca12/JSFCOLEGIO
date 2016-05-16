@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 11/04/2016 15:34:25 by Hibernate Tools 4.3.1
+// Generated 16-may-2016 9:34:07 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -25,7 +25,6 @@ public class Estudiante  implements java.io.Serializable {
      private Integer dscColegiatura;
      private Set datosDoms = new HashSet(0);
      private Set datosNacs = new HashSet(0);
-     private Set tesises = new HashSet(0);
      private Set datosLabs = new HashSet(0);
      private Set solicitudInscripcions = new HashSet(0);
 
@@ -37,7 +36,7 @@ public class Estudiante  implements java.io.Serializable {
         this.id = id;
         this.cedPasaporte = cedPasaporte;
     }
-    public Estudiante(int id, String cedPasaporte, String nombres, String apellidos, String email, String celular, Date fechaNac, Character sexo, Character estadoCivil, String paisOrigen, Integer dscColegiatura, Set datosDoms, Set datosNacs, Set tesises, Set datosLabs, Set solicitudInscripcions) {
+    public Estudiante(int id, String cedPasaporte, String nombres, String apellidos, String email, String celular, Date fechaNac, Character sexo, Character estadoCivil, String paisOrigen, Integer dscColegiatura, Set datosDoms, Set datosNacs, Set datosLabs, Set solicitudInscripcions) {
        this.id = id;
        this.cedPasaporte = cedPasaporte;
        this.nombres = nombres;
@@ -51,7 +50,6 @@ public class Estudiante  implements java.io.Serializable {
        this.dscColegiatura = dscColegiatura;
        this.datosDoms = datosDoms;
        this.datosNacs = datosNacs;
-       this.tesises = tesises;
        this.datosLabs = datosLabs;
        this.solicitudInscripcions = solicitudInscripcions;
     }
@@ -146,13 +144,6 @@ public class Estudiante  implements java.io.Serializable {
     
     public void setDatosNacs(Set datosNacs) {
         this.datosNacs = datosNacs;
-    }
-    public Set getTesises() {
-        return this.tesises;
-    }
-    
-    public void setTesises(Set tesises) {
-        this.tesises = tesises;
     }
     public Set getDatosLabs() {
         return this.datosLabs;

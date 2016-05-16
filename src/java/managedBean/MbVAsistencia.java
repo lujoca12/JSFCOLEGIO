@@ -172,7 +172,7 @@ public class MbVAsistencia implements Serializable {
                                 modulo.getUsuario().getApellidos() + " " + modulo.getUsuario().getNombres(),
                                 modulo.getCreditos().toString(),
                                 modulo.getId(),
-                                modulo.getN_modulo(),
+                                modulo.getModulo(),
                                 modulo.getFechaInicio() == null ? null:modulo.getFechaInicio(),
                                 modulo.getFechaFin() == null ? null:modulo.getFechaFin(),
                                 modulo.getFechaInicioExamen() == null ? null:modulo.getFechaInicioExamen(),

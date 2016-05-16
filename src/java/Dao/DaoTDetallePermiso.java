@@ -9,7 +9,6 @@ import Interface.InterfaceDetallePermiso;
 import Pojo.DetallePermiso;
 import Pojo.Permiso;
 import Pojo.Usuario;
-import Pojo.registrarpermisosxusuarios;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;

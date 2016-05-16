@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 11/04/2016 15:34:25 by Hibernate Tools 4.3.1
+// Generated 16-may-2016 9:34:07 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -13,7 +13,8 @@ public class TipoTribunal  implements java.io.Serializable {
 
      private int id;
      private String descripcion;
-     private Set detalleTribunals = new HashSet(0);
+     private Character estado;
+     private Set tribunals = new HashSet(0);
 
     public TipoTribunal() {
     }
@@ -22,14 +23,11 @@ public class TipoTribunal  implements java.io.Serializable {
     public TipoTribunal(int id) {
         this.id = id;
     }
-    public TipoTribunal(int id, String descripcion, Set detalleTribunals) {
+    public TipoTribunal(int id, String descripcion, Character estado, Set tribunals) {
        this.id = id;
        this.descripcion = descripcion;
-       this.detalleTribunals = detalleTribunals;
-    }
-
-    public TipoTribunal(int i, String ninguno) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       this.estado = estado;
+       this.tribunals = tribunals;
     }
    
     public int getId() {
@@ -46,12 +44,19 @@ public class TipoTribunal  implements java.io.Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    public Set getDetalleTribunals() {
-        return this.detalleTribunals;
+    public Character getEstado() {
+        return this.estado;
     }
     
-    public void setDetalleTribunals(Set detalleTribunals) {
-        this.detalleTribunals = detalleTribunals;
+    public void setEstado(Character estado) {
+        this.estado = estado;
+    }
+    public Set getTribunals() {
+        return this.tribunals;
+    }
+    
+    public void setTribunals(Set tribunals) {
+        this.tribunals = tribunals;
     }
 
 

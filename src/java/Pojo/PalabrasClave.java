@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 11/04/2016 15:34:25 by Hibernate Tools 4.3.1
+// Generated 16-may-2016 9:34:07 by Hibernate Tools 4.3.1
 
 
 
@@ -10,21 +10,23 @@ public class PalabrasClave  implements java.io.Serializable {
 
 
      private int id;
-     private Tesis tesis;
+     private Proyecto proyecto;
      private String descripcion;
+     private Character estado;
 
     public PalabrasClave() {
     }
 
 	
-    public PalabrasClave(int id, Tesis tesis) {
+    public PalabrasClave(int id, Proyecto proyecto) {
         this.id = id;
-        this.tesis = tesis;
+        this.proyecto = proyecto;
     }
-    public PalabrasClave(int id, Tesis tesis, String descripcion) {
+    public PalabrasClave(int id, Proyecto proyecto, String descripcion, Character estado) {
        this.id = id;
-       this.tesis = tesis;
+       this.proyecto = proyecto;
        this.descripcion = descripcion;
+       this.estado = estado;
     }
    
     public int getId() {
@@ -34,12 +36,12 @@ public class PalabrasClave  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    public Tesis getTesis() {
-        return this.tesis;
+    public Proyecto getProyecto() {
+        return this.proyecto;
     }
     
-    public void setTesis(Tesis tesis) {
-        this.tesis = tesis;
+    public void setProyecto(Proyecto proyecto) {
+        this.proyecto = proyecto;
     }
     public String getDescripcion() {
         return this.descripcion;
@@ -47,6 +49,13 @@ public class PalabrasClave  implements java.io.Serializable {
     
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+    public Character getEstado() {
+        return this.estado;
+    }
+    
+    public void setEstado(Character estado) {
+        this.estado = estado;
     }
 
 

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 16-may-2016 9:34:21 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.HorarioModulo" table="horario_modulo" schema="public" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="increment" />
+        </id>
+        <property name="horaInicio" type="time">
+            <column name="hora_inicio" length="15" />
+        </property>
+        <property name="horaFin" type="timestamp">
+            <column name="hora_fin" length="29" />
+        </property>
+        <property name="fecha" type="date">
+            <column name="fecha" length="13" />
+        </property>
+        <property name="mes" type="java.lang.Integer">
+            <column name="mes" />
+        </property>
+        <property name="dia" type="java.lang.Character">
+            <column name="dia" length="1" />
+        </property>
+        <property name="hora" type="big_decimal">
+            <column name="hora" precision="4" />
+        </property>
+    </class>
+</hibernate-mapping>

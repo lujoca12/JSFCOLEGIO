@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 11/04/2016 15:34:25 by Hibernate Tools 4.3.1
+// Generated 16-may-2016 9:34:07 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -15,9 +15,9 @@ public class Requisitos  implements java.io.Serializable {
      private String descripcion;
      private Character estado;
      private Character respaldo;
-     private Set requisitosPromos = new HashSet(0);
-     private String formato;
      private String tipoArchivo;
+     private String formato;
+     private Set requisitosPromos = new HashSet(0);
 
     public Requisitos() {
     }
@@ -26,35 +26,15 @@ public class Requisitos  implements java.io.Serializable {
     public Requisitos(int id) {
         this.id = id;
     }
-    public Requisitos(int id, String descripcion, Character estado, Character respaldo, Set requisitosPromos,String formato,String tipoArchivo) {
+    public Requisitos(int id, String descripcion, Character estado, Character respaldo, String tipoArchivo, String formato, Set requisitosPromos) {
        this.id = id;
        this.descripcion = descripcion;
        this.estado = estado;
        this.respaldo = respaldo;
+       this.tipoArchivo = tipoArchivo;
+       this.formato = formato;
        this.requisitosPromos = requisitosPromos;
-       this.formato=formato;
-       this.tipoArchivo=tipoArchivo;
     }
-
-    
-    
-
-    public String getFormato() {
-        return formato;
-    }
-
-    public void setFormato(String formato) {
-        this.formato = formato;
-    }
-
-    public String getTipoArchivo() {
-        return tipoArchivo;
-    }
-
-    public void setTipoArchivo(String tipoArchivo) {
-        this.tipoArchivo = tipoArchivo;
-    }
-    
    
     public int getId() {
         return this.id;
@@ -84,6 +64,20 @@ public class Requisitos  implements java.io.Serializable {
     public void setRespaldo(Character respaldo) {
         this.respaldo = respaldo;
     }
+    public String getTipoArchivo() {
+        return this.tipoArchivo;
+    }
+    
+    public void setTipoArchivo(String tipoArchivo) {
+        this.tipoArchivo = tipoArchivo;
+    }
+    public String getFormato() {
+        return this.formato;
+    }
+    
+    public void setFormato(String formato) {
+        this.formato = formato;
+    }
     public Set getRequisitosPromos() {
         return this.requisitosPromos;
     }
@@ -91,15 +85,8 @@ public class Requisitos  implements java.io.Serializable {
     public void setRequisitosPromos(Set requisitosPromos) {
         this.requisitosPromos = requisitosPromos;
     }
-    
-    public String getIdCombinado(){
-        
-        return formato+"-"+String.valueOf(id);
-    }
-    
-    public String getPedidoArchivo(){
-        return descripcion +" : Solo archivos tipo "+tipoArchivo;
-    }
+
+
 
 
 }

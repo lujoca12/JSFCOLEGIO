@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 11/04/2016 15:34:25 by Hibernate Tools 4.3.1
+// Generated 16-may-2016 9:34:07 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -22,12 +22,12 @@ public class Promocion  implements java.io.Serializable {
      private Integer NCuotas;
      private int idUsuario;
      private String usuario;
+     private String resolucion;
+     private Character estado;
      private Set requisitosPromos = new HashSet(0);
      private Set precios = new HashSet(0);
      private Set modulos = new HashSet(0);
      private Set solicitudInscripcions = new HashSet(0);
-     private String n_resolucion;
-     private Character estado;
 
     public Promocion() {
     }
@@ -38,7 +38,7 @@ public class Promocion  implements java.io.Serializable {
         this.maestria = maestria;
         this.idUsuario = idUsuario;
     }
-    public Promocion(int id, Maestria maestria, Integer descripcion, Date fechaResolucion, Date fechaInicio, Date fechaFin, Integer cupo, Integer NCuotas, int idUsuario, String usuario, Set requisitosPromos, Set precios, Set modulos, Set solicitudInscripcions, String n_resolucion, Character estado) {
+    public Promocion(int id, Maestria maestria, Integer descripcion, Date fechaResolucion, Date fechaInicio, Date fechaFin, Integer cupo, Integer NCuotas, int idUsuario, String usuario, String resolucion, Character estado, Set requisitosPromos, Set precios, Set modulos, Set solicitudInscripcions) {
        this.id = id;
        this.maestria = maestria;
        this.descripcion = descripcion;
@@ -49,20 +49,12 @@ public class Promocion  implements java.io.Serializable {
        this.NCuotas = NCuotas;
        this.idUsuario = idUsuario;
        this.usuario = usuario;
+       this.resolucion = resolucion;
+       this.estado = estado;
        this.requisitosPromos = requisitosPromos;
        this.precios = precios;
        this.modulos = modulos;
        this.solicitudInscripcions = solicitudInscripcions;
-       this.n_resolucion = n_resolucion;
-       this.estado = estado;
-    }
-
-    public Character getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Character estado) {
-        this.estado = estado;
     }
    
     public int getId() {
@@ -135,6 +127,20 @@ public class Promocion  implements java.io.Serializable {
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
+    public String getResolucion() {
+        return this.resolucion;
+    }
+    
+    public void setResolucion(String resolucion) {
+        this.resolucion = resolucion;
+    }
+    public Character getEstado() {
+        return this.estado;
+    }
+    
+    public void setEstado(Character estado) {
+        this.estado = estado;
+    }
     public Set getRequisitosPromos() {
         return this.requisitosPromos;
     }
@@ -164,13 +170,8 @@ public class Promocion  implements java.io.Serializable {
         this.solicitudInscripcions = solicitudInscripcions;
     }
 
-    public String getN_resolucion() {
-        return n_resolucion;
-    }
 
-    public void setN_resolucion(String n_resolucion) {
-        this.n_resolucion = n_resolucion;
-    }
+
 
 }
 

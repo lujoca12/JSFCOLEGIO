@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 11/04/2016 15:34:25 by Hibernate Tools 4.3.1
+// Generated 16-may-2016 9:34:07 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -18,10 +18,11 @@ public class Matricula  implements java.io.Serializable {
      private Integer dscColegiatura;
      private Character estado;
      private String NMatricula;
+     private Date fechaGraduacion;
      private Set asistencias = new HashSet(0);
+     private Set titulacions = new HashSet(0);
      private Set pagos = new HashSet(0);
      private Set notases = new HashSet(0);
-     private Date fechaGraduacion;
 
     public Matricula() {
     }
@@ -31,25 +32,18 @@ public class Matricula  implements java.io.Serializable {
         this.id = id;
         this.solicitudInscripcion = solicitudInscripcion;
     }
-    public Matricula(int id, SolicitudInscripcion solicitudInscripcion, Date fechaMatricula, Integer dscColegiatura, Character estado, String NMatricula, Set asistencias, Set pagos, Set notases,Date fechaGraduacion) {
+    public Matricula(int id, SolicitudInscripcion solicitudInscripcion, Date fechaMatricula, Integer dscColegiatura, Character estado, String NMatricula, Date fechaGraduacion, Set asistencias, Set titulacions, Set pagos, Set notases) {
        this.id = id;
        this.solicitudInscripcion = solicitudInscripcion;
        this.fechaMatricula = fechaMatricula;
        this.dscColegiatura = dscColegiatura;
        this.estado = estado;
        this.NMatricula = NMatricula;
+       this.fechaGraduacion = fechaGraduacion;
        this.asistencias = asistencias;
+       this.titulacions = titulacions;
        this.pagos = pagos;
        this.notases = notases;
-       this.fechaGraduacion=fechaGraduacion;
-    }
-
-    public Date getFechaGraduacion() {
-        return fechaGraduacion;
-    }
-
-    public void setFechaGraduacion(Date fechaGraduacion) {
-        this.fechaGraduacion = fechaGraduacion;
     }
    
     public int getId() {
@@ -94,12 +88,26 @@ public class Matricula  implements java.io.Serializable {
     public void setNMatricula(String NMatricula) {
         this.NMatricula = NMatricula;
     }
+    public Date getFechaGraduacion() {
+        return this.fechaGraduacion;
+    }
+    
+    public void setFechaGraduacion(Date fechaGraduacion) {
+        this.fechaGraduacion = fechaGraduacion;
+    }
     public Set getAsistencias() {
         return this.asistencias;
     }
     
     public void setAsistencias(Set asistencias) {
         this.asistencias = asistencias;
+    }
+    public Set getTitulacions() {
+        return this.titulacions;
+    }
+    
+    public void setTitulacions(Set titulacions) {
+        this.titulacions = titulacions;
     }
     public Set getPagos() {
         return this.pagos;

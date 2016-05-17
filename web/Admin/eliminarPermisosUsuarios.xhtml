@@ -52,7 +52,7 @@
                         <p:column headerText="Orden" style="width: 10%; text-align: center;">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{menu.orden}" /></f:facet>
-                                <f:facet name="input"><p:inputText value="#{menu.orden}" style="width:100%" label="text"/></f:facet>
+                                <f:facet name="input"><p:inputText value="#{menu.orden}" onkeypress="return soloNumeros(event)" style="width:100%" label="text"/></f:facet>
                             </p:cellEditor>
                         </p:column>
 

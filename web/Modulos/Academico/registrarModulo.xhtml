@@ -34,7 +34,7 @@
                             </p:selectOneMenu>
                             
                             <p:outputLabel for="cboNmodulo" value="Nº Mòdulo:" styleClass="labelDerecha"/>
-                            <p:selectOneMenu id="cboNmodulo" required="true" value="#{mbVModulos.tModulo.n_modulo}">
+                            <p:selectOneMenu id="cboNmodulo" required="true" value="#{mbVModulos.tModulo.modulo}">
                                 <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{mbVModulos.lstTodosModulos}" />
                             </p:selectOneMenu>
@@ -89,7 +89,7 @@
 
 
                             <p:outputLabel for="txtFechaFinExamen" value="Fecha fin examen:" styleClass="labelDerecha" />
-                            <p:calendar id="txtFechaFinExamen" mindate="#{mbVModulos.tModulo.txtFechaInicioExamen}" locale="es" value="#{mbVModulos.tModulo.fechaFinExamen}" onkeypress="return permite(event, 'none')" effect="fold" pattern="dd-MM-yyyy" mask="true" >
+                            <p:calendar id="txtFechaFinExamen" mindate="#{mbVModulos.tModulo.fechaInicioExamen}" locale="es" value="#{mbVModulos.tModulo.fechaFinExamen}" onkeypress="return permite(event, 'none')" effect="fold" pattern="dd-MM-yyyy" mask="true" >
                                 <f:attribute name="txtFechaInicioExamen" value="#{mbVModulos.tModulo.fechaInicioExamen}"/>
                                 <f:validator validatorId="primeDateRangeValidator1" />
                             </p:calendar>

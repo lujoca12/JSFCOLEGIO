@@ -322,20 +322,20 @@ public class MbVtesis implements Serializable{
     }
         
     public void llenarCboTipotribunal() {
-        this.lstTheme = new ArrayList<TipoTribunal>();
-        try {
-            DaoTUsuario daoTusuario = new DaoTUsuario();
-
-            List<Usuario> lstUsuario = daoTusuario.getDocentes();
-            this.lstTheme.clear();
-            this.lstTheme.add(new TipoTribunal(-1, "Ninguno"));
-            for (Usuario user : lstUsuario) {
-                this.lstTheme.add(new TipoTribunal(user.getId(), 
-                        user.getApellidos() + " " + user.getNombres()));
-            }
-        } catch (Exception ex) {
-
-        }
+//        this.lstTheme = new ArrayList<TipoTribunal>();
+//        try {
+//            DaoTUsuario daoTusuario = new DaoTUsuario();
+//
+//            List<Usuario> lstUsuario = daoTusuario.getDocentes();
+//            this.lstTheme.clear();
+//            this.lstTheme.add(new TipoTribunal(-1, "Ninguno"));
+//            for (Usuario user : lstUsuario) {
+//                this.lstTheme.add(new TipoTribunal(user.getId(), 
+//                        user.getApellidos() + " " + user.getNombres()));
+//            }
+//        } catch (Exception ex) {
+//
+//        }
     }
     
     public void llenarTablaTesis()
@@ -355,8 +355,8 @@ public class MbVtesis implements Serializable{
                                 tes.getFechaSubida() , 
                                 tes.getRuta(),
                                 tes.getResumen(), 
-                                tes.getMaestria(),
-                                tes.getEstudiante()));
+                                null,
+                               null));
                       //LstTablatesis.add(new ClsTablaTesis(id, autor, titulo, fechaSubida, fechaSubida, ruta, resumen, idMaestria, idEstudiante));
                     }
                 }
@@ -373,30 +373,30 @@ public class MbVtesis implements Serializable{
         }        
     }
     public void CargarTesisAutor(){
-        LstTablatesis= new ArrayList<>();
-        try{
-            LstTablatesis.clear();
-           DaoTesis dtesis = new DaoTesis();
-           List<Proyecto> lsttesis= dtesis.getProyectoxAutor(this.autor);
-           if (lsttesis.size() > 0) {
-               for(Proyecto tesi : lsttesis){
-                   LstTablatesis.add(new ClsTablaTesis(
-                           tesi.getId(), 
-                           tesi.getAutor(), 
-                           tesi.getTitulo(),
-                           tesi.getFechaSustentacion(), 
-                           tesi.getFechaSubida(), 
-                           tesi.getRuta(), 
-                           tesi.getResumen(), 
-                           tesi.getMaestria(), 
-                           tesi.getEstudiante()) );
-                  // LstTablatesis.add(new ClsTablaTesis(id, autor, titulo, fechaSubida, fechaSubida, ruta, resumen, tMaestria, tEstudiante) );
-               }
-           }           
-        }
-        catch (Exception e){
-            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, e);
-        }
+//        LstTablatesis= new ArrayList<>();
+//        try{
+//            LstTablatesis.clear();
+//           DaoTesis dtesis = new DaoTesis();
+//           List<Proyecto> lsttesis= dtesis.getProyectoxAutor(this.autor);
+//           if (lsttesis.size() > 0) {
+//               for(Proyecto tesi : lsttesis){
+//                   LstTablatesis.add(new ClsTablaTesis(
+//                           tesi.getId(), 
+//                           tesi.getAutor(), 
+//                           tesi.getTitulo(),
+//                           tesi.getFechaSustentacion(), 
+//                           tesi.getFechaSubida(), 
+//                           tesi.getRuta(), 
+//                           tesi.getResumen(), 
+//                           1, 
+//                           "") );
+//                  // LstTablatesis.add(new ClsTablaTesis(id, autor, titulo, fechaSubida, fechaSubida, ruta, resumen, tMaestria, tEstudiante) );
+//               }
+//           }           
+//        }
+//        catch (Exception e){
+//            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, e);
+//        }
         
     }
     public void consultarTesisTitulo(){
@@ -406,30 +406,30 @@ public class MbVtesis implements Serializable{
         }
     }
      public void CargarTesisTitulo(){
-         LstTablatesis= new ArrayList<>();
-        try{
-            LstTablatesis.clear();
-           DaoTesis dtesis = new DaoTesis();
-           List<Proyecto> lsttesis= dtesis.getProyectoxTitulo(this.titulo);
-           if (lsttesis.size() > 0) {
-               for(Proyecto tesi : lsttesis){
-                   LstTablatesis.add(new ClsTablaTesis(
-                           tesi.getId(), 
-                           tesi.getAutor(), 
-                           tesi.getTitulo(),
-                           tesi.getFechaSustentacion(), 
-                           tesi.getFechaSubida(), 
-                           tesi.getRuta(), 
-                           tesi.getResumen(), 
-                           tesi.getMaestria(), 
-                           tesi.getEstudiante()) );
-                  // LstTablatesis.add(new ClsTablaTesis(id, autor, titulo, fechaSubida, fechaSubida, ruta, resumen, tMaestria, tEstudiante) );
-               }
-           }           
-        }
-        catch (Exception e){
-            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, e);
-        }
+//         LstTablatesis= new ArrayList<>();
+//        try{
+//            LstTablatesis.clear();
+//           DaoTesis dtesis = new DaoTesis();
+//           List<Proyecto> lsttesis= dtesis.getProyectoxTitulo(this.titulo);
+//           if (lsttesis.size() > 0) {
+//               for(Proyecto tesi : lsttesis){
+//                   LstTablatesis.add(new ClsTablaTesis(
+//                           tesi.getId(), 
+//                           tesi.getAutor(), 
+//                           tesi.getTitulo(),
+//                           tesi.getFechaSustentacion(), 
+//                           tesi.getFechaSubida(), 
+//                           tesi.getRuta(), 
+//                           tesi.getResumen(), 
+//                           1, 
+//                           "") );
+//                  // LstTablatesis.add(new ClsTablaTesis(id, autor, titulo, fechaSubida, fechaSubida, ruta, resumen, tMaestria, tEstudiante) );
+//               }
+//           }           
+//        }
+//        catch (Exception e){
+//            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, e);
+//        }
      }
     
     public void consultarTesisFechaSus(){
@@ -439,30 +439,30 @@ public class MbVtesis implements Serializable{
         }
     }
     public void CargarTesisFechaSust(){
-        LstTablatesis= new ArrayList<>();
-        try{
-            LstTablatesis.clear();
-           DaoTesis dtesis = new DaoTesis();
-           List<Proyecto> lsttesis= dtesis.getProyectoxFechaSust(this.fechaSustentacion);
-           if (lsttesis.size() > 0) {
-               for(Proyecto tesi : lsttesis){
-                   LstTablatesis.add(new ClsTablaTesis(
-                           tesi.getId(), 
-                           tesi.getAutor(), 
-                           tesi.getTitulo(),
-                           tesi.getFechaSustentacion(), 
-                           tesi.getFechaSubida(), 
-                           tesi.getRuta(), 
-                           tesi.getResumen(), 
-                           tesi.getMaestria(), 
-                           tesi.getEstudiante()) );
-                  // LstTablatesis.add(new ClsTablaTesis(id, autor, titulo, fechaSubida, fechaSubida, ruta, resumen, tMaestria, tEstudiante) );
-               }
-           }           
-        }
-        catch (Exception e){
-            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, e);
-        }
+//        LstTablatesis= new ArrayList<>();
+//        try{
+//            LstTablatesis.clear();
+//           DaoTesis dtesis = new DaoTesis();
+//           List<Proyecto> lsttesis= dtesis.getProyectoxFechaSust(this.fechaSustentacion);
+//           if (lsttesis.size() > 0) {
+//               for(Proyecto tesi : lsttesis){
+//                   LstTablatesis.add(new ClsTablaTesis(
+//                           tesi.getId(), 
+//                           tesi.getAutor(), 
+//                           tesi.getTitulo(),
+//                           tesi.getFechaSustentacion(), 
+//                           tesi.getFechaSubida(), 
+//                           tesi.getRuta(), 
+//                           tesi.getResumen(), 
+//                           1, 
+//                           "tesi.getEstudiante()") );
+//                  // LstTablatesis.add(new ClsTablaTesis(id, autor, titulo, fechaSubida, fechaSubida, ruta, resumen, tMaestria, tEstudiante) );
+//               }
+//           }           
+//        }
+//        catch (Exception e){
+//            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, e);
+//        }
     }    
     public void llenarCboMaestria(){
         

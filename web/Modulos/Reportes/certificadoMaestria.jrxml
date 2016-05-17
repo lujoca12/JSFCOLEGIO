@@ -331,7 +331,7 @@
 	</parameter>
 	<queryString language="hql">
 		<![CDATA[select maest.descripcion as maestria, estud.apellidos as apellidos, estud.nombres as nombres, nota.nota as nota, 
-nota.notaTexto as notaTexto, mod.descripcion as modulo, mod.creditos as creditos, mod.n_modulo as n_modulo 
+nota.notaTexto as notaTexto, mod.descripcion as modulo, mod.creditos as creditos, mod.modulo as n_modulo 
 from Notas nota 
 inner join nota.modulo mod 
 inner join nota.matricula matr 
@@ -339,7 +339,7 @@ inner join matr.solicitudInscripcion solic
 inner join solic.estudiante estud 
 inner join solic.promocion pr 
 inner join pr.maestria maest 
-where estud.cedPasaporte = $P{cedulaEstudiante} order by  mod.n_modulo asc]]>
+where estud.cedPasaporte = $P{cedulaEstudiante} order by  mod.modulo asc]]>
 	</queryString>
 	<field name="maestria" class="java.lang.String"/>
 	<field name="apellidos" class="java.lang.String"/>

@@ -350,7 +350,7 @@
 		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
 	</parameter>
 	<queryString language="hql">
-		<![CDATA[select est.cedPasaporte as cedula, est.apellidos as apellidos, est.nombres as nombres, maest.descripcion as maestria, pr.fechaInicio as fechaInicio, pr.fechaFin as fechaFin, pr.descripcion as n_promoc, matr.NMatricula as n_matricula, pr.fechaResolucion as fechaResolucion, pr.n_resolucion as n_resolucion  from Estudiante est  
+		<![CDATA[select est.cedPasaporte as cedula, est.apellidos as apellidos, est.nombres as nombres, maest.descripcion as maestria, pr.fechaInicio as fechaInicio, pr.fechaFin as fechaFin, pr.descripcion as n_promoc, matr.NMatricula as n_matricula, pr.fechaResolucion as fechaResolucion, pr.resolucion as n_resolucion  from Estudiante est  
 inner join est.solicitudInscripcions solinscr 
 inner join solinscr.matriculas matr 
 inner join solinscr.promocion pr 

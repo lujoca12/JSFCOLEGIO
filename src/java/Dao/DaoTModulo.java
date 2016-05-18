@@ -86,6 +86,26 @@ public class DaoTModulo implements InterfaceModulos{
     }
     
     @Override
+    public List<Modulo> getTblModulosMaestria(int idMaestria) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        //Presento los modulos registrados x años 
+        String hql = "from Modulo modul inner join fetch modul.usuario user \n"
+                + "inner join fetch  user.tipoUsuario tuser \n"
+                + "inner join fetch modul.promocion pr \n"
+                + "inner join fetch pr.maestria maest \n"
+                + "where maest.id = "+idMaestria+" and\n"
+                + "(year(current_date) >= year(pr.fechaInicio) and year(current_date)<= year(pr.fechaFin))\n"
+                + "and (tuser.descripcion like '%Prof%' or tuser.descripcion like '%prof%' or tuser.descripcion like '%Docen%' or tuser.descripcion like '%docent%') \n"
+                + "order by modul.descripcion asc";
+        Query query = sesion.createQuery(hql);
+        List<Modulo> lstPermiso=(List<Modulo>) query.list();
+        sesion.close();
+        return lstPermiso;
+    }
+    
+    @Override
     public List<Modulo> getCboModulosNotas(int usuario_id) throws Exception {
         this.sesion = null;
         this.tx = null;

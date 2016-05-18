@@ -23,6 +23,7 @@ public class Modulo  implements java.io.Serializable {
      private String modulo;
      private Set asistencias = new HashSet(0);
      private Set notases = new HashSet(0);
+     private Set horariomodulo = new HashSet(0);
      private Date fechaInicioExamen;
      private Date fechaFinExamen;
      private BigDecimal totalHorasModulo;
@@ -36,7 +37,7 @@ public class Modulo  implements java.io.Serializable {
         this.promocion = promocion;
         this.usuario = usuario;
     }
-    public Modulo(int id, Promocion promocion, Usuario usuario, BigDecimal creditos, String descripcion, Date fechaInicio, Date fechaFin, String modulo, Set asistencias, Set notases, Date fechaInicioExamen, Date fechaFinExamen, BigDecimal totalHorasModulo) {
+    public Modulo(int id, Promocion promocion, Usuario usuario, BigDecimal creditos, String descripcion, Date fechaInicio, Date fechaFin, String modulo, Set asistencias, Set notases, Set horariomodulo, Date fechaInicioExamen, Date fechaFinExamen, BigDecimal totalHorasModulo) {
        this.id = id;
        this.promocion = promocion;
        this.usuario = usuario;
@@ -47,6 +48,7 @@ public class Modulo  implements java.io.Serializable {
        this.modulo = modulo;
        this.asistencias = asistencias;
        this.notases = notases;
+       this.horariomodulo = horariomodulo;
        this.fechaInicioExamen = fechaInicioExamen;
        this.fechaFinExamen = fechaFinExamen;
        this.totalHorasModulo = totalHorasModulo;
@@ -123,6 +125,14 @@ public class Modulo  implements java.io.Serializable {
         this.notases = notases;
     }
 
+    public Set getHorariomodulo() {
+        return horariomodulo;
+    }
+
+    public void setHorariomodulo(Set horariomodulo) {
+        this.horariomodulo = horariomodulo;
+    }
+    
     public Date getFechaInicioExamen() {
         return fechaInicioExamen;
     }

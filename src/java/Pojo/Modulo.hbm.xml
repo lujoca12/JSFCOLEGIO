@@ -41,6 +41,12 @@
             </key>
             <one-to-many class="Pojo.Notas" />
         </set>
+        <set name="horariomodulo" table="horario_modulo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_modulo" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.HorarioModulo" />
+        </set>
         <property name="fechaInicioExamen" type="date">
             <column name="fecha_inicio_examen" length="13" />
         </property>

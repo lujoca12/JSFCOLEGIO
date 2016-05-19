@@ -13,7 +13,7 @@
         <div class="ui-fluid">
             <h:form id="form">
                 <p:tab id="personal" title="RegistrarHorarioModulo">
-                    <p:panel header="Registrar Horario Módulon">
+                    <p:panel header="Registrar Horario Módulo">
                         <p:growl id="msgs" showDetail="true" />
                         <p:focus context="panel"/>
                         <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
@@ -31,7 +31,7 @@
                                 <p:column>
                                     <h:outputText value="#{tProfesor.displayName}" />
                                 </p:column>
-                                <p:ajax listener="#{mbVModulosHorarios.onMaestriaChange}" update="cboModulo panel" />
+                                <p:ajax listener="#{mbVModulosHorarios.onMaestriaChange}" update="form cboModulo panel" />
                             </p:selectOneMenu>
                             
                             <p:outputLabel for="cboModulo" value="Módulos:" styleClass="labelDerecha"/>
@@ -46,13 +46,121 @@
                                 <p:column>
                                     <h:outputText value="#{tModulo.modulo}" />
                                 </p:column>
-                                <p:ajax update="panel" listener="#{mbVModulosHorarios.cargarTablaRegNotas}" />
+                                <p:ajax update="form,panel1,panelTabla1" listener="#{mbVModulosHorarios.onModuloChange}"/>
                             </p:selectOneMenu>
                             
                             
                         </p:panelGrid>
                     </p:panel>
                 </p:tab>
+                
+                <br></br>
+
+                <p:panel id="panelTabla" rendered="#{mbVModulosHorarios.estado}">
+                    <p:panelGrid rendered="#{mbVModulosHorarios.estado}" id="panel1" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
+                        <p:outputLabel for="txtFechaInicio" value="Fecha:" styleClass="labelDerecha" />
+                        <p:calendar id="txtFechaInicio" class="date_input" required="true"
+                                    onkeypress="return permite(event, 'none')" 
+                                    locale="es" value="#{mbVModulosHorarios.tHorarioModulo.fecha}" 
+                                    effect="fold" pattern="dd-MM-yyyy" mask="true" 
+                                    mindate="#{mbVModulosHorarios.clsTblModulosReg.fechaInicio}"
+                                    maxdate="#{mbVModulosHorarios.clsTblModulosReg.fechaFin}">
+                        </p:calendar>
+                        
+                        <p:outputLabel for="txtHoraInicio" styleClass="labelDerecha" value="Hora inicio:" />
+                        <p:calendar id="txtHoraInicio" value="#{mbVModulosHorarios.tHorarioModulo.horaInicio}" required="true" pattern="HH:mm" mask="true" timeOnly="true" >
+                            
+                        </p:calendar>
+                        
+                        <p:outputLabel for="txtHoraFin" styleClass="labelDerecha" value="Hora fin:" />
+                        <p:calendar id="txtHoraFin" value="#{mbVModulosHorarios.tHorarioModulo.horaFin}" required="true" pattern="HH:mm" mask="true" timeOnly="true">
+                            
+                        </p:calendar>
+                        
+                        <h:outputText id="display" value="" />
+                        <p:commandButton value="Guardar" update="form" styleClass="anchoBotones" icon="ui-icon-disk"
+                                         actionListener="#{mbVModulosHorarios.registrar()}" />
+                    </p:panelGrid>
+                </p:panel>
+                <br></br>
+                <p:panel id="panelTabla1" style="height: 30%; width: 100%;">
+                    <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->
+                    <p:dataTable class="tblDatos fuenteTamanio" id="tblHorarios" var="lstTbl" value="#{mbVModulosHorarios.lstTblHorarioModulo}"
+                                 editable="true" scrollable="true" scrollHeight="150" >
+                        <p:ajax event="rowEdit" listener="#{mbVModulosHorarios.onRowEdit}" update=":form:msgs" />
+                        <p:ajax event="rowEditCancel" listener="#{mbVModulosHorarios.onRowCancel}" update=":form:msgs" />
+
+                        <p:column headerText="Maestría" >
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.maestria}" /></f:facet>
+                                <f:facet name="input"><p:inputText readonly="true" value="#{lstTbl.maestria}" style="width:100%"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Módulo">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.moduloNombre}" /></f:facet>
+                                <f:facet name="input">
+                                    <f:facet name="input"><p:inputText readonly="true" value="#{lstTbl.moduloNombre}" style="width:100%"/></f:facet>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="Fecha">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{lstTbl.fechaHorario}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:calendar id="txtFechaInicio" class="date_input" required="true"
+                                                onkeypress="return permite(event, 'none')" 
+                                                locale="es" value="#{lstTbl.fechaHorario}" 
+                                                effect="fold" pattern="dd-MM-yyyy" mask="true" 
+                                                mindate="#{lstTbl.fechaInicio}"
+                                                maxdate="#{lstTbl.fechaFin}">
+                                    </p:calendar>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Hora inicio">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.horaInicio}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:calendar id="txtHoraInicio" value="#{lstTbl.horaInicio}" 
+                                                required="true" pattern="HH:mm" mask="true" timeOnly="true" >
+                                    </p:calendar>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="Hora fin">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{lstTbl.horaFin}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:calendar id="txtHoraFin" value="#{lstTbl.horaFin}" 
+                                                required="true" pattern="HH:mm" mask="true" timeOnly="true">
+                                    </p:calendar>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column>
+                            <p:rowEditor />   
+                        </p:column>
+
+                    </p:dataTable>
+
+                </p:panel>
+                
+                
+                <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                    <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+                </p:dialog>
             </h:form>
         </div>
     </h:body>

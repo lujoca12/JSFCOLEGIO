@@ -297,7 +297,7 @@ public class MbVNotas implements Serializable {
                             lstCboModulos.add(new ClsTablaModulosRegistrados(modulo.getPromocion().getMaestria().getId(),
                                     modulo.getPromocion().getMaestria().getDescripcion() + " (Dir.(a)" + modulo.getPromocion().getUsuario() + ")",
                                     modulo.getPromocion().getId(),
-                                    modulo.getDescripcion() + " (" + modulo.getPromocion().getMaestria().getDescripcion() + ")",
+                                    modulo.getModulo()+": "+modulo.getDescripcion() + " (" + modulo.getPromocion().getMaestria().getDescripcion() + ")",
                                     modulo.getUsuario().getId(),
                                     modulo.getUsuario().getApellidos() + " " + modulo.getUsuario().getNombres(),
                                     modulo.getCreditos().toString(),

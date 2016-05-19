@@ -5,19 +5,27 @@
  */
 package managedBean;
 
+import Clases.ClsHorarioModulo;
 import Clases.ClsMaestria;
 import Clases.ClsTablaModulosRegistrados;
+import Dao.DaoTHorarioModulo;
 import Dao.DaoTMaestrias;
 import Dao.DaoTModulo;
 import Pojo.HorarioModulo;
 import Pojo.Maestria;
 import Pojo.Modulo;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import org.primefaces.event.RowEditEvent;
 
 /**
  *
@@ -33,12 +41,18 @@ public class MbVModulosHorarios implements Serializable{
     private ClsTablaModulosRegistrados clsTblModulosReg;
     private List<ClsTablaModulosRegistrados> lstCboModulos;
     
+    private ClsHorarioModulo clsTblHorarioModulo;
+    private List<ClsHorarioModulo> lstTblHorarioModulo;
+    
     private boolean msg = false;
     private HorarioModulo tHorarioModulo;
+    
+    private boolean estado = false;
     
     public MbVModulosHorarios() {
         tHorarioModulo = new HorarioModulo();
         llenarCboMaestria();
+        cargarTablaHorarioModulos();
     }
 
     public ClsMaestria getThemeMaestria() {
@@ -63,6 +77,34 @@ public class MbVModulosHorarios implements Serializable{
 
     public List<ClsTablaModulosRegistrados> getLstCboModulos() {
         return lstCboModulos;
+    }
+
+    public HorarioModulo gettHorarioModulo() {
+        return tHorarioModulo;
+    }
+
+    public void settHorarioModulo(HorarioModulo tHorarioModulo) {
+        this.tHorarioModulo = tHorarioModulo;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+    public ClsHorarioModulo getClsTblHorarioModulo() {
+        return clsTblHorarioModulo;
+    }
+
+    public void setClsTblHorarioModulo(ClsHorarioModulo clsTblHorarioModulo) {
+        this.clsTblHorarioModulo = clsTblHorarioModulo;
+    }
+
+    public List<ClsHorarioModulo> getLstTblHorarioModulo() {
+        return lstTblHorarioModulo;
     }
     
     public void llenarCboMaestria(){
@@ -89,6 +131,7 @@ public class MbVModulosHorarios implements Serializable{
     
     public void onMaestriaChange() throws Exception {
         try {
+            
             lstCboModulos = new ArrayList<>();
             lstCboModulos.clear();
             this.lstCboModulos.add(new ClsTablaModulosRegistrados(-1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)","(Escoja un Módulo)",-1,"(Escoja un Módulo)",null,null,null,null,""));
@@ -97,8 +140,11 @@ public class MbVModulosHorarios implements Serializable{
             
             if(themeMaestria != null)
                 lstModulo = daoTmodulo.getTblModulosMaestria(themeMaestria.getId());
-            else
+            else{
                 lstCboModulos.clear();
+                estado = false;
+            }
+                
             
             if (lstModulo != null) {
                 if (lstModulo.size() > 0) {
@@ -119,6 +165,7 @@ public class MbVModulosHorarios implements Serializable{
                                 modulo.getTotalHorasModulo() == null ? null : modulo.getTotalHorasModulo().toString()
                         ));
                     }
+                   
                 }
             }
             
@@ -127,6 +174,191 @@ public class MbVModulosHorarios implements Serializable{
             
         }
 
+    }
+    
+    public void cargarTablaHorarioModulos() {
+        lstTblHorarioModulo = new ArrayList<>();
+        //Time horaInicio = null, horaFin = null;
+        
+        try {
+            lstTblHorarioModulo.clear();
+            DaoTHorarioModulo daoThorariomodulo = new DaoTHorarioModulo();
+            List<HorarioModulo> lstHorario = daoThorariomodulo.getTblHorarios();
+            if(lstHorario != null){
+                if(lstHorario.size()>0){
+                    for(HorarioModulo horario: lstHorario){
+//                        horaInicio = new Time(horario.getHoraInicio().getTime());
+//                        horaFin = new Time(horario.getHoraFin().getTime());
+                        lstTblHorarioModulo.add(new ClsHorarioModulo(horario.getModulo().getPromocion().getMaestria().getId(), 
+                                horario.getModulo().getPromocion().getMaestria().getDescripcion(), 
+                                horario.getModulo().getId(), 
+                                horario.getModulo().getModulo()+": "+horario.getModulo().getDescripcion()+ " (Dir.(a)" + horario.getModulo().getPromocion().getUsuario() + ")",
+                                horario.getModulo().getCreditos().toString(), 
+                                horario.getModulo().getFechaInicio() == null ? null : horario.getModulo().getFechaInicio(), 
+                                horario.getModulo().getFechaFin() == null ? null : horario.getModulo().getFechaFin(), 
+                                horario.getModulo().getModulo(), 
+                                horario.getModulo().getTotalHorasModulo() == null ? null : horario.getModulo().getTotalHorasModulo().toString(),
+                                horario.getId(), 
+                                horario.getHoraInicio(),
+                                horario.getHoraFin(),
+                                horario.getFecha() == null ? null : horario.getFecha()));
+                    }
+                }
+            }
+            
+        } catch (Exception ex) {
+            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void onModuloChange() throws Exception {
+        if (clsTblModulosReg != null) {
+            estado = true;
+        } else {
+            estado = false;
+        }
+    }
+    
+    public void registrar(){
+        boolean repetida = false;
+        try {
+            BigDecimal bigdec;
+            DaoTHorarioModulo daoThorariomodulo = new DaoTHorarioModulo();
+            Modulo modulo = new Modulo();
+            modulo.setId(clsTblModulosReg.getIdModulo());
+            tHorarioModulo.setModulo(modulo);
+            
+            long tiempoInicial= tHorarioModulo.getHoraInicio().getTime();
+            long tiempoFinal = tHorarioModulo.getHoraFin().getTime();
+            long resta = tiempoFinal - tiempoInicial;
+            
+            
+            
+            //el metodo getTime te devuelve en mili segundos para saberlo en mins debes hacer
+            resta = resta / (1000 * 60);
+            
+            
+            if(resta >= 60){
+                Long l = new Long(resta);
+                double minutos = l.doubleValue();
+                double hora = ((minutos-(minutos%60))/60)+((minutos%60)/100);
+                bigdec = new BigDecimal(hora);
+                tHorarioModulo.setHora(bigdec);
+                repetida = daoThorariomodulo.existe(tHorarioModulo);
+                if (!repetida) {
+                    msg = daoThorariomodulo.registrar(tHorarioModulo);
+                }
+                if (repetida) {
+                    mensajesError("Registro repetido");
+                } else {
+                    if (msg) {
+                        mensajesOk("Datos procesados correctamente");
+                    } else {
+                        mensajesError("Error al procesar datos");
+                    }
+                    vaciarCajas();
+                    cargarTablaHorarioModulos();
+                }
+                
+            }else{
+                mensajesError("Error en definición de hora inicio y fin");
+            }
+            
+        } catch (Exception ex) {
+            Logger.getLogger(MbVModulosHorarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    public void onRowEdit(RowEditEvent event) {
+        boolean repetida = false;
+        BigDecimal bigdec;
+        DaoTHorarioModulo daoThorariomodulo = new DaoTHorarioModulo();
+        Modulo modulo = new Modulo();
+        HorarioModulo horarioModulo = new HorarioModulo();
+        modulo.setId(((ClsHorarioModulo) event.getObject()).getIdModulo());
+        horarioModulo.setModulo(modulo);
+        horarioModulo.setId(((ClsHorarioModulo) event.getObject()).getIdHorario());
+        horarioModulo.setFecha(((ClsHorarioModulo) event.getObject()).getFechaHorario());
+        horarioModulo.setHoraInicio(((ClsHorarioModulo) event.getObject()).getHoraInicio());
+        horarioModulo.setHoraFin(((ClsHorarioModulo) event.getObject()).getHoraFin());
+        
+        long tiempoInicial = horarioModulo.getHoraInicio().getTime();
+        long tiempoFinal = horarioModulo.getHoraFin().getTime();
+        long resta = tiempoFinal - tiempoInicial;
+            
+            //el metodo getTime te devuelve en mili segundos para saberlo en mins debes hacer
+            resta = resta / (1000 * 60);
+            
+            
+            if(resta >= 60){
+            try {
+                Long l = new Long(resta);
+                double minutos = l.doubleValue();
+                double hora = ((minutos-(minutos%60))/60)+((minutos%60)/100);
+                bigdec = new BigDecimal(hora);
+                horarioModulo.setHora(bigdec);
+                repetida = daoThorariomodulo.existe(horarioModulo);
+                if (!repetida) {
+                    msg = daoThorariomodulo.registrar(horarioModulo);
+                }
+                if (repetida) {
+                    mensajesError("Registro repetido");
+                } else {
+                    if (msg) {
+                        mensajesOk("Datos Actualizados correctamente");
+                    } else {
+                        mensajesError("Error al actualizar datos");
+                    }
+                    vaciarCajas();
+                    
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(MbVModulosHorarios.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                
+            }else{
+                mensajesError("Error en definición de hora inicio y fin");
+            }
+        cargarTablaHorarioModulos();
+    }
+    
+    public void onRowCancel(RowEditEvent event) {
+
+    }
+    
+    public void onDelete(ClsHorarioModulo clsTblHorarios) {
+        DaoTHorarioModulo daoThorariomodulo = new DaoTHorarioModulo();
+        HorarioModulo horarioModulo = new HorarioModulo();
+        horarioModulo.setId(clsTblHorarios.getIdHorario());
+        try {
+            msg = daoThorariomodulo.delete(horarioModulo);
+        } catch (Exception ex) {
+            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        cargarTablaHorarioModulos();
+        if (msg) {
+            mensajesOk("Dato eliminado correctamente");
+        } else {
+            mensajesError("Error al eliminar dato");
+        }
+    }
+    
+    private void vaciarCajas() {
+        
+        tHorarioModulo.setHoraInicio(null);
+        tHorarioModulo.setHoraFin(null);
+
+    }
+    
+    private void mensajesOk(String msg) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje de la Aplicacion", msg);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+    private void mensajesError(String msg) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje de la Aplicacion", msg);
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
     
 }

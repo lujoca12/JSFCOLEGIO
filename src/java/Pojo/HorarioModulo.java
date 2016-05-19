@@ -18,15 +18,17 @@ public class HorarioModulo  implements java.io.Serializable {
      private Integer mes;
      private Character dia;
      private BigDecimal hora;
+     private Modulo modulo;
 
     public HorarioModulo() {
     }
 
 	
-    public HorarioModulo(int id) {
+    public HorarioModulo(int id, Modulo modulo) {
         this.id = id;
+        this.modulo = modulo;
     }
-    public HorarioModulo(int id, Date horaInicio, Date horaFin, Date fecha, Integer mes, Character dia, BigDecimal hora) {
+    public HorarioModulo(int id, Date horaInicio, Date horaFin, Date fecha, Integer mes, Character dia, BigDecimal hora, Modulo modulo) {
        this.id = id;
        this.horaInicio = horaInicio;
        this.horaFin = horaFin;
@@ -34,6 +36,7 @@ public class HorarioModulo  implements java.io.Serializable {
        this.mes = mes;
        this.dia = dia;
        this.hora = hora;
+       this.modulo = modulo;
     }
    
     public int getId() {
@@ -86,8 +89,13 @@ public class HorarioModulo  implements java.io.Serializable {
         this.hora = hora;
     }
 
+    public Modulo getModulo() {
+        return modulo;
+    }
 
-
+    public void setModulo(Modulo modulo) {
+        this.modulo = modulo;
+    }
 
 }
 

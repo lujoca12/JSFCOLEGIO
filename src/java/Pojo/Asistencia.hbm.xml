@@ -26,5 +26,8 @@
         <property name="usuario" type="string">
             <column name="usuario" length="100" />
         </property>
+        <property name="horas_asistidas" type="big_decimal">
+            <column name="horas_asistidas" precision="4" />
+        </property>
     </class>
 </hibernate-mapping>

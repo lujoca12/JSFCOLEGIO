@@ -2,6 +2,7 @@ package Pojo;
 // Generated 16-may-2016 9:34:07 by Hibernate Tools 4.3.1
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -17,6 +18,7 @@ public class Asistencia  implements java.io.Serializable {
      private String observacion;
      private Date fecha;
      private String usuario;
+     private BigDecimal horas_asistidas;
 
     public Asistencia() {
     }
@@ -27,7 +29,7 @@ public class Asistencia  implements java.io.Serializable {
         this.matricula = matricula;
         this.modulo = modulo;
     }
-    public Asistencia(int id, Matricula matricula, Modulo modulo, Character estado, String observacion, Date fecha, String usuario) {
+    public Asistencia(int id, Matricula matricula, Modulo modulo, Character estado, String observacion, Date fecha, String usuario,BigDecimal horas_asistidas) {
        this.id = id;
        this.matricula = matricula;
        this.modulo = modulo;
@@ -35,6 +37,7 @@ public class Asistencia  implements java.io.Serializable {
        this.observacion = observacion;
        this.fecha = fecha;
        this.usuario = usuario;
+       this.horas_asistidas = horas_asistidas;
     }
    
     public int getId() {
@@ -87,9 +90,13 @@ public class Asistencia  implements java.io.Serializable {
         this.usuario = usuario;
     }
 
+    public BigDecimal getHoras_asistidas() {
+        return horas_asistidas;
+    }
 
-
-
+    public void setHoras_asistidas(BigDecimal horas_asistidas) {
+        this.horas_asistidas = horas_asistidas;
+    }
 }
 
 

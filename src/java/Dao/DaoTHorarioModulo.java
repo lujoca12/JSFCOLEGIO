@@ -70,6 +70,18 @@ public class DaoTHorarioModulo implements InterfaceHorarioModulo{
         sesion.close();
         return lstHorarioModulo;
     }
+    
+    @Override
+    public List<HorarioModulo> getFechaHorasModulos(int idModulo) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String hql="from HorarioModulo horario inner join fetch horario.modulo mod where mod.id = "+idModulo+"";
+        Query query = sesion.createQuery(hql);
+        List<HorarioModulo> lstHorarioModulo =(List<HorarioModulo>) query.list();
+        sesion.close();
+        return lstHorarioModulo;
+    }
 
     @Override
     public List<HorarioModulo> getTblHorarios() throws Exception {

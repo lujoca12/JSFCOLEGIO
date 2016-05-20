@@ -5,18 +5,22 @@
  */
 package managedBean;
 
+import Clases.ClsFechaHoras;
 import Clases.ClsNotas;
 import Clases.ClsTablaModulosRegistrados;
 import Dao.DaoTAsistencias;
+import Dao.DaoTHorarioModulo;
 import Dao.DaoTMatricula;
 import Dao.DaoTModulo;
 import Pojo.Asistencia;
+import Pojo.HorarioModulo;
 import Pojo.Matricula;
 import Pojo.Modulo;
 import Pojo.Usuario;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,6 +30,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import org.primefaces.event.RowEditEvent;
 
 /**
@@ -55,6 +60,10 @@ public class MbVAsistencia implements Serializable {
     private int idModulo = 0;
     private Date fecha;
     private boolean msg;
+    private BigDecimal horasAsistidas;
+    private List<ClsFechaHoras> lstCboFecha;
+    private ClsFechaHoras clsFechaHora;
+    private SelectItem seleccion;
 
     public MbVAsistencia() {
         tAsistencia = new Asistencia();
@@ -151,6 +160,39 @@ public class MbVAsistencia implements Serializable {
     public void setEstado(int estado) {
         this.estado = estado;
     }
+
+    public BigDecimal getHorasAsistidas() {
+        return horasAsistidas;
+    }
+
+    public void setHorasAsistidas(BigDecimal horasAsistidas) {
+        this.horasAsistidas = horasAsistidas;
+    }
+
+    public List<ClsFechaHoras> getLstCboFecha() {
+        return lstCboFecha;
+    }
+
+    public void setLstCboFecha(List<ClsFechaHoras> lstCboFecha) {
+        this.lstCboFecha = lstCboFecha;
+    }
+
+    public ClsFechaHoras getClsFechaHora() {
+        return clsFechaHora;
+    }
+
+    public void setClsFechaHora(ClsFechaHoras clsFechaHora) {
+        this.clsFechaHora = clsFechaHora;
+    }
+    
+    public SelectItem getSeleccion() {
+        return seleccion;
+    }
+
+    public void setSeleccion(SelectItem seleccion) {
+        this.seleccion = seleccion;
+    }
+    
     
     public void cargarCboModulos() {
         lstCboModulos = new ArrayList<>();
@@ -186,6 +228,25 @@ public class MbVAsistencia implements Serializable {
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void cargarCboFechas() {
+        lstCboFecha = new ArrayList<>();
+        try {
+            lstCboFecha.clear();
+            DaoTHorarioModulo daoHorario = new DaoTHorarioModulo();
+            List<HorarioModulo> lstHorario = daoHorario.getFechaHorasModulos(idModulo);
+
+            if (lstHorario != null) {
+                if (lstHorario.size() > 0) {
+                    for (HorarioModulo horario : lstHorario) {
+                        lstCboFecha.add(new ClsFechaHoras(horario.getId(), horario.getHora(),horario.getFecha()));
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public void cargarTablaRegAsistencia() {
         lstTblNotas = new ArrayList<>();
@@ -193,31 +254,35 @@ public class MbVAsistencia implements Serializable {
         int añoInicio = 0;
         int añoFin = 0;
         int cont = 0;
+        this.estado = 1;
         
         try {
-            lstTblNotas.clear();
-            
-            DaoTAsistencias daoTasistencia = new DaoTAsistencias();
-            List<Asistencia> lstAsistencia = daoTasistencia.existe(this.idModulo, this.fecha);
-            
-            
-            boolean asist = false;
-            
-            if(lstAsistencia.size() > 0){
-                this.estado = 1;
-                mensajesOk("Asistencia ya registrada");
-                for (Asistencia asistencia : lstAsistencia) {
+            if (this.idModulo > 0 && this.clsFechaHora != null) {
+
+                lstTblNotas.clear();
+
+                DaoTAsistencias daoTasistencia = new DaoTAsistencias();
+
+                List<Asistencia> lstAsistencia = daoTasistencia.existe(this.idModulo, this.clsFechaHora.getFecha());
+
+                boolean asist = false;
+
+                if (lstAsistencia.size() > 0) {
+                    this.estado = 1;
+                    mensajesOk("Asistencia ya registrada");
+                    for (Asistencia asistencia : lstAsistencia) {
                         calendar.setTime(asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getFechaInicio());
                         añoInicio = calendar.get(Calendar.YEAR);
                         cont++;
                         calendar.setTime(asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getFechaFin());
                         añoFin = calendar.get(Calendar.YEAR);
                         estudiante = asistencia.getMatricula().getSolicitudInscripcion().getEstudiante().getApellidos() + " " + asistencia.getMatricula().getSolicitudInscripcion().getEstudiante().getNombres();
-                        if(asistencia.getEstado().equals('1'))
+                        if (asistencia.getEstado().equals('1')) {
                             asist = true;
-                        else
+                        } else {
                             asist = false;
-                        
+                        }
+
                         lstTblNotas.add(new ClsNotas(asistencia.getMatricula().getSolicitudInscripcion().getEstudiante().getId(),
                                 estudiante,
                                 asistencia.getMatricula().getId(),
@@ -232,42 +297,42 @@ public class MbVAsistencia implements Serializable {
                                 "",
                                 "",
                                 null,
-                                asist, 0,"",""));
+                                asist, 0, "", ""));
                     }
-            }else{
-                DaoTMatricula daoTmatricula = new DaoTMatricula();
-                List<Matricula> lstMatricula = daoTmatricula.getMatriculaRegNotas(this.idModulo);
-                if (lstMatricula.size() > 0) {
-                    this.estado = 0;
-                    
-                    for (Matricula matricula : lstMatricula) {
-                        calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaInicio());
-                        añoInicio = calendar.get(Calendar.YEAR);
-                        cont++;
-                        calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaFin());
-                        añoFin = calendar.get(Calendar.YEAR);
-                        estudiante = matricula.getSolicitudInscripcion().getEstudiante().getApellidos() + " " + matricula.getSolicitudInscripcion().getEstudiante().getNombres();
+                } else {
+                    DaoTMatricula daoTmatricula = new DaoTMatricula();
+                    List<Matricula> lstMatricula = daoTmatricula.getMatriculaRegNotas(this.idModulo);
+                    if (lstMatricula.size() > 0) {
+                        this.estado = 0;
 
-                        lstTblNotas.add(new ClsNotas(matricula.getSolicitudInscripcion().getEstudiante().getId(),
-                                matricula.getSolicitudInscripcion().getEstudiante().getApellidos() + " " + matricula.getSolicitudInscripcion().getEstudiante().getNombres(),
-                                matricula.getId(),
-                                matricula.getNMatricula(),
-                                matricula.getFechaMatricula(),
-                                matricula.getSolicitudInscripcion().getPromocion().getId(),
-                                añoInicio + "-" + añoFin,
-                                matricula.getSolicitudInscripcion().getPromocion().getFechaResolucion(),
-                                matricula.getSolicitudInscripcion().getPromocion().getMaestria().getId(),
-                                matricula.getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
-                                cont,
-                                "",
-                                "",
-                                null,
-                                true, 0,"",""));
+                        for (Matricula matricula : lstMatricula) {
+                            calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaInicio());
+                            añoInicio = calendar.get(Calendar.YEAR);
+                            cont++;
+                            calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaFin());
+                            añoFin = calendar.get(Calendar.YEAR);
+                            estudiante = matricula.getSolicitudInscripcion().getEstudiante().getApellidos() + " " + matricula.getSolicitudInscripcion().getEstudiante().getNombres();
+
+                            lstTblNotas.add(new ClsNotas(matricula.getSolicitudInscripcion().getEstudiante().getId(),
+                                    matricula.getSolicitudInscripcion().getEstudiante().getApellidos() + " " + matricula.getSolicitudInscripcion().getEstudiante().getNombres(),
+                                    matricula.getId(),
+                                    matricula.getNMatricula(),
+                                    matricula.getFechaMatricula(),
+                                    matricula.getSolicitudInscripcion().getPromocion().getId(),
+                                    añoInicio + "-" + añoFin,
+                                    matricula.getSolicitudInscripcion().getPromocion().getFechaResolucion(),
+                                    matricula.getSolicitudInscripcion().getPromocion().getMaestria().getId(),
+                                    matricula.getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
+                                    cont,
+                                    "",
+                                    "",
+                                    null,
+                                    true, 0, "", ""));
+                        }
                     }
+
                 }
-                
             }
-
             
 
         } catch (Exception ex) {

@@ -20,4 +20,5 @@ public interface InterfaceHorarioModulo {
     public boolean update(HorarioModulo tHorarioModulo) throws Exception;
     public boolean delete(HorarioModulo tHorarioModulo) throws Exception;
     public boolean existe(HorarioModulo tHorarioModulo) throws Exception;
+    public List<HorarioModulo> getFechaHorasModulos(int idModulo) throws Exception;
 }

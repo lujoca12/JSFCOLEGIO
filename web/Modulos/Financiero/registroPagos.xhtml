@@ -14,16 +14,16 @@
             </ui:define>
             <ui:define name="content">
 
-                <h:form class="login-form centrado-porcentual" >
+                <h:form id="form" class="login-form centrado-porcentual" >
                     <p:growl id="msgs" showDetail="true" />
                     <p:tab id="personal" title="ConsultaNotas">                        
                     </p:tab>                
-                    <div class="panel panel-primary" style="margin-left: 20px; margin-right: 20px;">
+                    <div class="panel panel-primary" style="border: none !important;">
                         <div class="panel-heading" >
                             Consulta de pagos
                         </div>
                         <p:tab title="Consulta de pagos">
-                            
+
                             <p:panelGrid id="panel" columns="3" layout="grid" styleClass="ui-panelgrid-blank">
                                 <p:outputLabel for="txtCedEstud" style="font-weight: bold !important;" styleClass="labelDerecha" value="Cédula Estudiante:" />
 
@@ -63,13 +63,13 @@
                         </div>
                     </p:panel>
 
-                    <p:panel id="panelDetalleNotas" rendered="#{mbVNotas.idProm eq 0 ? false:true}">
+                    <p:panel id="panelDetallePagos" rendered="#{mbVNotas.idProm eq 0 ? false:true}">
                         <div class="panel panel-primary">
                             <p:panel style="padding: 0 !important;">
                                 <h5 style="text-align: left; font-weight: bold !important; padding-bottom: 0px !important;">
-                                    Detalle de notas
+                                    Pagos
                                 </h5>
-                                <p:dataTable id="tblDetalleNotas" class="tblNotas DataTable datatableHover" scrollable="false" var="notas" value="#{mbVNotas.lstTblNotasReg}"
+                                <p:dataTable id="tblDetallePagos" class="tblNotas DataTable datatableHover" scrollable="false" var="notas" value="#{mbVNotas.lstTblNotasReg}"
                                              emptyMessage="No hay datos">
                                     <p:column headerText="Módulo" style="text-align: center !important;">
                                         <h:outputText value="#{notas.descripMod}" />
@@ -103,9 +103,7 @@
 
                 <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
                     <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
-                </p:dialog>
-                </div>
-                </h:form>
+                </p:dialog>                
 
             </ui:define>
         </ui:composition>

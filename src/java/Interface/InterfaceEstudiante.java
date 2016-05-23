@@ -19,4 +19,5 @@ public interface InterfaceEstudiante {
     public List<Estudiante> getEstudiantes() throws Exception;
     public Estudiante getEstudiante(String idUsuario) throws Exception;
     public boolean update(Estudiante tEstudiante) throws Exception;
+     public List<Estudiante> getEstudiantesMaestria(int idmaestria) throws Exception;
 }

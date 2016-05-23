@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"      
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h5="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      >
+    
+    <h:head>
+        <title>Facelet Title</title>
+        <!-- Theme style -->
+    
+    </h:head>
+    <h:body>
+        <ui:composition template="/templates/masterLayout.xhtml">
+            <ui:define name="leftContent"></ui:define>
+            <ui:define name="content">  
+                <h:outputStylesheet name="green.css" library="css"/>
+                <h:outputScript name="ajax.js" library="js" />
+                <h:outputScript name="jquery/jquery.js" library="primefaces" />
+                <br></br>
+                <br></br>
+                <div class="ui-fluid">
+                <h:form id="form">
+                    <p:growl id="msgs" showDetail="true" />
+                    <p:tab id="personal" title="VerificarTesis">                        
+                    </p:tab>                
+                    <div class="panel panel-primary" style="margin-left: 20px; margin-right: 20px;">
+                        <div class="panel-heading" >
+                            Consulta de estudiante
+                        </div>
+                        <p:tab title="Consulta de Estudiante">
+                                <p:remoteCommand name="test" update="form,msgs" actionListener="#{mbVNotas.consultarMaestrias()}"/>
+                                <p:panelGrid id="panel" columns="3" layout="grid" styleClass="ui-panelgrid-blank">
+                                    <p:outputLabel for="txtCedEstud" style="font-weight: bold !important;" styleClass="labelDerecha" value="Cédula Estudiante:" />
+                                    
+                                    <p:inputMask id="txtCedEstud" value="#{mbVNotas.cedula}" required="true" mask="999999999-9"/>
+                                    <p:commandButton value="Listar" update="form,msgs" styleClass="anchoBotonesConsulta" 
+                                                     icon="ui-icon-search" actionListener="#{mbVNotas.consultarMaestrias()}" />
+
+                                </p:panelGrid>
+                            </p:tab>  
+                    </div>
+                    <p:panel id="panelMatriculaGenerada" rendered="#{mbVNotas.estudiante eq '' ? false:true}">
+                        <div class="panel panel-primary" >
+                            <p:panel style="padding: 0 !important;" >
+                                <h5 style="text-align: left; font-weight: bold !important; padding-bottom: 0px !important;">
+                                    <h:outputText value="Sr.(a) #{mbVNotas.estudiante}"   />
+                                </h5>
+                                <p:separator />
+                                <p:dataTable class="tblNotas DataTable datatableHover" scrollable="false" var="notas" value="#{mbVNotas.lstTblNotas}"
+                                             emptyMessage="No hay datos">
+                                    <p:column headerText="Maestria" style="text-align: center;">
+                                        <h:outputText value="#{notas.descripMaestria}" />
+                                    </p:column>
+
+                                    <p:column headerText="Periodo" style="text-align: center;">
+                                        <h:outputText value="#{notas.periodo}" />
+                                    </p:column>
+
+                                    <p:column headerText="fecha Graduación" style="text-align: center;">
+                                        <h:outputText value="#{notas.fecha}" />
+                                    </p:column>
+                                    
+                                </p:dataTable>
+                            </p:panel>
+                        </div>
+                    </p:panel>
+                    
+                    <p:panel id="panelDetalleNotas" rendered="#{mbVNotas.estudiante eq '' ? false:true}">
+                        <div class="panel panel-primary">
+                            <p:panel style="padding: 0 !important;">
+                                <h5 style="text-align: left; font-weight: bold !important; padding-bottom: 0px !important;">
+                                    Detalle de notas
+                                </h5>
+                                <p:dataTable id="tblDetalleNotas" class="tblNotas DataTable datatableHover" scrollable="false" var="notas" value="#{mbVNotas.lstTblNotasReg}"
+                                             emptyMessage="No hay datos">
+                                    <p:column headerText="Módulo" style="text-align: center !important;">
+                                        <h:outputText value="#{notas.descripMod}" />
+                                    </p:column>
+
+                                    <p:column headerText="N1" style="text-align: center !important;">
+                                        <h:outputText value="#{notas.idNotas eq 0 ? null:notas.nota}"  />
+                                    </p:column>
+
+                                    <!--<p:column headerText="N2">
+                                        <h:outputText value="#{car.brand}" />
+                                    </p:column>
+
+                                    <p:column headerText="E. Final">
+                                        <h:outputText value="#{car.color}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="N. Final">
+                                        <h:outputText value="#{car.color}" />
+                                    </p:column>-->
+                                    
+                                    <p:column headerText="Estado" style="text-align: center !important;">
+                                        <h:outputText value="#{notas.idNotas eq 0 ? null : notas.nota >= 7 ? 'Aprobado':'Reprobado'}" />
+                                    </p:column>
+                                </p:dataTable>
+                            </p:panel>
+                        </div>
+                    </p:panel>
+                    </h:form>
+                    <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+ 
+                    <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                        <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+                    </p:dialog>
+                </div>
+                
+
+                
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

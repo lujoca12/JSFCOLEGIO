@@ -39,11 +39,7 @@ public class ClsTablaTesis implements Serializable{
         this.idMaestria = idMaestria;
         this.idEstudiante = idEstudiante;
     }
-
-    
-    
-    
-
+          
     public int getIdTesis() {
         return idTesis;
     }

@@ -35,14 +35,15 @@
                             </p:selectOneMenu>
                             
                             <p:outputLabel for="cboModulo" value="Módulos:" styleClass="labelDerecha"/>
-                            <p:selectOneMenu id="cboModulo" value="#{mbVModulosHorarios.clsTblModulosReg}" converter="themeConverterModulos"
+                            <p:selectOneMenu id="cboModulo" value="#{mbVModulosHorarios.clsTblModulosReg}" 
+                                             converter="themeConverterModulos"
                                              effect="fade" var="tModulo" filter="true" filterMatchMode="contains">
                                 <f:selectItem itemLabel="(Escoja un Módulo)"/>
-                                <f:selectItems value="#{mbVModulosHorarios.lstCboModulos}" var="modulos" itemLabel="#{modulos.modulo}" itemValue="#{modulos}" />
+                                <f:selectItems value="#{mbVModulosHorarios.lstCboModulos}" var="modulos" 
+                                               itemLabel="#{modulos.modulo}" itemValue="#{modulos}" />
                                 <p:column style="width:10%">
                                     <h:outputText styleClass="ui-theme ui-theme-#{tModulo.idModulo}" />
                                 </p:column>
-
                                 <p:column>
                                     <h:outputText value="#{tModulo.modulo}" />
                                 </p:column>

@@ -91,5 +91,21 @@ public class DaoTEstudiante implements InterfaceEstudiante{
     public boolean update(Estudiante tEstudiante) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public List<Estudiante> getEstudiantesMaestria(int idmaestria) throws Exception {
+         this.sesion = null;
+         this.tx = null;
+         iniciaOperacion();
+         String hql="from Estudiante es\n" +
+                 "inner join fetch es.solicitudInscripcions si\n" +
+                 "inner join fetch si.promocion pro\n" +
+                 "inner join fetch pro.maestria mae\n" +
+                 "where mae.id ='1'";
+         Query query = sesion.createQuery(hql);
+         List<Estudiante> lstestudiante=(List<Estudiante>) query.list();
+         sesion.close();
+         return lstestudiante;
+       }
     
 }

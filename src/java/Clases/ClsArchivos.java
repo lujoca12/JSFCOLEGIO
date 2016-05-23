@@ -6,6 +6,7 @@
 package Clases;
 
 import java.io.Serializable;
+import java.text.Normalizer;
 import org.primefaces.model.StreamedContent;
 
 /**
@@ -16,7 +17,7 @@ public class ClsArchivos implements Serializable{
     
     private String descripcion;
     private StreamedContent file;
-
+   
     public String getDescripcion() {
         return descripcion;
     }
@@ -38,10 +39,6 @@ public class ClsArchivos implements Serializable{
 
     public ClsArchivos(String descripcion, StreamedContent file) {
         this.descripcion = descripcion;
-        this.file = file;
-    }
-    
-    
-    
-    
+        this.file = file;        
+    }    
 }

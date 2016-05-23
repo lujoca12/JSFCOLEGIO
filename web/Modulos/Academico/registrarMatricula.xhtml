@@ -56,7 +56,7 @@
                         <h:outputText value="#{a.descripcion}" />
                     </p:column>
                     <p:column headerText="Archivos">
-                        <p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                        <p:commandButton action="#{asignarEntrevistaBean.obtenerRequisitos()}"  value="Download" ajax="false"  icon="ui-icon-arrowthick-1-s">
                             <p:fileDownload value="#{a.file}" />
                         </p:commandButton>
                     </p:column>                    

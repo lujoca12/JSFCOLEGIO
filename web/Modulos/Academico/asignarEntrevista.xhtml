@@ -8,15 +8,15 @@
         <script>
 
 
-        PrimeFaces.locales['es'] = {
+            PrimeFaces.locales['es'] = {
                 closeText: 'Cerrar',
                 prevText: 'Anterior',
                 nextText: 'Siguiente',
-                monthNames: ['Enero','Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
-                dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
-                dayNamesShort: ['Dom','Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-                dayNamesMin: ['D','L','M','M','J','V','S'],
+                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
                 weekHeader: 'Semana',
                 firstDay: 1,
                 isRTL: false,
@@ -32,15 +32,15 @@
                 month: 'Mes',
                 week: 'Semana',
                 day: 'Día',
-                allDayText : 'Todo el día'
-        };
-        
+                allDayText: 'Todo el día'
+            };
+
         </script>
     </h:head>
     <h:body>
         <div class="ui-fluid">
             <h:form id="form">               
- <p:growl id="msgs" showDetail="true"/>
+                <p:growl id="msgs" showDetail="true"/>
                 <p:dataTable id="solicitudes" var="s" value="#{asignarEntrevistaBean.lstSInscripcion}" rows="10"
                              paginator="true"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -81,15 +81,30 @@
                                 <h:outputLabel value="Lugar de la Entrevista: "/>
                             </p:column>
                             <p:column >
-                                <h:inputText value="#{asignarEntrevistaBean.lugar}"  />
+                                <h:inputText size="30" value="#{asignarEntrevistaBean.lugar}"  />
                             </p:column>
 
                             <p:column >
-                                 <h:outputLabel value="Fecha : "/>
+                                <h:outputLabel value="Fecha : "/>
                             </p:column>
 
-                            <p:column headerText="Promocion">
-                                <p:calendar value="#{asignarEntrevistaBean.fechaHora}" pattern="dd/MM/yyyy HH:mm:ss" locale="es"/>
+                            <p:column>
+                                <p:calendar value="#{asignarEntrevistaBean.fecha}" mode="inline" pattern="dd-MM-yyyy" locale="es"/>
+                            </p:column>
+                            <p:column >
+                                <h:outputLabel value="Hora : "/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="txtHora" value="#{asignarEntrevistaBean.hora}"><f:validateLongRange minimum="0" maximum="23"/> </p:inputText>
+                                <p:slider for="txtHora" maxValue="23" />
+                            </p:column>
+                            <p:column >
+                                <h:outputLabel value="Minutos : "/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="txtM" value="#{asignarEntrevistaBean.minuto}"  ><f:validateLongRange minimum="0" maximum="59"/> </p:inputText>
+                                <p:slider for="txtM" maxValue="59" />
+
                             </p:column>
                         </p:panelGrid>
                         <p:commandButton actionListener="#{asignarEntrevistaBean.enviarEmail()}" update="msgs solicitudes" oncomplete="PF('carDialog').hide()" value="Aceptar"/>
@@ -97,7 +112,7 @@
                 </p:dialog>
 
             </h:form>
-            
+
         </div>
     </h:body>
 </html>

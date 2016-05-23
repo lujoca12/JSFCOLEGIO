@@ -68,6 +68,21 @@ public class InscripcionDao implements Serializable{
         
         return band;
     }
+    public boolean insertarEntrevista(SolicitudInscripcion sInscripcon) throws Exception {
+        boolean band = false;
+        try {
+            iniciaOperacion();           
+            sesion.update(sInscripcon);
+            tx.commit();
+            sesion.close();
+            band = true;
+        } catch (Exception e) {
+            tx.rollback();
+            band = false;
+        }
+        
+        return band;
+    }
     
     public List<SolicitudInscripcion> getInscripcionesEstudiantes() throws Exception {
         this.sesion = null;
@@ -75,7 +90,7 @@ public class InscripcionDao implements Serializable{
         iniciaOperacion();
        
         String hql="from SolicitudInscripcion si inner join fetch si.estudiante e inner join fetch si.promocion pr inner join fetch pr.maestria m"
-                + "  where si.fechaRevision=null and si.estado='E' order by si.fechaRealizacion asc";
+                + "  where si.fechaRevision=null and (si.estado='E' or si.estado='T') order by si.fechaRealizacion asc";
        
         Query query = sesion.createQuery(hql);
         //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);

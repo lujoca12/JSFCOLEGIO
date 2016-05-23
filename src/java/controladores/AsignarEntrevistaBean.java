@@ -30,6 +30,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -55,24 +57,50 @@ public class AsignarEntrevistaBean implements Serializable {
      */
     private List<Estudiante> estudiantes;
     private List<SolicitudInscripcion> lstSInscripcion;
-    private List<Archivos> lstArchivos = null;
+    private List<Archivos> lstArchivos;
     private SolicitudInscripcion SelectedInscripcion;
     private String observacion;
     private InscripcionDao d;
     private Object[] a = null;
     private String idS;
-    private Date fechaHora;
+    private Date fecha;
     private String lugar;
-
+    private String hora;
+    private String minuto;
+    private String fecha2;
     private StreamedContent file;
     private List<ClsArchivos> archivos;
 
-    public Date getFechaHora() {
-        return fechaHora;
+    public String getFecha2() {
+        return fecha2;
     }
 
-    public void setFechaHora(Date fechaHora) {
-        this.fechaHora = fechaHora;
+    public void setFecha2(String fecha2) {
+        this.fecha2 = fecha2;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
+    public String getMinuto() {
+        return minuto;
+    }
+
+    public void setMinuto(String minuto) {
+        this.minuto = minuto;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     public String getLugar() {
@@ -148,7 +176,7 @@ public class AsignarEntrevistaBean implements Serializable {
         this.lstSInscripcion = lstSInscripcion;
     }
 
-    public AsignarEntrevistaBean() {
+    public AsignarEntrevistaBean() throws Exception {
 
     }
 
@@ -157,6 +185,7 @@ public class AsignarEntrevistaBean implements Serializable {
         try {
             d = new InscripcionDao();
             lstSInscripcion = d.getInscripcionesEstudiantes();
+
         } catch (Exception ex) {
         }
     }
@@ -170,7 +199,7 @@ public class AsignarEntrevistaBean implements Serializable {
             m.setSolicitudInscripcion(SelectedInscripcion);
             SelectedInscripcion.setEstado('A');
             SelectedInscripcion.setFechaRevision(fecha);
-            SelectedInscripcion.setObservacion(observacion);
+            SelectedInscripcion.setObservacion(observacion);            
             MatriculaDao mDao = new MatriculaDao();
             mDao.insertar(m, SelectedInscripcion);
             lstSInscripcion.remove(SelectedInscripcion);
@@ -213,7 +242,6 @@ public class AsignarEntrevistaBean implements Serializable {
                     archivos.add(new ClsArchivos(a.getRequisitosPromo().getRequisitos().getDescripcion(), file));
                 }
             }
-
         } catch (Exception ex) {
             Logger.getLogger(AsignarEntrevistaBean.class.getName()).log(Level.SEVERE, null, ex);
 
@@ -240,25 +268,47 @@ public class AsignarEntrevistaBean implements Serializable {
         });
 
         try {
-SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE MMMM d HH:mm:ss z yyyy");
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            fecha2 = dateFormat.format(fecha) + " " + hora + ":" + minuto + ":00";
+            SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("postgradouteq@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse("chiting23@gmail.com"));
             message.setSubject("Entrevista Maestria");
-            message.setText("La entrevista tendrá lugar en el "+lugar+" a las "+dateFormat.format(fechaHora));
-
-            Transport.send(message);
+            //message.setText("La entrevista tendrá lugar en " + lugar + " el " + dateFormat.format(fecha));
+            message.setText("La entrevista tendrá lugar en " + lugar + " el " + dateFormat2.parse(fecha2));
+//            Transport.send(message);
             FacesMessage m = new FacesMessage("Succesful", "Correo enviado");
             FacesContext.getCurrentInstance().addMessage(null, m);
-            lstSInscripcion.remove(SelectedInscripcion);
-            fechaHora=null;
+            InscripcionDao iD = new InscripcionDao();
+            SelectedInscripcion.setFechaEntrevista(dateFormat2.parse(fecha2));
+            SelectedInscripcion.setLugarEntrevista(lugar);
+            SelectedInscripcion.setEstado('T');
+            if (iD.insertarEntrevista(SelectedInscripcion)) {
+                lstSInscripcion.remove(SelectedInscripcion);
+                fecha = null;
+            } else {
+                FacesMessage m2 = new FacesMessage("Error", "No se ha podido guardar los datos");
+                FacesContext.getCurrentInstance().addMessage(null, m2);
+            }
         } catch (AddressException e) {
             System.out.println(e.toString());
+            FacesMessage m = new FacesMessage("Error", "La dirección de correo no existe");
+            FacesContext.getCurrentInstance().addMessage(null, m);
             // ...
         } catch (MessagingException e) {
             // ...
             System.out.println(e.toString());
+            FacesMessage m = new FacesMessage("Error", "No se ha podido conectar con el servidor, inténtelo de nuevo");
+            FacesContext.getCurrentInstance().addMessage(null, m);
+        } catch (Exception ex) {
+            Logger.getLogger(AsignarEntrevistaBean.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.toString());
+            FacesMessage m = new FacesMessage("Error", "No se ha podido guardar los datos");
+            FacesContext.getCurrentInstance().addMessage(null, m);
         }
         // ...
 

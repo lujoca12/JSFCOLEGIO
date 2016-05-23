@@ -16,9 +16,7 @@
             <ui:define name="leftContent"></ui:define>
             <ui:define name="content">     
                 <h:outputStylesheet name="inscripcion.css" library="css"/>
-                <h:outputStylesheet name="fileinput.css" library="css"/>
-                <h:outputScript name="fileinput.min.js" library="js"/>
-                <h:outputScript name="verFoto.js" library="js"/>
+
                 <h:form id="form" enctype="multipart/form-data" >
                     <p:growl id="messages" showDetail="true" />
                     <div class="encabezado">
@@ -58,14 +56,21 @@
 
 
                     </div>
-                    <p:wizard id="datos" flowListener="#{userWizard.onFlowProcess}" style="display:none;" backLabel="Regresar" nextLabel="Siguiente" step="requisitos"  >
+                    <p:wizard id="datos" flowListener="#{userWizard.onFlowProcess}" style="display:none;" backLabel="Regresar" nextLabel="Siguiente" >
 
                         <p:tab id="personal" title="Personal">
                             <p:panel header="Información Personal">
                                 <p:messages closable="true" />
+                                <p:selectOneRadio  id="tipoDoc" value="#{inscripcionBean.cedOpas}" >
+                                        <f:selectItem itemLabel="Cédula" itemValue="cedula"  />
+                                        <f:selectItem itemLabel="Pasaporte" itemValue="pasaporte" />                                        
+                                    </p:selectOneRadio>
                                 <h:panelGrid columns="4" cellspacing="5px" >
-                                    <h:outputLabel for="cedPas" value="Cédula o Pasaporte: " />
-                                    <p:inputText  required="true"  id="cedPas" class="form-control " value="#{inscripcionBean.estudiante.cedPasaporte}"/>
+                                    
+                                    <h:outputLabel  for="cedPas" value="Cédula o Pasaporte: " />
+                                    <p:inputText  required="true" onblur="validarCedula();" id="cedPas" class="form-control " value="#{inscripcionBean.estudiante.cedPasaporte}">                                        
+
+                                    </p:inputText>
 
                                     <h:outputLabel for="estCivil" value="Estado Civil: " />
                                     <h:selectOneMenu id="estCivil" class="form-control" value="#{inscripcionBean.estudiante.estadoCivil}">
@@ -162,7 +167,7 @@
                                     <p:inputText  required="true" id="direccionDom" class="form-control " value="#{inscripcionBean.datosDom.direccion}"/>
 
                                     <h:outputLabel for="telefono" value="Teléfono: " />
-                                    <p:inputMask id="telefono"  required="true" class="form-control" mask="9999999999" value="#{inscripcionBean.datosDom.telefono}"/>
+                                    <p:inputMask id="telefono"  required="true" class="form-control" mask="999999999" value="#{inscripcionBean.datosDom.telefono}"/>
 
                                 </h:panelGrid>
                             </p:panel>
@@ -198,7 +203,7 @@
                                     <p:inputText  required="true" id="cargo" class="form-control " value="#{inscripcionBean.datosLab.cargo}"/>
 
                                     <h:outputLabel for="telefonoTra" value="Teléfono: " />
-                                    <p:inputMask id="telefonoTra"  required="true" class="form-control" mask="9999999999" value="#{inscripcionBean.datosLab.telefono}"/>
+                                    <p:inputMask id="telefonoTra"  required="true" class="form-control" mask="999999999" value="#{inscripcionBean.datosLab.telefono}"/>
 
                                     <h:outputLabel for="direccionTra" value="Dirección: " />
                                     <p:inputText  required="true" id="direccionTra" class="form-control " value="#{inscripcionBean.datosLab.direccion}"/>
@@ -241,7 +246,7 @@
                                     <h:outputLabel for="nregistro" value="Número de registro del Senecyt: " />
                                     <p:inputText  required="true" id="nregistro" class="form-control " value="#{inscripcionBean.numeroSenecyt}"/>
 
-                                   
+
                                 </h:panelGrid>
 
                             </p:panel>
@@ -250,17 +255,17 @@
                             <p:panel header="Requisitos">
                                 <p:messages closable="true" />
                                 <h:panelGrid columns="1" width="100%" >  
-                                    
+
                                     <c:forEach   items="#{inscripcionBean.reqPro}"  var="r" >                                       
                                         <h:outputText value="#{r.requisitos.pedidoArchivo}" style="font-weight:  bold"/> 
                                         <p:fileUpload  h5:required="true" mode="simple"  style="margin-bottom: 10px;"  value="#{inscripcionBean.file}"   accept="#{r.requisitos.tipoArchivo}" h5:title="#{r.requisitos.pedidoArchivo}"  /> 
                                     </c:forEach>
-                                  
+
                                 </h:panelGrid>
                                 <p:commandButton type="submit" action="#{inscripcionBean.guardar()}" disabled="#{inscripcionBean.btnGuardar}" update="messages datos" ajax="false"  value="Guardar Datos" process="@this" />
                             </p:panel>
                         </p:tab>       
-                        
+
 
                     </p:wizard>
 
@@ -272,26 +277,20 @@
                     <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
                 </p:dialog>
 
-                <h:outputScript name="jquery.bootstrap.wizard.min.js" library="js"/>
+
+
                 <h:outputScript name="jquery.validate.min.js" library="js"/>
-                <h:outputScript name="messages_es.min.js" library="js"/>
-                <h:outputScript name="validarInscripcion.js" library="js"/> 
-                <h:outputScript name="vistaPrevia.js" library="js"/> 
+                <h:outputScript name="messages_es.min.js" library="js"/>     
+                                <h:outputScript name="validadorCedula.js" library="js"/>     
+                <script type="text/javascript" >
+                  
 
-                <script type="text/javascript">
-
-                       $(document).ready(function () {
-                           
-                           
-                     
+                        
                     
-                     });
-                     
-
                 </script>
-
             </ui:define>
         </ui:composition>
+
     </h:body>
 </html>
 

@@ -129,8 +129,20 @@ public class InscripcionBean implements Serializable {
     private String descripcionPromo;
     private List<SelectItem> items;
     private List<Promocion> lstPromocion;
-    private String filename ="";
-    private String extension="";
+    private String filename = "";
+    private String extension = "";
+    private String cedOpas="cedula";
+
+    public String getCedOpas() {
+        return cedOpas;
+    }
+
+    public void setCedOpas(String cedOpas) {
+        this.cedOpas = cedOpas;
+    }
+    
+    
+    
 
     public boolean isBtnGuardar() {
         return btnGuardar;
@@ -139,8 +151,6 @@ public class InscripcionBean implements Serializable {
     public void setBtnGuardar(boolean btnGuardar) {
         this.btnGuardar = btnGuardar;
     }
-    
-    
 
     public String getDescripcionPromo() {
         return descripcionPromo;
@@ -604,7 +614,7 @@ public class InscripcionBean implements Serializable {
 
     public boolean errorArchivos() {
         int x = 0;
-        boolean error = false;        
+        boolean error = false;
         for (UploadedFile f : files) {
             extension = FilenameUtils.getExtension(f.getFileName());
             if (!reqPro.get(x).getRequisitos().getTipoArchivo().contains(extension)) {
@@ -620,38 +630,38 @@ public class InscripcionBean implements Serializable {
     public void guardarArchivos() {
 
         try {
-            
-            for (SelectItem i : items) {
-                    if (i.getValue().toString().equals(idMaestria)) {
-                        descripcionMaetria = i.getLabel();
-                    }
-                }
-                PromocionDao pD = new PromocionDao();
-                descripcionPromo = pD.getPromocion(idPromo).getDescripcion().toString();
 
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                Date dateobj = new Date();
-                String nombreCarpeta = (descripcionMaetria + "-" + descripcionPromo + "-" + estudiante.getApellidos() + " " + estudiante.getNombres() + "-" + df.format(dateobj).replaceAll(":", "-")).trim();
-                File directorio = new File("d:/Postgrado/inscripciones/requisitos/" + nombreCarpeta + "/");
-                if (!directorio.exists()) {
-                    directorio.mkdir();
+            for (SelectItem i : items) {
+                if (i.getValue().toString().equals(idMaestria)) {
+                    descripcionMaetria = i.getLabel();
                 }
-                int cont = 0;
-               ArchivosDao aDao = new ArchivosDao();
-                for (UploadedFile f : files) {
-                    filename = reqPro.get(cont).getRequisitos().getFormato();
-                    extension = FilenameUtils.getExtension(f.getFileName());                    
-                    Path ruta = Paths.get(directorio + "/" + filename + "." + extension);
-                    InputStream input = f.getInputstream();
-                    Files.copy(input, ruta, StandardCopyOption.REPLACE_EXISTING);                    
-                    archivos = new Archivos();                                        
-                    archivos.setRuta(ruta.toString());
-                    archivos.setRequisitosPromo(reqPro.get(cont));
-                    archivos.setSolicitudInscripcion(sInscripcion);   
-                    aDao.insertar(archivos);
-                    cont++;
-                }
-            
+            }
+            PromocionDao pD = new PromocionDao();
+            descripcionPromo = pD.getPromocion(idPromo).getDescripcion().toString();
+
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date dateobj = new Date();
+            String nombreCarpeta = (descripcionMaetria + "-" + descripcionPromo + "-" + estudiante.getApellidos() + " " + estudiante.getNombres() + "-" + df.format(dateobj).replaceAll(":", "-")).trim();
+            File directorio = new File("d:/Postgrado/inscripciones/requisitos/" + nombreCarpeta + "/");
+            if (!directorio.exists()) {
+                directorio.mkdir();
+            }
+            int cont = 0;
+            ArchivosDao aDao = new ArchivosDao();
+            for (UploadedFile f : files) {
+                filename = reqPro.get(cont).getRequisitos().getFormato();
+                extension = FilenameUtils.getExtension(f.getFileName());
+                Path ruta = Paths.get(directorio + "/" + filename + "." + extension);
+                InputStream input = f.getInputstream();
+                Files.copy(input, ruta, StandardCopyOption.REPLACE_EXISTING);
+                archivos = new Archivos();
+                archivos.setRuta(ruta.toString());
+                archivos.setRequisitosPromo(reqPro.get(cont));
+                archivos.setSolicitudInscripcion(sInscripcion);
+                aDao.insertar(archivos);
+                cont++;
+            }
+
             // resultado= "/faces/index?faces-redirect=true";
         } catch (IOException ex) {
             Logger.getLogger(InscripcionBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -941,16 +951,16 @@ public class InscripcionBean implements Serializable {
                     guardarArchivos();
                     FacesMessage message = new FacesMessage("Succesful", "Datos guardados");
                     FacesContext.getCurrentInstance().addMessage(null, message);
-                    btnGuardar=true;
+                    btnGuardar = true;
                 } else {
                     FacesMessage message = new FacesMessage("Error", "Ha habido un problema");
                     FacesContext.getCurrentInstance().addMessage(null, message);
-                    btnGuardar=false;
+                    btnGuardar = false;
                 }
             } else {
                 FacesMessage message = new FacesMessage("Error", "Revise los formatos de los archivos que intenta subir");
                 FacesContext.getCurrentInstance().addMessage(null, message);
-                btnGuardar=false;
+                btnGuardar = false;
             }
 
         } catch (Exception ex) {
@@ -958,6 +968,31 @@ public class InscripcionBean implements Serializable {
         }
     }
 
-    
+     public void validadorDeCedula() {
+        int total=0;
+        int tamanoCedula =10;
+        int[] coeficientes ={2,1,2,1,2,1,2,1,2};
+        int numeroProvincias=24;
+        int tercerDigito=6;
+        String cedula = cedOpas;
+        if(cedula.matches("[0-9]*") && cedula.length()==tamanoCedula){
+            int provincia= Integer.parseInt(cedula.substring(0,2));
+            int digitoTres = Integer.parseInt(cedula.charAt(2)+"");
+            if((provincia > 0 && provincia <= numeroProvincias) && digitoTres < tercerDigito){
+                int digitoVerificadorRecibido = Integer.parseInt(cedula.charAt(9)+"");
+                for(int i=0;i<coeficientes.length;i++){
+                    int valor = coeficientes[i]* Integer.parseInt(cedula.charAt(i)+"");
+                    total = valor >= 10 ? total + (valor-9):total + valor;
+                }
+                int digitoverificadorObtenido = total >= 10 ? (total %10) != 0 ? 10 - (total %10): (total %10):total;
+                if(digitoverificadorObtenido!=digitoVerificadorRecibido){
+                    estudiante.setCedPasaporte("");
+                    FacesMessage message = new FacesMessage("Error", "Número de Cédula inválido");
+                    FacesContext.getCurrentInstance().addMessage(null, message);
+                }
+            }
+        }
+        
+    }
 
 }

@@ -6,7 +6,11 @@
 package Dao;
 
 import Pojo.Pago;
+import Pojo.Precio;
+import Pojo.TipoPrecio;
+import java.util.List;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
@@ -34,7 +38,7 @@ public class PagoDao {
         throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
     }
     
-    public boolean insertar(Pago pago) throws Exception {
+    public boolean insertarPago(Pago pago) throws Exception {
         boolean band = false;
         try {
             iniciaOperacion();
@@ -48,6 +52,38 @@ public class PagoDao {
         }
 
         return band;
+    }
+    public boolean insertarPrecio(Precio precio) throws Exception {
+        boolean band = false;
+        try {
+            iniciaOperacion();
+            sesion.saveOrUpdate(precio);
+            tx.commit();
+            sesion.close();
+            band = true;
+        } catch (Exception e) {
+            tx.rollback();
+            band = false;
+        }
+
+        return band;
+    }
+    
+    public TipoPrecio getTipoPrecio(String Id){
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+       
+        String hql="from TipoPrecio tp where tp.id = '"+Id+"' order by tp.descripcion asc";
+       
+        Query query = sesion.createQuery(hql);
+        //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        List<TipoPrecio> lst=(List<TipoPrecio>) query.list();
+        TipoPrecio u=null;
+        for(TipoPrecio p : lst)
+            u=p;
+        sesion.close();
+        return u; 
     }
     
 }

@@ -16,8 +16,8 @@
         <many-to-one name="tipoPrecio" class="Pojo.TipoPrecio" fetch="select">
             <column name="id_tipo_precio" not-null="true" />
         </many-to-one>
-        <property name="valor" type="java.lang.Double">
-            <column name="valor" scale="0" />
+        <property name="valor" type="big_decimal">
+            <column name="valor" precision="7" />
         </property>
         <property name="fechaInicio" type="date">
             <column name="fecha_inicio" length="13" />

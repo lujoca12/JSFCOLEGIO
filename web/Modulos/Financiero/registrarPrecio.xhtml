@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <div class="ui-fluid">
+            <h:form id="form">               
+ <p:growl id="msgs" showDetail="true" />
+                <p:panel header="Registrar Precio">                            
+                    <p:panelGrid id="panel" columns="3"   layout="grid" styleClass="ui-panelgrid-blank">
+                        <h:outputLabel for="maestria" value="Seleccionar Maestría: " styleClass="labelDerecha" />
+                        <h:selectOneMenu id="maestria" class="form-control " value="#{precioBean.idMaestria}"   >  
+                            <p:ajax listener="#{precioBean.onMaestriaChange}" update="promocion" />                            
+                            <f:selectItem itemLabel="Seleccionar.." itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{precioBean.maestrias}"  />  
+                        </h:selectOneMenu>  
+                        <h:inputHidden/>
+
+                        <h:outputLabel for="promocion" value="Seleccionar Promocion: " styleClass="labelDerecha" />
+                        <h:selectOneMenu id="promocion" class="form-control " value="#{precioBean.idPromo}"   >                          
+
+                            <f:selectItem itemLabel="Seleccionar.." itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{precioBean.promociones}"  />  
+                        </h:selectOneMenu>  
+                        <h:inputHidden/>                       
+                    </p:panelGrid>
+                </p:panel>
+                <p:panel header="Registrar Precio" >
+                    <p:panelGrid id="datos" columns="3"  layout="grid" styleClass="ui-panelgrid-blank">
+                        <h:outputLabel for="precioMatricula" value="Precio de la Matrícula: " styleClass="labelDerecha" />
+                        <p:inputText id="precioMatricula" required="true" value="#{precioBean.precioMatricula}">
+                            <f:validateDoubleRange minimum="0"  />
+                        </p:inputText> 
+                        <p:message for="precioMatricula"/>
+                        <h:outputLabel for="precioColegiatura" value="Precio de la Colegiatura: " styleClass="labelDerecha" />
+                        <p:inputText id="precioColegiatura" required="true" value="#{precioBean.precioColegiatura}">
+                            <f:validateDoubleRange minimum="0"  />
+                        </p:inputText> 
+                        <p:message for="precioColegiatura"/>
+                        <h:inputHidden/>
+                        <p:commandButton id="guardar" update="msgs" type="submit" value="Guardar" action="#{precioBean.guardarPrecio()}" style="display:block;margin:auto;" icon="ui-icon-image">
+                            
+                        </p:commandButton>
+                        <h:inputHidden/>
+                    </p:panelGrid>
+
+                </p:panel>
+            </h:form>
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                    <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+                </p:dialog>
+        </div>
+    </h:body>
+</html>
+

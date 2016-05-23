@@ -11,11 +11,13 @@ import Clases.ClsEstudiante;
 import Dao.DaoTMaestrias;
 import Dao.DaoTEstudiante;
 import Pojo.Maestria;
+import Pojo.Titulacion;
 import Dao.DaoTitulacion;
 import Pojo.Estudiante;
 import Pojo.TipoTitulacion;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
@@ -28,27 +30,38 @@ import javax.faces.view.ViewScoped;
 @Named(value = "mbVtitulacion")
 @ViewScoped
 public class MbVtitulacion implements Serializable{
-      private boolean estado = false;
-    
+    private boolean estado = false;    
     private String idmaestria;
-
      private boolean msg = false;
      private ClsTipoTitulacion clstipotitulacion;
-     private List<ClsTipoTitulacion> lsttipotitulacion;
-     
+     private List<ClsTipoTitulacion> lsttipotitulacion;     
      private ClsMaestria clsmaestria;
-     private List<ClsMaestria> lstmaestria;
-     
+     private List<ClsMaestria> lstmaestria;     
      private ClsEstudiante clsestudiante;
      private List<ClsEstudiante> lstestudiante;
+     
+     private Date fechainicio;
+     private Date fechafin;
+     
+     private Titulacion ttitulacion;
     /**
      * Creates a new instance of MbVtitulacion
      */
     public MbVtitulacion() {
+        ttitulacion = new Titulacion();
         llenarCboTipoTitulacion();
         llenarCboMaestria();
     }
 
+    public Titulacion getTtitulacion() {
+        return ttitulacion;
+    }
+
+    public void setTtitulacion(Titulacion ttitulacion) {
+        this.ttitulacion = ttitulacion;
+    }
+    
+    
     public ClsEstudiante getClsestudiante() {
         return clsestudiante;
     }
@@ -74,15 +87,7 @@ public class MbVtitulacion implements Serializable{
     public List<ClsMaestria> getLstmaestria() {
         return lstmaestria;
     }
-
-    
-    
-        
-        
-        
-
-    
-    
+           
     public ClsTipoTitulacion getClstipotitulacion() {
         return clstipotitulacion;
     }
@@ -150,7 +155,7 @@ public class MbVtitulacion implements Serializable{
                     lstestudiante.add(new ClsEstudiante(
                             es.getId(),
                             es.getNombres(), 
-                            es.getApellidos()
+                            es.getNombres()+" "+es.getApellidos()
                     ));
                 }                
             }

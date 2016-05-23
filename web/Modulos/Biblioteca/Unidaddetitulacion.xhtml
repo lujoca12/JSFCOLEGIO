@@ -20,7 +20,7 @@
                             
                             <p:outputLabel for="cboTipot" value="Tipo de Titulación" styleClass="labelDerecha"  />
                             <p:selectOneMenu id="cboTipot" value="#{mbVtitulacion.clstipotitulacion}" 
-                                             
+                                             converter="themeConverterTipoTitulacion" required="true"
                                              effect="fade" var="tProfesor" filter="true" filterMatchMode="contains">
                                 <f:selectItems value="#{mbVtitulacion.lsttipotitulacion}" var="theme" 
                                                itemLabel="#{theme.displayName}" itemValue="#{theme}" />

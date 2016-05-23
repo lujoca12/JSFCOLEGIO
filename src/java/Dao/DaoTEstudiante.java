@@ -101,7 +101,7 @@ public class DaoTEstudiante implements InterfaceEstudiante{
                  "inner join fetch es.solicitudInscripcions si\n" +
                  "inner join fetch si.promocion pro\n" +
                  "inner join fetch pro.maestria mae\n" +
-                 "where mae.id ='1'";
+                 "where mae.id ='"+idmaestria+"'";
          Query query = sesion.createQuery(hql);
          List<Estudiante> lstestudiante=(List<Estudiante>) query.list();
          sesion.close();

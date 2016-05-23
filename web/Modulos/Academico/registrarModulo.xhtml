@@ -72,7 +72,10 @@
 
 
                             <p:outputLabel for="txtFechaFin" value="Fecha fin:" styleClass="labelDerecha" />
-                            <p:calendar id="txtFechaFin" required="true" mindate="#{mbVModulos.tModulo.fechaInicio}" locale="es" value="#{mbVModulos.tModulo.fechaFin}" onkeypress="return permite(event, 'none')" effect="fold" pattern="dd-MM-yyyy" mask="true" >
+                            <p:calendar id="txtFechaFin" required="true" mindate="#{mbVModulos.tModulo.fechaInicio}" locale="es" 
+                                        value="#{mbVModulos.tModulo.fechaFin}" 
+                                        onkeypress="return permite(event, 'none')" 
+                                        effect="fold" pattern="dd-MM-yyyy" mask="true" >
                                 <f:attribute name="txtFechaInicio" value="#{mbVModulos.tModulo.fechaInicio}"/>
                                 <p:ajax event="dateSelect" update="txtFechaInicioExamen" />
                                 <p:ajax event="dateSelect" update="txtFechaFinExamen" />

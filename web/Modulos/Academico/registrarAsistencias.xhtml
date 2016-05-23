@@ -30,13 +30,10 @@
                             <p:selectOneMenu id="cboFecha" value="#{mbVAsistencia.clsFechaHora}" converter="themeConverterHorarioModulo">
                                 <f:selectItem itemLabel="(Escoja una fecha)" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{mbVAsistencia.lstCboFecha}" var="horario" itemLabel="#{horario.fecha}" itemValue="#{horario}" />
-                                <p:ajax update="frmRegistrarAsist" />
+                                <p:ajax update="frmRegistrarAsist,msgsAsist" listener="#{mbVAsistencia.cargarTablaRegAsistencia}"/>
                             </p:selectOneMenu>
                             
                             
-                            <h:outputText id="display1" value="" />
-                            <p:commandButton value="Mostrar" update="frmRegistrarAsist,msgsAsist" styleClass="anchoBotones" icon="ui-icon-search"
-                                             actionListener="#{mbVAsistencia.cargarTablaRegAsistencia}" />
                             
                         </p:panelGrid>
                     </p:panel>

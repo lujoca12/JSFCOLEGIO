@@ -33,18 +33,16 @@
                             <p:selectOneMenu id="cboFecha" value="#{mbVAsistencia.clsFechaHora}" converter="themeConverterHorarioModulo">
                                 <f:selectItem itemLabel="(Escoja una fecha)" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{mbVAsistencia.lstCboFecha}" var="horario" itemLabel="#{horario.fecha}" itemValue="#{horario}" />
-                                <p:ajax update="frmEdicionAsist" />
+                                <p:ajax update="frmEdicionAsist,msgsAsist" listener="#{mbVAsistencia.cargarTablaEdiAsistencia}" />
                             </p:selectOneMenu>
                             
-                            <h:outputText id="display" value="" />
-                            <p:commandButton value="Mostrar" update="frmEdicionAsist,msgsAsist" styleClass="anchoBotones" icon="ui-icon-search"
-                                             actionListener="#{mbVAsistencia.cargarTablaEdiAsistencia}" />
+                           
                         </p:panelGrid>
                     </p:panel>
                 </p:tab>
                 <br></br>
                 
-                <p:panel id="panelRegistroNotas" rendered="#{mbVAsistencia.idModulo eq 0 ? false:true}">
+                <p:panel id="panelRegistroNotas" rendered="#{mbVAsistencia.estado eq 0 ? false:true}">
                     
                     <p:dataTable class="tblDatos" id="tblModulos" var="notas" value="#{mbVAsistencia.lstTblNotas}"
                                  editable="true" scrollable="true" scrollHeight="150" emptyMessage="No hay Datos">
@@ -95,13 +93,16 @@
                         </p:column>
                         
                     </p:dataTable>
+                    <br></br>
                     <p:message for="display1"/>
                     <p:commandButton value="Eliminar" update="frmEdicionAsist,tblModulos" styleClass="anchoBotones" icon="ui-icon-trash"
-                                     actionListener="#{mbVAsistencia.onDelete()}">
+                                     actionListener="#{mbVAsistencia.onDelete()}"
+                                     rendered="#{mbVAsistencia.habilitar eq 1 ? false:true}">
                         <p:confirm header="Eliminación de Asistencias" message="Esta completamente seguro de realizar esta acción" icon="ui-icon-alert" />
                     </p:commandButton>
                     <h:outputText id="display1" value="" />
                     
+                    <br></br>
                     <p:confirmDialog global="true" styleClass="change-position">
                         <p:commandButton value="Confirmar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
                         <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
@@ -109,7 +110,7 @@
                     
                     
 
-                    <br></br>
+                    
                     
 
 

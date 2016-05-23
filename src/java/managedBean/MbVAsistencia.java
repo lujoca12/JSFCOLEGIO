@@ -358,31 +358,33 @@ public class MbVAsistencia implements Serializable {
         int añoFin = 0;
         int cont = 0;
         this.estado = 0;
+        this.habilitar = 1;
         
         try {
             lstTblNotas.clear();
-            
-            DaoTAsistencias daoTasistencia = new DaoTAsistencias();
-            List<Asistencia> lstAsistencia = daoTasistencia.existe(this.idModulo, this.fecha);
-            
-            
-            boolean asist = false;
-            
-            if(lstAsistencia.size() > 0){
-                this.estado = 1;
-               
-                for (Asistencia asistencia : lstAsistencia) {
+            if (this.idModulo > 0 && this.clsFechaHora != null) {
+                DaoTAsistencias daoTasistencia = new DaoTAsistencias();
+                List<Asistencia> lstAsistencia = daoTasistencia.existe(this.idModulo, this.clsFechaHora.getFecha());
+
+                boolean asist = false;
+
+                if (lstAsistencia.size() > 0) {
+                    this.estado = 1;
+                    this.habilitar = 0;
+
+                    for (Asistencia asistencia : lstAsistencia) {
                         calendar.setTime(asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getFechaInicio());
                         añoInicio = calendar.get(Calendar.YEAR);
                         cont++;
                         calendar.setTime(asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getFechaFin());
                         añoFin = calendar.get(Calendar.YEAR);
                         estudiante = asistencia.getMatricula().getSolicitudInscripcion().getEstudiante().getApellidos() + " " + asistencia.getMatricula().getSolicitudInscripcion().getEstudiante().getNombres();
-                        if(asistencia.getEstado().equals('1'))
+                        if (asistencia.getEstado().equals('1')) {
                             asist = true;
-                        else
+                        } else {
                             asist = false;
-                        
+                        }
+
                         lstTblNotas.add(new ClsNotas(asistencia.getMatricula().getSolicitudInscripcion().getEstudiante().getId(),
                                 estudiante,
                                 asistencia.getMatricula().getId(),
@@ -397,16 +399,16 @@ public class MbVAsistencia implements Serializable {
                                 "",
                                 "",
                                 this.clsFechaHora.getFecha(),
-                                asist, 
-                                asistencia.getId(),"","",this.clsFechaHora.getHoras().toString()));
+                                asist,
+                                asistencia.getId(), "", "", this.clsFechaHora.getHoras().toString()));
                     }
-            }else{
-                this.estado = 0;
-                mensajesOk("No hay Asistencia registrada con esta fecha");
-                vaciarCajas();
-            }
+                } else {
+                    this.estado = 0;
+                    mensajesOk("No hay Asistencia registrada con esta fecha");
+                    vaciarCajas();
+                }
 
-            
+            }
 
         } catch (Exception ex) {
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);

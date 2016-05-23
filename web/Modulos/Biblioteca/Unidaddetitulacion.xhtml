@@ -37,7 +37,7 @@
                             <p:selectOneMenu  id="cbomaestria" value="#{mbVtitulacion.clsmaestria}" 
                                              converter="themeConverterMaestria" required="true"
                                              effect="fade" var="t" filter="true" filterMatchMode="contains">
-                                
+                                <p:ajax listener="#{mbVtitulacion.onMaestriaChange()}" update="cbomatricula"/>
                                 <f:selectItems value="#{mbVtitulacion.lstmaestria}" var="theme" 
                                                itemLabel="#{theme.displayName}" itemValue="#{theme}" />
                                 <p:column style="width:10%">
@@ -47,18 +47,18 @@
                                 <p:column>
                                     <h:outputText value="#{t.displayName}" />
                                 </p:column>
-                                <p:ajax listener="#{mbVtitulacion.onMaestriaChange}" update="cbomatricula"/>
+                                
                             </p:selectOneMenu>
                             
                             <p:outputLabel for="cbomatricula" value="Estudiante:" styleClass="labelDerecha"  />
                             <p:selectOneMenu id="cbomatricula" value="#{mbVtitulacion.clsestudiante}" 
-                                             
+                                             converter="themeConverterEstudiante"
                                              effect="fade" var="testudiante" filter="true" filterMatchMode="contains">
                                  <f:selectItem itemLabel="(Escoja un Estudiante)"/>
                                  <f:selectItems value="#{mbVtitulacion.lstestudiante}" var="estudiante" 
                                                itemLabel="#{estudiante.apellidos}" itemValue="#{estudiante}" />
                                 <p:column style="width:10%">
-                                    <h:outputText styleClass="ui-theme ui-theme-#{testudiante.nombre}" />
+                                    <h:outputText styleClass="ui-theme ui-theme-#{testudiante.nombres}" />
                                 </p:column>
                                 <p:column>
                                     <h:outputText value="#{testudiante.apellidos}" />
@@ -213,6 +213,10 @@
                         <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
                     </p:confirmDialog>
                 </p:panel>
+                <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                    <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+                </p:dialog>
             </h:form>
         </div>
     </h:body>

@@ -14,18 +14,20 @@ import Pojo.Maestria;
 import Dao.DaoTitulacion;
 import Pojo.Estudiante;
 import Pojo.TipoTitulacion;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
+import javax.faces.view.ViewScoped;
 
 /**
  *
  * @author SERVER
  */
 @Named(value = "mbVtitulacion")
-@Dependent
-public class MbVtitulacion {
+@ViewScoped
+public class MbVtitulacion implements Serializable{
       private boolean estado = false;
     
     private String idmaestria;
@@ -59,10 +61,6 @@ public class MbVtitulacion {
         return lstestudiante;
     }
 
-    public void setLstestudiante(List<ClsEstudiante> lstestudiante) {
-        this.lstestudiante = lstestudiante;
-    }
-    
     
 
     public ClsMaestria getClsmaestria() {
@@ -77,9 +75,7 @@ public class MbVtitulacion {
         return lstmaestria;
     }
 
-    public void setLstmaestria(List<ClsMaestria> lstmaestria) {
-        this.lstmaestria = lstmaestria;
-    }
+    
     
         
         

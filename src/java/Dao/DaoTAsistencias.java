@@ -61,6 +61,7 @@ public class DaoTAsistencias implements InterfaceAsistencia{
             Asistencia tAsistencia = null;
             Matricula matricula = null;
             Modulo modulo = null;
+            BigDecimal bigDec;
             
             //Date fecha = new Date();
             for (int i = 0; i < lstNotas.size(); i++) {
@@ -80,6 +81,8 @@ public class DaoTAsistencias implements InterfaceAsistencia{
                 modulo.setId(idModulo);
                 tAsistencia.setModulo(modulo);
                 tAsistencia.setObservacion(lstNotas.get(i).getObservacion());
+                bigDec = new BigDecimal(lstNotas.get(i).getHorasAsistidas());
+                tAsistencia.setHoras_asistidas(bigDec);
                 
                 sesion.save(tAsistencia);
             }
@@ -175,10 +178,10 @@ public class DaoTAsistencias implements InterfaceAsistencia{
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-//        Calendar cal = Calendar.getInstance();
-//        cal.add(Calendar.DATE,0);
-//        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-//        String formatted = format1.format(cal.getTime());
+//      Calendar cal = Calendar.getInstance();
+//      cal.add(Calendar.DATE,0);
+//      SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+//      String formatted = format1.format(cal.getTime());
         
         //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
         Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");

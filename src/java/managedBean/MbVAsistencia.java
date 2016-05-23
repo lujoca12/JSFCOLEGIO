@@ -54,6 +54,7 @@ public class MbVAsistencia implements Serializable {
     
     private String msgRegistro = "";
     private int estado;
+    private int habilitar;
     
     
     private int idProm = 0;
@@ -192,6 +193,14 @@ public class MbVAsistencia implements Serializable {
     public void setSeleccion(SelectItem seleccion) {
         this.seleccion = seleccion;
     }
+
+    public int getHabilitar() {
+        return habilitar;
+    }
+
+    public void setHabilitar(int habilitar) {
+        this.habilitar = habilitar;
+    }
     
     
     public void cargarCboModulos() {
@@ -231,6 +240,7 @@ public class MbVAsistencia implements Serializable {
     
     public void cargarCboFechas() {
         lstCboFecha = new ArrayList<>();
+        this.estado = 0;
         try {
             lstCboFecha.clear();
             DaoTHorarioModulo daoHorario = new DaoTHorarioModulo();
@@ -254,7 +264,7 @@ public class MbVAsistencia implements Serializable {
         int añoInicio = 0;
         int añoFin = 0;
         int cont = 0;
-        this.estado = 1;
+        this.estado = 0;
         
         try {
             if (this.idModulo > 0 && this.clsFechaHora != null) {
@@ -269,6 +279,7 @@ public class MbVAsistencia implements Serializable {
 
                 if (lstAsistencia.size() > 0) {
                     this.estado = 1;
+                    this.habilitar = 1;
                     mensajesOk("Asistencia ya registrada");
                     for (Asistencia asistencia : lstAsistencia) {
                         calendar.setTime(asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getFechaInicio());
@@ -296,15 +307,15 @@ public class MbVAsistencia implements Serializable {
                                 cont,
                                 "",
                                 "",
-                                null,
-                                asist, 0, "", ""));
+                                this.clsFechaHora.getFecha(),
+                                asist, 0, "", "",this.clsFechaHora.getHoras().toString()));
                     }
                 } else {
                     DaoTMatricula daoTmatricula = new DaoTMatricula();
                     List<Matricula> lstMatricula = daoTmatricula.getMatriculaRegNotas(this.idModulo);
                     if (lstMatricula.size() > 0) {
-                        this.estado = 0;
-
+                        this.estado = 1;
+                        this.habilitar = 0;
                         for (Matricula matricula : lstMatricula) {
                             calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaInicio());
                             añoInicio = calendar.get(Calendar.YEAR);
@@ -326,8 +337,8 @@ public class MbVAsistencia implements Serializable {
                                     cont,
                                     "",
                                     "",
-                                    null,
-                                    true, 0, "", ""));
+                                    this.clsFechaHora.getFecha(),
+                                    true, 0, "", "",this.clsFechaHora.getHoras().toString()));
                         }
                     }
 
@@ -346,6 +357,7 @@ public class MbVAsistencia implements Serializable {
         int añoInicio = 0;
         int añoFin = 0;
         int cont = 0;
+        this.estado = 0;
         
         try {
             lstTblNotas.clear();
@@ -384,9 +396,9 @@ public class MbVAsistencia implements Serializable {
                                 cont,
                                 "",
                                 "",
-                                this.fecha,
+                                this.clsFechaHora.getFecha(),
                                 asist, 
-                                asistencia.getId(),"",""));
+                                asistencia.getId(),"","",this.clsFechaHora.getHoras().toString()));
                     }
             }else{
                 this.estado = 0;
@@ -404,7 +416,7 @@ public class MbVAsistencia implements Serializable {
     public void registrar() {
         DaoTAsistencias daoTasistencia = new DaoTAsistencias();
         try {
-            msg = daoTasistencia.registrar(lstTblNotas, this.idModulo, fecha);
+            msg = daoTasistencia.registrar(lstTblNotas, this.idModulo, this.clsFechaHora.getFecha());
         } catch (Exception ex) {
             Logger.getLogger(MbVNotas.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -477,6 +489,9 @@ public class MbVAsistencia implements Serializable {
 
     private void vaciarCajas() {
         this.idModulo = 0;
+        cargarCboFechas();
+        this.estado = 0;
+        
         cargarCboModulos();
         
         lstTblNotas = new ArrayList<>();

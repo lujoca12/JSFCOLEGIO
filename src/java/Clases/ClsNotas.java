@@ -6,6 +6,7 @@
 package Clases;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 /**
  *
@@ -32,8 +33,9 @@ public class ClsNotas implements Serializable {
     private int idNota;
     private String usuario;
     private String responsable;
+    private String horasAsistidas;
 
-    public ClsNotas(int idEstudiante, String nombresEstudiante, int idMatricula, String n_matricula, Date fechaMatricula, int idPromocion, String periodo, Date resolucion, int idMaestria, String descripMaestria, int n_registro, String nota, String observacion, Date fecha, boolean estado, int idNota,String usuario,String responsable) {
+    public ClsNotas(int idEstudiante, String nombresEstudiante, int idMatricula, String n_matricula, Date fechaMatricula, int idPromocion, String periodo, Date resolucion, int idMaestria, String descripMaestria, int n_registro, String nota, String observacion, Date fecha, boolean estado, int idNota,String usuario,String responsable, String horasAsistidas) {
         this.idEstudiante = idEstudiante;
         this.nombresEstudiante = nombresEstudiante;
         this.idMatricula = idMatricula;
@@ -52,6 +54,7 @@ public class ClsNotas implements Serializable {
         this.idNota = idNota;
         this.usuario = usuario;
         this.responsable = responsable;
+        this.horasAsistidas = horasAsistidas;
     }
 
     
@@ -198,6 +201,14 @@ public class ClsNotas implements Serializable {
 
     public void setResponsable(String responsable) {
         this.responsable = responsable;
+    }
+
+    public String getHorasAsistidas() {
+        return horasAsistidas;
+    }
+
+    public void setHorasAsistidas(String horasAsistidas) {
+        this.horasAsistidas = horasAsistidas;
     }
     
 }

@@ -207,7 +207,7 @@ public class MbVNotas implements Serializable {
                             "",
                             "",
                             null,
-                            true, 0,"",""));
+                            true, 0,"","",null));
                 }
             } else {
                 this.estudiante = "";
@@ -428,7 +428,7 @@ public class MbVNotas implements Serializable {
                                         true,
                                         notas.getId(),
                                         notas.getUsuario(),
-                                        notas.getResponsable()));
+                                        notas.getResponsable(),null));
                             }
                         }
                     }
@@ -455,7 +455,7 @@ public class MbVNotas implements Serializable {
                                 "0",
                                 "",
                                 null,
-                                true, 0,"",""));
+                                true, 0,"","",null));
 
                     }
 
@@ -549,7 +549,7 @@ public class MbVNotas implements Serializable {
                             true,
                             notas.getId(),
                             notas.getUsuario(),
-                            notas.getResponsable()));
+                            notas.getResponsable(),null));
                 }
             }
 

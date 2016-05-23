@@ -19,10 +19,10 @@
                         <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
 
                             <p:outputLabel for="cboModulo" value="Módulos:" styleClass="labelDerecha"/>
-                            <p:selectOneMenu id="cboModulo" value="#{mbVAsistencia.idModulo}" required="true">
+                            <p:selectOneMenu id="cboModulo" value="#{mbVAsistencia.idModulo}">
                                 <f:selectItem itemLabel="(Escoja un Módulo)" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{mbVAsistencia.lstCboModulos}" var="modulos" itemLabel="#{modulos.modulo}" itemValue="#{modulos.idModulo}" />
-                                <p:ajax update="cboFecha" listener="#{mbVAsistencia.cargarCboFechas()}" />
+                                <p:ajax update="frmRegistrarAsist,cboFecha" listener="#{mbVAsistencia.cargarCboFechas()}" />
                                 
                             </p:selectOneMenu>
                             
@@ -30,6 +30,7 @@
                             <p:selectOneMenu id="cboFecha" value="#{mbVAsistencia.clsFechaHora}" converter="themeConverterHorarioModulo">
                                 <f:selectItem itemLabel="(Escoja una fecha)" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{mbVAsistencia.lstCboFecha}" var="horario" itemLabel="#{horario.fecha}" itemValue="#{horario}" />
+                                <p:ajax update="frmRegistrarAsist" />
                             </p:selectOneMenu>
                             
                             
@@ -44,7 +45,7 @@
                 
                     
                 
-                <p:panel id="panelRegistroNotas" rendered="#{mbVAsistencia.idModulo eq 0 ? false:true}">
+                <p:panel id="panelRegistroNotas" rendered="#{mbVAsistencia.estado eq 0 ? false:true}">
                     
                     <p:dataTable class="tblDatos" scrollable="false" var="notas" value="#{mbVAsistencia.lstTblNotas}"
                                  emptyMessage="No hay Estudiantes para registrar asistencia">
@@ -57,18 +58,18 @@
                         </p:column>
 
                         <p:column headerText="Asistencia" style="text-align: center; width: 10%;">
-                            <p:selectBooleanCheckbox disabled="#{mbVAsistencia.estado eq 1 ? true:false}" value="#{notas.estado}" />
+                            <p:selectBooleanCheckbox disabled="#{mbVAsistencia.habilitar eq 1 ? true:false}" value="#{notas.estado}" />
                         </p:column>
 
                         <p:column headerText="Observación" style="text-align: center; width: 55%;">
-                            <p:inputText disabled="#{mbVAsistencia.estado eq 1 ? true:false}" value="#{notas.observacion}" style="width:100%"/>
+                            <p:inputText disabled="#{mbVAsistencia.habilitar eq 1 ? true:false}" value="#{notas.observacion}" style="width:100%"/>
                         </p:column>
 
                     </p:dataTable>
 
                     <br></br>
                     <p:message for="display"/>
-                    <p:commandButton rendered="#{mbVAsistencia.estado eq 1 ? false:true}" value="Guardar" update="frmRegistrarAsist,msgsAsist" styleClass="anchoBotones" icon="ui-icon-disk"
+                    <p:commandButton rendered="#{mbVAsistencia.habilitar eq 1 ? false:true}" value="Guardar" update="frmRegistrarAsist,msgsAsist" styleClass="anchoBotones" icon="ui-icon-disk"
                                      actionListener="#{mbVAsistencia.registrar()}">
                         <p:confirm header="Registro de Asistencias" message="Esta completamente seguro de realizar esta acción" icon="ui-icon-alert" />
                     </p:commandButton>

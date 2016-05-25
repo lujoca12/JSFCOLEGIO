@@ -145,7 +145,7 @@ public class DaoTModulo implements InterfaceModulos{
 //        //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
 //        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");  
         String consulta = "";
-        String fecha = "";
+        String fecha = "and (current_date >= modul.fechaInicio and current_date <= modul.fechaFin) ";
        
 //        if(usuario_id == 0){
 //            consulta = "";

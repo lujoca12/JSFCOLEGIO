@@ -363,10 +363,14 @@ public class MbVModulos implements Serializable {
             modulo.setId(((ClsTablaModulosRegistrados) event.getObject()).getIdModulo());
             modulo.setDescripcion(((ClsTablaModulosRegistrados) event.getObject()).getModulo());
             BigDecimal bigdec;
+            String valorHoras = ((ClsTablaModulosRegistrados) event.getObject()).getTotalHorasModulo().toString();
+            if(!valorHoras.isEmpty()){
+                bigdec = new BigDecimal(Double.parseDouble(((ClsTablaModulosRegistrados) event.getObject()).getTotalHorasModulo()));
+                modulo.setTotalHorasModulo(bigdec);
+            }
             bigdec = new BigDecimal(Double.parseDouble(((ClsTablaModulosRegistrados) event.getObject()).getCreditos()));
             modulo.setCreditos(bigdec);
-            bigdec = new BigDecimal(Double.parseDouble(((ClsTablaModulosRegistrados) event.getObject()).getTotalHorasModulo()));
-            modulo.setTotalHorasModulo(bigdec);
+            
             modulo.setFechaInicio(((ClsTablaModulosRegistrados) event.getObject()).getFechaInicio());
             modulo.setFechaFin(((ClsTablaModulosRegistrados) event.getObject()).getFechaFin());
             modulo.setFechaInicioExamen(((ClsTablaModulosRegistrados) event.getObject()).getFechaInicioExamen());

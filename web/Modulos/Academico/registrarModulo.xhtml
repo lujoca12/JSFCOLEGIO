@@ -161,7 +161,7 @@
                         <p:column headerText="Descripciòn">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.modulo}" /></f:facet>
-                                <f:facet name="input"><p:inputText value="#{lstTbl.modulo}" style="width:100%"/></f:facet>
+                                <f:facet name="input"><p:inputText required="true" value="#{lstTbl.modulo}" style="width:100%"/></f:facet>
                             </p:cellEditor>
                         </p:column>
                         
@@ -262,7 +262,7 @@
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.creditos}"   /></f:facet>
                                 <f:facet name="input">
-                                    <p:inputText value="#{lstTbl.creditos}" style="width:100%" label="text" onkeypress="return validarNum(event, true)">
+                                    <p:inputText value="#{lstTbl.creditos}" required="true" style="width:100%" label="text" onkeypress="return validarNum(event, true)">
                                     </p:inputText>
                                 </f:facet>
                             </p:cellEditor>

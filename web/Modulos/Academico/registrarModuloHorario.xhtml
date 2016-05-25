@@ -70,7 +70,8 @@
                         
                         <p:outputLabel for="txtHoraInicio" styleClass="labelDerecha" value="Hora inicio:" />
                         <p:calendar id="txtHoraInicio" value="#{mbVModulosHorarios.tHorarioModulo.horaInicio}" required="true" pattern="HH:mm" mask="true" timeOnly="true" >
-                            
+                        <p:ajax event="dateSelect" update="txtHoraInicio"/> 
+                        <p:ajax event="blur" update="txtHoraInicio" />
                         </p:calendar>
                         
                         <p:outputLabel for="txtHoraFin" styleClass="labelDerecha" value="Hora fin:" />

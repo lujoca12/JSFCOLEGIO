@@ -6,6 +6,7 @@
 package Interface;
 
 import Pojo.Matricula;
+import Pojo.Titulacion;
 import java.util.List;
 
 /**
@@ -20,5 +21,6 @@ public interface InterfaceMatricula {
     public List<Matricula> getMatriculaRegNotas(int idModulo) throws Exception;
     public Matricula getMatriculas(String idMatricula) throws Exception;
     public boolean update(Matricula tMatricula) throws Exception;
-    
+    public List<Matricula> getMatriculaEstudiante(int idestudiante) throws Exception;
+    public List<Titulacion> getTitulacionxMatricula(int idtitulacion) throws Exception;
 }

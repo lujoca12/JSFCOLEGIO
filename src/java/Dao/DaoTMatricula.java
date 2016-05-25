@@ -7,6 +7,7 @@ package Dao;
 
 import Interface.InterfaceMatricula;
 import Pojo.Matricula;
+import Pojo.Titulacion;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -78,8 +79,15 @@ public class DaoTMatricula implements InterfaceMatricula{
        // String hql="from palabras_clave pal inner join tesis t on pal.id_tesis = t.id where pal.id='4'";
 //        String hql="from Matricula matr inner join fetch matr.promocion pr inner join fetch pr.maestria maest inner join fetch matr.solicitudInscripcion solInsc inner join fetch  solInsc.estudiante estud "
 //                + "where estud.cedPasaporte = '"+cedula+"' and matr.estado='1' and maest.estado = '1'  order by maest.descripcion asc";
-        String hql= "from Matricula matr inner join fetch matr.solicitudInscripcion solInsc inner join fetch  solInsc.estudiante estud inner join fetch solInsc.promocion pr inner join fetch pr.maestria maest\n" +
-                   "where estud.cedPasaporte = '"+cedula+"' and matr.estado='1' and maest.estado = '1'  order by maest.descripcion asc";
+        String hql= "from Matricula matr "
+                + "inner join fetch matr.solicitudInscripcion solInsc "
+                + "inner join fetch  solInsc.estudiante estud "
+                + "inner join fetch solInsc.promocion pr "
+                + "inner join fetch pr.maestria maest\n" +
+                   "where estud.cedPasaporte = '"+cedula+"' "
+                + "and matr.estado='1' "
+                + "and maest.estado = '1'  "
+                + "order by maest.descripcion asc";
         Query query = sesion.createQuery(hql);
          List<Matricula> lstPermiso=(List<Matricula>) query.list();
         sesion.close();
@@ -108,6 +116,40 @@ public class DaoTMatricula implements InterfaceMatricula{
     @Override
     public boolean update(Matricula tMatricula) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Matricula> getMatriculaEstudiante(int idestudiante) throws Exception {
+          this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+       // String hql="from palabras_clave pal inner join tesis t on pal.id_tesis = t.id where pal.id='4'";
+//        String hql="from Matricula matr inner join fetch matr.promocion pr inner join fetch pr.maestria maest inner join fetch matr.solicitudInscripcion solInsc inner join fetch  solInsc.estudiante estud "
+//                + "where estud.cedPasaporte = '"+cedula+"' and matr.estado='1' and maest.estado = '1'  order by maest.descripcion asc";
+        String hql= "from Matricula matr "
+                + "inner join fetch matr.solicitudInscripcion solInsc "
+                + "inner join fetch  solInsc.estudiante estud "
+                + "inner join fetch solInsc.promocion pr "
+                + "inner join fetch pr.maestria maest\n" +
+                   "where estud.id = '"+idestudiante+"' "
+                + "and matr.estado='1' "
+                + "and maest.estado = '1'  "
+                + "order by maest.descripcion asc";
+        Query query = sesion.createQuery(hql);
+         List<Matricula> lstPermiso=(List<Matricula>) query.list();
+        sesion.close();
+        return lstPermiso;
+    }
+
+    @Override
+    public List<Titulacion> getTitulacionxMatricula(int idtitulacion) throws Exception {
+        this.sesion= null;
+        this.tx= null;
+        iniciaOperacion();
+        String hql="from Pojo.Titulacion as t where t.matricula ='"+idtitulacion+"'";
+        Query query = sesion.createQuery(hql);
+        List<Titulacion> lstt=(List<Titulacion>) query.list();
+        return lstt;
     }
     
 }

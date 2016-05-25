@@ -228,9 +228,7 @@ public class MbVtesis implements Serializable{
     public void setmBean(MaestriaBean mBean) {
         this.mBean = mBean;
     }
-    
-    
-    
+      
     
     public List<ClsTablaTesis> getLstTablatesis() {
         return LstTablatesis;

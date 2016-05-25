@@ -8,12 +8,16 @@ package managedBean;
 import Clases.ClsTipoTitulacion;
 import Clases.ClsMaestria;
 import Clases.ClsEstudiante;
+import Clases.ClsMatricula;
 import Dao.DaoTMaestrias;
 import Dao.DaoTEstudiante;
+import Dao.DaoTMatricula;
 import Pojo.Maestria;
 import Pojo.Titulacion;
 import Dao.DaoTitulacion;
 import Pojo.Estudiante;
+import Pojo.Matricula;
+import Pojo.SolicitudInscripcion;
 import Pojo.TipoTitulacion;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,6 +25,8 @@ import java.util.Date;
 import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
 /**
@@ -34,72 +40,79 @@ public class MbVtitulacion implements Serializable{
     private String idmaestria;
      private boolean msg = false;
      private ClsTipoTitulacion clstipotitulacion;
-     private List<ClsTipoTitulacion> lsttipotitulacion;     
+     private List<ClsTipoTitulacion> lsttipotitulacion;  
+     
+     private ClsMatricula clsmatricula;
+     private List<ClsMatricula> lstmatricula;   
      private ClsMaestria clsmaestria;
      private List<ClsMaestria> lstmaestria;     
      private ClsEstudiante clsestudiante;
      private List<ClsEstudiante> lstestudiante;
-     
+     private Date date;
      private Date fechainicio;
      private Date fechafin;
      
      private Titulacion ttitulacion;
+     private TipoTitulacion ttipotitulacion;
+     private Matricula tmatricula;
+     private Estudiante testudiante;
     /**
      * Creates a new instance of MbVtitulacion
      */
     public MbVtitulacion() {
         ttitulacion = new Titulacion();
+        tmatricula = new Matricula();
+        ttipotitulacion = new TipoTitulacion();
+        ttitulacion.setFechaInicio(date);
         llenarCboTipoTitulacion();
         llenarCboMaestria();
     }
-
+    
+    private void vaciarCajas(){
+         ttitulacion = new Titulacion();
+        tmatricula = new Matricula();
+        ttipotitulacion = new TipoTitulacion();
+    }
+    
+    public Date getDate() {
+        return date;
+    }
+    public void setDate(Date date) {
+        this.date = date;
+    }
     public Titulacion getTtitulacion() {
         return ttitulacion;
     }
-
     public void setTtitulacion(Titulacion ttitulacion) {
         this.ttitulacion = ttitulacion;
-    }
-    
-    
+    } 
     public ClsEstudiante getClsestudiante() {
         return clsestudiante;
     }
-
     public void setClsestudiante(ClsEstudiante clsestudiante) {
         this.clsestudiante = clsestudiante;
     }
-
     public List<ClsEstudiante> getLstestudiante() {
         return lstestudiante;
     }
-
-    
-
     public ClsMaestria getClsmaestria() {
         return clsmaestria;
     }
-
     public void setClsmaestria(ClsMaestria clsmaestria) {
         this.clsmaestria = clsmaestria;
     }
-
     public List<ClsMaestria> getLstmaestria() {
         return lstmaestria;
-    }
-           
+    }        
     public ClsTipoTitulacion getClstipotitulacion() {
         return clstipotitulacion;
     }
-
     public void setClstipotitulacion(ClsTipoTitulacion clstipotitulacion) {
         this.clstipotitulacion = clstipotitulacion;
     }
-
     public List<ClsTipoTitulacion> getLsttipotitulacion() {
         return lsttipotitulacion;
     }
-
     public void setLsttipotitulacion(List<ClsTipoTitulacion> lsttipotitulacion) {
         this.lsttipotitulacion = lsttipotitulacion;
     }
@@ -197,4 +210,79 @@ public class MbVtitulacion implements Serializable{
             
         }
      }
+
+     public void ObteneridMatriculaEstudiante(){
+         try{
+             DaoTMatricula daomatricula = new DaoTMatricula();
+         
+            this.lstmatricula = new ArrayList<ClsMatricula>();
+            int cedul = this.clsestudiante.getId();
+            String cedula = Integer.toString(this.clsestudiante.getId());
+            List<Matricula> matr = daomatricula.getMatriculaEstudiante(cedul);
+            this.lstmatricula.clear();
+            for(Matricula ma : matr){
+            //lstmatricula.add(new ClsMatricula(cedul, fechainicio, 0, idmaestria, fechainicio)
+            lstmatricula.add(new ClsMatricula(
+                    ma.getId(),              
+                    ma.getFechaMatricula(),  
+                    ma.getEstado(),  
+                    ma.getNMatricula(),
+                    ma.getFechaGraduacion()));
+            }
+            boolean a =false;
+         }catch(Exception e){
+             
+         }
+     }
+     
+     public void registrarTitulacion(){
+         DaoTitulacion daotitulacion = new DaoTitulacion();
+         DaoTMatricula daomatricula = new DaoTMatricula();
+         boolean band = false;
+         ObteneridMatriculaEstudiante();
+
+        //Variable para saber si esta registrada
+        boolean repetida = false;
+            ttipotitulacion.setId(this.clstipotitulacion.getId());
+            ttitulacion.setTipoTitulacion(ttipotitulacion);
+            ttitulacion.setFechaFin(ttitulacion.getFechaFin());
+            ttitulacion.setFechaInicio(ttitulacion.getFechaInicio());
+            tmatricula.setId(this.clsmatricula.getId());
+            //ttitulacion.setMatricula(tmatricula);
+        try{
+            List<Titulacion> lstT=(List<Titulacion>) daomatricula.getTitulacionxMatricula(ttitulacion.getMatricula().getId());
+            if(lstT.size() > 0){
+                repetida = true;
+            }
+            else{
+                //Si la maestria no existe se la registra
+                msg =  daotitulacion.registrarTitulacion(ttitulacion);
+            }
+        }
+        catch (Exception e){
+            vaciarCajas();
+        }
+        if(repetida){
+            mensajesError("Registro repetido");            
+        }else{
+            vaciarCajas();            
+            if(msg)
+                mensajesOk("Datos procesados bien");            
+            else
+                mensajesError("error al intentar procesar");
+                }
+        
+     }
+     
+     
+     
+     
+    private void mensajesOk(String msg){
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje de la Aplicacion", msg);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+    private void mensajesError(String msg){
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje de la Aplicacion", msg);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
 }

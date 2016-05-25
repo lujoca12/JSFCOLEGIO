@@ -52,7 +52,7 @@
                             
                             <p:outputLabel for="cbomatricula" value="Estudiante:" styleClass="labelDerecha"  />
                             <p:selectOneMenu id="cbomatricula" value="#{mbVtitulacion.clsestudiante}" 
-                                             converter="themeConverterEstudiante"
+                                             converter="themeConverterEstudiante" required="true"
                                              effect="fade" var="testudiante" filter="true" filterMatchMode="contains">
                                  <f:selectItem itemLabel="(Escoja un Estudiante)"/>
                                  <f:selectItems value="#{mbVtitulacion.lstestudiante}" var="estudiante" 
@@ -66,31 +66,18 @@
                             </p:selectOneMenu>
 
                             <p:outputLabel for="txtFechaInicio" value="Fecha inicio:" styleClass="labelDerecha" />
-                            <p:calendar id="txtFechaInicio" 
-                                        onkeypress="return permite(event, 'none')" 
-                                        locale="es" 
-                                        value="#{mbVMaestrias.tPromocion.fechaInicio}" 
-                                        effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" >
-                                <p:ajax event="dateSelect" update="txtFechaFin" />
-                                <p:ajax event="blur" update="txtFechaFin" />
-                                <f:attribute name="txtFechaFin" value="#{mbVMaestrias.tPromocion.fechaFin}"/>
-                                <f:validator validatorId="primeDateRangeValidator" />
-                            </p:calendar>
+                            <p:calendar id="txtFechaInicio" value="#{mbVtitulacion.ttitulacion.fechaInicio}" 
+                                    effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" />
 
 
                             <p:outputLabel for="txtFechaFin" value="Fecha fin:" styleClass="labelDerecha" />
-                            <p:calendar id="txtFechaFin" mindate="#{mbVMaestrias.tPromocion.fechaInicio}"
-                                        locale="es" value="#{mbVMaestrias.tPromocion.fechaFin}"
-                                        onkeypress="return permite(event, 'none')" effect="fold" 
-                                        required="true" pattern="dd-MM-yyyy" mask="true" >
-                                <f:attribute name="txtFechaInicio" value="#{mbVMaestrias.tPromocion.fechaInicio}"/>
-                                <f:validator validatorId="primeDateRangeValidator" />
-                            </p:calendar>
+                            <p:calendar id="txtFechaFin" value="#{mbVtitulacion.ttitulacion.fechaFin}" 
+                                    effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" />
 
                             <h:outputText id="display" value="" />
                             <p:commandButton value="Guardar" update="form,msgs" 
                                              styleClass="anchoBotones" icon="ui-icon-disk"
-                                             actionListener="#{mbVMaestrias.registrar()}" />
+                                             actionListener="#{mbVtitulacion.registrarTitulacion()}" />
 
 
 

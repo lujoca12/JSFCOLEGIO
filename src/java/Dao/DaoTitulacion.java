@@ -10,6 +10,7 @@ import Pojo.Matricula;
 import Pojo.TipoTitulacion;
 import Pojo.PalabrasClave;
 import Pojo.TipoTitulacion;
+import Pojo.Titulacion;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -57,4 +58,22 @@ public class DaoTitulacion implements InterfaceTitulacion{
         sesion.close();
         return lsttipotitu;
     }
+
+    @Override
+    public boolean registrarTitulacion(Titulacion t) throws Exception {
+        boolean band = false;
+        try{
+            iniciaOperacion();
+            sesion.save(t);
+            tx.commit();
+            sesion.close();
+            band=true;
+        }catch(Exception e){
+            tx.rollback();
+            band=false;
+        }
+        
+        
+        return band;
+     }
 }

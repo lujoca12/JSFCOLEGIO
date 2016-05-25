@@ -264,10 +264,10 @@ public class MbVMaestrias implements Serializable{
     public void registrar(){
 
         DaoTPromocion daoTpromocion = new DaoTPromocion();
-        boolean band = false;
+            boolean band = false;
 
-        //Variable para saber si esta registrada ya la maestria promocion
-        boolean repetida = false;
+            //Variable para saber si esta registrada ya la maestria promocion
+            boolean repetida = false;
 
         try {
             //Aqui obtnego el id del usuario que seleccione

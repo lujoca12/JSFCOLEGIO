@@ -15,4 +15,5 @@ import java.util.List;
  */
 public interface InterfaceTitulacion {
      public List<TipoTitulacion> getTodastipoTitulacion() throws Exception;
+     public boolean registrarTitulacion(Titulacion t) throws Exception;
 }

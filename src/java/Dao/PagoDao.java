@@ -86,4 +86,20 @@ public class PagoDao {
         return u; 
     }
     
+    public List<Pago> getPagosAprobar() throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+       
+        String hql="from Pago p inner join fetch p.matricula m inner join fetch m.solicitudInscripcion si "
+                + "inner join fetch si.estudiante inner join fetch si.promocion pr inner join fetch pr.maestria m"
+                + " where p.estado ='E'";
+       
+        Query query = sesion.createQuery(hql);
+        //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        List<Pago> lst=(List<Pago>) query.list();
+        sesion.close();
+        return lst;
+    }
+    
 }

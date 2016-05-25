@@ -2,6 +2,7 @@ package Pojo;
 // Generated 16-may-2016 9:34:07 by Hibernate Tools 4.3.1
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -13,10 +14,11 @@ public class Pago  implements java.io.Serializable {
      private int id;
      private Matricula matricula;
      private TipoPago tipoPago;
-     private Double valor;
+     private BigDecimal valor;
      private Date fecha;
      private String idComprobante;
      private String rutaComprobante;
+     private Character estado;
 
     public Pago() {
     }
@@ -27,7 +29,7 @@ public class Pago  implements java.io.Serializable {
         this.matricula = matricula;
         this.tipoPago = tipoPago;
     }
-    public Pago(int id, Matricula matricula, TipoPago tipoPago, Double valor, Date fecha, String idComprobante, String rutaComprobante) {
+    public Pago(int id, Matricula matricula, TipoPago tipoPago, BigDecimal valor, Date fecha, String idComprobante, String rutaComprobante, Character estado) {
        this.id = id;
        this.matricula = matricula;
        this.tipoPago = tipoPago;
@@ -35,6 +37,15 @@ public class Pago  implements java.io.Serializable {
        this.fecha = fecha;
        this.idComprobante = idComprobante;
        this.rutaComprobante = rutaComprobante;
+       this.estado = estado;
+    }
+
+    public Character getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Character estado) {
+        this.estado = estado;
     }
    
     public int getId() {
@@ -58,11 +69,11 @@ public class Pago  implements java.io.Serializable {
     public void setTipoPago(TipoPago tipoPago) {
         this.tipoPago = tipoPago;
     }
-    public Double getValor() {
+    public BigDecimal getValor() {
         return this.valor;
     }
     
-    public void setValor(Double valor) {
+    public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
     public Date getFecha() {

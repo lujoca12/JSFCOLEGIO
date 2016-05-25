@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+         <div class="ui-fluid">
+            <h:form id="form">  
+                <h:outputStylesheet name="matricula.css" library="css"/>
+                <p:growl id="msgs" showDetail="true"/>
+                <p:dataTable style="margin-bottom: 25px;" id="solicitudes" var="s" value="#{pagosBean.lstPagos}"  rows="10" selectionMode="single" selection="#{pagosBean.selectedPago}" rowKey="#{s.id}"
+                             paginator="true"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15">
+                    <f:facet name="header">
+                        Listas de Solicitudes por Revisar
+                    </f:facet>                      
+                    <p:column headerText="Apellidos">
+                        <h:outputText value="#{s.matricula.solicitudInscripcion.estudiante.apellidos}" />
+                    </p:column>
+                    <p:column headerText="Nombres">
+                        <h:outputText value="#{s.matricula.solicitudInscripcion.estudiante.nombres}" />
+                    </p:column>
+
+                    <p:column headerText="Maestria">
+                        <h:outputText value="#{s.matricula.solicitudInscripcion.promocion.maestria.descripcion}" />
+                    </p:column>
+
+                    <p:column headerText="Promocion">
+                        <h:outputText value="#{s.matricula.solicitudInscripcion.promocion.descripcion}" />
+                    </p:column>
+
+                    <p:column headerText="Fecha">
+                        <h:outputText value="#{s.fecha}" />
+                    </p:column>
+                    
+                    <p:column headerText="Valor">
+                        <h:outputText value="#{s.valor}" />
+                    </p:column>
+
+
+                    <f:facet name="footer">
+                        <p:commandButton process="solicitudes" action="#{asignarEntrevistaBean.obtenerRequisitos()}" update="form:requisitos form:carDetail" icon="ui-icon-search" value="Seleccionar"  />
+                    </f:facet>
+
+                </p:dataTable>
+
+                <p:dataTable style="margin-bottom: 25px;" id="requisitos" value="#{asignarEntrevistaBean.archivos}" var="a">
+                    <f:facet name="header">
+                        Listas de Requisitos por Solicitud
+                    </f:facet>
+                    <p:column headerText="Descripcion">
+                        <h:outputText value="#{a.descripcion}" />
+                    </p:column>
+                    <p:column headerText="Archivos">
+                        <p:commandButton action="#{asignarEntrevistaBean.obtenerRequisitos()}"  value="Download" ajax="false"  icon="ui-icon-arrowthick-1-s">
+                            <p:fileDownload value="#{a.file}" />
+                        </p:commandButton>
+                    </p:column>                    
+                </p:dataTable>
+
+
+
+                <p:outputPanel id="carDetail" styleClass="panel-cont">
+                    <p:panelGrid  styleClass="datos-ob" columns="2" rendered="#{not empty asignarEntrevistaBean.selectedInscripcion}" >
+                        <h:outputLabel value="Observacion: "/>
+                        <p:inputTextarea rows="5" cols="30"  counter="display" maxlength="255" value="#{asignarEntrevistaBean.observacion}" counterTemplate="{0} characters remaining." autoResize="false" />
+                        <h:inputHidden/>
+                        <h:outputText id="display" />
+                    </p:panelGrid>
+                    <p:commandButton  style="height: 50px;"  actionListener="#{asignarEntrevistaBean.guardarMatricula()}" value="Aprobar" update="solicitudes requisitos carDetail" />
+                    <p:commandButton style="height: 50px;"  value="Rechazar" actionListener="#{asignarEntrevistaBean.rechazarMatricula()}" update="solicitudes requisitos carDetail" />
+                </p:outputPanel>
+
+
+            </h:form>
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"  />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+            </p:dialog>
+
+        </div>
+    </h:body>
+</html>
+

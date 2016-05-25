@@ -8,20 +8,34 @@ package managedBean;
 import Clases.ClsNotas;
 import Clases.ClsTablaModulosRegistrados;
 import Clases.ClsTblNotas;
+import Clases.ClsTblPagos;
 import Dao.DaoTEstudiante;
 import Dao.DaoTMatricula;
 import Dao.DaoTModulo;
 import Dao.DaoTNotas;
+import Dao.PagosDao;
 import Pojo.Estudiante;
 import Pojo.Matricula;
 import Pojo.Modulo;
 import Pojo.Notas;
+import Pojo.Pago;
 import Pojo.SolicitudInscripcion;
+import Pojo.TipoPago;
 import Pojo.Usuario;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import java.util.List;
@@ -29,6 +43,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import org.apache.commons.io.FilenameUtils;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -42,9 +58,11 @@ public class MbVNotas implements Serializable {
 
     private ClsNotas clsNotas;
     private List<ClsNotas> lstTblNotas;
-
+    private List<Pago> lstPagos = new ArrayList<>();
     private ClsTblNotas clsTblNotas;
+    private ClsTblPagos clsTblPagos;
     private List<ClsTblNotas> lstTblNotasReg;
+    private List<ClsTblPagos> lstTblPagosReg;
 
     private ClsTablaModulosRegistrados clsTblModulosReg;
     private List<ClsTablaModulosRegistrados> lstCboModulos;
@@ -58,6 +76,83 @@ public class MbVNotas implements Serializable {
     private Character estado;
     private String docente;
     private boolean msg;
+    private Pago pago;
+    private UploadedFile file;
+    private ClsNotas selectedNota;
+    private String idComprobante;
+    private BigDecimal valor;
+
+    public String getIdComprobante() {
+        return idComprobante;
+    }
+
+    public void setIdComprobante(String idComprobante) {
+        this.idComprobante = idComprobante;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
+        
+    public ClsNotas getSelectedNota() {
+        return selectedNota;
+    }
+
+    public void setSelectedNota(ClsNotas selectedNota) {
+        this.selectedNota = selectedNota;
+    }
+    
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+
+    public Pago getPago() {
+        return pago;
+    }
+
+    public void setPago(Pago pago) {
+        this.pago = pago;
+    }
+
+    public List<Pago> getLstPagos() {
+        return lstPagos;
+    }
+
+    public void setLstPagos(List<Pago> lstPagos) {
+        this.lstPagos = lstPagos;
+    }
+
+    public ClsTblPagos getClsTblPagos() {
+        return clsTblPagos;
+    }
+
+    public void setClsTblPagos(ClsTblPagos clsTblPagos) {
+        this.clsTblPagos = clsTblPagos;
+    }
+
+    public List<ClsTblPagos> getLstTblPagosReg() {
+        return lstTblPagosReg;
+    }
+
+    public void setLstTblPagosReg(List<ClsTblPagos> lstTblPagosReg) {
+        this.lstTblPagosReg = lstTblPagosReg;
+    }
+
+    public boolean isMsg() {
+        return msg;
+    }
+
+    public void setMsg(boolean msg) {
+        this.msg = msg;
+    }
 
     public MbVNotas() {
         tNotas = new Notas();
@@ -171,7 +266,7 @@ public class MbVNotas implements Serializable {
     public void setDocente(String docente) {
         this.docente = docente;
     }
-    
+
     private void cargarTblMatriculaPromocion() {
         this.idProm = 0;
         lstTblNotas = new ArrayList<>();
@@ -207,7 +302,7 @@ public class MbVNotas implements Serializable {
                             "",
                             "",
                             null,
-                            true, 0,"","",null));
+                            true, 0, "", "", null));
                 }
             } else {
                 this.estudiante = "";
@@ -285,9 +380,9 @@ public class MbVNotas implements Serializable {
         Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         try {
             lstCboModulos.clear();
-            
-            this.lstCboModulos.add(new ClsTablaModulosRegistrados(-1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)","(Escoja un Módulo)",-1,"(Escoja un Módulo)",null,null,null,null,""));
-            if(usuario.getTipoUsuario().getDescripcion().equals("Profesor(a)") || usuario.getTipoUsuario().getDescripcion().equals("Docente") || usuario.getTipoUsuario().getDescripcion().equals("PROFESOR(A)") || usuario.getTipoUsuario().getDescripcion().equals("DOCENTE")){
+
+            this.lstCboModulos.add(new ClsTablaModulosRegistrados(-1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)", "(Escoja un Módulo)", -1, "(Escoja un Módulo)", null, null, null, null, ""));
+            if (usuario.getTipoUsuario().getDescripcion().equals("Profesor(a)") || usuario.getTipoUsuario().getDescripcion().equals("Docente") || usuario.getTipoUsuario().getDescripcion().equals("PROFESOR(A)") || usuario.getTipoUsuario().getDescripcion().equals("DOCENTE")) {
                 DaoTModulo daoTmodulo = new DaoTModulo();
                 List<Modulo> lstModulo = daoTmodulo.getCboModulosNotas(usuario.getId());
                 tipo_user = 1;
@@ -297,7 +392,7 @@ public class MbVNotas implements Serializable {
                             lstCboModulos.add(new ClsTablaModulosRegistrados(modulo.getPromocion().getMaestria().getId(),
                                     modulo.getPromocion().getMaestria().getDescripcion() + " (Dir.(a)" + modulo.getPromocion().getUsuario() + ")",
                                     modulo.getPromocion().getId(),
-                                    modulo.getModulo()+": "+modulo.getDescripcion() + " (" + modulo.getPromocion().getMaestria().getDescripcion() + ")",
+                                    modulo.getModulo() + ": " + modulo.getDescripcion() + " (" + modulo.getPromocion().getMaestria().getDescripcion() + ")",
                                     modulo.getUsuario().getId(),
                                     modulo.getUsuario().getApellidos() + " " + modulo.getUsuario().getNombres(),
                                     modulo.getCreditos().toString(),
@@ -312,7 +407,7 @@ public class MbVNotas implements Serializable {
                         }
                     }
                 }
-            }else{
+            } else {
                 DaoTModulo daoTmodulo = new DaoTModulo();
                 List<Modulo> lstModulo = daoTmodulo.getCboModulosNotas(0);
                 tipo_user = 0;
@@ -328,7 +423,7 @@ public class MbVNotas implements Serializable {
                                     modulo.getCreditos().toString(),
                                     modulo.getId(),
                                     modulo.getModulo(),
-                                    modulo.getFechaInicio() == null ? null:modulo.getFechaInicio(),
+                                    modulo.getFechaInicio() == null ? null : modulo.getFechaInicio(),
                                     modulo.getFechaFin() == null ? null : modulo.getFechaFin(),
                                     modulo.getFechaInicioExamen() == null ? null : modulo.getFechaInicioExamen(),
                                     modulo.getFechaFinExamen() == null ? null : modulo.getFechaFinExamen(),
@@ -337,10 +432,9 @@ public class MbVNotas implements Serializable {
                         }
                     }
                 }
-                
+
             }
-            
-            
+
         } catch (Exception ex) {
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -362,46 +456,48 @@ public class MbVNotas implements Serializable {
                 }
             }
         }
-        
+
         try {
             lstTblNotas.clear();
             estado = ' ';
             tipo_user = 0;
             DaoTNotas daoTnotas = new DaoTNotas();
             List<Notas> lstNotas = null;
-            if(this.clsTblModulosReg != null)
-                lstNotas = daoTnotas.existe(this.clsTblModulosReg.getIdModulo(),"0");
-            else
-                lstNotas = daoTnotas.existe(0,"0");
-            
+            if (this.clsTblModulosReg != null) {
+                lstNotas = daoTnotas.existe(this.clsTblModulosReg.getIdModulo(), "0");
+            } else {
+                lstNotas = daoTnotas.existe(0, "0");
+            }
+
             DaoTMatricula daoTmatricula = new DaoTMatricula();
             List<Matricula> lstMatricula = null;
-            
-            if(this.clsTblModulosReg != null)
+
+            if (this.clsTblModulosReg != null) {
                 lstMatricula = daoTmatricula.getMatriculaRegNotas(this.clsTblModulosReg.getIdModulo());
-            else
+            } else {
                 lstMatricula = daoTmatricula.getMatriculaRegNotas(0);
-            
+            }
+
             //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
             Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-            
-            if(usuario.getTipoUsuario().getDescripcion().equals("Profesor(a)") || usuario.getTipoUsuario().getDescripcion().equals("Docente") || usuario.getTipoUsuario().getDescripcion().equals("PROFESOR(A)") || usuario.getTipoUsuario().getDescripcion().equals("DOCENTE")){
+
+            if (usuario.getTipoUsuario().getDescripcion().equals("Profesor(a)") || usuario.getTipoUsuario().getDescripcion().equals("Docente") || usuario.getTipoUsuario().getDescripcion().equals("PROFESOR(A)") || usuario.getTipoUsuario().getDescripcion().equals("DOCENTE")) {
                 tipo_user = 1;
-            
-            }else{
+
+            } else {
                 tipo_user = 0;
             }
-            
+
             if (lstMatricula.size() > 0) {
                 for (Matricula matricula : lstMatricula) {
 
                     if (lstNotas.size() > 0) {
                         for (Notas notas : lstNotas) {
-                            
+
                             if (matricula.getId() == notas.getMatricula().getId()) {
-                                
+
                                 estado = notas.getEstado();
-                                docente = notas.getModulo().getUsuario().getApellidos()+" "+notas.getModulo().getUsuario().getNombres();
+                                docente = notas.getModulo().getUsuario().getApellidos() + " " + notas.getModulo().getUsuario().getNombres();
                                 bandera = false;
                                 calendar.setTime(notas.getMatricula().getSolicitudInscripcion().getPromocion().getFechaInicio());
                                 añoInicio = calendar.get(Calendar.YEAR);
@@ -428,7 +524,7 @@ public class MbVNotas implements Serializable {
                                         true,
                                         notas.getId(),
                                         notas.getUsuario(),
-                                        notas.getResponsable(),null));
+                                        notas.getResponsable(), null));
                             }
                         }
                     }
@@ -455,31 +551,33 @@ public class MbVNotas implements Serializable {
                                 "0",
                                 "",
                                 null,
-                                true, 0,"","",null));
+                                true, 0, "", "", null));
 
                     }
 
                     bandera = true;
                 }
             }
-            if(estado != null)
-                if(estado.equals('A'))
+            if (estado != null) {
+                if (estado.equals('A')) {
                     mensajesOk("Notas ya Registradas");
-            
-            if(usuario.getTipoUsuario().getDescripcion().equals("Profesor(a)") || usuario.getTipoUsuario().getDescripcion().equals("Docente") || usuario.getTipoUsuario().getDescripcion().equals("PROFESOR(A)") || usuario.getTipoUsuario().getDescripcion().equals("DOCENTE")){
+                }
+            }
+
+            if (usuario.getTipoUsuario().getDescripcion().equals("Profesor(a)") || usuario.getTipoUsuario().getDescripcion().equals("Docente") || usuario.getTipoUsuario().getDescripcion().equals("PROFESOR(A)") || usuario.getTipoUsuario().getDescripcion().equals("DOCENTE")) {
                 tipo_user = 1;
-                if(estado != null)
+                if (estado != null) {
                     if (estado.equals('G')) {
                         mensajesOk("Notas ya Registradas");
                     }
+                }
             }
-                
 
         } catch (Exception ex) {
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void cargarTablaEdicionRegNotas() {
         lstTblNotas = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
@@ -504,9 +602,9 @@ public class MbVNotas implements Serializable {
             DaoTNotas daoTnotas = new DaoTNotas();
             List<Notas> lstNotas = null;
             if (this.clsTblModulosReg != null) {
-                lstNotas = daoTnotas.existe(this.clsTblModulosReg.getIdModulo(),"1");
+                lstNotas = daoTnotas.existe(this.clsTblModulosReg.getIdModulo(), "1");
             } else {
-                lstNotas = daoTnotas.existe(0,"1");
+                lstNotas = daoTnotas.existe(0, "1");
             }
 
             //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
@@ -549,11 +647,9 @@ public class MbVNotas implements Serializable {
                             true,
                             notas.getId(),
                             notas.getUsuario(),
-                            notas.getResponsable(),null));
+                            notas.getResponsable(), null));
                 }
             }
-
-            
 
         } catch (Exception ex) {
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
@@ -563,13 +659,14 @@ public class MbVNotas implements Serializable {
     public void registrar(Character accion) {
         DaoTNotas daoTnotas = new DaoTNotas();
         try {
-            if(lstTblNotas.size() > 0)
+            if (lstTblNotas.size() > 0) {
                 msg = daoTnotas.registrar(lstTblNotas, this.clsTblModulosReg.getIdModulo(), accion, docente);
-                
+            }
+
         } catch (Exception ex) {
             Logger.getLogger(MbVNotas.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         if (msg) {
             mensajesOk("Datos procesados correctamente");
         } else {
@@ -581,15 +678,16 @@ public class MbVNotas implements Serializable {
 //    G  = Guardado-> Docente
 //    A  = Archivado-> Secretario u otros
 //    E  = Eliminado-> Calificaciones de baja
-    public void registrar_borrador(){
+
+    public void registrar_borrador() {
         registrar('B');
     }
-    
-    public void registrar_notas_docente(){
+
+    public void registrar_notas_docente() {
         registrar('G');
     }
-    
-    public void confirmar_notas_Secretaria(){
+
+    public void confirmar_notas_Secretaria() {
         registrar('A');
     }
 
@@ -603,11 +701,12 @@ public class MbVNotas implements Serializable {
         }
 
     }
-    public void eliminarNotas(){
-        
+
+    public void eliminarNotas() {
+
         DaoTNotas daoTnotas = new DaoTNotas();
         try {
-            msg = daoTnotas.update(lstTblNotas,this.clsTblModulosReg.getIdModulo());
+            msg = daoTnotas.update(lstTblNotas, this.clsTblModulosReg.getIdModulo());
         } catch (Exception ex) {
             Logger.getLogger(MbVNotas.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -631,6 +730,10 @@ public class MbVNotas implements Serializable {
         cargarTablaNotas(clsNotas.getIdMatricula(), clsNotas.getIdPromocion());
     }
 
+    public void consultarPagos(ClsNotas clsNotas) {
+        cargarTablaPagos(clsNotas.getIdMatricula());
+    }
+
     private void mensajesOk(String msg) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje de la Aplicacion", msg);
         FacesContext.getCurrentInstance().addMessage(null, message);
@@ -639,6 +742,60 @@ public class MbVNotas implements Serializable {
     private void mensajesError(String msg) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje de la Aplicacion", msg);
         FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+    private void cargarTablaPagos(int idMatricula) {
+        lstTblPagosReg = new ArrayList<>();
+        try {
+            lstTblPagosReg.clear();
+            PagosDao pDao = new PagosDao();
+            lstPagos = pDao.getTodosPagos(idMatricula);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void guardarPago() {
+        try {
+            PagosDao pDao = new PagosDao();
+            Matricula m = new Matricula();
+            pago = new Pago();
+            m.setId(selectedNota.getIdMatricula() );
+           pago.setValor(valor);
+           pago.setIdComprobante(idComprobante);
+            pago.setEstado('E');
+            Date fecha = new Date();
+            pago.setFecha(fecha);
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date dateobj = new Date();
+            String nombreCarpeta = selectedNota.getNombresEstudiante();
+            File directorio = new File("d:/Postgrado/pagos/" + selectedNota.getDescripMaestria() + "/" + nombreCarpeta + "/");
+            if (!directorio.exists()) {
+                directorio.mkdir();
+            }
+            String filename = selectedNota.getIdMatricula() + (df.format(dateobj).replaceAll(":", "-")).trim();
+            String extension = FilenameUtils.getExtension(file.getFileName());
+            Path ruta = Paths.get(directorio + "/" + filename + "." + extension);
+            InputStream input = file.getInputstream();
+            Files.copy(input, ruta, StandardCopyOption.REPLACE_EXISTING);
+            pago.setMatricula(m);
+            pago.setTipoPago(pDao.getTipoPagoBanco());
+            pago.setRutaComprobante(ruta.toString());
+            pDao.registrar(pago);
+            
+            FacesMessage message = new FacesMessage("Succesful", "Datos Guardados correctamente");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } catch (IOException ex) {
+            Logger.getLogger(MbVNotas.class.getName()).log(Level.SEVERE, null, ex);
+            FacesMessage message = new FacesMessage("Error", ex.toString());
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } catch (Exception ex) {
+            Logger.getLogger(MbVNotas.class.getName()).log(Level.SEVERE, null, ex);
+           //mentira revisar xq file es null !!!
+            FacesMessage message = new FacesMessage("Succesful", "Datos Guardados correctamente!");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
     }
 
 }

@@ -16,8 +16,8 @@
         <many-to-one name="tipoPago" class="Pojo.TipoPago" fetch="select">
             <column name="id_tipo_pago" not-null="true" />
         </many-to-one>
-        <property name="valor" type="java.lang.Double">
-            <column name="valor" scale="0" />
+        <property name="valor" type="big_decimal">
+            <column name="valor" precision="7" />
         </property>
         <property name="fecha" type="date">
             <column name="fecha" length="13" />
@@ -27,6 +27,9 @@
         </property>
         <property name="rutaComprobante" type="string">
             <column name="ruta_comprobante" />
+        </property>
+        <property name="estado" type="java.lang.Character">
+            <column name="estado" length="1" />
         </property>
     </class>
 </hibernate-mapping>

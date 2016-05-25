@@ -42,7 +42,7 @@ public class PagoDao {
         boolean band = false;
         try {
             iniciaOperacion();
-            sesion.save(pago);
+            sesion.saveOrUpdate(pago);
             tx.commit();
             sesion.close();
             band = true;
@@ -101,5 +101,22 @@ public class PagoDao {
         sesion.close();
         return lst;
     }
+    public Pago getPago(int id) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+       
+        String hql="from Pago p where p.id ='"+id+"'";
+       
+        Query query = sesion.createQuery(hql);
+        //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        List<Pago> lst=(List<Pago>) query.list();
+        Pago pago = null;
+        for (Pago p :lst)
+            pago=p;
+        sesion.close();
+        return pago;
+    }
+    
     
 }

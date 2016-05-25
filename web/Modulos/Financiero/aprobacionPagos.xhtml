@@ -44,20 +44,20 @@
 
 
                     <f:facet name="footer">
-                        <p:commandButton process="solicitudes" action="#{asignarEntrevistaBean.obtenerRequisitos()}" update="form:requisitos form:carDetail" icon="ui-icon-search" value="Seleccionar"  />
+                        <p:commandButton process="solicitudes" action="#{pagosBean.obtenerRequisitos()}" update="form:requisitos form:carDetail" icon="ui-icon-search" value="Seleccionar"  />
                     </f:facet>
 
                 </p:dataTable>
 
-                <p:dataTable style="margin-bottom: 25px;" id="requisitos" value="#{asignarEntrevistaBean.archivos}" var="a">
+                <p:dataTable style="margin-bottom: 25px;" id="requisitos" value="#{pagosBean.archivos}" var="a">
                     <f:facet name="header">
-                        Listas de Requisitos por Solicitud
+                        Listas de Archivos 
                     </f:facet>
                     <p:column headerText="Descripcion">
                         <h:outputText value="#{a.descripcion}" />
                     </p:column>
                     <p:column headerText="Archivos">
-                        <p:commandButton action="#{asignarEntrevistaBean.obtenerRequisitos()}"  value="Download" ajax="false"  icon="ui-icon-arrowthick-1-s">
+                        <p:commandButton action="#{pagosBean.obtenerRequisitos()}"  value="Download" ajax="false"  icon="ui-icon-arrowthick-1-s">
                             <p:fileDownload value="#{a.file}" />
                         </p:commandButton>
                     </p:column>                    
@@ -66,14 +66,9 @@
 
 
                 <p:outputPanel id="carDetail" styleClass="panel-cont">
-                    <p:panelGrid  styleClass="datos-ob" columns="2" rendered="#{not empty asignarEntrevistaBean.selectedInscripcion}" >
-                        <h:outputLabel value="Observacion: "/>
-                        <p:inputTextarea rows="5" cols="30"  counter="display" maxlength="255" value="#{asignarEntrevistaBean.observacion}" counterTemplate="{0} characters remaining." autoResize="false" />
-                        <h:inputHidden/>
-                        <h:outputText id="display" />
-                    </p:panelGrid>
-                    <p:commandButton  style="height: 50px;"  actionListener="#{asignarEntrevistaBean.guardarMatricula()}" value="Aprobar" update="solicitudes requisitos carDetail" />
-                    <p:commandButton style="height: 50px;"  value="Rechazar" actionListener="#{asignarEntrevistaBean.rechazarMatricula()}" update="solicitudes requisitos carDetail" />
+                   
+                    <p:commandButton  style="height: 50px;"  actionListener="#{pagosBean.guardarMatricula()}" value="Aprobar" update="solicitudes requisitos carDetail" />
+                    <p:commandButton style="height: 50px;"  value="Rechazar" actionListener="#{pagosBean.rechazarMatricula()}" update="solicitudes requisitos carDetail" />
                 </p:outputPanel>
 
 

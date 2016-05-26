@@ -267,6 +267,25 @@ public class MbVModulosHorarios implements Serializable{
             }
     }
     
+    private void edicMovimientoHoras(String totalHoras, int idModulo){
+        horasModulo = totalHoras;
+            if(!horasModulo.isEmpty()){
+                DaoTHorarioModulo daoThorarioModulo = new DaoTHorarioModulo();
+            try {
+                horasAsignadas = daoThorarioModulo.getTotalHorasAsignadas(idModulo);
+            } catch (Exception ex) {
+                Logger.getLogger(MbVModulosHorarios.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                if(!horasAsignadas.isEmpty()){
+                    horasxRegistrar = String.valueOf(Double.parseDouble(horasModulo) -  Double.parseDouble(horasAsignadas));
+                }else{
+                    horasAsignadas = "0";
+                    horasxRegistrar = horasModulo;
+                }
+                    
+            }
+    }
+    
     public void registrar(){
         boolean repetida = false;
         try {
@@ -357,7 +376,7 @@ public class MbVModulosHorarios implements Serializable{
                 horarioModulo.setHora(bigdec);
                 repetida = daoThorariomodulo.existe(horarioModulo);
                 if (!repetida) {
-                    //movimientoHoras();
+                    edicMovimientoHoras(((ClsHorarioModulo) event.getObject()).getTotalHoras(), ((ClsHorarioModulo) event.getObject()).getIdModulo());
                     if(hora > 0 && hora <= Double.parseDouble(horasxRegistrar)){
                         msg = daoThorariomodulo.registrar(tHorarioModulo);
                     }
@@ -375,7 +394,7 @@ public class MbVModulosHorarios implements Serializable{
                         mensajesError("Error al actualizar datos");
                     }
                     vaciarCajas();
-                    //movimientoHoras();
+                    edicMovimientoHoras(((ClsHorarioModulo) event.getObject()).getTotalHoras(), ((ClsHorarioModulo) event.getObject()).getIdModulo());
                 }
             } catch (Exception ex) {
                 Logger.getLogger(MbVModulosHorarios.class.getName()).log(Level.SEVERE, null, ex);

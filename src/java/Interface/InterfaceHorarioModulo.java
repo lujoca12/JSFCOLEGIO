@@ -21,4 +21,5 @@ public interface InterfaceHorarioModulo {
     public boolean delete(HorarioModulo tHorarioModulo) throws Exception;
     public boolean existe(HorarioModulo tHorarioModulo) throws Exception;
     public List<HorarioModulo> getFechaHorasModulos(int idModulo) throws Exception;
+    public String getTotalHorasAsignadas(int idModulo) throws Exception;
 }

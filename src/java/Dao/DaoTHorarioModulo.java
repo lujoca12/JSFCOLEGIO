@@ -98,6 +98,23 @@ public class DaoTHorarioModulo implements InterfaceHorarioModulo{
         sesion.close();
         return lstHorarioModulo;
     }
+    
+    @Override
+    public String getTotalHorasAsignadas(int idModulo) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String hql = "select sum(horario.hora) from HorarioModulo horario inner join horario.modulo mod where mod.id = "+idModulo+"";
+        Query query = sesion.createQuery(hql);
+        Object resultado = query.uniqueResult();
+        sesion.close();
+        
+        if(resultado != null)
+            return resultado.toString();
+        else
+            return "";
+        
+    }
 
     @Override
     public HorarioModulo getHorario(String idHorarioModulo) throws Exception {

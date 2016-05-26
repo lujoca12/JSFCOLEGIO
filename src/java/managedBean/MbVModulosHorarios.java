@@ -48,6 +48,9 @@ public class MbVModulosHorarios implements Serializable{
     private HorarioModulo tHorarioModulo;
     
     private boolean estado = false;
+    private String horasModulo;
+    private String horasAsignadas;
+    private String horasxRegistrar;
     
     public MbVModulosHorarios() {
         tHorarioModulo = new HorarioModulo();
@@ -105,6 +108,30 @@ public class MbVModulosHorarios implements Serializable{
 
     public List<ClsHorarioModulo> getLstTblHorarioModulo() {
         return lstTblHorarioModulo;
+    }
+
+    public String getHorasModulo() {
+        return horasModulo;
+    }
+
+    public void setHorasModulo(String horasModulo) {
+        this.horasModulo = horasModulo;
+    }
+
+    public String getHorasAsignadas() {
+        return horasAsignadas;
+    }
+
+    public void setHorasAsignadas(String horasAsignadas) {
+        this.horasAsignadas = horasAsignadas;
+    }
+
+    public String getHorasxRegistrar() {
+        return horasxRegistrar;
+    }
+
+    public void setHorasxRegistrar(String horasxRegistrar) {
+        this.horasxRegistrar = horasxRegistrar;
     }
     
     public void llenarCboMaestria(){
@@ -214,9 +241,30 @@ public class MbVModulosHorarios implements Serializable{
     public void onModuloChange() throws Exception {
         if (clsTblModulosReg != null) {
             estado = true;
+            movimientoHoras();
+            
         } else {
             estado = false;
         }
+    }
+    
+    private void movimientoHoras(){
+        horasModulo = clsTblModulosReg.getTotalHorasModulo();
+            if(!horasModulo.isEmpty()){
+                DaoTHorarioModulo daoThorarioModulo = new DaoTHorarioModulo();
+            try {
+                horasAsignadas = daoThorarioModulo.getTotalHorasAsignadas(clsTblModulosReg.getIdModulo());
+            } catch (Exception ex) {
+                Logger.getLogger(MbVModulosHorarios.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                if(!horasAsignadas.isEmpty()){
+                    horasxRegistrar = String.valueOf(Double.parseDouble(horasModulo) -  Double.parseDouble(horasAsignadas));
+                }else{
+                    horasAsignadas = "0";
+                    horasxRegistrar = horasModulo;
+                }
+                    
+            }
     }
     
     public void registrar(){
@@ -242,11 +290,19 @@ public class MbVModulosHorarios implements Serializable{
                 Long l = new Long(resta);
                 double minutos = l.doubleValue();
                 double hora = ((minutos-(minutos%60))/60)+((minutos%60)/100);
+                
                 bigdec = new BigDecimal(hora);
                 tHorarioModulo.setHora(bigdec);
                 repetida = daoThorariomodulo.existe(tHorarioModulo);
                 if (!repetida) {
-                    msg = daoThorariomodulo.registrar(tHorarioModulo);
+                    
+                    if(hora > 0 && hora <= Double.parseDouble(horasxRegistrar)){
+                        msg = daoThorariomodulo.registrar(tHorarioModulo);
+                    }
+                    else{
+                        mensajesError("error! el total de horas no pueden ser mayor a "+horasxRegistrar+"");
+                        return;
+                    }
                 }
                 if (repetida) {
                     mensajesError("Registro repetido");
@@ -258,6 +314,7 @@ public class MbVModulosHorarios implements Serializable{
                     }
                     vaciarCajas();
                     cargarTablaHorarioModulos();
+                    movimientoHoras();
                 }
                 
             }else{
@@ -300,7 +357,14 @@ public class MbVModulosHorarios implements Serializable{
                 horarioModulo.setHora(bigdec);
                 repetida = daoThorariomodulo.existe(horarioModulo);
                 if (!repetida) {
-                    msg = daoThorariomodulo.registrar(horarioModulo);
+                    //movimientoHoras();
+                    if(hora > 0 && hora <= Double.parseDouble(horasxRegistrar)){
+                        msg = daoThorariomodulo.registrar(tHorarioModulo);
+                    }
+                    else{
+                        mensajesError("error! el total de horas no pueden ser mayor a "+horasxRegistrar+"");
+                        return;
+                    }
                 }
                 if (repetida) {
                     mensajesError("Registro repetido");
@@ -311,7 +375,7 @@ public class MbVModulosHorarios implements Serializable{
                         mensajesError("Error al actualizar datos");
                     }
                     vaciarCajas();
-                    
+                    //movimientoHoras();
                 }
             } catch (Exception ex) {
                 Logger.getLogger(MbVModulosHorarios.class.getName()).log(Level.SEVERE, null, ex);

@@ -47,7 +47,7 @@
                                 <p:column>
                                     <h:outputText value="#{tModulo.modulo}" />
                                 </p:column>
-                                <p:ajax update="form,panel1,panelTabla1" listener="#{mbVModulosHorarios.onModuloChange}"/>
+                                <p:ajax update="form,panel1,panelTabla1,panelTabla" listener="#{mbVModulosHorarios.onModuloChange}"/>
                             </p:selectOneMenu>
                             
                             
@@ -58,7 +58,13 @@
                 <br></br>
 
                 <p:panel id="panelTabla" rendered="#{mbVModulosHorarios.estado}">
+                    <h5>
+                        Horas del Módulo: <span style="color: red;">#{mbVModulosHorarios.horasModulo}</span> -- 
+                        Horas Asignadas: <span style="color: red;">#{mbVModulosHorarios.horasAsignadas}</span> -- 
+                        Horas por Registrar: <span style="color: red;">#{mbVModulosHorarios.horasxRegistrar}</span>
+                    </h5>
                     <p:panelGrid rendered="#{mbVModulosHorarios.estado}" id="panel1" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
+                        
                         <p:outputLabel for="txtFechaInicio" value="Fecha:" styleClass="labelDerecha" />
                         <p:calendar id="txtFechaInicio" class="date_input" required="true"
                                     onkeypress="return permite(event, 'none')" 
@@ -70,8 +76,7 @@
                         
                         <p:outputLabel for="txtHoraInicio" styleClass="labelDerecha" value="Hora inicio:" />
                         <p:calendar id="txtHoraInicio" value="#{mbVModulosHorarios.tHorarioModulo.horaInicio}" required="true" pattern="HH:mm" mask="true" timeOnly="true" >
-                        <p:ajax event="dateSelect" update="txtHoraInicio"/> 
-                        <p:ajax event="blur" update="txtHoraInicio" />
+                        
                         </p:calendar>
                         
                         <p:outputLabel for="txtHoraFin" styleClass="labelDerecha" value="Hora fin:" />

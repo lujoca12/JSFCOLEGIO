@@ -346,6 +346,16 @@ public class MbVModulosHorarios implements Serializable{
         
     }
     
+    public void validarFecha(){
+        if(tHorarioModulo.getFecha().before(this.clsTblModulosReg.getFechaInicio())){
+            tHorarioModulo.setFecha(this.clsTblModulosReg.getFechaInicio());
+            mensajesOk("Le fecha no puede ser menor a "+this.clsTblModulosReg.getFechaInicio()+"");
+        }else if(tHorarioModulo.getFecha().after(this.clsTblModulosReg.getFechaInicio())){
+            tHorarioModulo.setFecha(this.clsTblModulosReg.getFechaFin());
+            mensajesOk("La fecha no puede ser mayor a "+this.clsTblModulosReg.getFechaFin()+"");
+        }
+    }
+    
     public void onRowEdit(RowEditEvent event) {
         boolean repetida = false;
         BigDecimal bigdec;
@@ -378,7 +388,15 @@ public class MbVModulosHorarios implements Serializable{
                 if (!repetida) {
                     edicMovimientoHoras(((ClsHorarioModulo) event.getObject()).getTotalHoras(), ((ClsHorarioModulo) event.getObject()).getIdModulo());
                     if(hora > 0 && hora <= Double.parseDouble(horasxRegistrar)){
-                        msg = daoThorariomodulo.registrar(tHorarioModulo);
+                        if (tHorarioModulo.getFecha().before(this.clsTblModulosReg.getFechaInicio())) {
+                            mensajesOk("Le fecha no puede ser menor a " + this.clsTblModulosReg.getFechaInicio() + "");
+                            return;
+                        } else if (tHorarioModulo.getFecha().after(this.clsTblModulosReg.getFechaInicio())) {
+                            mensajesOk("La fecha no puede ser mayor a " + this.clsTblModulosReg.getFechaFin() + "");
+                            return;
+                        }else{
+                            msg = daoThorariomodulo.registrar(horarioModulo);
+                        }
                     }
                     else{
                         mensajesError("error! el total de horas no pueden ser mayor a "+horasxRegistrar+"");

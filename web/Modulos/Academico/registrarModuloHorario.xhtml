@@ -60,7 +60,7 @@
                 <p:panel id="panelTabla" rendered="#{mbVModulosHorarios.estado}">
                     <h5>
                         Horas del Módulo: <span style="color: red;">#{mbVModulosHorarios.horasModulo}</span> -- 
-                        Horas Asignadas: <span style="color: red;">#{mbVModulosHorarios.horasAsignadas}</span> -- 
+                        Horas Registradas: <span style="color: red;">#{mbVModulosHorarios.horasAsignadas}</span> -- 
                         Horas por Registrar: <span style="color: red;">#{mbVModulosHorarios.horasxRegistrar}</span>
                     </h5>
                     <p:panelGrid rendered="#{mbVModulosHorarios.estado}" id="panel1" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
@@ -72,6 +72,8 @@
                                     effect="fold" pattern="dd-MM-yyyy" mask="true" 
                                     mindate="#{mbVModulosHorarios.clsTblModulosReg.fechaInicio}"
                                     maxdate="#{mbVModulosHorarios.clsTblModulosReg.fechaFin}">
+                            <p:ajax listener="#{mbVModulosHorarios.validarFecha}" update="txtFechaInicio" />
+                            
                         </p:calendar>
                         
                         <p:outputLabel for="txtHoraInicio" styleClass="labelDerecha" value="Hora inicio:" />
@@ -94,7 +96,7 @@
                     <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->
                     <p:dataTable class="tblDatos fuenteTamanio" id="tblHorarios" var="lstTbl" value="#{mbVModulosHorarios.lstTblHorarioModulo}"
                                  editable="true" scrollable="true" scrollHeight="150" >
-                        <p:ajax event="rowEdit" listener="#{mbVModulosHorarios.onRowEdit}" update=":form:msgs" />
+                        <p:ajax event="rowEdit" listener="#{mbVModulosHorarios.onRowEdit}" update=":form:msgs :form:panelTabla" />
                         <p:ajax event="rowEditCancel" listener="#{mbVModulosHorarios.onRowCancel}" update=":form:msgs" />
 
                         <p:column headerText="Maestría" >

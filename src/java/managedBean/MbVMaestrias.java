@@ -193,7 +193,7 @@ public class MbVMaestrias implements Serializable{
             
             List<Maestria> lstMaestria = daoTmaestria.getMaestrias();
             this.lstThemeMaestria.clear();
-            this.lstThemeMaestria.add(new ClsMaestria(-1,"Ninguno","Ninguno",0,0,0));
+            this.lstThemeMaestria.add(new ClsMaestria(-1,"Ninguno","Ninguno",0,0,0,null, null));
             
             for(Maestria maestria: lstMaestria){
                 this.lstThemeMaestria.add(new ClsMaestria(maestria.getId(),
@@ -201,7 +201,9 @@ public class MbVMaestrias implements Serializable{
                         maestria.getDescripcion(),
                         maestria.getId(),
                         0,
-                        0));
+                        0, 
+                        null,
+                        null));
             }
         } catch (Exception ex) {
             

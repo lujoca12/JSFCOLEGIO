@@ -100,7 +100,7 @@ public class MbVActaEmision implements Serializable {
 
             List<Promocion> lstPromocion = daoTpromocion.getPromocionesMaestrias();
             this.lstThemeMaestria.clear();
-            this.lstThemeMaestria.add(new ClsMaestria(-1, "Ninguno", "Ninguno", 0, 0, 0));
+            this.lstThemeMaestria.add(new ClsMaestria(-1, "Ninguno", "Ninguno", 0, 0,0, null, null));
 
             for (Promocion promocion : lstPromocion) {
                 calendar.setTime(promocion.getFechaInicio());
@@ -114,7 +114,9 @@ public class MbVActaEmision implements Serializable {
                         promocion.getMaestria().getDescripcion(), 
                         promocion.getMaestria().getId(),
                         anioInicio, 
-                        anioFin));
+                        anioFin,
+                        promocion.getFechaInicio(),
+                        promocion.getFechaFin()));
             }
         } catch (Exception ex) {
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);

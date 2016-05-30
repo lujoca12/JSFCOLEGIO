@@ -243,4 +243,26 @@ public class DaoTModulo implements InterfaceModulos{
         return band;
     }
     
+    @Override
+    public List<Modulo> validacionModulos(Modulo tModulo) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        boolean band = false;
+        
+        
+        iniciaOperacion();
+        String hql="from Modulo m where "
+                + "m.promocion="+tModulo.getPromocion().getId()+" and "
+                + "m.usuario="+tModulo.getUsuario().getId()+" order by m.fechaInicio, m.fechaFin desc ";
+        Query query = sesion.createQuery(hql);
+        List<Modulo> modulo=(List<Modulo>) query.list();
+        if(modulo.size() > 0)
+            band = true;
+        else
+            band = false;
+        
+        sesion.close();
+        return modulo;
+    }
+    
 }

@@ -33,6 +33,7 @@
                                 <p:column>
                                     <h:outputText value="#{tProfesor.displayName}" />
                                 </p:column>
+                                <p:ajax listener="#{mbVModulos.onMaestriaChange}" update="form txtFechaInicio txtFechaFin" />
                             </p:selectOneMenu>
                             
                             <p:outputLabel for="cboNmodulo" value="Nº Mòdulo:" styleClass="labelDerecha"/>

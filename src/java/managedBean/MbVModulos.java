@@ -19,6 +19,7 @@ import Pojo.Usuario;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,6 +60,9 @@ public class MbVModulos implements Serializable {
     private List<Modulo> lstModulo;
     private String creditos;
     private String totalHorasModulo;
+    
+    private Date fechaInicio;
+    private Date fechaFin;
 
     public MbVModulos() {
         cargarTablaModulos();
@@ -160,6 +164,22 @@ public class MbVModulos implements Serializable {
     public void setTotalHorasModulo(String totalHorasModulo) {
         this.totalHorasModulo = totalHorasModulo;
     }
+
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
+    }
     
     public List<SelectItem> getLstTodosModulos() {
         this.lstTodosModulos = new ArrayList<SelectItem>();
@@ -241,17 +261,26 @@ public class MbVModulos implements Serializable {
 
             List<Promocion> lstPromocion = daoTpromocion.getPromocionesMaestrias();
             this.lstThemeMaestria.clear();
-            this.lstThemeMaestria.add(new ClsMaestria(-1, "Ninguno", "Ninguno", 0, 0, 0));
+            this.lstThemeMaestria.add(new ClsMaestria(-1, "Ninguno", "Ninguno", 0, 0, 0, null, null));
 
             for (Promocion promocion : lstPromocion) {
 
                 this.lstThemeMaestria.add(new ClsMaestria(promocion.getId(),
                         promocion.getMaestria().getDescripcion() + " (" + promocion.getUsuario() + ")",
                         promocion.getMaestria().getDescripcion(), promocion.getId(),
-                        0, 0));
+                        0, 0,
+                        promocion.getFechaInicio(),
+                        promocion.getFechaFin()));
             }
         } catch (Exception ex) {
 
+        }
+    }
+    
+    public void onMaestriaChange() throws Exception {
+        if(themeMaestria != null){
+            fechaInicio = themeMaestria.getFechaInicioMaestria();
+            fechaFin = themeMaestria.getFechaFinMaestria();
         }
     }
 
@@ -294,7 +323,32 @@ public class MbVModulos implements Serializable {
 
             repetida = daoTmodulo.existe(tModulo);
             if (!repetida) {
-                msg = daoTmodulo.registrar(tModulo);
+                List<Modulo> modulo = daoTmodulo.validacionModulos(tModulo);
+                if(modulo.size() <= 0){
+                    if (fechaInicio.before(themeMaestria.getFechaInicioMaestria()) || fechaFin.after(themeMaestria.getFechaFinMaestria())) {
+                        mensajesError("error fecha no puede ser menor que "+themeMaestria.getFechaInicioMaestria()+" ni mayor que "+themeMaestria.getFechaFinMaestria()+"");
+                        return;
+                    }else{
+                        msg = daoTmodulo.registrar(tModulo);
+                    }
+                    
+                }else{
+                    if(tModulo.getFechaInicio().before(modulo.get(0).getFechaFin())){
+                        //msg = daoTmodulo.registrar(tModulo);
+                        mensajesError("error fecha no puede ser menor a "+modulo.get(0).getFechaFin()+"");
+                        return;
+                    }else{
+                        if (fechaInicio.before(themeMaestria.getFechaInicioMaestria()) || fechaFin.after(themeMaestria.getFechaFinMaestria())) {
+                            mensajesError("error fecha no puede ser menor que " + themeMaestria.getFechaInicioMaestria() + " ni mayor que " + themeMaestria.getFechaFinMaestria() + "");
+                            return;
+                        } else {
+                            msg = daoTmodulo.registrar(tModulo);
+                        }
+                    }
+                        
+                    
+                }
+                
             }
 
             cargarTablaModulos();

@@ -5,6 +5,8 @@
  */
 package Clases;
 
+import java.util.Date;
+
 /**
  *
  * @author server
@@ -17,16 +19,20 @@ public class ClsMaestria {
     private int idPromocion;
     private int añoInicio;
     private int añoFin;
+    private Date fechaInicioMaestria;
+    private Date fechaFinMaestria;
      
     public ClsMaestria() {}
  
-    public ClsMaestria(int id, String displayName, String name, int idPromocion, int añoInicio, int añoFin) {
+    public ClsMaestria(int id, String displayName, String name, int idPromocion, int añoInicio, int añoFin, Date fechaInicioMaestria, Date fechaFinMaestria) {
         this.id = id;
         this.displayName = displayName;
         this.name = name;
         this.idPromocion = idPromocion;
         this.añoInicio = añoInicio;
         this.añoFin = añoFin;
+        this.fechaInicioMaestria = fechaInicioMaestria;
+        this.fechaFinMaestria = fechaFinMaestria;
     }
  
     public int getId() {
@@ -76,9 +82,23 @@ public class ClsMaestria {
     public void setAñoFin(int añoFin) {
         this.añoFin = añoFin;
     }
+
+    public Date getFechaInicioMaestria() {
+        return fechaInicioMaestria;
+    }
+
+    public void setFechaInicioMaestria(Date fechaInicioMaestria) {
+        this.fechaInicioMaestria = fechaInicioMaestria;
+    }
+
+    public Date getFechaFinMaestria() {
+        return fechaFinMaestria;
+    }
+
+    public void setFechaFinMaestria(Date fechaFinMaestria) {
+        this.fechaFinMaestria = fechaFinMaestria;
+    }
     
-    
-     
     @Override
     public String toString() {
         return name;

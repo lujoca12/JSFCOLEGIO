@@ -141,7 +141,7 @@ public class MbVModulosHorarios implements Serializable{
             
             List<Maestria> lstMaestria = daoTmaestria.getMaestrias();
             this.lstThemeMaestria.clear();
-            this.lstThemeMaestria.add(new ClsMaestria(-1,"Ninguno","Ninguno",0,0,0));
+            this.lstThemeMaestria.add(new ClsMaestria(-1,"Ninguno","Ninguno",0,0,0, null, null));
             
             for(Maestria maestria: lstMaestria){
                 this.lstThemeMaestria.add(new ClsMaestria(maestria.getId(),
@@ -149,7 +149,9 @@ public class MbVModulosHorarios implements Serializable{
                         maestria.getDescripcion(),
                         maestria.getId(),
                         0,
-                        0));
+                        0,
+                        null,
+                        null));
             }
         } catch (Exception ex) {
             
@@ -388,15 +390,19 @@ public class MbVModulosHorarios implements Serializable{
                 if (!repetida) {
                     edicMovimientoHoras(((ClsHorarioModulo) event.getObject()).getTotalHoras(), ((ClsHorarioModulo) event.getObject()).getIdModulo());
                     if(hora > 0 && hora <= Double.parseDouble(horasxRegistrar)){
-                        if (tHorarioModulo.getFecha().before(this.clsTblModulosReg.getFechaInicio())) {
-                            mensajesOk("Le fecha no puede ser menor a " + this.clsTblModulosReg.getFechaInicio() + "");
-                            return;
-                        } else if (tHorarioModulo.getFecha().after(this.clsTblModulosReg.getFechaInicio())) {
-                            mensajesOk("La fecha no puede ser mayor a " + this.clsTblModulosReg.getFechaFin() + "");
-                            return;
+                        if (tHorarioModulo.getFecha() != null) {
+                            if (tHorarioModulo.getFecha().before(this.clsTblModulosReg.getFechaInicio())) {
+                                mensajesOk("Le fecha no puede ser menor a " + this.clsTblModulosReg.getFechaInicio() + "");
+                                return;
+                            } else if (tHorarioModulo.getFecha().after(this.clsTblModulosReg.getFechaInicio())) {
+                                mensajesOk("La fecha no puede ser mayor a " + this.clsTblModulosReg.getFechaFin() + "");
+                                return;
+                            } else {
+                                msg = daoThorariomodulo.registrar(horarioModulo);
+                            }
                         }else{
-                            msg = daoThorariomodulo.registrar(horarioModulo);
-                        }
+                                msg = daoThorariomodulo.registrar(horarioModulo);
+                            }
                     }
                     else{
                         mensajesError("error! el total de horas no pueden ser mayor a "+horasxRegistrar+"");

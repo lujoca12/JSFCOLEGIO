@@ -125,7 +125,7 @@ public class MbVtitulacion implements Serializable{
             
         List<Maestria> lst = daoTmaestria.getMaestrias();
             this.lstmaestria.clear();
-            this.lstmaestria.add(new ClsMaestria(-1, "ninguno", "ninguno", -1, -1, -1));
+            this.lstmaestria.add(new ClsMaestria(-1, "ninguno", "ninguno", -1, -1, -1, null, null));
             for(Maestria tt: lst){
                 this.lstmaestria.add(new ClsMaestria(
                         tt.getId(),
@@ -133,7 +133,9 @@ public class MbVtitulacion implements Serializable{
                         tt.getDescripcion(), 
                         tt.getId(), 
                         0, 
-                        0));
+                        0,
+                        null,
+                        null));
                 }
             String nreak;
             nreak="";

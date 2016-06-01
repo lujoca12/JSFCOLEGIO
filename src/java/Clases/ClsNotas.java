@@ -34,8 +34,9 @@ public class ClsNotas implements Serializable {
     private String usuario;
     private String responsable;
     private String horasAsistidas;
+    private Double totalAsistencia;
 
-    public ClsNotas(int idEstudiante, String nombresEstudiante, int idMatricula, String n_matricula, Date fechaMatricula, int idPromocion, String periodo, Date resolucion, int idMaestria, String descripMaestria, int n_registro, String nota, String observacion, Date fecha, boolean estado, int idNota,String usuario,String responsable, String horasAsistidas) {
+    public ClsNotas(int idEstudiante, String nombresEstudiante, int idMatricula, String n_matricula, Date fechaMatricula, int idPromocion, String periodo, Date resolucion, int idMaestria, String descripMaestria, int n_registro, String nota, String observacion, Date fecha, boolean estado, int idNota,String usuario,String responsable, String horasAsistidas, Double totalAsistencia) {
         this.idEstudiante = idEstudiante;
         this.nombresEstudiante = nombresEstudiante;
         this.idMatricula = idMatricula;
@@ -55,6 +56,7 @@ public class ClsNotas implements Serializable {
         this.usuario = usuario;
         this.responsable = responsable;
         this.horasAsistidas = horasAsistidas;
+        this.totalAsistencia = totalAsistencia;
     }
 
     
@@ -209,6 +211,14 @@ public class ClsNotas implements Serializable {
 
     public void setHorasAsistidas(String horasAsistidas) {
         this.horasAsistidas = horasAsistidas;
+    }
+
+    public Double getTotalAsistencia() {
+        return totalAsistencia;
+    }
+
+    public void setTotalAsistencia(Double totalAsistencia) {
+        this.totalAsistencia = totalAsistencia;
     }
     
 }

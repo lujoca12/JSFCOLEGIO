@@ -145,22 +145,26 @@ public class DaoTModulo implements InterfaceModulos{
 //        //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
 //        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");  
         String consulta = "";
-        String fecha = "and (current_date >= modul.fechaInicio and current_date <= modul.fechaFin) ";
+        String fecha = " (current_date >= modul.fechaInicio and current_date <= modul.fechaInicioExamen) ";
        
 //        if(usuario_id == 0){
 //            consulta = "";
 //            fecha = "";
 //        }
 //        else{
-            consulta = "user.id="+usuario_id+" and";
+            consulta = "user.id="+usuario_id+"";
 //            fecha="and (current_date >= modul.fechaInicio and current_date <= modul.fechaFin) ";
 //        }
 
-        String hql="from Modulo modul inner join fetch modul.usuario user inner join fetch  user.tipoUsuario tuser inner join fetch modul.promocion pr inner join fetch pr.maestria maest \n" +
-                    "where "+consulta+" \n" +
-                    "(year(current_date) >= year(pr.fechaInicio) and year(current_date)<= year(pr.fechaFin))\n" +
-                    ""+fecha+" "
-                + "and (tuser.descripcion like '%Prof%' or tuser.descripcion like '%prof%' or tuser.descripcion like '%Docen%' or tuser.descripcion like '%docent%') order by modul.descripcion asc";
+        String hql = "from Modulo modul inner join fetch modul.usuario user \n"
+                + "inner join fetch  user.tipoUsuario tuser \n"
+                + "inner join fetch modul.promocion pr \n"
+                + "inner join fetch pr.maestria maest \n"
+                + "where "+consulta+" and\n"
+                + "(year(current_date) >= year(pr.fechaInicio) and year(current_date)<= year(pr.fechaFin)) and \n"
+                + ""+fecha+"\n"
+                + "and (tuser.descripcion like '%Prof%' or tuser.descripcion like '%prof%' or tuser.descripcion like '%Docen%' or tuser.descripcion like '%docent%') \n"
+                + "order by modul.descripcion asc";
         Query query = sesion.createQuery(hql);
         List<Modulo> lstPermiso=(List<Modulo>) query.list();
         sesion.close();

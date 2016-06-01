@@ -352,7 +352,7 @@ public class MbVModulosHorarios implements Serializable{
         if(tHorarioModulo.getFecha().before(this.clsTblModulosReg.getFechaInicio())){
             tHorarioModulo.setFecha(this.clsTblModulosReg.getFechaInicio());
             mensajesOk("Le fecha no puede ser menor a "+this.clsTblModulosReg.getFechaInicio()+"");
-        }else if(tHorarioModulo.getFecha().after(this.clsTblModulosReg.getFechaInicio())){
+        }else if(tHorarioModulo.getFecha().after(this.clsTblModulosReg.getFechaFin())){
             tHorarioModulo.setFecha(this.clsTblModulosReg.getFechaFin());
             mensajesOk("La fecha no puede ser mayor a "+this.clsTblModulosReg.getFechaFin()+"");
         }

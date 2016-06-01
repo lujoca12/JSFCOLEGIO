@@ -306,9 +306,10 @@ public class MbVAsistencia implements Serializable {
                                 asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
                                 cont,
                                 "",
-                                "",
+                                asistencia.getObservacion(),
                                 this.clsFechaHora.getFecha(),
-                                asist, 0, "", "",this.clsFechaHora.getHoras().toString()));
+                                asist, 0, "", "",this.clsFechaHora.getHoras().toString(),
+                                0.0));
                     }
                 } else {
                     DaoTMatricula daoTmatricula = new DaoTMatricula();
@@ -338,7 +339,8 @@ public class MbVAsistencia implements Serializable {
                                     "",
                                     "",
                                     this.clsFechaHora.getFecha(),
-                                    true, 0, "", "",this.clsFechaHora.getHoras().toString()));
+                                    true, 0, "", "",this.clsFechaHora.getHoras().toString(),
+                                    0.0));
                         }
                     }
 
@@ -397,10 +399,11 @@ public class MbVAsistencia implements Serializable {
                                 asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
                                 cont,
                                 "",
-                                "",
+                                asistencia.getObservacion(),
                                 this.clsFechaHora.getFecha(),
                                 asist,
-                                asistencia.getId(), "", "", this.clsFechaHora.getHoras().toString()));
+                                asistencia.getId(), "", "", this.clsFechaHora.getHoras().toString(),
+                                0.0));
                     }
                 } else {
                     this.estado = 0;

@@ -83,7 +83,7 @@
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{notas.observacion}" /></f:facet>
                                 <f:facet name="input">
-                                    <p:inputText value="#{notas.observacion}" style="width:100%"/>
+                                    <p:inputText value="#{notas.observacion eq 'N' ? null:'Retirado(a)'}" style="width:100%"/>
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>

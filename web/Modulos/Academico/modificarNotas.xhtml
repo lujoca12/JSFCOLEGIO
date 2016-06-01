@@ -11,7 +11,7 @@
     <h:body>
 
         <div class="ui-fluid">
-            <h:form id="frmRegistrarNotas">
+            <h:form id="frmEdicionNotas">
                 <p:tab id="personal" title="RegistrarNotas">
                     <p:panel header="Ediciòn de Notas">
                         <p:growl id="msgsNotas" showDetail="true" />
@@ -28,7 +28,7 @@
                                     <p:column>
                                         <h:outputText value="#{tModulo.modulo}" />
                                     </p:column>
-                                    <p:ajax update="frmRegistrarNotas,msgsNotas" listener="#{mbVNotas.cargarTablaEdicionRegNotas}" />
+                                    <p:ajax update="frmEdicionNotas,msgsNotas" listener="#{mbVNotas.cargarTablaEdicionRegNotas}" />
                                 </p:selectOneMenu>
                             <p:message for="cboModulo" />
                         </p:panelGrid>
@@ -67,7 +67,7 @@
 
                     <center>
                         <div>
-                            <p:commandButton value="Eliminar" update="frmRegistrarNotas,msgsNotas" styleClass="anchoBotones" icon="ui-icon-trash"
+                            <p:commandButton value="Eliminar" update="frmEdicionNotas,msgsNotas" styleClass="anchoBotones" icon="ui-icon-trash"
                                              actionListener="#{mbVNotas.eliminarNotas()}" 
                                              rendered="#{(mbVNotas.tipo_user eq 0 and (mbVNotas.estado eq 'A' or mbVNotas.estado eq 'G'))
                                                           or (mbVNotas.tipo_user eq 1 and (mbVNotas.estado eq 'A' or mbVNotas.estado eq 'G'))}" >

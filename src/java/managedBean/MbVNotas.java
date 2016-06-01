@@ -9,11 +9,13 @@ import Clases.ClsNotas;
 import Clases.ClsTablaModulosRegistrados;
 import Clases.ClsTblNotas;
 import Clases.ClsTblPagos;
+import Dao.DaoTAsistencias;
 import Dao.DaoTEstudiante;
 import Dao.DaoTMatricula;
 import Dao.DaoTModulo;
 import Dao.DaoTNotas;
 import Dao.PagosDao;
+import Pojo.Asistencia;
 import Pojo.Estudiante;
 import Pojo.Matricula;
 import Pojo.Modulo;
@@ -302,7 +304,7 @@ public class MbVNotas implements Serializable {
                             "",
                             "",
                             null,
-                            true, 0, "", "", null));
+                            true, 0, "", "", null,0.0));
                 }
             } else {
                 this.estudiante = "";
@@ -524,7 +526,9 @@ public class MbVNotas implements Serializable {
                                         true,
                                         notas.getId(),
                                         notas.getUsuario(),
-                                        notas.getResponsable(), null));
+                                        notas.getResponsable(), 
+                                        null,
+                                        0.0));
                             }
                         }
                     }
@@ -551,13 +555,14 @@ public class MbVNotas implements Serializable {
                                 "0",
                                 "",
                                 null,
-                                true, 0, "", "", null));
+                                true, 0, "", "", null,0.0));
 
                     }
 
                     bandera = true;
                 }
             }
+            perdidosxAsistencia(lstTblNotas);
             if (estado != null) {
                 if (estado.equals('A')) {
                     mensajesOk("Notas ya Registradas");
@@ -576,6 +581,30 @@ public class MbVNotas implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    private void perdidosxAsistencia(List<ClsNotas> lstTblNotases) throws Exception{
+        DaoTAsistencias daoTasistencia = new DaoTAsistencias();
+        List<Asistencia> lstAsist = null;
+        Object [] obj = null;
+        BigDecimal bgd = null;
+        if (this.clsTblModulosReg != null) {
+            lstAsist = daoTasistencia.getPerdidosxAsistencia(this.clsTblModulosReg.getIdModulo());
+        } else {
+            lstAsist = daoTasistencia.getPerdidosxAsistencia(0);
+        }
+        if (lstAsist.size() > 0) {
+            for (int i = 0; i < lstTblNotases.size(); i++) {
+                for (int j = 0; j < lstAsist.size(); j++) {
+                    obj = (Object[])(Object)lstAsist.get(j);
+                    if(obj[0].equals(lstTblNotases.get(i).getIdMatricula())){
+                        bgd = (BigDecimal) obj[1];
+                        lstTblNotases.get(i).setTotalAsistencia(bgd.doubleValue());
+                    }
+                }
+            }
+        }
+        
     }
 
     public void cargarTablaEdicionRegNotas() {
@@ -647,7 +676,8 @@ public class MbVNotas implements Serializable {
                             true,
                             notas.getId(),
                             notas.getUsuario(),
-                            notas.getResponsable(), null));
+                            notas.getResponsable(), null,
+                            0.0));
                 }
             }
 

@@ -335,7 +335,7 @@ public class MbVModulos implements Serializable {
                 }else{
                     if(tModulo.getFechaInicio().before(modulo.get(0).getFechaFin())){
                         //msg = daoTmodulo.registrar(tModulo);
-                        mensajesError("error fecha no puede ser menor a "+modulo.get(0).getFechaFin()+"");
+                        mensajesError("error fecha de Inicio del Módulo no puede ser menor a "+modulo.get(0).getFechaFin()+"");
                         return;
                     }else{
                         if (fechaInicio.before(themeMaestria.getFechaInicioMaestria()) || fechaFin.after(themeMaestria.getFechaFinMaestria())) {
@@ -430,6 +430,30 @@ public class MbVModulos implements Serializable {
             modulo.setFechaInicioExamen(((ClsTablaModulosRegistrados) event.getObject()).getFechaInicioExamen());
             modulo.setFechaFinExamen(((ClsTablaModulosRegistrados) event.getObject()).getFechaFinExamen());
             modulo.setModulo(((ClsTablaModulosRegistrados) event.getObject()).getN_modulo());
+//            if(modulo.size() <= 0){
+//                    if (fechaInicio.before(themeMaestria.getFechaInicioMaestria()) || fechaFin.after(themeMaestria.getFechaFinMaestria())) {
+//                        mensajesError("error fecha no puede ser menor que "+themeMaestria.getFechaInicioMaestria()+" ni mayor que "+themeMaestria.getFechaFinMaestria()+"");
+//                        return;
+//                    }else{
+//                        msg = daoTmodulo.registrar(tModulo);
+//                    }
+//                    
+//                }else{
+//                    if(tModulo.getFechaInicio().before(modulo.get(0).getFechaFin())){
+//                        //msg = daoTmodulo.registrar(tModulo);
+//                        mensajesError("error fecha de Inicio del Módulo no puede ser menor a "+modulo.get(0).getFechaFin()+"");
+//                        return;
+//                    }else{
+//                        if (fechaInicio.before(themeMaestria.getFechaInicioMaestria()) || fechaFin.after(themeMaestria.getFechaFinMaestria())) {
+//                            mensajesError("error fecha no puede ser menor que " + themeMaestria.getFechaInicioMaestria() + " ni mayor que " + themeMaestria.getFechaFinMaestria() + "");
+//                            return;
+//                        } else {
+//                            msg = daoTmodulo.registrar(tModulo);
+//                        }
+//                    }
+//                        
+//                    
+//                }
             msg = daoTmodulo.update(modulo);
             cargarTablaModulos();
 

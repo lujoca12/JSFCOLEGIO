@@ -53,7 +53,7 @@ public class DaoTNotas implements InterfaceNotas{
         try {
             //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
             Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
-            
+            int cont = 0;
             iniciaOperacion();
             Notas tNotas = null;
             Matricula matricula = null;
@@ -82,11 +82,18 @@ public class DaoTNotas implements InterfaceNotas{
                 tNotas.setObservacion(lstNotas.get(i).getObservacion());
                 tNotas.setId(lstNotas.get(i).getIdNota());
                 
-                sesion.saveOrUpdate(tNotas);
+                if(lstNotas.get(i).getTotalAsistencia()>= 90){
+                    sesion.saveOrUpdate(tNotas);
+                }else
+                    cont ++;
+                    
             }
             tx.commit();
             sesion.close();
             band = true;
+            if(cont == lstNotas.size())
+                band = false;
+            
         } catch (Exception e) {
             tx.rollback();
             band = false;

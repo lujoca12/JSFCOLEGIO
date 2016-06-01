@@ -59,7 +59,11 @@
                         </p:column>
 
                         <p:column headerText="Observación" style="text-align: center; width: 55%;">
-                            <p:inputText disabled="#{mbVAsistencia.habilitar eq 1 ? true:false}" value="#{notas.observacion}" style="width:100%"/>
+                            <h:selectOneMenu disabled="#{mbVAsistencia.habilitar eq 1 ? true:false}" style="width:100%"
+                                id="cboObservacion" class="form-control" value="#{notas.observacion}">
+                                <f:selectItem itemLabel="Ninguna" itemValue="N" />
+                                <f:selectItem itemLabel="Retirado(a)" itemValue="R" />
+                            </h:selectOneMenu>
                         </p:column>
 
                     </p:dataTable>

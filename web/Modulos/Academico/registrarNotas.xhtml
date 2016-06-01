@@ -43,11 +43,11 @@
                     <p:dataTable class="tblDatos" scrollable="false" var="notas" value="#{mbVNotas.lstTblNotas}"
                                  emptyMessage="No hay Estudiantes para registrar notas">
                         <p:column headerText="#" style="text-align: center; width: 5%;">
-                            <h:outputText value="#{notas.n_registro}" />
+                            <h:outputText value="#{notas.n_registro}" style="#{(notas.totalAsistencia lt 90 and notas.totalAsistencia gt 0 ? 'color: red;':null)}" />
                         </p:column>
 
                         <p:column headerText="Estudiante" style="text-align: center; width: 30%;">
-                            <h:outputText value="#{notas.nombresEstudiante}" />
+                            <h:outputText value="#{notas.nombresEstudiante}" style="#{(notas.totalAsistencia lt 90 and notas.totalAsistencia gt 0 ? 'color: red;':null)}" />
                         </p:column>
 
                         <p:column headerText="Nota" style="text-align: center; width: 10%;">
@@ -57,15 +57,19 @@
                                                      or (mbVNotas.tipo_user eq 1 and mbVNotas.estado eq 'G')
                                                      or (mbVNotas.tipo_user eq 0 and mbVNotas.estado eq 'G')
                                                      or (mbVNotas.estado eq 'B' and mbVNotas.tipo_user eq 0)
-                                                     or (mbVNotas.estado eq ' ' and mbVNotas.tipo_user eq 0)}" 
-                                         onkeypress="return validarNum(event, true)" style="width:100%; text-align: center;">
+                                                     or (mbVNotas.estado eq ' ' and mbVNotas.tipo_user eq 0)
+                                                     or (notas.totalAsistencia lt 90 and notas.totalAsistencia gt 0 ? true:false)}" 
+                                         onkeypress="return validarNum(event, true)" 
+                                         style="width:100%; text-align: center; #{(notas.totalAsistencia lt 90 and notas.totalAsistencia gt 0 ? 'color: red;':null)}">
                                 <f:validateDoubleRange maximum="10"/>
                             </p:inputText>
 
                         </p:column>
 
                         <p:column headerText="Observación" style="text-align: center; width: 55%;">
-                            <p:inputText value="#{notas.observacion}" style="width:100%"/>
+                            <p:inputText readonly="#{(notas.totalAsistencia lt 90 and notas.totalAsistencia gt 0 ? true:false)}"
+                                value="#{(notas.totalAsistencia lt 90 and notas.totalAsistencia gt 0 ? 'Perdido por Asistencia':notas.totalAsistencia)}" 
+                                style="width:100%; #{(notas.totalAsistencia lt 90 and notas.totalAsistencia gt 0 ? 'color: red;':null)}"/>
                         </p:column>
                     </p:dataTable>
                     <br></br>

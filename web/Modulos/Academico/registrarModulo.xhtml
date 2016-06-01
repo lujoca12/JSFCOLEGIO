@@ -63,7 +63,12 @@
                             
                             
                             <p:outputLabel for="txtFechaInicio" value="Fecha inicio:" styleClass="labelDerecha" />
-                            <p:calendar id="txtFechaInicio" required="true" class="date_input" onkeypress="return permite(event, 'none')" locale="es" value="#{mbVModulos.tModulo.fechaInicio}" effect="fold" pattern="dd-MM-yyyy" mask="true" >
+                            <p:calendar id="txtFechaInicio" required="true" 
+                                        class="date_input" onkeypress="return permite(event, 'none')" 
+                                        locale="es" value="#{mbVModulos.tModulo.fechaInicio}" effect="fold" 
+                                        pattern="dd-MM-yyyy" mask="true" 
+                                        mindate="#{mbVModulos.fechaInicio}"
+                                        maxdate="#{mbVModulos.fechaFin}">
                                 <p:ajax event="dateSelect" update="txtFechaFin" />
                                 <p:ajax event="blur" update="txtFechaFin" />
                                 
@@ -76,7 +81,8 @@
                             <p:calendar id="txtFechaFin" required="true" mindate="#{mbVModulos.tModulo.fechaInicio}" locale="es" 
                                         value="#{mbVModulos.tModulo.fechaFin}" 
                                         onkeypress="return permite(event, 'none')" 
-                                        effect="fold" pattern="dd-MM-yyyy" mask="true" >
+                                        effect="fold" pattern="dd-MM-yyyy" mask="true" 
+                                        maxdate="#{mbVModulos.fechaFin}">
                                 <f:attribute name="txtFechaInicio" value="#{mbVModulos.tModulo.fechaInicio}"/>
                                 <p:ajax event="dateSelect" update="txtFechaInicioExamen" />
                                 <p:ajax event="dateSelect" update="txtFechaFinExamen" />

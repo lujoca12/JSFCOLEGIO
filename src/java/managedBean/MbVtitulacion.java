@@ -7,6 +7,8 @@ package managedBean;
 
 import Clases.ClsTipoTitulacion;
 import Clases.ClsMaestria;
+import Clases.ClsTitulacion;
+
 import Clases.ClsEstudiante;
 import Clases.ClsMatricula;
 import Dao.DaoTMaestrias;
@@ -23,6 +25,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.faces.application.FacesMessage;
@@ -39,6 +43,10 @@ public class MbVtitulacion implements Serializable{
     private boolean estado = false;    
     private String idmaestria;
      private boolean msg = false;
+     
+     private ClsTitulacion clstitulacion;     
+     private List<ClsTitulacion> lsttitulacion;  
+     
      private ClsTipoTitulacion clstipotitulacion;
      private List<ClsTipoTitulacion> lsttipotitulacion;  
      
@@ -66,6 +74,7 @@ public class MbVtitulacion implements Serializable{
         ttitulacion.setFechaInicio(date);
         llenarCboTipoTitulacion();
         llenarCboMaestria();
+        CargarTitulacionNO();
     }
     
     private void vaciarCajas(){
@@ -73,7 +82,31 @@ public class MbVtitulacion implements Serializable{
         tmatricula = new Matricula();
         ttipotitulacion = new TipoTitulacion();
     }
-    
+
+    public ClsMatricula getClsmatricula() {
+        return clsmatricula;
+    }
+    public void setClsmatricula(ClsMatricula clsmatricula) {
+        this.clsmatricula = clsmatricula;
+    }
+    public List<ClsMatricula> getLstmatricula() {
+        return lstmatricula;
+    }
+    public void setLstmatricula(List<ClsMatricula> lstmatricula) {
+        this.lstmatricula = lstmatricula;
+    }
+    public ClsTitulacion getClstitulacion() {
+        return clstitulacion;
+    }
+    public void setClstitulacion(ClsTitulacion clstitulacion) {
+        this.clstitulacion = clstitulacion;
+    }
+    public List<ClsTitulacion> getLsttitulacion() {
+        return lsttitulacion;
+    }
+    public void setLsttitulacion(List<ClsTitulacion> lsttitulacion) {
+        this.lsttitulacion = lsttitulacion;
+    }   
     public Date getDate() {
         return date;
     }
@@ -145,8 +178,22 @@ public class MbVtitulacion implements Serializable{
     }
     
     public void onEstudianteChange() throws Exception{
-        if(clsestudiante != null){estado=true;}
-        else{estado=false;}
+        DaoTMatricula daomatricula = new DaoTMatricula();
+        List<Matricula> lstmatric=null;
+        if(clsestudiante != null && clsestudiante.equals("")){
+            estado=true;
+            lstmatricula = new ArrayList<>();
+            lstmatricula.clear();            
+            lstmatric= daomatricula.getMatriculaEstudiante(clsestudiante.getId());            
+        }
+        else{ lstmatricula.clear(); estado=false;        }
+        if(lstmatric != null){
+            if(lstmatric.size()>0){
+                for(Matricula ma : lstmatric){
+                    lstmatricula.add(new ClsMatricula(ma.getId(), ma.getEstado()));
+                }
+            }
+        }
     }
     
     public void onMaestriaChange() throws Exception{
@@ -213,7 +260,7 @@ public class MbVtitulacion implements Serializable{
         }
      }
 
-     public void ObteneridMatriculaEstudiante(){
+     public void ObteneridMatriculaEstudiante() throws Exception{
          try{
              DaoTMatricula daomatricula = new DaoTMatricula();
          
@@ -241,7 +288,7 @@ public class MbVtitulacion implements Serializable{
          DaoTitulacion daotitulacion = new DaoTitulacion();
          DaoTMatricula daomatricula = new DaoTMatricula();
          boolean band = false;
-         ObteneridMatriculaEstudiante();
+         //ObteneridMatriculaEstudiante();
 
         //Variable para saber si esta registrada
         boolean repetida = false;
@@ -250,7 +297,8 @@ public class MbVtitulacion implements Serializable{
             ttitulacion.setFechaFin(ttitulacion.getFechaFin());
             ttitulacion.setFechaInicio(ttitulacion.getFechaInicio());
             tmatricula.setId(this.clsmatricula.getId());
-            //ttitulacion.setMatricula(tmatricula);
+            ttitulacion.setMatricula(tmatricula);
+            ttitulacion.setEstado('E');
         try{
             List<Titulacion> lstT=(List<Titulacion>) daomatricula.getTitulacionxMatricula(ttitulacion.getMatricula().getId());
             if(lstT.size() > 0){
@@ -276,7 +324,74 @@ public class MbVtitulacion implements Serializable{
         
      }
      
-     
+     public void CargarTitulacionok(){
+         lsttitulacion = new ArrayList<>();
+         try{
+             lsttitulacion.clear();
+             DaoTitulacion daotitula = new DaoTitulacion();             
+            List<Titulacion> lsttitulac = daotitula.getTitulacionOK();
+            
+            if(lsttitulac != null){
+                if(lsttitulac.size() > 0){
+                    for(Titulacion ti : lsttitulac){
+                        
+            //List<Maestria> lstma = daotitula.obtenermaestria(ti.getMatricula().getId());
+                //String mammm="";
+           // for (Maestria maaa : lstma){
+           //     mammm = maaa.getDescripcion();
+           // }
+                //    String maestria =ti.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion();
+                        lsttitulacion.add(new ClsTitulacion(ti.getId(),
+                                ti.getNota().doubleValue(), 
+                                ti.getFechaInicio(), 
+                                ti.getFechaFin(),
+                                ti.getTipoTitulacion().getId(),
+                                ti.getMatricula().getId(),
+                                "maestria",
+                                "estudiante"));
+                    }
+                }
+            }
+             
+             
+         }catch(Exception e){             
+            Logger.getLogger(MbVtitulacion.class.getName()).log(Level.SEVERE, null, e);
+         }
+     }
+     public void CargarTitulacionNO(){
+         lsttitulacion = new ArrayList<>();
+         try{
+             lsttitulacion.clear();
+             DaoTitulacion daotitula = new DaoTitulacion();             
+            List<Titulacion> lsttitulac = daotitula.getTitulacionNO();
+            
+            if(lsttitulac != null){
+                if(lsttitulac.size() > 0){
+                    for(Titulacion ti : lsttitulac){
+                        
+            //List<Maestria> lstma = daotitula.obtenermaestria(ti.getMatricula().getId());
+                //String mammm="";
+           // for (Maestria maaa : lstma){
+           //     mammm = maaa.getDescripcion();
+           // }
+                //    String maestria =ti.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion();
+                        lsttitulacion.add(new ClsTitulacion(ti.getId(),
+                                ti.getNota().doubleValue(), 
+                                ti.getFechaInicio(), 
+                                ti.getFechaFin(),
+                                ti.getTipoTitulacion().getId(),
+                                ti.getMatricula().getId(),
+                                "maestria",
+                                "estudiante"));
+                    }
+                }
+            }
+             
+             
+         }catch(Exception e){             
+            Logger.getLogger(MbVtitulacion.class.getName()).log(Level.SEVERE, null, e);
+         }
+     }
      
      
     private void mensajesOk(String msg){

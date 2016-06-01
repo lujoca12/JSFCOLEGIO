@@ -43,7 +43,7 @@
     <mapping resource="Pojo/DetallePermiso.hbm.xml"/>
     <mapping resource="Pojo/TipoTribunal.hbm.xml"/>
     <mapping resource="Pojo/TipoPrecio.hbm.xml"/>
-    <mapping resource="Pojo/Titulacion.hbm.xml"/>
+    <mapping class="" file="" jar="" package="" resource="Pojo/Titulacion.hbm.xml"/>
     <mapping resource="Pojo/Titulo.hbm.xml"/>
     <mapping resource="Pojo/Precio.hbm.xml"/>
     <mapping resource="Pojo/TipoTitulacion.hbm.xml"/>

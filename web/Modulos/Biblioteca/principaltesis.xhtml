@@ -51,15 +51,24 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">Registrar tesis</div>
                         <div class="panel-body"> 
-                            <p:button outcome="/Modulos/Biblioteca/Unidaddetitulacion" value="titulación"/>  
+                            
                             <p:button outcome="/Modulos/Biblioteca/RegistrarTesis" value="Registrar"/>  
                             <p:button outcome="/Modulos/Biblioteca/GuardarTesis" value="Guardar"/>  
+                            <p:button outcome="/Modulos/Biblioteca/AsignarPalabrasClaves" value="palabras claves"/>
+                            <p:button outcome="/Modulos/Biblioteca/GuardarTesis" value="Sustentacion"/>  
                         </div>
                     </div>    
                     <div class="panel panel-danger">
+                        <div class="panel-heading">Unidad de titulación</div>
+                        <div class="panel-body"> 
+                            <p:button outcome="/Modulos/Biblioteca/Unidaddetitulacion" value="Registrar titulación"/>  
+                            <p:button outcome="/Modulos/Biblioteca/Unidaddetitulacion" value="Guardar titulación"/>  
+                            <p:button outcome = "/Modulos/Biblioteca/verificarEstadoToP" value="consulta estudiante" />
+                        </div>
+                    </div> 
+                    <div class="panel panel-danger">
                         <div class="panel-heading">Otros</div>
                         <div class="panel-body"> 
-                            <p:button outcome="/Modulos/Biblioteca/AsignarPalabrasClaves" value="palabras claves"/>
                             <p:button outcome = "/Modulos/Biblioteca/VerificarNombretesis" value="consulta tesis" />
                             <p:button outcome = "/Modulos/Biblioteca/verificarEstadoToP" value="consulta estudiante" />
                         </div>

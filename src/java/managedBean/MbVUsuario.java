@@ -421,9 +421,7 @@ public class MbVUsuario implements Serializable {
             mensajesError("Error al eliminar datos");
         }
     }
-    
-    
-
+        
     public void registrarUsuarios() {
         DaoTUsuario daoTusuario = new DaoTUsuario();
 

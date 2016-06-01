@@ -19,6 +19,7 @@ public class Titulacion  implements java.io.Serializable {
      private BigDecimal nota;
      private Date fechaInicio;
      private Date fechaFin;
+     private Character estado;
      private Set proyectos = new HashSet(0);
 
     public Titulacion() {
@@ -28,14 +29,25 @@ public class Titulacion  implements java.io.Serializable {
     public Titulacion(int id) {
         this.id = id;
     }
-    public Titulacion(int id, Matricula matricula, TipoTitulacion tipoTitulacion, BigDecimal nota, Date fechaInicio, Date fechaFin, Set proyectos) {
-       this.id = id;
-       this.matricula = matricula;
-       this.tipoTitulacion = tipoTitulacion;
-       this.nota = nota;
-       this.fechaInicio = fechaInicio;
-       this.fechaFin = fechaFin;
+    
+
+    public Titulacion(int id, Matricula matricula, TipoTitulacion tipoTitulacion, BigDecimal nota, Date fechaInicio, Date fechaFin, Character estado, Set proyectos) {
+        this.id = id;
+        this.matricula = matricula;
+        this.tipoTitulacion = tipoTitulacion;
+        this.nota = nota;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.estado = estado;
        this.proyectos = proyectos;
+    }
+    
+    public Character getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Character estado) {
+        this.estado = estado;
     }
    
     public int getId() {

@@ -25,7 +25,7 @@
                         <p:panel header="Registrar Tesis">
                             <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
                         
-                        <p:outputLabel for="txtTitulo" styleClass="labelDerecha" value="Título:" />
+                        <p:outputLabel for="txtTitulo" styleClass="labelDerecha" value="Título o Tema:" />
                         <p:inputText id="txtTitulo" value="#{mbVtesis.tTesis.titulo}" maxlength="100" >
                             <f:validateLength minimum="5" maximum="100" />
                         </p:inputText> 
@@ -46,12 +46,7 @@
                         
                         <p:outputLabel for="txtFechaS" styleClass="labelDerecha" value="Fecha sustentación:" />
                         <p:calendar id="txtFechaS" value="#{mbVtesis.tTesis.fechaSustentacion}" 
-                                    effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" />   
-                        
-                        <p:outputLabel for="txtRuta" styleClass="labelDerecha" value="Ruta:" />   
-                        <p:inputText id="txtRuta" value="#{mbVtesis.tTesis.ruta}" maxlength="100" >
-                            <f:validateLength minimum="5" maximum="100" />
-                        </p:inputText>
+                                    effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" /> 
                         
                         <p:outputLabel for="txtResumen" styleClass="labelDerecha" value="Resumen:" />
                         <p:inputText id="txtResumen" value="#{mbVtesis.tTesis.resumen}" maxlength="100" >
@@ -71,9 +66,6 @@
                                 <h:outputText value="#{tmaestria.displayName}" />
                             </p:column>
                         </p:selectOneMenu>
-                        <p:outputLabel for="txtFechaSubid" styleClass="labelDerecha" value="Fecha subida:" />
-                        <p:calendar id="txtFechaSubid" value="#{mbVtesis.tTesis.fechaSubida}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" />
-                        
                         
                         <h:outputText id="display" value="" />
                         <p:commandButton id="mostrar" value="Guardar"  

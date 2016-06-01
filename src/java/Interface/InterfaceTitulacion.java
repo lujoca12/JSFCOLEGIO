@@ -6,6 +6,7 @@
 package Interface;
 
 import Pojo.Titulacion;
+import Pojo.Maestria;
 import Pojo.TipoTitulacion;
 import java.util.List;
 
@@ -16,4 +17,7 @@ import java.util.List;
 public interface InterfaceTitulacion {
      public List<TipoTitulacion> getTodastipoTitulacion() throws Exception;
      public boolean registrarTitulacion(Titulacion t) throws Exception;
+     public List<Titulacion> getTitulacionOK() throws Exception;
+     public List<Titulacion> getTitulacionNO() throws Exception;
+     public List<Maestria> obtenermaestria(int matricula) throws Exception;
 }

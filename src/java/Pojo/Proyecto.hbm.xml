@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+    <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 16-may-2016 9:34:21 by Hibernate Tools 4.3.1 -->
@@ -10,7 +10,18 @@
         </id>
         <many-to-one name="titulacion" class="Pojo.Titulacion" fetch="select">
             <column name="id_titulacion" />
+        </many-to-one>     
+           
+        <many-to-one name="usuario" class="Pojo.Usuario" fetch="select">
+            <column name="id_usuario" />
         </many-to-one>
+        <property name="tutor" type="string">
+            <column name="tutor" />
+        </property>
+        <property name="estado" type="java.lang.Character">
+            <column name="estado" length="1" />
+        </property>
+        
         <property name="titulo" type="string">
             <column name="titulo" />
         </property>

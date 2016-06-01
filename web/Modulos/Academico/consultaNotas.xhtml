@@ -79,7 +79,8 @@
                                 <h5 style="text-align: left; font-weight: bold !important; padding-bottom: 0px !important;">
                                     Detalle de notas
                                 </h5>
-                                <p:dataTable id="tblDetalleNotas" class="tblNotas DataTable datatableHover" scrollable="false" var="notas" value="#{mbVNotas.lstTblNotasReg}"
+                                <p:dataTable id="tblDetalleNotas" class="tblNotas DataTable datatableHover" scrollable="false" var="notas" 
+                                             value="#{mbVNotas.lstTblNotasReg}"
                                              emptyMessage="No hay datos">
                                     <p:column headerText="Módulo" style="text-align: center !important;">
                                         <h:outputText value="#{notas.descripMod}" />

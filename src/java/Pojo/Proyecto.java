@@ -23,6 +23,10 @@ public class Proyecto  implements java.io.Serializable {
      private String maestria;
      private Set palabrasClaves = new HashSet(0);
      private Set sustentacions = new HashSet(0);
+     
+     private Usuario usuario;
+     private String tutor;
+     private Boolean estado;
 
     public Proyecto() {
     }
@@ -31,20 +35,47 @@ public class Proyecto  implements java.io.Serializable {
     public Proyecto(int id) {
         this.id = id;
     }
-    public Proyecto(int id, Titulacion titulacion, String titulo, String autor, Date fechaSustentacion, String ruta, String resumen, Date fechaSubida, String maestria, Set palabrasClaves, Set sustentacions) {
-       this.id = id;
-       this.titulacion = titulacion;
-       this.titulo = titulo;
-       this.autor = autor;
-       this.fechaSustentacion = fechaSustentacion;
-       this.ruta = ruta;
-       this.resumen = resumen;
-       this.fechaSubida = fechaSubida;
-       this.maestria = maestria;
-       this.palabrasClaves = palabrasClaves;
-       this.sustentacions = sustentacions;
-    }
    
+    public Proyecto(int id, Titulacion titulacion, String titulo, String autor, Date fechaSustentacion, String ruta, String resumen, Date fechaSubida, String maestria, Usuario usuario, String tutor, Boolean estado) {
+        this.id = id;
+        this.titulacion = titulacion;
+        this.titulo = titulo;
+        this.autor = autor;
+        this.fechaSustentacion = fechaSustentacion;
+        this.ruta = ruta;
+        this.resumen = resumen;
+        this.fechaSubida = fechaSubida;
+        this.maestria = maestria;
+        this.usuario = usuario;
+        this.tutor = tutor;
+        this.estado = estado;
+    }
+
+    
+    
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getTutor() {
+        return tutor;
+    }
+
+    public void setTutor(String tutor) {
+        this.tutor = tutor;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
     public int getId() {
         return this.id;
     }

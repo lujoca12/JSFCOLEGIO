@@ -76,4 +76,56 @@ public class DaoTitulacion implements InterfaceTitulacion{
         
         return band;
      }
+
+    @Override
+    public List<Titulacion> getTitulacionOK() throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        // estado
+        //A= guardo; E=espera
+        String hql="from Titulacion t\n" +
+                "where t.estado ='A' and t.nota != null";
+        Query query = sesion.createQuery(hql);
+
+        List<Titulacion> lstProyecto=(List<Titulacion>) query.list();
+        sesion.close();
+        return lstProyecto;
+    }
+
+    @Override
+    public List<Maestria> obtenermaestria(int matricula) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        // estado
+        //A= guardo; E=espera
+        String hql="select m.descripcion from Maestria m\n" +
+                "inner join m.promocions pr\n" +
+                "inner join pr.solicitudInscripcions soli\n" +
+                "inner join soli.matriculas matri\n" +
+                "where matri.id = '"+matricula+"'\n" +
+                "";
+        Query query = sesion.createQuery(hql);
+
+        List<Maestria> lstProyecto=(List<Maestria>) query.list();
+        sesion.close();
+        return lstProyecto;   
+    }
+
+    @Override
+    public List<Titulacion> getTitulacionNO() throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        // estado
+        //A= guardo; E=espera
+        String hql="from Titulacion t\n" +
+                "where t.estado ='E'";
+        Query query = sesion.createQuery(hql);
+
+        List<Titulacion> lstProyecto=(List<Titulacion>) query.list();
+        sesion.close();
+        return lstProyecto;
+    }
 }

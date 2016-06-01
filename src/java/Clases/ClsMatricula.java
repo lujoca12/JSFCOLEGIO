@@ -20,6 +20,14 @@ public class ClsMatricula {
     private String n_matricula;
     private Date fechagraduacion;
 
+    public ClsMatricula(int id, char estado) {
+        this.id = id;
+        this.estado = estado;
+    }
+    
+    
+    
+
     public ClsMatricula(int id, Date fechaMatricula, char estado, String n_matricula, Date fechagraduacion) {
         this.id = id;
         this.fechaMatricula = fechaMatricula;

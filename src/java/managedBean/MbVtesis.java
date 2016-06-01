@@ -87,15 +87,14 @@ public class MbVtesis implements Serializable{
      * Creates a new instance of MbVtesis
      */
     public MbVtesis(){
-        llenarCboEstudiantes();
-        llenarTablaTesis();
-        llenarCboMaestria();
+//        llenarCboEstudiantes();
+//        llenarTablaTesis();
+//        llenarCboMaestria();
         tMaestria= new Maestria();
         tTesis = new Proyecto();
         tpalabrasclave = new PalabrasClave();
         tEstudiante= new Estudiante();
-    }
-            
+    }   
     private void vaciarCajas(){
         tTesis = new Proyecto();
         tpalabrasclave = new PalabrasClave();
@@ -104,161 +103,113 @@ public class MbVtesis implements Serializable{
     public String getPc1() {
         return pc1;
     }
-
     public PalabrasClave getTpalabrasclave() {
         return tpalabrasclave;
     }
-
     public void setTpalabrasclave(PalabrasClave tpalabrasclave) {
         this.tpalabrasclave = tpalabrasclave;
     }
-   
-    
-    
-
     public ClsEstudiante getClsestudiante() {
         return clsestudiante;
     }
-
     public void setClsestudiante(ClsEstudiante clsestudiante) {
         this.clsestudiante = clsestudiante;
     }
-
     public List<ClsEstudiante> getLstestudiante() {
         return lstestudiante;
     }
-
     public void setLstestudiante(List<ClsEstudiante> lstestudiante) {
         this.lstestudiante = lstestudiante;
     }
-    
-    
-
     public String getTitulo() {
         return titulo;
     }
-
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
     
-    
-
     public Date getFechaSustentacion() {
         return fechaSustentacion;
     }
-
     public void setFechaSustentacion(Date fechaSustentacion) {
         this.fechaSustentacion = fechaSustentacion;
     }
-
     public Date getFechaSubida() {
         return fechaSubida;
     }
-
     public void setFechaSubida(Date fechaSubida) {
         this.fechaSubida = fechaSubida;
     }
-    
-    
-
-    public String getAutor() {
+     public String getAutor() {
         return autor;
     }
-
-    public void setAutor(String autor) {
+     public void setAutor(String autor) {
         this.autor = autor;
     }
-    
-    
-
-    public ClsMaestria getClsMaestria() {
+     public ClsMaestria getClsMaestria() {
         return clsMaestria;
     }
-
     public void setClsMaestria(ClsMaestria clsMaestria) {
         this.clsMaestria = clsMaestria;
     }
-
-    public List<ClsMaestria> getLstThemeMaestria() {
+   public List<ClsMaestria> getLstThemeMaestria() {
         return lstThemeMaestria;
     }
-
     public void setLstThemeMaestria(List<ClsMaestria> lstThemeMaestria) {
         this.lstThemeMaestria = lstThemeMaestria;
     }
-    
-
     public ClsTablaTesis getClsTablaTesis() {
         return clsTablaTesis;
     }
-
     public void setClsTablaTesis(ClsTablaTesis clsTablaTesis) {
         this.clsTablaTesis = clsTablaTesis;
     }
-    
     public Map<String, String> getMaestrias() {
         return maestrias;
     }
-
     public void setMaestrias(Map<String, String> maestrias) {
         this.maestrias = maestrias;
     }
-
     public String getIdMaestria() {
         return idMaestria;
     }
-
     public void setIdMaestria(String idMaestria) {
         this.idMaestria = idMaestria;
     }
-
     public Map<String, Map<String, String>> getData() {
         return data;
     }
-
     public void setData(Map<String, Map<String, String>> data) {
         this.data = data;
     }
-
     public MaestriaBean getmBean() {
         return mBean;
     }
-
     public void setmBean(MaestriaBean mBean) {
         this.mBean = mBean;
     }
-      
-    
     public List<ClsTablaTesis> getLstTablatesis() {
         return LstTablatesis;
     }    
-
     public Proyecto gettTesis() {
         return tTesis;
     }
-
     public void settTesis(Proyecto tTesis) {
         this.tTesis = tTesis;
     }
-
     public Estudiante gettEstudiante() {
         return tEstudiante;
     }
-
     public void settEstudiante(Estudiante tEstudiante) {
         this.tEstudiante = tEstudiante;
     }
-    
-
     public Maestria gettMaestria() {
         return tMaestria;
     }
-
     public void settMaestria(Maestria tMaestria) {
         this.tMaestria = tMaestria;
-    }
-          
+    }   
+    
     public void llenarCboEstudiantes(){
         this.lstestudiante = new ArrayList<ClsEstudiante>();
         try{
@@ -280,7 +231,6 @@ public class MbVtesis implements Serializable{
             
         }
     }
-
     public List<SelectItem> getLstEstudiantes() {
        this.lstEstudiantes = new ArrayList<SelectItem>();
         try {

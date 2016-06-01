@@ -64,7 +64,11 @@
                                     <p:column headerText="fecha Graduación" style="text-align: center;">
                                         <h:outputText value="#{notas.fecha}" />
                                     </p:column>
-                                    
+                                    <p:column headerText="Opciones" style="text-align: center;">
+                                        <p:commandLink update="@form" actionListener="#{mbVNotas.consultarNotas(notas)}">
+                                            <h:outputText style="color: #00a65a;" value="Ver notas" />
+                                        </p:commandLink>
+                                    </p:column>
                                 </p:dataTable>
                             </p:panel>
                         </div>
@@ -76,34 +80,27 @@
                                 <h5 style="text-align: left; font-weight: bold !important; padding-bottom: 0px !important;">
                                     Detalle de notas
                                 </h5>
-                                <p:dataTable id="tblDetalleNotas" class="tblNotas DataTable datatableHover" scrollable="false" var="notas" value="#{mbVNotas.lstTblNotasReg}"
-                                             emptyMessage="No hay datos">
+                                <p:dataTable id="tblDetalleNotas" class="tblNotas DataTable datatableHover" scrollable="false" 
+                                             var="notas" value="#{mbVNotas.lstTblNotasReg}"    emptyMessage="No hay datos">
                                     <p:column headerText="Módulo" style="text-align: center !important;">
                                         <h:outputText value="#{notas.descripMod}" />
                                     </p:column>
 
                                     <p:column headerText="N1" style="text-align: center !important;">
                                         <h:outputText value="#{notas.idNotas eq 0 ? null:notas.nota}"  />
-                                    </p:column>
-
-                                    <!--<p:column headerText="N2">
-                                        <h:outputText value="#{car.brand}" />
-                                    </p:column>
-
-                                    <p:column headerText="E. Final">
-                                        <h:outputText value="#{car.color}" />
-                                    </p:column>
-                                    
-                                    <p:column headerText="N. Final">
-                                        <h:outputText value="#{car.color}" />
-                                    </p:column>-->
-                                    
+                                    </p:column>   
+                                    <p:column headerText="Fecha Culminación" style="text-align: center !important;">
+                                        <h:outputText value="#{notas.fechaFin}"  />
+                                    </p:column> 
                                     <p:column headerText="Estado" style="text-align: center !important;">
                                         <h:outputText value="#{notas.idNotas eq 0 ? null : notas.nota >= 7 ? 'Aprobado':'Reprobado'}" />
                                     </p:column>
                                 </p:dataTable>
                             </p:panel>
                         </div>
+                    </p:panel>
+                    <p:panel>
+                        
                     </p:panel>
                     </h:form>
                     <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />

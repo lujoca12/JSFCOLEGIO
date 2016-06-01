@@ -146,7 +146,7 @@ public class DaoTMatricula implements InterfaceMatricula{
         this.sesion= null;
         this.tx= null;
         iniciaOperacion();
-        String hql="from Pojo.Titulacion as t where t.matricula ='"+idtitulacion+"'";
+        String hql="from Titulacion as t where t.matricula ='"+idtitulacion+"'";
         Query query = sesion.createQuery(hql);
         List<Titulacion> lstt=(List<Titulacion>) query.list();
         return lstt;

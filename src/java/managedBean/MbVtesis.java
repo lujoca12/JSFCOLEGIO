@@ -217,13 +217,13 @@ public class MbVtesis implements Serializable{
             
             List<Estudiante> lstestu = daoestudiante.getEstudiantes();
             this.lstestudiante.clear();
-            this.lstestudiante.add(new ClsEstudiante(-1,"Ninguno","Ninguno"));
+            this.lstestudiante.add(new ClsEstudiante(-1,"Ninguno","Ninguno",-1));
             
             for(Estudiante e : lstestu){
                 this.lstestudiante.add(new ClsEstudiante(
                         e.getId(), 
                         e.getNombres()+" "+e.getApellidos(), 
-                        e.getNombres()+" "+e.getApellidos()));
+                        e.getNombres()+" "+e.getApellidos(),-1));
                 //this.lstestudiante.add(new ClsEstudiante(e.getId(), idmaestria, titulo, autor, titulo, titulo, titulo, ruta, fechaSubida, msg, msg));
             }
             

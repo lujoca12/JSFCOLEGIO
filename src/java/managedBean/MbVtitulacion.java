@@ -253,10 +253,10 @@ public class MbVtitulacion implements Serializable{
             
             List<Estudiante> lsttipo = daoTusuario.getEstudiantes();
             this.lstestudiante.clear();
-            this.lstestudiante.add(new ClsEstudiante(-1,"Ninguno","Ninguno"));
+            this.lstestudiante.add(new ClsEstudiante(-1,"Ninguno","Ninguno",-1));
             for(Estudiante tt: lsttipo){
                 this.lstestudiante.add(new ClsEstudiante(tt.getId(),
-                        tt.getApellidos()+""+tt.getNombres(), tt.getNombres()));
+                        tt.getApellidos()+""+tt.getNombres(), tt.getNombres(),-1));
             }
         } catch (Exception ex) {
             

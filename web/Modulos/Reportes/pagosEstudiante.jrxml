@@ -1,29 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD JasperReport//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
-
-<jasperReport name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-    <background>
-        <band/>
-    </background>
-    <title>
-        <band height="79"/>
-    </title>
-    <pageHeader>
-        <band height="35"/>
-    </pageHeader>
-    <columnHeader>
-        <band height="61"/>
-    </columnHeader>
-    <detail>
-        <band height="125"/>
-    </detail>
-    <columnFooter>
-        <band height="45"/>
-    </columnFooter>
-    <pageFooter>
-        <band height="54"/>
-    </pageFooter>
-    <summary>
-        <band height="42"/>
-    </summary>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1394bf74-6c02-4df9-abd3-3934683ccd0d">
+	<property name="ireport.zoom" value="1.3310000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="352" y="34" width="97" height="20" uuid="3271242f-7137-4174-a375-a1c99de70176"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[P.O.BOX Guayaquil: 5620]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="67" y="0" width="414" height="20" uuid="2b423151-a2bd-4cf7-9132-c50ed9bccdf3"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIVERSIDAD TÉCNICA ESTATAL DE QUEVEDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="104" y="49" width="88" height="20" uuid="26f471e6-195b-43e3-99db-1347f73ae114"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Conmutador: 2751 430]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="104" y="34" width="88" height="20" uuid="3c382dff-d303-4af1-a75b-b204bd3415dc"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Telefax:        2759 244]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="194" y="30" width="155" height="20" uuid="d0c5c9cb-c624-4018-90d9-f6af67f2c8da"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIDAD DE POSTGRADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="352" y="49" width="97" height="20" uuid="a47e4c31-1826-46cc-8c72-702d224aa87a"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[P.O.BOX Quevedo 73]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="203" y="59" width="142" height="20" uuid="691d06ab-996e-4058-9477-c0e66847ba96"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Quevedo - Los Rios - Ecuador]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
 </jasperReport>

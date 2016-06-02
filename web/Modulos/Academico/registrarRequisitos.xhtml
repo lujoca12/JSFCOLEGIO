@@ -28,11 +28,7 @@
                             <f:selectItem itemLabel="Pdf" itemValue="application/pdf"/>
                         </p:selectOneMenu>
                         <p:message for="tipoArchivo"/>
-
-                        <p:outputLabel for="respaldo" value="Se necesita respaldo?:" styleClass="labelDerecha"/>
-                        <p:selectBooleanCheckbox id="respaldo" required="true" value="#{requisitosBean.respaldo}"/>
-                        <p:message for="respaldo"/>
-
+                        
                         <p:message for="display"/>
                         <p:commandButton value="Guardar" update="form,msgs" styleClass="anchoBotones" icon="ui-icon-disk"
                                          actionListener="#{requisitosBean.registrar()}" />

@@ -135,7 +135,7 @@ public class PagosBean implements Serializable {
             lstPagos.remove(selectedPago);
             selectedPago = null;
         } catch (Exception ex) {
-            FacesMessage message = new FacesMessage("Erorr", "Error al guardarlos datos");
+            FacesMessage message = new FacesMessage("Erorr", "Error al guardar los datos");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
@@ -148,13 +148,13 @@ public class PagosBean implements Serializable {
             FacesMessage message = new FacesMessage("Succesful", "Datos guardados");
             FacesContext.getCurrentInstance().addMessage(null, message);
             }else{
-                FacesMessage message = new FacesMessage("Erorr", "Error al guardarlos datos");
+                FacesMessage message = new FacesMessage("Erorr", "Error al guardar los datos");
             FacesContext.getCurrentInstance().addMessage(null, message);
             }
             lstPagos.remove(selectedPago);
             selectedPago = null;
         } catch (Exception ex) {
-            FacesMessage message = new FacesMessage("Erorr", "Error al guardarlos datos");
+            FacesMessage message = new FacesMessage("Erorr", "Error al guardar los datos");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }

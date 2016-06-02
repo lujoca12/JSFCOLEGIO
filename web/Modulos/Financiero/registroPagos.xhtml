@@ -33,7 +33,7 @@
                                     <p:outputLabel for="txtCedEstud" style="font-weight: bold !important;" styleClass="labelDerecha" value="Cédula Estudiante:" />
 
                                     <p:inputMask id="txtCedEstud" value="#{mbVNotas.cedula}" required="true" mask="999999999-9"/>
-                                    <p:commandButton value="Listar" update="form,msgs" styleClass="anchoBotonesConsulta" 
+                                    <p:commandButton value="Listar" update="form msgs" styleClass="anchoBotonesConsulta" 
                                                      icon="ui-icon-search" actionListener="#{mbVNotas.consultarMaestrias()}" />
 
                                 </p:panelGrid>
@@ -116,18 +116,20 @@
                                         <h:outputLabel value="Valor : "/>
                                     </p:column>
                                     <p:column >
-                                        <h:inputText   value="#{mbVNotas.valor}" />
+                                        <h:inputText  value="#{mbVNotas.valor}" >
+                                            <f:validateDoubleRange minimum="0.0" />
+                                        </h:inputText>
                                     </p:column>
 
                                     <p:column >
                                         <h:outputLabel value="Comprobante : "/>
                                     </p:column>
                                     <p:column>
-                                        <p:fileUpload mode="simple"  value="#{mbVNotas.file}" />                                  
+                                        <p:fileUpload mode="simple" value="#{mbVNotas.file}" accept=".jpg,.png" />                                  
                                     </p:column>
 
                                 </p:panelGrid>
-                                <p:commandButton actionListener="#{mbVNotas.guardarPago()}" onerror="PF('carDialog').hide()" oncomplete="PF('carDialog').hide()" value="Aceptar"/>
+                                <p:commandButton action="#{mbVNotas.guardarPago()}" ajax="false" oncomplete="PF('carDialog').hide()" value="Aceptar"/>
                             </p:outputPanel>
                         </p:dialog>
                     </h:form>

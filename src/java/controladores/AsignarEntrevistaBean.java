@@ -69,7 +69,7 @@ public class AsignarEntrevistaBean implements Serializable {
     private String minuto;
     private String fecha2;
     private StreamedContent file;
-    private List<ClsArchivos> archivos;
+    private List<ClsArchivos> archivos=null;
 
     public String getFecha2() {
         return fecha2;
@@ -192,39 +192,65 @@ public class AsignarEntrevistaBean implements Serializable {
 
     public void guardarMatricula() {
         try {
-            Matricula m = new Matricula();
-            m.setEstado('1');
-            Date fecha = new Date();
-            m.setFechaMatricula(fecha);
-            m.setSolicitudInscripcion(SelectedInscripcion);
-            SelectedInscripcion.setEstado('A');
-            SelectedInscripcion.setFechaRevision(fecha);
-            SelectedInscripcion.setObservacion(observacion);            
             MatriculaDao mDao = new MatriculaDao();
-            mDao.insertar(m, SelectedInscripcion);
-            lstSInscripcion.remove(SelectedInscripcion);
-            FacesMessage message = new FacesMessage("Succesful", "Datos guardados");
-            FacesContext.getCurrentInstance().addMessage(null, message);
-            SelectedInscripcion = null;
+            if (SelectedInscripcion != null) {
+                if (!mDao.existeMatricula(SelectedInscripcion.getEstudiante().getCedPasaporte(), String.valueOf(SelectedInscripcion.getPromocion().getId()))) {
+                    int nM = mDao.VerificarNMatricula()+1;
+                    Matricula m = new Matricula();
+                    m.setNMatricula(String.valueOf(nM));
+                    m.setEstado('1');
+                    Date fechaM = new Date();
+                    m.setFechaMatricula(fechaM);
+                    m.setSolicitudInscripcion(SelectedInscripcion);
+                    SelectedInscripcion.setEstado('A');
+                    SelectedInscripcion.setFechaRevision(fechaM);
+                    SelectedInscripcion.setObservacion(observacion);
+                    mDao.insertar(m, SelectedInscripcion);
+                    lstSInscripcion.remove(SelectedInscripcion);
+                    FacesMessage message = new FacesMessage("Succesful", "Datos guardados");
+                    FacesContext.getCurrentInstance().addMessage(null, message);
+
+                } else {
+                    observacion = "Ya está matriculado previamente";
+                    rechazarMatricula();
+                    FacesMessage message = new FacesMessage("Error", "Este Alumno ya esta matriculado en esta maestria/promocion");
+                    FacesContext.getCurrentInstance().addMessage(null, message);
+                }
+            } else {
+                FacesMessage message = new FacesMessage("Error", "Selecciona una solicitud");
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            }
+
         } catch (Exception ex) {
-            FacesMessage message = new FacesMessage("Erorr", "Error al guardarlos datos");
+            FacesMessage message = new FacesMessage("Error", "Error al guardar los datos");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+        SelectedInscripcion = null;
+        observacion = "";
+        archivos=null;
     }
 
     public void rechazarMatricula() {
         try {
-
-            SelectedInscripcion.setEstado('R');
-            Date fecha = new Date();
-            SelectedInscripcion.setFechaRevision(fecha);
-            MatriculaDao mDao = new MatriculaDao();
-            mDao.rechazar(SelectedInscripcion);
-            lstSInscripcion.remove(SelectedInscripcion);
-            SelectedInscripcion = null;
+            if (SelectedInscripcion != null) {
+                SelectedInscripcion.setEstado('R');
+                Date fechaM = new Date();
+                SelectedInscripcion.setFechaRevision(fechaM);
+                MatriculaDao mDao = new MatriculaDao();
+                mDao.rechazar(SelectedInscripcion);
+                lstSInscripcion.remove(SelectedInscripcion);
+            } else {
+                FacesMessage message = new FacesMessage("Error", "Selecciona una solicitud");
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            }            
         } catch (Exception ex) {
-
+            FacesMessage message = new FacesMessage("Erorr", "Error al guardar los datos");
+            FacesContext.getCurrentInstance().addMessage(null, message);
         }
+
+        SelectedInscripcion = null;
+        observacion = "";
+        archivos=null;
     }
 
     public void obtenerRequisitos() {

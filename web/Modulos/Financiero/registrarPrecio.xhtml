@@ -37,15 +37,22 @@
                             <f:validateDoubleRange minimum="0"  />
                         </p:inputText> 
                         <p:message for="precioMatricula"/>
+                        
                         <h:outputLabel for="precioColegiatura" value="Precio de la Colegiatura: " styleClass="labelDerecha" />
                         <p:inputText id="precioColegiatura" required="true" value="#{precioBean.precioColegiatura}">
                             <f:validateDoubleRange minimum="0"  />
                         </p:inputText> 
                         <p:message for="precioColegiatura"/>
-                        <h:inputHidden/>
-                        <p:commandButton id="guardar" update="msgs" type="submit" value="Guardar" action="#{precioBean.guardarPrecio()}" style="display:block;margin:auto;" icon="ui-icon-image">
-                            
-                        </p:commandButton>
+                        
+                        <h:outputLabel for="precioAranceles" value="Precio de Aranceles: " styleClass="labelDerecha" />
+                        <p:inputText id="precioAranceles" required="true" value="#{precioBean.precioAranceles}">
+                            <f:validateDoubleRange minimum="0"  />
+                        </p:inputText> 
+                        <p:message for="precioColegiatura"/>
+                        
+                        <h:inputHidden/>                        
+                        <p:commandButton id="guardar" update="msgs" type="submit" value="Guardar" action="#{precioBean.guardarPrecio()}" style="display:block;margin:auto;" icon="ui-icon-image">                            
+                      </p:commandButton>
                         <h:inputHidden/>
                     </p:panelGrid>
 

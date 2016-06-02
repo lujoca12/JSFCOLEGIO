@@ -51,12 +51,13 @@ public class PagosDao implements InterfacePagos{
         iniciaOperacion();
         //String hql="from Notas nota inner join fetch nota.modulo modul where nota.modulo = "+idModulo+" and "
           //      + "nota.matricula="+idMatricula+" order by modul.descripcion asc";
-        String hql="from Pago p where p.matricula='"+idMatricula+"' and p.estado='A' order by p.fecha asc";
+        String hql="from Pago p where p.matricula='"+idMatricula+"' order by p.fecha asc";
         Query query = sesion.createQuery(hql);
         List<Pago> lstNotas=(List<Pago>) query.list();
         sesion.close();
         return lstNotas;
     }
+    @Override
      public TipoPago getTipoPagoBanco() throws Exception {
         this.sesion = null;
         this.tx = null;

@@ -99,7 +99,7 @@ public class MbVNotas implements Serializable {
     public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
-        
+
     public ClsNotas getSelectedNota() {
         return selectedNota;
     }
@@ -107,7 +107,7 @@ public class MbVNotas implements Serializable {
     public void setSelectedNota(ClsNotas selectedNota) {
         this.selectedNota = selectedNota;
     }
-    
+
     public UploadedFile getFile() {
         return file;
     }
@@ -304,7 +304,7 @@ public class MbVNotas implements Serializable {
                             "",
                             "",
                             null,
-                            true, 0, "", "", null,0.0));
+                            true, 0, "", "", null, 0.0));
                 }
             } else {
                 this.estudiante = "";
@@ -526,7 +526,7 @@ public class MbVNotas implements Serializable {
                                         true,
                                         notas.getId(),
                                         notas.getUsuario(),
-                                        notas.getResponsable(), 
+                                        notas.getResponsable(),
                                         null,
                                         0.0));
                             }
@@ -555,7 +555,7 @@ public class MbVNotas implements Serializable {
                                 "0",
                                 "",
                                 null,
-                                true, 0, "", "", null,0.0));
+                                true, 0, "", "", null, 0.0));
 
                     }
 
@@ -582,11 +582,11 @@ public class MbVNotas implements Serializable {
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void perdidosxAsistencia(List<ClsNotas> lstTblNotases) throws Exception{
+
+    private void perdidosxAsistencia(List<ClsNotas> lstTblNotases) throws Exception {
         DaoTAsistencias daoTasistencia = new DaoTAsistencias();
         List<Asistencia> lstAsist = null;
-        Object [] obj = null;
+        Object[] obj = null;
         BigDecimal bgd = null;
         if (this.clsTblModulosReg != null) {
             lstAsist = daoTasistencia.getPerdidosxAsistencia(this.clsTblModulosReg.getIdModulo());
@@ -596,15 +596,15 @@ public class MbVNotas implements Serializable {
         if (lstAsist.size() > 0) {
             for (int i = 0; i < lstTblNotases.size(); i++) {
                 for (int j = 0; j < lstAsist.size(); j++) {
-                    obj = (Object[])(Object)lstAsist.get(j);
-                    if(obj[0].equals(lstTblNotases.get(i).getIdMatricula())){
+                    obj = (Object[]) (Object) lstAsist.get(j);
+                    if (obj[0].equals(lstTblNotases.get(i).getIdMatricula())) {
                         bgd = (BigDecimal) obj[1];
                         lstTblNotases.get(i).setTotalAsistencia(bgd.doubleValue());
                     }
                 }
             }
         }
-        
+
     }
 
     public void cargarTablaEdicionRegNotas() {
@@ -780,7 +780,7 @@ public class MbVNotas implements Serializable {
             lstTblPagosReg.clear();
             PagosDao pDao = new PagosDao();
             lstPagos = pDao.getTodosPagos(idMatricula);
-            
+
         } catch (Exception ex) {
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -788,44 +788,66 @@ public class MbVNotas implements Serializable {
 
     public void guardarPago() {
         try {
-            PagosDao pDao = new PagosDao();
-            Matricula m = new Matricula();
-            pago = new Pago();
-            m.setId(selectedNota.getIdMatricula() );
-           pago.setValor(valor);
-           pago.setIdComprobante(idComprobante);
-            pago.setEstado('E');
-            Date fecha = new Date();
-            pago.setFecha(fecha);
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date dateobj = new Date();
-            String nombreCarpeta = selectedNota.getNombresEstudiante();
-            File directorio = new File("d:/Postgrado/pagos/" + selectedNota.getDescripMaestria() + "/" + nombreCarpeta + "/");
-            if (!directorio.exists()) {
-                directorio.mkdir();
+            if ((file != null && valor != null) && valor.doubleValue() > 0) {
+                PagosDao pDao = new PagosDao();
+                Matricula m = new Matricula();
+                pago = new Pago();
+                m.setId(selectedNota.getIdMatricula());
+                pago.setValor(valor);
+                pago.setIdComprobante(idComprobante);
+                pago.setEstado('E');
+                Date fecha = new Date();
+                pago.setFecha(fecha);
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date dateobj = new Date();
+                String nombreCarpeta = selectedNota.getNombresEstudiante().trim();
+                String maest = removeCaractEspeciales(selectedNota.getDescripMaestria()).trim();
+                File directorio = new File("d:/Postgrado/pagos/" + maest + "/" + selectedNota.getIdMatricula() + "-" + nombreCarpeta + "/");
+                if (!directorio.exists()) {
+                    directorio.mkdirs();
+                }
+                String filename = selectedNota.getIdMatricula() + (df.format(dateobj).replaceAll(":", "-")).trim();
+                String extension = FilenameUtils.getExtension(file.getFileName());
+                Path ruta = Paths.get(directorio + "/" + filename + "." + extension);
+                InputStream input = file.getInputstream();
+                Files.copy(input, ruta, StandardCopyOption.REPLACE_EXISTING);
+                pago.setMatricula(m);
+                pago.setTipoPago(pDao.getTipoPagoBanco());
+                pago.setRutaComprobante(ruta.toString());
+                pDao.registrar(pago);
+
+                FacesMessage message = new FacesMessage("Succesful", "Datos Guardados correctamente");
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            } else {
+                valor = BigDecimal.valueOf(0.00);
+                FacesMessage message = new FacesMessage("Error", "Ingrese datos");
+                FacesContext.getCurrentInstance().addMessage(null, message);
             }
-            String filename = selectedNota.getIdMatricula() + (df.format(dateobj).replaceAll(":", "-")).trim();
-            String extension = FilenameUtils.getExtension(file.getFileName());
-            Path ruta = Paths.get(directorio + "/" + filename + "." + extension);
-            InputStream input = file.getInputstream();
-            Files.copy(input, ruta, StandardCopyOption.REPLACE_EXISTING);
-            pago.setMatricula(m);
-            pago.setTipoPago(pDao.getTipoPagoBanco());
-            pago.setRutaComprobante(ruta.toString());
-            pDao.registrar(pago);
-            
-            FacesMessage message = new FacesMessage("Succesful", "Datos Guardados correctamente");
-            FacesContext.getCurrentInstance().addMessage(null, message);
+            idComprobante = "";
+            valor = BigDecimal.valueOf(0.00);
+            file = null;
         } catch (IOException ex) {
             Logger.getLogger(MbVNotas.class.getName()).log(Level.SEVERE, null, ex);
             FacesMessage message = new FacesMessage("Error", ex.toString());
+            System.out.println(ex.toString());
             FacesContext.getCurrentInstance().addMessage(null, message);
         } catch (Exception ex) {
             Logger.getLogger(MbVNotas.class.getName()).log(Level.SEVERE, null, ex);
-           //mentira revisar xq file es null !!!
-            FacesMessage message = new FacesMessage("Succesful", "Datos Guardados correctamente!");
-            FacesContext.getCurrentInstance().addMessage(null, message);
+            //mentira revisar xq file es null !!!
+            System.out.println(ex.toString());
         }
     }
 
+    public String removeCaractEspeciales(String input) {
+        // Cadena de caracteres original a sustituir.
+        String original = "áàäéèëíìïóòöúùuñÁÀÄÉÈËÍÌÏÓÒÖÚÙÜÑçÇ";
+        // Cadena de caracteres ASCII que reemplazarán los originales.
+        String ascii = "aaaeeeiiiooouuunAAAEEEIIIOOOUUUNcC";
+        String output = input;
+        for (int i = 0; i < original.length(); i++) {
+            // Reemplazamos los caracteres especiales.
+            output = output.replace(original.charAt(i), ascii.charAt(i));
+        }//for i
+        return output;
+    }//remove1
 }

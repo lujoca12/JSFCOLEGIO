@@ -9,6 +9,7 @@ import Clases.ClsRequisito;
 import Dao.ArchivosDao;
 import Dao.InscripcionDao;
 import Dao.LocalizacionDao;
+import Dao.PagosDao;
 import Dao.PromocionDao;
 import Dao.RequisitosDao;
 import Dao.UniversidadesDao;
@@ -18,6 +19,7 @@ import Pojo.DatosDom;
 import Pojo.DatosLab;
 import Pojo.DatosNac;
 import Pojo.Estudiante;
+import Pojo.Pago;
 import Pojo.Pais;
 import Pojo.Parroquia;
 import Pojo.Promocion;
@@ -131,7 +133,7 @@ public class InscripcionBean implements Serializable {
     private List<Promocion> lstPromocion;
     private String filename = "";
     private String extension = "";
-    private String cedOpas="cedula";
+    private String cedOpas = "cedula";
 
     public String getCedOpas() {
         return cedOpas;
@@ -140,9 +142,6 @@ public class InscripcionBean implements Serializable {
     public void setCedOpas(String cedOpas) {
         this.cedOpas = cedOpas;
     }
-    
-    
-    
 
     public boolean isBtnGuardar() {
         return btnGuardar;
@@ -644,7 +643,7 @@ public class InscripcionBean implements Serializable {
             String nombreCarpeta = (descripcionMaetria + "-" + descripcionPromo + "-" + estudiante.getApellidos() + " " + estudiante.getNombres() + "-" + df.format(dateobj).replaceAll(":", "-")).trim();
             File directorio = new File("d:/Postgrado/inscripciones/requisitos/" + nombreCarpeta + "/");
             if (!directorio.exists()) {
-                directorio.mkdir();
+                directorio.mkdirs();
             }
             int cont = 0;
             ArchivosDao aDao = new ArchivosDao();
@@ -658,7 +657,7 @@ public class InscripcionBean implements Serializable {
                 archivos.setRuta(ruta.toString());
                 archivos.setRequisitosPromo(reqPro.get(cont));
                 archivos.setSolicitudInscripcion(sInscripcion);
-                aDao.insertar(archivos);
+                aDao.insertar(archivos);                
                 cont++;
             }
 
@@ -968,31 +967,31 @@ public class InscripcionBean implements Serializable {
         }
     }
 
-     public void validadorDeCedula() {
-        int total=0;
-        int tamanoCedula =10;
-        int[] coeficientes ={2,1,2,1,2,1,2,1,2};
-        int numeroProvincias=24;
-        int tercerDigito=6;
+    public void validadorDeCedula() {
+        int total = 0;
+        int tamanoCedula = 10;
+        int[] coeficientes = {2, 1, 2, 1, 2, 1, 2, 1, 2};
+        int numeroProvincias = 24;
+        int tercerDigito = 6;
         String cedula = cedOpas;
-        if(cedula.matches("[0-9]*") && cedula.length()==tamanoCedula){
-            int provincia= Integer.parseInt(cedula.substring(0,2));
-            int digitoTres = Integer.parseInt(cedula.charAt(2)+"");
-            if((provincia > 0 && provincia <= numeroProvincias) && digitoTres < tercerDigito){
-                int digitoVerificadorRecibido = Integer.parseInt(cedula.charAt(9)+"");
-                for(int i=0;i<coeficientes.length;i++){
-                    int valor = coeficientes[i]* Integer.parseInt(cedula.charAt(i)+"");
-                    total = valor >= 10 ? total + (valor-9):total + valor;
+        if (cedula.matches("[0-9]*") && cedula.length() == tamanoCedula) {
+            int provincia = Integer.parseInt(cedula.substring(0, 2));
+            int digitoTres = Integer.parseInt(cedula.charAt(2) + "");
+            if ((provincia > 0 && provincia <= numeroProvincias) && digitoTres < tercerDigito) {
+                int digitoVerificadorRecibido = Integer.parseInt(cedula.charAt(9) + "");
+                for (int i = 0; i < coeficientes.length; i++) {
+                    int valor = coeficientes[i] * Integer.parseInt(cedula.charAt(i) + "");
+                    total = valor >= 10 ? total + (valor - 9) : total + valor;
                 }
-                int digitoverificadorObtenido = total >= 10 ? (total %10) != 0 ? 10 - (total %10): (total %10):total;
-                if(digitoverificadorObtenido!=digitoVerificadorRecibido){
+                int digitoverificadorObtenido = total >= 10 ? (total % 10) != 0 ? 10 - (total % 10) : (total % 10) : total;
+                if (digitoverificadorObtenido != digitoVerificadorRecibido) {
                     estudiante.setCedPasaporte("");
                     FacesMessage message = new FacesMessage("Error", "Número de Cédula inválido");
                     FacesContext.getCurrentInstance().addMessage(null, message);
                 }
             }
         }
-        
+
     }
 
 }

@@ -45,6 +45,15 @@ public class PrecioBean implements Serializable {
     private Map<String, Map<String, String>> data = new HashMap<>();
     private BigDecimal precioMatricula;
     private BigDecimal precioColegiatura;
+    private BigDecimal precioAranceles;
+
+    public BigDecimal getPrecioAranceles() {
+        return precioAranceles;
+    }
+
+    public void setPrecioAranceles(BigDecimal precioAranceles) {
+        this.precioAranceles = precioAranceles;
+    }   
 
     public BigDecimal getPrecioMatricula() {
         return precioMatricula;
@@ -190,9 +199,15 @@ public class PrecioBean implements Serializable {
             precio.setTipoPrecio(pagoD.getTipoPrecio("1"));
             precio.setValor(precioMatricula);
             pagoD.insertarPrecio(precio);
+            
             precio.setTipoPrecio(pagoD.getTipoPrecio("2"));
             precio.setValor(precioColegiatura);
             pagoD.insertarPrecio(precio);
+            
+            precio.setTipoPrecio(pagoD.getTipoPrecio("3"));
+            precio.setValor(precioAranceles);
+            pagoD.insertarPrecio(precio);
+            
             FacesMessage message = new FacesMessage("Succesful", "Datos procesados correctamente");
             FacesContext.getCurrentInstance().addMessage("message", message);
         } catch (Exception ex) {

@@ -158,16 +158,12 @@ public class RequisitosBean implements Serializable {
             requisito.setFormato(formato);
             requisito.setTipoArchivo(tipoArhivo);
             requisito.setEstado('1');
-            if (respaldo) {
-                requisito.setRespaldo('1');
-            } else {
-                requisito.setRespaldo('0');
-            }
+            requisito.setRespaldo('1');
 
-           if(true== Drequisitos.insertar(requisito)){
-            mensajesOk("Datos procesados correctamente.");
-            vaciarCajas();
-           }
+            if (true == Drequisitos.insertar(requisito)) {
+                mensajesOk("Datos procesados correctamente.");
+                vaciarCajas();
+            }
         } catch (Exception e) {
             //Logger.getLogger(MbVMaestrias.class.getName()).log(Level.SEVERE, null, e);
             mensajesError("Error al procesar datos");

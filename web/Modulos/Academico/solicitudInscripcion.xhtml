@@ -62,11 +62,11 @@
                             <p:panel header="Información Personal">
                                 <p:messages closable="true" />
                                 <p:selectOneRadio  id="tipoDoc" value="#{inscripcionBean.cedOpas}" >
-                                        <f:selectItem itemLabel="Cédula" itemValue="cedula"  />
-                                        <f:selectItem itemLabel="Pasaporte" itemValue="pasaporte" />                                        
-                                    </p:selectOneRadio>
+                                    <f:selectItem itemLabel="Cédula" itemValue="cedula"  />
+                                    <f:selectItem itemLabel="Pasaporte" itemValue="pasaporte" />                                        
+                                </p:selectOneRadio>
                                 <h:panelGrid columns="4" cellspacing="5px" >
-                                    
+
                                     <h:outputLabel  for="cedPas" value="Cédula o Pasaporte: " />
                                     <p:inputText  required="true" onblur="validarCedula();" id="cedPas" class="form-control " value="#{inscripcionBean.estudiante.cedPasaporte}">                                        
 
@@ -82,23 +82,34 @@
                                     </h:selectOneMenu>
 
                                     <h:outputLabel for="nombres" value="Nombres: " />
-                                    <p:inputText  required="true"  id="nombres" class="form-control " value="#{inscripcionBean.estudiante.nombres}"/>
+                                    <p:inputText  required="true"  id="nombres" class="form-control " value="#{inscripcionBean.estudiante.nombres}">
+                                        <f:validateRegex pattern="[a-zA-Z ]+$+"/>
+                                        <f:validateLength  maximum="50" />
+                                    </p:inputText>
 
                                     <h:outputLabel for="apellidos" value="Apellidos: "  />
-                                    <p:inputText  required="true" id="apellidos"  class="form-control " value="#{inscripcionBean.estudiante.apellidos}"/>
+                                    <p:inputText  required="true" id="apellidos"  class="form-control " value="#{inscripcionBean.estudiante.apellidos}">
+                                        <f:validateRegex pattern="[a-zA-Z ]+$"/>
+                                        <f:validateLength  maximum="50" />
+                                    </p:inputText>
 
                                     <h:outputLabel for="fNac" value="Fecha de Nacimiento: " />
                                     <p:calendar  id="fNac" required="true"  navigator="true" mask="true" value="#{inscripcionBean.estudiante.fechaNac}" pattern="dd/MM/yyyy" mindate="01/01/1940" maxdate="#{validadorFecha.fechaMax}"  />                                  
 
                                     <h:outputLabel for="email" value="Email: " />
-                                    <p:inputText  required="true" id="email"  class="form-control  " value="#{inscripcionBean.estudiante.email}"/>
+                                    <p:inputText  required="true" id="email"  class="form-control  " value="#{inscripcionBean.estudiante.email}">
+                                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" /> 
+                                    </p:inputText>
+                                    
                                     <h:outputLabel for="celular" value="Celular: " />
                                     <p:inputMask id="celular"  required="true"  class="form-control" mask="9999999999" value="#{inscripcionBean.estudiante.celular}"/>
+                                    
                                     <h:outputLabel for="sexo" value="Sexo: " />
                                     <h:selectOneMenu id="sexo" class="form-control" value="#{inscripcionBean.estudiante.sexo}" >
                                         <f:selectItem itemLabel="Masculino" itemValue="M" />
                                         <f:selectItem itemLabel="Femenino" itemValue="F" />
                                     </h:selectOneMenu>
+                                    
                                     <h:outputLabel for="paisO" value="País de Origen: "/>
                                     <h:selectOneMenu id="paisO" class="form-control" value="#{inscripcionBean.idPaisOrigen}">
                                         <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
@@ -164,7 +175,9 @@
                                     </h:selectOneMenu>
 
                                     <h:outputLabel for="direccionDom" value="Dirección: " />
-                                    <p:inputText  required="true" id="direccionDom" class="form-control " value="#{inscripcionBean.datosDom.direccion}"/>
+                                    <p:inputText  required="true" id="direccionDom" class="form-control " value="#{inscripcionBean.datosDom.direccion}">
+                                        <f:validateLength maximum="90"/>
+                                    </p:inputText>
 
                                     <h:outputLabel for="telefono" value="Teléfono: " />
                                     <p:inputMask id="telefono"  required="true" class="form-control" mask="999999999" value="#{inscripcionBean.datosDom.telefono}"/>
@@ -197,19 +210,27 @@
                                     </h:selectOneMenu>
 
                                     <h:outputLabel for="empresa" value="Empresa: " />
-                                    <p:inputText  required="true" id="empresa" class="form-control " value="#{inscripcionBean.datosLab.empresa}"/>
+                                    <p:inputText  required="true" id="empresa" class="form-control " value="#{inscripcionBean.datosLab.empresa}">
+                                          <f:validateLength maximum="90"/>
+                                    </p:inputText>
 
                                     <h:outputLabel for="cargo" value="Cargo: " />
-                                    <p:inputText  required="true" id="cargo" class="form-control " value="#{inscripcionBean.datosLab.cargo}"/>
+                                    <p:inputText  required="true" id="cargo" class="form-control " value="#{inscripcionBean.datosLab.cargo}">
+                                          <f:validateLength maximum="90"/>
+                                    </p:inputText>
 
                                     <h:outputLabel for="telefonoTra" value="Teléfono: " />
                                     <p:inputMask id="telefonoTra"  required="true" class="form-control" mask="999999999" value="#{inscripcionBean.datosLab.telefono}"/>
 
                                     <h:outputLabel for="direccionTra" value="Dirección: " />
-                                    <p:inputText  required="true" id="direccionTra" class="form-control " value="#{inscripcionBean.datosLab.direccion}"/>
+                                    <p:inputText  required="true" id="direccionTra" class="form-control " value="#{inscripcionBean.datosLab.direccion}">
+                                          <f:validateLength maximum="90"/>
+                                    </p:inputText>
 
                                     <h:outputLabel for="emailTra" value="Email: " />
-                                    <p:inputText  required="true" id="emailTra" class="form-control  " value="#{inscripcionBean.datosLab.email}" />
+                                    <p:inputText  required="true" id="emailTra" class="form-control  " value="#{inscripcionBean.datosLab.email}" >
+                                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" /> 
+                                    </p:inputText>
 
                                 </h:panelGrid>
                             </p:panel>
@@ -232,7 +253,9 @@
                                         <h:outputLabel for="universidadNueva" rendered="#{inscripcionBean.idUniversidad eq 'Nueva'}" value="Nombre Universidad: " />
                                     </h:panelGroup>
                                     <h:panelGroup id="gUT">
-                                        <p:inputText  required="true" rendered="#{inscripcionBean.idUniversidad eq 'Nueva'}" value="#{inscripcionBean.universidadNueva}" id="universidadNueva" class="form-control "/>
+                                        <p:inputText  required="true" rendered="#{inscripcionBean.idUniversidad eq 'Nueva'}" value="#{inscripcionBean.universidadNueva}" id="universidadNueva" class="form-control ">
+                                            <f:validateLength maximum="90"/>
+                                    </p:inputText>
                                     </h:panelGroup>
                                     <h:panelGroup id="gPU">
                                         <h:outputLabel for="paisU" rendered="#{inscripcionBean.idUniversidad eq 'Nueva'}" value="País de la Universidad: "/>
@@ -244,7 +267,9 @@
                                         </h:selectOneMenu>
                                     </h:panelGroup>
                                     <h:outputLabel for="nregistro" value="Número de registro del Senecyt: " />
-                                    <p:inputText  required="true" id="nregistro" class="form-control " value="#{inscripcionBean.numeroSenecyt}"/>
+                                    <p:inputText  required="true" id="nregistro" class="form-control " value="#{inscripcionBean.numeroSenecyt}">
+                                        <f:validateLength maximum="30"/>
+                                    </p:inputText>
 
 
                                 </h:panelGrid>
@@ -281,12 +306,12 @@
 
                 <h:outputScript name="jquery.validate.min.js" library="js"/>
                 <h:outputScript name="messages_es.min.js" library="js"/>     
-                                <h:outputScript name="validadorCedula.js" library="js"/>     
+                <h:outputScript name="validadorCedula.js" library="js"/>     
                 <script type="text/javascript" >
-                  
 
-                        
-                    
+
+
+
                 </script>
             </ui:define>
         </ui:composition>

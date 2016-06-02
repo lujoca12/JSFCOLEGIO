@@ -60,7 +60,7 @@
 
                         <p:column headerText="Observación" style="text-align: center; width: 55%;">
                             <h:selectOneMenu disabled="#{mbVAsistencia.habilitar eq 1 ? true:false}" style="width:100%"
-                                id="cboObservacion" class="form-control" value="#{notas.observacion}">
+                                id="cboObservacion" class="form-control" value="#{notas.observacion eq 'N' ? null:'Retirado(a)'}">
                                 <f:selectItem itemLabel="Ninguna" itemValue="N" />
                                 <f:selectItem itemLabel="Retirado(a)" itemValue="R" />
                             </h:selectOneMenu>

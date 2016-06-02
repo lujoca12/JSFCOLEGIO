@@ -35,8 +35,8 @@ public class Proyecto  implements java.io.Serializable {
     public Proyecto(int id) {
         this.id = id;
     }
-   
-    public Proyecto(int id, Titulacion titulacion, String titulo, String autor, Date fechaSustentacion, String ruta, String resumen, Date fechaSubida, String maestria, Usuario usuario, String tutor, Boolean estado) {
+        
+    public Proyecto(int id, Titulacion titulacion, String titulo, String autor, Date fechaSustentacion, String ruta, String resumen, Date fechaSubida, String maestria, Usuario usuario, String tutor, Boolean estado,Set palabrasClaves, Set sustentacions) {
         this.id = id;
         this.titulacion = titulacion;
         this.titulo = titulo;
@@ -49,8 +49,11 @@ public class Proyecto  implements java.io.Serializable {
         this.usuario = usuario;
         this.tutor = tutor;
         this.estado = estado;
+        this.sustentacions=sustentacions;
+        this.palabrasClaves=palabrasClaves;
     }
-
+   
+   
     
     
     public Usuario getUsuario() {

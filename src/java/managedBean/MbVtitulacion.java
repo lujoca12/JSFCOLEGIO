@@ -180,6 +180,8 @@ public class MbVtitulacion implements Serializable{
     public void onEstudianteChange() throws Exception{
         DaoTMatricula daomatricula = new DaoTMatricula();
         List<Matricula> lstmatric=null;
+        
+        
         if(clsestudiante != null && clsestudiante.equals("")){
             estado=true;
             lstmatricula = new ArrayList<>();
@@ -200,7 +202,7 @@ public class MbVtitulacion implements Serializable{
         try{
         lstestudiante = new ArrayList<>();
         lstestudiante.clear();
-        this.lstestudiante.add(new ClsEstudiante(-1, "(Escoja un Estudiante)","(Escoja un Estudiante)"));
+        this.lstestudiante.add(new ClsEstudiante(-1, "(Escoja un Estudiante)","(Escoja un Estudiante)",-1));
         DaoTEstudiante daoestudiante = new DaoTEstudiante();
         List<Estudiante> lstestud= null;
         
@@ -217,7 +219,8 @@ public class MbVtitulacion implements Serializable{
                     lstestudiante.add(new ClsEstudiante(
                             es.getId(),
                             es.getNombres(), 
-                            es.getNombres()+" "+es.getApellidos()
+                            es.getNombres()+" "+es.getApellidos(),
+                            -1
                     ));
                 }                
             }

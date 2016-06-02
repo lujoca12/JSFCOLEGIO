@@ -18,12 +18,14 @@ public class ClsEstudiante {
      private String apellidos;
      private String email,celular,pais;
      private Date fechanaci;
+     private int idmatricula;
      private boolean sexo, estadocivil;
 
-    public ClsEstudiante(int id, String nombres, String apellidos) {
+    public ClsEstudiante(int id, String nombres, String apellidos, int idmatricula) {
         this.id = id;
         this.nombres = nombres;
         this.apellidos = apellidos;
+        this.idmatricula = idmatricula;
     }
      
      

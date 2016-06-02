@@ -99,6 +99,7 @@ public class DaoTEstudiante implements InterfaceEstudiante{
          iniciaOperacion();
          String hql="from Estudiante es\n" +
                  "inner join fetch es.solicitudInscripcions si\n" +
+                 "inner join fetch si.matriculas matri\n" +
                  "inner join fetch si.promocion pro\n" +
                  "inner join fetch pro.maestria mae\n" +
                  "where mae.id ='"+idmaestria+"'";

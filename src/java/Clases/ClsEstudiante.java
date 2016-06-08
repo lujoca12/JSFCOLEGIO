@@ -47,8 +47,13 @@ public class ClsEstudiante {
     public ClsEstudiante() {
     }
 
-     
-     
+    public int getIdmatricula() {
+        return idmatricula;
+    }
+
+    public void setIdmatricula(int idmatricula) {
+        this.idmatricula = idmatricula;
+    }
      
     public int getId() {
         return id;

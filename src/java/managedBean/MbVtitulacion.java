@@ -44,6 +44,9 @@ public class MbVtitulacion implements Serializable{
     private String idmaestria;
      private boolean msg = false;
      
+     private ClsTitulacion clstitulacion1;     
+     private List<ClsTitulacion> lsttitulacion1; 
+     
      private ClsTitulacion clstitulacion;     
      private List<ClsTitulacion> lsttitulacion;  
      
@@ -178,24 +181,34 @@ public class MbVtitulacion implements Serializable{
     }
     
     public void onEstudianteChange() throws Exception{
-        DaoTMatricula daomatricula = new DaoTMatricula();
-        List<Matricula> lstmatric=null;
+       try{
+        lstestudiante = new ArrayList<>();
+        lstestudiante.clear();
+        this.lstestudiante.add(new ClsEstudiante(-1, "(Escoja un Estudiant)","(Escoja un Estudiant)",-1));
+        DaoTEstudiante daoestudiante = new DaoTEstudiante();
+        List<Estudiante> lstestud= null;
         
-        
-        if(clsestudiante != null && clsestudiante.equals("")){
-            estado=true;
-            lstmatricula = new ArrayList<>();
-            lstmatricula.clear();            
-            lstmatric= daomatricula.getMatriculaEstudiante(clsestudiante.getId());            
+        if(clsmaestria != null && !clsmaestria.equals(""))
+            lstestud = daoestudiante.getEstudiantesMaestriaTitulacion(clsmaestria.getId());
+        else{
+            lstestudiante.clear();
+            estado=false;
         }
-        else{ lstmatricula.clear(); estado=false;        }
-        if(lstmatric != null){
-            if(lstmatric.size()>0){
-                for(Matricula ma : lstmatric){
-                    lstmatricula.add(new ClsMatricula(ma.getId(), ma.getEstado()));
-                }
+        
+        if(lstestud != null){
+            if(lstestud.size()>0){
+                for(Estudiante es : lstestud){
+                    lstestudiante.add(new ClsEstudiante(
+                            es.getId(),
+                            es.getNombres(), 
+                            es.getNombres()+" "+es.getApellidos(),
+                            -1
+                    ));
+                }                
             }
         }
+       }catch (Exception e){}
+        
     }
     
     public void onMaestriaChange() throws Exception{
@@ -224,7 +237,16 @@ public class MbVtitulacion implements Serializable{
                     ));
                 }                
             }
+         //   ObteneridMatriculaEstudiante();
+         //
+//         lstmatricula = new ArrayList<>();
+//         lstmaestria.clear();
+//         DaoTMatricula daomatricula = new DaoTMatricula();
+//         
+         //
+         
         }
+        
         }catch (Exception e){}
         
     }
@@ -263,11 +285,12 @@ public class MbVtitulacion implements Serializable{
         }
      }
 
-     public void ObteneridMatriculaEstudiante() throws Exception{
-         try{
-             DaoTMatricula daomatricula = new DaoTMatricula();
+     public List<ClsMatricula> ObteneridMatriculaEstudiante() {
          
             this.lstmatricula = new ArrayList<ClsMatricula>();
+            try{
+             DaoTMatricula daomatricula = new DaoTMatricula();
+         
             int cedul = this.clsestudiante.getId();
             String cedula = Integer.toString(this.clsestudiante.getId());
             List<Matricula> matr = daomatricula.getMatriculaEstudiante(cedul);
@@ -281,25 +304,31 @@ public class MbVtitulacion implements Serializable{
                     ma.getNMatricula(),
                     ma.getFechaGraduacion()));
             }
+//            clsmatricula = (ClsMatricula) lstmatricula;
             boolean a =false;
          }catch(Exception e){
              
          }
+         return lstmatricula;
      }
      
-     public void registrarTitulacion(){
+     public void registrarTitulacion() throws Exception {
          DaoTitulacion daotitulacion = new DaoTitulacion();
          DaoTMatricula daomatricula = new DaoTMatricula();
          boolean band = false;
-         //ObteneridMatriculaEstudiante();
+         ObteneridMatriculaEstudiante();
+        // onEstudianteChange();
 
         //Variable para saber si esta registrada
+//        clsmatricula = (ClsMatricula) daomatricula.getMatriculaEstudiante(clsestudiante.getId());
+        
         boolean repetida = false;
             ttipotitulacion.setId(this.clstipotitulacion.getId());
             ttitulacion.setTipoTitulacion(ttipotitulacion);
             ttitulacion.setFechaFin(ttitulacion.getFechaFin());
             ttitulacion.setFechaInicio(ttitulacion.getFechaInicio());
-            tmatricula.setId(this.clsmatricula.getId());
+            
+            tmatricula.setId(lstmatricula.get(0).getId());
             ttitulacion.setMatricula(tmatricula);
             ttitulacion.setEstado('E');
         try{
@@ -316,8 +345,10 @@ public class MbVtitulacion implements Serializable{
             vaciarCajas();
         }
         if(repetida){
-            mensajesError("Registro repetido");            
+            vaciarCajas();
+            mensajesError("Registro repetido: Estudiante");            
         }else{
+            CargarTitulacionNO();
             vaciarCajas();            
             if(msg)
                 mensajesOk("Datos procesados bien");            
@@ -362,28 +393,26 @@ public class MbVtitulacion implements Serializable{
          }
      }
      public void CargarTitulacionNO(){
-         lsttitulacion = new ArrayList<>();
+         lsttitulacion1 = new ArrayList<>();
          try{
-             lsttitulacion.clear();
+             lsttitulacion1.clear();
              DaoTitulacion daotitula = new DaoTitulacion();             
             List<Titulacion> lsttitulac = daotitula.getTitulacionNO();
             
             if(lsttitulac != null){
                 if(lsttitulac.size() > 0){
                     for(Titulacion ti : lsttitulac){
-                        
-            //List<Maestria> lstma = daotitula.obtenermaestria(ti.getMatricula().getId());
-                //String mammm="";
-           // for (Maestria maaa : lstma){
-           //     mammm = maaa.getDescripcion();
-           // }
-                //    String maestria =ti.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion();
-                        lsttitulacion.add(new ClsTitulacion(ti.getId(),
-                                ti.getNota().doubleValue(), 
+                        Double nota;
+                      //  nota = ti.getNota().doubleValue();
+                      //String valor=ti.getNota().toString();
+                        nota= 0.00;
+                        lsttitulacion1.add(new ClsTitulacion(ti.getId(),
+                                nota, 
                                 ti.getFechaInicio(), 
                                 ti.getFechaFin(),
-                                ti.getTipoTitulacion().getId(),
+                                1,
                                 ti.getMatricula().getId(),
+                                //ti.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion()
                                 "maestria",
                                 "estudiante"));
                     }

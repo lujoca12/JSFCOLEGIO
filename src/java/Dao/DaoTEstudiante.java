@@ -108,5 +108,23 @@ public class DaoTEstudiante implements InterfaceEstudiante{
          sesion.close();
          return lstestudiante;
        }
+
+    @Override
+    public List<Estudiante> getEstudiantesMaestriaTitulacion(int idmaestria) throws Exception {
+       this.sesion = null;
+         this.tx = null;
+         iniciaOperacion();
+         String hql="from Estudiante es\n" +
+                 "inner join fetch es.solicitudInscripcions si\n" +
+                 "inner join fetch si.matriculas matri\n" +
+                 "inner join fetch si.promocion pro\n" +
+                 "inner join fetch pro.maestria mae\n" +
+                 "inner join fetch matri.titulacions titu\n" +
+                 "where mae.id ='"+idmaestria+"' and titu.estado = 'E'";
+         Query query = sesion.createQuery(hql);
+         List<Estudiante> lstestudiante=(List<Estudiante>) query.list();
+         sesion.close();
+         return lstestudiante; 
+    }
     
 }

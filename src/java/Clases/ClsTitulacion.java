@@ -24,9 +24,13 @@ public class ClsTitulacion {
     private String maestria;
     private String estudiante;
     private String tipotitulacion;
-    private boolean estado;
+    private Character estado;
 
-    public ClsTitulacion(int id, Double nota, Date fechaInicio, Date fechaFin, int idmatricula, boolean estado) {
+    public ClsTitulacion(int id) {
+        this.id = id;
+    }
+    
+    public ClsTitulacion(int id, Double nota, Date fechaInicio, Date fechaFin, int idmatricula, Character estado) {
         this.id = id;
         this.nota = nota;
         this.fechaInicio = fechaInicio;
@@ -46,7 +50,7 @@ public class ClsTitulacion {
         this.estudiante = estudiante;
     }
 
-    public ClsTitulacion(int id, Double nota, Date fechaInicio, Date fechaFin, int idtipotitulacion, int idmaestria, int idmatricula, int idestudiante, String maestria, String estudiante, String tipotitulacion, boolean estado) {
+    public ClsTitulacion(int id, Double nota, Date fechaInicio, Date fechaFin, int idtipotitulacion, int idmaestria, int idmatricula, int idestudiante, String maestria, String estudiante, String tipotitulacion, Character estado) {
         this.id = id;
         this.nota = nota;
         this.fechaInicio = fechaInicio;
@@ -132,10 +136,10 @@ public class ClsTitulacion {
     public void setEstudiante(String estudiante) {
         this.estudiante = estudiante;
     }
-    public boolean isEstado() {
+    public Character isEstado() {
         return estado;
     }
-    public void setEstado(boolean estado) {
+    public void setEstado(Character estado) {
         this.estado = estado;
     }
     

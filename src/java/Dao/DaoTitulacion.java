@@ -119,13 +119,65 @@ public class DaoTitulacion implements InterfaceTitulacion{
         this.tx = null;
         iniciaOperacion();
         // estado
-        //A= guardo; E=espera
+        //A= Aprobado;R:Reprobado; E=espera
         String hql="from Titulacion t\n" +
-                "where t.estado ='E'";
+                "where t.estado = 'E'";
         Query query = sesion.createQuery(hql);
 
         List<Titulacion> lstProyecto=(List<Titulacion>) query.list();
         sesion.close();
         return lstProyecto;
     }
+
+    @Override
+    public List<Titulacion> getTitulacionEstudianteMaestria(int estudiante, int maestria) throws Exception {
+    this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String hql= "from Titulacion t\n" +
+                "inner join fetch t.matricula m\n" +
+                "inner join fetch m.solicitudInscripcion si\n" +
+                "inner join fetch si.estudiante e\n" +
+                "inner join fetch si.promocion p\n" +
+                "inner join fetch p.maestria ma\n" +
+                "where t.estado = 'E' and e.id = '"+estudiante+"' and ma.id = '"+maestria+"'";
+        Query query = sesion.createQuery(hql);
+         List<Titulacion> lstPermiso=(List<Titulacion>) query.list();
+        sesion.close();
+        return lstPermiso;
+    }
+
+    @Override
+    public boolean update(Titulacion ttitulacion) throws Exception {
+         boolean band = false;
+        try {
+            iniciaOperacion();
+            sesion.update(ttitulacion);
+
+            tx.commit();
+            sesion.close();
+            band = true;
+        } catch (Exception e) {
+            tx.rollback();
+            band = false;
+        }
+        
+        return band;
+    }
+
+    @Override
+    public List<TipoTitulacion> gettipoTitulacionid(int titulacion) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String hql= "from TipoTitulacion t\n" +
+                "inner join fetch t.titulacions ti\n" +
+                "where ti.id='"+titulacion+"'";
+        Query query = sesion.createQuery(hql);
+         List<TipoTitulacion> lstPermiso=(List<TipoTitulacion>) query.list();
+        sesion.close();
+        return lstPermiso;
+    }
+
+
 }

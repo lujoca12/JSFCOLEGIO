@@ -53,8 +53,7 @@
                             <p:outputLabel for="cbomatricula" value="Estudiante:" styleClass="labelDerecha"  />
                             <p:selectOneMenu id="cbomatricula" value="#{mbVtitulacion.clsestudiante}" 
                                              converter="themeConverterEstudiante" required="true"
-                                             effect="fade" var="testudiante" filter="true" filterMatchMode="contains">                                
-                                <p:ajax listener="#{mbVtitulacion.onEstudianteChange()}" update="cbom"/>
+                                             effect="fade" var="testudiante" filter="true" filterMatchMode="contains">
                                  <f:selectItem itemLabel="(Escoja un Estudiante)"/>
                                  <f:selectItems value="#{mbVtitulacion.lstestudiante}" var="estudiante" 
                                                itemLabel="#{estudiante.apellidos}" itemValue="#{estudiante}" />
@@ -63,19 +62,6 @@
                                 </p:column>
                                 <p:column>
                                     <h:outputText value="#{testudiante.apellidos}" />
-                                </p:column>
-                            </p:selectOneMenu>
-                            <p:outputLabel for="cbom" value="Matricula() :" styleClass="labelDerecha"  />                            
-                            <p:selectOneMenu id="cbom" value="#{mbVtitulacion.clsmatricula}" 
-                                             effect="fade" var="tmatri" filter="true" filterMatchMode="contains">
-                                 <f:selectItem itemLabel="(Escoja)"/>
-                                 <f:selectItems value="#{mbVtitulacion.lstmatricula}" var="matri" 
-                                                itemLabel="#{matri.id}" itemValue="#{matri}" />
-                                <p:column style="width:10%">
-                                    <h:outputText styleClass="ui-theme ui-theme-#{tmatri.estado}" />
-                                </p:column>
-                                <p:column>
-                                    <h:outputText value="#{tmatri.estado}" />
                                 </p:column>
                             </p:selectOneMenu>
 
@@ -99,35 +85,17 @@
                     </p:panel>
                 </p:tab>
                 <br></br>
-                <p:panel id="panelTabla" style="height: 30%;">
-                    <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->   
-                    <p:dataTable class="tblDatos" id="tblMaestria" var="lstTbl" value="#{mbVtitulacion.lsttitulacion}"
-                                 editable="true" scrollable="true" scrollHeight="150">
-                        <p:column headerText="Maestria" style="width: 20%;">
+                <div>resultados</div>
+                <p:panel id="tabla" style="height: 40%">
+                    <p:dataTable class="tblDatos" id="tbltesis" var="lstTbl" value="#{mbVtitulacion.lsttitulacion}"
+                                 editable="true" scrollable="true"
+                                 rows="10" paginator="true"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,20">
+                        <p:column headerText="Maestria" style="width: 10%" >
                             <h:outputText value="#{lstTbl.maestria}" />
                         </p:column>
-                        <p:column headerText="Estudiante" style="width: 20%;">
-                            <h:outputText value="#{lstTbl.estudiante}" />
-                        </p:column>
-                        <p:column headerText="F. inicio" style="width: 15%;">
-                            <h:outputText value="#{lstTbl.fechaInicio}" />
-                        </p:column>
-                        <p:column headerText="F. fin" style="width: 15%;">
-                            <h:outputText value="#{lstTbl.fechaFin}" />
-                        </p:column>
-                        <p:column headerText="nota" style="width: 15%;">
-                            <h:outputText value="#{lstTbl.nota}" />
-                        </p:column>
-
-
-                        <p:column style="width:7%;">
-                            <p:rowEditor />   
-                        </p:column>
                     </p:dataTable>
-                    <p:confirmDialog global="true" styleClass="change-position">
-                        <p:commandButton value="Confirmar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
-                        <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
-                    </p:confirmDialog>
                 </p:panel>
                 <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
                 <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">

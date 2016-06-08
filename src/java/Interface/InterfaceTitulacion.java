@@ -15,9 +15,12 @@ import java.util.List;
  * @author SERVER
  */
 public interface InterfaceTitulacion {
+     public boolean update(Titulacion ttitulacion) throws Exception;
      public List<TipoTitulacion> getTodastipoTitulacion() throws Exception;
+     public List<TipoTitulacion> gettipoTitulacionid(int titulacion) throws Exception;
      public boolean registrarTitulacion(Titulacion t) throws Exception;
      public List<Titulacion> getTitulacionOK() throws Exception;
      public List<Titulacion> getTitulacionNO() throws Exception;
+     public List<Titulacion> getTitulacionEstudianteMaestria(int estudiante,int maestria) throws Exception;
      public List<Maestria> obtenermaestria(int matricula) throws Exception;
 }

@@ -26,7 +26,7 @@ public class Proyecto  implements java.io.Serializable {
      
      private Usuario usuario;
      private String tutor;
-     private Boolean estado;
+     private Character estado;
 
     public Proyecto() {
     }
@@ -36,7 +36,7 @@ public class Proyecto  implements java.io.Serializable {
         this.id = id;
     }
         
-    public Proyecto(int id, Titulacion titulacion, String titulo, String autor, Date fechaSustentacion, String ruta, String resumen, Date fechaSubida, String maestria, Usuario usuario, String tutor, Boolean estado,Set palabrasClaves, Set sustentacions) {
+    public Proyecto(int id, Titulacion titulacion, String titulo, String autor, Date fechaSustentacion, String ruta, String resumen, Date fechaSubida, String maestria, Usuario usuario, String tutor, Character estado,Set palabrasClaves, Set sustentacions) {
         this.id = id;
         this.titulacion = titulacion;
         this.titulo = titulo;
@@ -72,11 +72,11 @@ public class Proyecto  implements java.io.Serializable {
         this.tutor = tutor;
     }
 
-    public Boolean getEstado() {
+    public Character getEstado() {
         return estado;
     }
 
-    public void setEstado(Boolean estado) {
+    public void setEstado(Character estado) {
         this.estado = estado;
     }
     public int getId() {

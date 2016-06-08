@@ -9,12 +9,24 @@
         
         
     <body>
-
+        
         <ui:composition template="./../vistas/PlantillaAdministracion.xhtml">
 
-            
+            <ui:define name="contenedorIzquierdo">
+                <h:form id="formMenuIzquierdo" class="page-container">
+                    <p:remoteCommand name="formMenuIzquierdo" autoRun="true" action="#{mbVMenu.load()}" />
+                    <p:growl autoUpdate="true"/>
+
+                    <p:panelMenu model="#{mbVMenu.menuModel}" />
+                    <!--<p:submenu styleClass="menu-sistema" label="Asistencias" class="sidebar-menu">
+                         <p:menuitem value="Registrar" icon="ui-icon-disk" />
+                         <p:menuitem value="Actualizar" icon="ui-icon-arrowrefresh-1-w" />
+                     </p:submenu>-->
+                </h:form>
+            </ui:define>
             
             <ui:define name="contenedorCentral">
+                
                 <div class="col-md-12">
                             <!--earning graph start-->
                             <section class="panel">

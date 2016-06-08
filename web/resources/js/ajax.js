@@ -457,3 +457,14 @@ function restablecerMm(e){
     }
     return first;
 }
+
+
+//function calendario(){
+//    //alert('ajax');
+//    $(".datepicker").datepicker();
+//}
+
+
+    
+            
+

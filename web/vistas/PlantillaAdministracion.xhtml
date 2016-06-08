@@ -46,7 +46,8 @@
             <link href="#{resource['img/logoPostgrado.ico']}" rel="shortcut icon" type="image/x-icon"/>
             <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         </f:facet>
-
+        
+        
 
 
     </h:head>
@@ -271,16 +272,10 @@
                         </div>
                     </div>
                     <hr></hr>
-                    <h:form id="formMenuIzquierdo" class="page-container">
-                        <p:remoteCommand name="formMenuIzquierdo" autoRun="true" action="#{mbVMenu.load()}" />
-                        <p:growl autoUpdate="true"/>
-                        
-                        <p:panelMenu  model="#{mbVMenu.menuModel}" />
-                        <!--<p:submenu styleClass="menu-sistema" label="Asistencias" class="sidebar-menu">
-                             <p:menuitem value="Registrar" icon="ui-icon-disk" />
-                             <p:menuitem value="Actualizar" icon="ui-icon-arrowrefresh-1-w" />
-                         </p:submenu>-->
-                    </h:form>
+                    <ui:insert name="contenedorIzquierdo">
+
+                    </ui:insert>
+                    
                     <!--Fin del Menu dinamico-->
                 </section>
 

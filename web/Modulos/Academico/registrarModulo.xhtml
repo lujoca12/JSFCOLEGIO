@@ -7,7 +7,7 @@
     <h:head>
         <title>Facelet Title</title>
         <h:outputScript library="js" name="calendar_es.js" />
-        <h:outputScript name="jquery/jquery.js" library="primefaces" />
+        
     </h:head>
     <h:body>
         <div class="ui-fluid" >
@@ -21,6 +21,7 @@
                         <p:focus context="cboMaestria"/>
 
                         <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
+                            
 
                             <p:outputLabel for="cboMaestria" value="Maestria:" styleClass="labelDerecha"  />
                             <p:selectOneMenu id="cboMaestria" value="#{mbVModulos.themeMaestria}" converter="themeConverterMaestria" required="true"
@@ -289,6 +290,8 @@
 
             </h:form>
         </div>
+       
+        
     </h:body>
     
 </html>

@@ -42,20 +42,21 @@ public class MbVMenu implements Serializable {
      */
     private Permiso tPermiso;
     private List<Permiso> lstMenus;
-    private List<DetallePermiso> lstDetallePermiso;
-    private List<String> list;
     
-    private MenuModel menuModel;
+    private MenuModel menuModel = null;
     
     @PostConstruct
     public void load() {
         this.listarMenusNavxUsuarios();
+        menuModel = null;
         menuModel = new DefaultMenuModel();
         this.establecerMenuxUsuarios();
     }
     
     public void listarMenusNavxUsuarios(){
         try {
+            if(lstMenus != null)
+                lstMenus.clear();
             
             DaoTMenu daoTMenu = new DaoTMenu();
             Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");            
@@ -80,6 +81,7 @@ public class MbVMenu implements Serializable {
     public void establecerMenuxUsuarios(){
         
         try {
+            
             for (Permiso m : lstMenus) {
                 
                 if(m.getPadre() == 0){
@@ -112,9 +114,12 @@ public class MbVMenu implements Serializable {
         return menuModel;
     }
 
-    public void setMenuModel(MenuModel menuModel) {
-        this.menuModel = menuModel;
+    
+
+    public List<Permiso> getLstMenus() {
+        return lstMenus;
     }
+    
     public void addMessage(String summary, String detail) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
         FacesContext.getCurrentInstance().addMessage(null, message);

@@ -63,6 +63,7 @@ public class MbVModulos implements Serializable {
     
     private Date fechaInicio;
     private Date fechaFin;
+    boolean repetida;
 
     public MbVModulos() {
         cargarTablaModulos();
@@ -281,9 +282,12 @@ public class MbVModulos implements Serializable {
         if(themeMaestria != null){
             fechaInicio = themeMaestria.getFechaInicioMaestria();
             fechaFin = themeMaestria.getFechaFinMaestria();
+        }else{
+            fechaInicio = null;
+            fechaFin = null;
         }
     }
-
+    
     public List<SelectItem> getLstMaestria() {
         this.lstMaestria = new ArrayList<SelectItem>();
         try {
@@ -302,71 +306,140 @@ public class MbVModulos implements Serializable {
     }
 
     public void registrar() {
-        boolean repetida = false;
+        repetida = false;
         try {
 
             DaoTModulo daoTmodulo = new DaoTModulo();
+            if(this.themeMaestria == null){
+                mensajesError("Por favor escoja una maestria");
+                return;
+            } else {
+                DaoTPromocion daoTpromocion = new DaoTPromocion();
+                Promocion promocion = new Promocion();
+                promocion.setId(this.themeMaestria.getIdPromocion());
+                BigDecimal bigdec;
+                bigdec = new BigDecimal(Double.parseDouble(creditos));
+                tModulo.setCreditos(bigdec);
+                bigdec = new BigDecimal(Double.parseDouble(totalHorasModulo));
+                tModulo.setTotalHorasModulo(bigdec);
+                tModulo.setPromocion(promocion);
 
-            DaoTPromocion daoTpromocion = new DaoTPromocion();
-            Promocion promocion = new Promocion();
-            promocion.setId(this.themeMaestria.getIdPromocion());
-            BigDecimal bigdec;
-            bigdec = new BigDecimal(Double.parseDouble(creditos));
-            tModulo.setCreditos(bigdec);
-            bigdec = new BigDecimal(Double.parseDouble(totalHorasModulo));
-            tModulo.setTotalHorasModulo(bigdec);
-            tModulo.setPromocion(promocion);
+                Usuario usuario = new Usuario();
+                usuario.setId(theme.getId());
+                tModulo.setUsuario(usuario);
 
-            Usuario usuario = new Usuario();
-            usuario.setId(theme.getId());
-            tModulo.setUsuario(usuario);
-
-            repetida = daoTmodulo.existe(tModulo);
-            if (!repetida) {
-                List<Modulo> modulo = daoTmodulo.validacionModulos(tModulo);
-                if(modulo.size() <= 0){
-                    if (fechaInicio.before(themeMaestria.getFechaInicioMaestria()) || fechaFin.after(themeMaestria.getFechaFinMaestria())) {
-                        mensajesError("error fecha no puede ser menor que "+themeMaestria.getFechaInicioMaestria()+" ni mayor que "+themeMaestria.getFechaFinMaestria()+"");
-                        return;
-                    }else{
-                        msg = daoTmodulo.registrar(tModulo);
+                repetida = daoTmodulo.existe(tModulo);
+                if (!repetida) {
+                    List<Modulo> modulo = daoTmodulo.validacionModulos(tModulo);
+                    if (modulo.size() <= 0) {
+                        validacionFechas(daoTmodulo);
+                    } else {
+                       validacionFechas(daoTmodulo);
                     }
-                    
-                }else{
-                    if(tModulo.getFechaInicio().before(modulo.get(0).getFechaFin())){
-                        //msg = daoTmodulo.registrar(tModulo);
-                        mensajesError("error fecha de Inicio del Módulo no puede ser menor a "+modulo.get(0).getFechaFin()+"");
-                        return;
-                    }else{
-                        if (fechaInicio.before(themeMaestria.getFechaInicioMaestria()) || fechaFin.after(themeMaestria.getFechaFinMaestria())) {
-                            mensajesError("error fecha no puede ser menor que " + themeMaestria.getFechaInicioMaestria() + " ni mayor que " + themeMaestria.getFechaFinMaestria() + "");
-                            return;
-                        } else {
-                            msg = daoTmodulo.registrar(tModulo);
-                        }
-                    }
-                        
-                    
+
                 }
-                
-            }
 
-            cargarTablaModulos();
+               
+            }
+            
 
         } catch (Exception ex) {
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (repetida) {
-            mensajesError("Registro repetido");
-        } else {
-            if (msg) {
-                mensajesOk("Datos procesados correctamente");
-            } else {
-                mensajesError("Error al procesar datos");
-            }
-            vaciarCajas();
-        }
+        
 
+    }
+    
+    private void validacionFechas(DaoTModulo daoTmodulo) {
+        if (fechaInicio.after(tModulo.getFechaInicio()) || fechaFin.before(tModulo.getFechaInicio())){
+            mensajesError("La fecha de encuadre tiene que estar en este rango " + themeMaestria.getFechaInicioMaestria() + " y " + themeMaestria.getFechaFinMaestria() + "");
+            tModulo.setFechaInicio(null);
+            return;
+        }else if(fechaInicio.after(tModulo.getFechaFin()) || fechaFin.before(tModulo.getFechaFin())){
+            mensajesError("La 1ra asesoria tiene que estar en este rango " + themeMaestria.getFechaInicioMaestria() + " y " + themeMaestria.getFechaFinMaestria() + "");
+            tModulo.setFechaFin(null);
+            return;
+        }else if(fechaInicio.after(tModulo.getFechaInicioExamen()) || fechaFin.before(tModulo.getFechaInicioExamen())){
+            mensajesError("La 2da asesoria tiene que estar en este rango " + themeMaestria.getFechaInicioMaestria() + " y " + themeMaestria.getFechaFinMaestria() + "");
+            tModulo.setFechaInicioExamen(null);
+            return;
+        }else if(fechaInicio.after(tModulo.getFechaFinExamen()) || fechaFin.before(tModulo.getFechaFinExamen())) {
+            mensajesError("La fecha de evaluacón tiene que estar en este rango " + themeMaestria.getFechaInicioMaestria() + " y " + themeMaestria.getFechaFinMaestria() + "");
+            tModulo.setFechaFinExamen(null);
+            return;
+        } else {
+            if (tModulo.getFechaInicio().after(tModulo.getFechaFin()) || tModulo.getFechaInicio().equals(tModulo.getFechaFin()) ) {
+                mensajesError("La 1ra Asesoria no puede ser menor o igual a la fecha encuadre");
+                tModulo.setFechaFin(null);
+                return;
+            } else if (tModulo.getFechaInicio().after(tModulo.getFechaInicioExamen()) || tModulo.getFechaInicio().equals(tModulo.getFechaInicioExamen())) {
+                mensajesError("La 2da Asesoria no puede ser menor o igual a la fecha encuadre");
+                tModulo.setFechaInicioExamen(null);
+                return;
+            } else if (tModulo.getFechaInicio().after(tModulo.getFechaFinExamen()) || tModulo.getFechaInicio().equals(tModulo.getFechaFinExamen())) {
+                mensajesError("La fecha evaluacion no puede ser menor o igual a la fecha encuadre");
+                tModulo.setFechaFinExamen(null);
+                return;
+            } //segundo rango de condiciones
+            else if (tModulo.getFechaFin().before(tModulo.getFechaInicio()) || tModulo.getFechaFin().equals(tModulo.getFechaInicio())) {
+                mensajesError("La 1ra asesoria no puede ser menor a la fecha de encuadre");
+                tModulo.setFechaInicio(null);
+                return;
+            } else if (tModulo.getFechaFin().after(tModulo.getFechaInicioExamen()) || tModulo.getFechaFin().equals(tModulo.getFechaInicioExamen())) {
+                mensajesError("La 2da asesoria no puede ser menor o igual a la 1ra asesoria");
+                tModulo.setFechaInicioExamen(null);
+                return;
+            } else if (tModulo.getFechaFin().after(tModulo.getFechaFinExamen()) || tModulo.getFechaFin().equals(tModulo.getFechaFinExamen())) {
+                mensajesError("La fecha de evaluación no puede ser menor o igual a la 1ra asesoria");
+                tModulo.setFechaFinExamen(null);
+                return;
+            } //Tercer rango de condiciones
+            else if (tModulo.getFechaInicioExamen().before(tModulo.getFechaInicio()) || tModulo.getFechaInicioExamen().equals(tModulo.getFechaInicio())) {
+                mensajesError("La 2da asesoria no puede ser menor a la fecha de encuadre");
+                tModulo.setFechaInicio(null);
+                return;
+            } else if (tModulo.getFechaInicioExamen().before(tModulo.getFechaFin()) || tModulo.getFechaInicioExamen().equals(tModulo.getFechaFin())) {
+                mensajesError("La 2da asesoria no puede ser menor a la 1ra asesoria");
+                tModulo.setFechaFin(null);
+                return;
+            } else if (tModulo.getFechaInicioExamen().after(tModulo.getFechaFinExamen()) || tModulo.getFechaInicioExamen().equals(tModulo.getFechaFinExamen())) {
+                mensajesError("La evaluacion no puede ser menor o igual a la evaluacion 2da asesoria");
+                tModulo.setFechaFinExamen(null);
+                return;
+            } //cuarto rango de condiciones
+            else if (tModulo.getFechaFinExamen().before(tModulo.getFechaInicio()) || tModulo.getFechaFinExamen().equals(tModulo.getFechaInicio())) {
+                mensajesError("La fecha evaluación no puede ser menor a la fecha de encuadre");
+                tModulo.setFechaInicio(null);
+                return;
+            } else if (tModulo.getFechaFinExamen().before(tModulo.getFechaFin()) || tModulo.getFechaFinExamen().equals(tModulo.getFechaFin())) {
+                mensajesError("La fecha evaluación no puede ser menor a la 1ra asesoria");
+                tModulo.setFechaFin(null);
+                return;
+            } else if (tModulo.getFechaFinExamen().before(tModulo.getFechaInicioExamen()) || tModulo.getFechaFinExamen().equals(tModulo.getFechaInicioExamen())) {
+                mensajesError("La fecha evaluación no puede ser menor a la 2da asesoria");
+                tModulo.setFechaInicioExamen(null);
+                return;
+            } else {
+                try {
+                    msg = daoTmodulo.registrar(tModulo);
+                    cargarTablaModulos();
+                } catch (Exception ex) {
+                    Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (repetida) {
+                mensajesError("Registro repetido");
+            } else {
+                if (msg) {
+                    mensajesOk("Datos procesados correctamente");
+                } else {
+                    mensajesError("Error al procesar datos");
+                }
+                vaciarCajas();
+            }
+
+        }
+        
     }
 
     private void vaciarCajas() {

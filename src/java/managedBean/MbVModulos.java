@@ -228,7 +228,9 @@ public class MbVModulos implements Serializable {
                                 modulo.getFechaFin() == null ? null:modulo.getFechaFin(),
                                 modulo.getFechaInicioExamen() == null ? null:modulo.getFechaInicioExamen(),
                                 modulo.getFechaFinExamen() == null ? null:modulo.getFechaFinExamen(),
-                                modulo.getTotalHorasModulo() == null ? null:modulo.getTotalHorasModulo().toString()
+                                modulo.getTotalHorasModulo() == null ? null:modulo.getTotalHorasModulo().toString(),
+                                modulo.getPromocion().getFechaInicio(),
+                                modulo.getPromocion().getFechaFin()
                                 ));
                     }
                 }
@@ -332,9 +334,9 @@ public class MbVModulos implements Serializable {
                 if (!repetida) {
                     List<Modulo> modulo = daoTmodulo.validacionModulos(tModulo);
                     if (modulo.size() <= 0) {
-                        validacionFechas(daoTmodulo);
+                        validacionFechas(daoTmodulo,0);
                     } else {
-                       validacionFechas(daoTmodulo);
+                       validacionFechas(daoTmodulo,0);
                     }
 
                 }
@@ -350,7 +352,7 @@ public class MbVModulos implements Serializable {
 
     }
     
-    private void validacionFechas(DaoTModulo daoTmodulo) {
+    private void validacionFechas(DaoTModulo daoTmodulo, int estado) {
         if (fechaInicio.after(tModulo.getFechaInicio()) || fechaFin.before(tModulo.getFechaInicio())){
             mensajesError("La fecha de encuadre tiene que estar en este rango " + themeMaestria.getFechaInicioMaestria() + " y " + themeMaestria.getFechaFinMaestria() + "");
             tModulo.setFechaInicio(null);
@@ -421,23 +423,38 @@ public class MbVModulos implements Serializable {
                 return;
             } else {
                 try {
-                    msg = daoTmodulo.registrar(tModulo);
-                    cargarTablaModulos();
+                    if(estado == 0){
+                        msg = daoTmodulo.registrar(tModulo);
+                        cargarTablaModulos();
+                    }else if(estado == 1){
+                        msg = daoTmodulo.update(tModulo);
+                        cargarTablaModulos();
+                    }
+                    
                 } catch (Exception ex) {
                     Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            if (repetida) {
-                mensajesError("Registro repetido");
-            } else {
-                if (msg) {
-                    mensajesOk("Datos procesados correctamente");
+            if (estado == 0) {
+                if (repetida) {
+                    mensajesError("Registro repetido");
                 } else {
-                    mensajesError("Error al procesar datos");
-                }
-                vaciarCajas();
-            }
 
+                    if (msg) {
+                        mensajesOk("Datos procesados correctamente");
+                    } else {
+                        mensajesError("Error al procesar datos");
+                    }
+
+                    vaciarCajas();
+                }
+            } else if (estado == 1) {
+                if (msg) {
+                    mensajesOk("Datos actualizados correctamente");
+                } else {
+                    mensajesError("Error al actualizar datos");
+                }
+            }
         }
         
     }
@@ -484,62 +501,42 @@ public class MbVModulos implements Serializable {
         }
 
         try {
-            Modulo modulo = new Modulo();
-            modulo.setPromocion(promocion);
-            modulo.setUsuario(user);
-            modulo.setId(((ClsTablaModulosRegistrados) event.getObject()).getIdModulo());
-            modulo.setDescripcion(((ClsTablaModulosRegistrados) event.getObject()).getModulo());
+            tModulo = new Modulo();
+            tModulo.setPromocion(promocion);
+            tModulo.setUsuario(user);
+            tModulo.setId(((ClsTablaModulosRegistrados) event.getObject()).getIdModulo());
+            tModulo.setDescripcion(((ClsTablaModulosRegistrados) event.getObject()).getModulo());
             BigDecimal bigdec;
             String valorHoras = ((ClsTablaModulosRegistrados) event.getObject()).getTotalHorasModulo().toString();
             if(!valorHoras.isEmpty()){
                 bigdec = new BigDecimal(Double.parseDouble(((ClsTablaModulosRegistrados) event.getObject()).getTotalHorasModulo()));
-                modulo.setTotalHorasModulo(bigdec);
+                tModulo.setTotalHorasModulo(bigdec);
             }
             bigdec = new BigDecimal(Double.parseDouble(((ClsTablaModulosRegistrados) event.getObject()).getCreditos()));
-            modulo.setCreditos(bigdec);
+            tModulo.setCreditos(bigdec);
             
-            modulo.setFechaInicio(((ClsTablaModulosRegistrados) event.getObject()).getFechaInicio());
-            modulo.setFechaFin(((ClsTablaModulosRegistrados) event.getObject()).getFechaFin());
-            modulo.setFechaInicioExamen(((ClsTablaModulosRegistrados) event.getObject()).getFechaInicioExamen());
-            modulo.setFechaFinExamen(((ClsTablaModulosRegistrados) event.getObject()).getFechaFinExamen());
-            modulo.setModulo(((ClsTablaModulosRegistrados) event.getObject()).getN_modulo());
-//            if(modulo.size() <= 0){
-//                    if (fechaInicio.before(themeMaestria.getFechaInicioMaestria()) || fechaFin.after(themeMaestria.getFechaFinMaestria())) {
-//                        mensajesError("error fecha no puede ser menor que "+themeMaestria.getFechaInicioMaestria()+" ni mayor que "+themeMaestria.getFechaFinMaestria()+"");
-//                        return;
-//                    }else{
-//                        msg = daoTmodulo.registrar(tModulo);
-//                    }
-//                    
-//                }else{
-//                    if(tModulo.getFechaInicio().before(modulo.get(0).getFechaFin())){
-//                        //msg = daoTmodulo.registrar(tModulo);
-//                        mensajesError("error fecha de Inicio del Módulo no puede ser menor a "+modulo.get(0).getFechaFin()+"");
-//                        return;
-//                    }else{
-//                        if (fechaInicio.before(themeMaestria.getFechaInicioMaestria()) || fechaFin.after(themeMaestria.getFechaFinMaestria())) {
-//                            mensajesError("error fecha no puede ser menor que " + themeMaestria.getFechaInicioMaestria() + " ni mayor que " + themeMaestria.getFechaFinMaestria() + "");
-//                            return;
-//                        } else {
-//                            msg = daoTmodulo.registrar(tModulo);
-//                        }
-//                    }
-//                        
-//                    
-//                }
-            msg = daoTmodulo.update(modulo);
-            cargarTablaModulos();
+            tModulo.setFechaInicio(((ClsTablaModulosRegistrados) event.getObject()).getFechaInicio());
+            tModulo.setFechaFin(((ClsTablaModulosRegistrados) event.getObject()).getFechaFin());
+            tModulo.setFechaInicioExamen(((ClsTablaModulosRegistrados) event.getObject()).getFechaInicioExamen());
+            tModulo.setFechaFinExamen(((ClsTablaModulosRegistrados) event.getObject()).getFechaFinExamen());
+            tModulo.setModulo(((ClsTablaModulosRegistrados) event.getObject()).getN_modulo());
+            this.fechaInicio = ((ClsTablaModulosRegistrados) event.getObject()).getFechaInicioMaestria();
+            this.fechaFin = ((ClsTablaModulosRegistrados) event.getObject()).getFechaFinMaestria();
+            
+            validacionFechas(daoTmodulo,1);
+//            msg = daoTmodulo.update(tModulo);
+//            cargarTablaModulos();
 
         } catch (Exception ex) {
             Logger.getLogger(MbVTablaPermisos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (msg) {
-            mensajesOk("Datos actualizados correctamente");
-        } else {
-            mensajesError("Error al actualizar datos");
-        }
+//        if (msg) {
+//            mensajesOk("Datos actualizados correctamente");
+//        } else {
+//            mensajesError("Error al actualizar datos");
+//        }
     }
-
+    
     public void onRowCancel(RowEditEvent event) {
 
     }

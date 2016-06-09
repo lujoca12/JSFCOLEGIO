@@ -78,7 +78,11 @@ public class DaoTModulo implements InterfaceModulos{
         this.tx = null;
         iniciaOperacion();
         //Presento los modulos registrados x años 
-        String hql="from Modulo mod inner join fetch mod.promocion p inner join fetch mod.usuario user inner join fetch p.maestria m where m.estado='1' and (year(current_date) >= year(p.fechaInicio) and year(current_date)<= year(p.fechaFin)) order by mod.id desc";
+        String hql="from Modulo mod inner join fetch mod.promocion p "
+                + "inner join fetch mod.usuario user "
+                + "inner join fetch p.maestria m where m.estado='1' and "
+                + "(year(current_date) >= year(p.fechaInicio) "
+                + "and year(current_date)<= year(p.fechaFin)) order by mod.id desc";
         Query query = sesion.createQuery(hql);
         List<Modulo> lstPermiso=(List<Modulo>) query.list();
         sesion.close();

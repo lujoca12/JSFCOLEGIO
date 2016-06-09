@@ -163,7 +163,7 @@ public class MbVModulosHorarios implements Serializable{
             
             lstCboModulos = new ArrayList<>();
             lstCboModulos.clear();
-            this.lstCboModulos.add(new ClsTablaModulosRegistrados(-1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)","(Escoja un Módulo)",-1,"(Escoja un Módulo)",null,null,null,null,""));
+            this.lstCboModulos.add(new ClsTablaModulosRegistrados(-1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)","(Escoja un Módulo)",-1,"(Escoja un Módulo)",null,null,null,null,"",null,null));
             DaoTModulo daoTmodulo = new DaoTModulo();
             List<Modulo> lstModulo = null;
             
@@ -191,7 +191,9 @@ public class MbVModulosHorarios implements Serializable{
                                 modulo.getFechaFin() == null ? null : modulo.getFechaFin(),
                                 modulo.getFechaInicioExamen() == null ? null : modulo.getFechaInicioExamen(),
                                 modulo.getFechaFinExamen() == null ? null : modulo.getFechaFinExamen(),
-                                modulo.getTotalHorasModulo() == null ? null : modulo.getTotalHorasModulo().toString()
+                                modulo.getTotalHorasModulo() == null ? null : modulo.getTotalHorasModulo().toString(),
+                                modulo.getPromocion().getFechaInicio(),
+                                modulo.getPromocion().getFechaFin()
                         ));
                     }
                    

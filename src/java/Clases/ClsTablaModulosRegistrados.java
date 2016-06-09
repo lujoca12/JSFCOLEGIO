@@ -29,9 +29,11 @@ public class ClsTablaModulosRegistrados implements Serializable {
     private Date fechaInicioExamen;
     private Date fechaFinExamen;
     private String totalHorasModulo;
+    private Date fechaInicioMaestria;
+    private Date fechaFinMaestria;
     
 
-    public ClsTablaModulosRegistrados(int idMaestria, String maestria, int idPromocion, String modulo, int idUsuario, String usuario, String creditos, int idModulo, String n_modulo, Date fechaInicio, Date fechaFin, Date fechaInicioExamen, Date fechaFinExamen, String totalHorasModulo) {
+    public ClsTablaModulosRegistrados(int idMaestria, String maestria, int idPromocion, String modulo, int idUsuario, String usuario, String creditos, int idModulo, String n_modulo, Date fechaInicio, Date fechaFin, Date fechaInicioExamen, Date fechaFinExamen, String totalHorasModulo, Date fechaInicioMaestria, Date fechaFinMaestria) {
         this.idMaestria = idMaestria;
         this.maestria = maestria;
         this.idPromocion = idPromocion;
@@ -46,6 +48,8 @@ public class ClsTablaModulosRegistrados implements Serializable {
         this.fechaInicioExamen = fechaInicioExamen;
         this.fechaFinExamen = fechaFinExamen;
         this.totalHorasModulo = totalHorasModulo;
+        this.fechaInicioMaestria = fechaInicioMaestria;
+        this.fechaFinMaestria = fechaFinMaestria;
     }
 
     public int getIdMaestria() {
@@ -158,6 +162,22 @@ public class ClsTablaModulosRegistrados implements Serializable {
 
     public void setTotalHorasModulo(String totalHorasModulo) {
         this.totalHorasModulo = totalHorasModulo;
+    }
+
+    public Date getFechaInicioMaestria() {
+        return fechaInicioMaestria;
+    }
+
+    public void setFechaInicioMaestria(Date fechaInicioMaestria) {
+        this.fechaInicioMaestria = fechaInicioMaestria;
+    }
+
+    public Date getFechaFinMaestria() {
+        return fechaFinMaestria;
+    }
+
+    public void setFechaFinMaestria(Date fechaFinMaestria) {
+        this.fechaFinMaestria = fechaFinMaestria;
     }
     
     

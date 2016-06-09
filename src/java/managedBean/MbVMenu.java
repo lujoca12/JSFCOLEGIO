@@ -26,6 +26,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
+import org.primefaces.model.menu.MenuItem;
 import org.primefaces.model.menu.MenuModel;
 
 
@@ -44,6 +45,7 @@ public class MbVMenu implements Serializable {
     private List<Permiso> lstMenus;
     
     private MenuModel menuModel = null;
+    private String name="";
     
     @PostConstruct
     public void load() {
@@ -81,7 +83,7 @@ public class MbVMenu implements Serializable {
     public void establecerMenuxUsuarios(){
         
         try {
-            
+
             for (Permiso m : lstMenus) {
                 
                 if(m.getPadre() == 0){
@@ -119,7 +121,7 @@ public class MbVMenu implements Serializable {
     public List<Permiso> getLstMenus() {
         return lstMenus;
     }
-    
+
     public void addMessage(String summary, String detail) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
         FacesContext.getCurrentInstance().addMessage(null, message);

@@ -174,10 +174,6 @@ public class MbVAsistencia implements Serializable {
         return lstCboFecha;
     }
 
-    public void setLstCboFecha(List<ClsFechaHoras> lstCboFecha) {
-        this.lstCboFecha = lstCboFecha;
-    }
-
     public ClsFechaHoras getClsFechaHora() {
         return clsFechaHora;
     }
@@ -250,9 +246,12 @@ public class MbVAsistencia implements Serializable {
 
             if (lstHorario != null) {
                 if (lstHorario.size() > 0) {
-                    for (HorarioModulo horario : lstHorario) {
-                        lstCboFecha.add(new ClsFechaHoras(horario.getId(), horario.getHora(),horario.getFecha()));
+                    for (int i = 0; i < lstHorario.size()-1; i++) {
+                        lstCboFecha.add(new ClsFechaHoras(lstHorario.get(i).getId(), lstHorario.get(i).getHora(),lstHorario.get(i).getFecha()));
                     }
+//                    for (HorarioModulo horario : lstHorario) {
+//                        lstCboFecha.add(new ClsFechaHoras(horario.getId(), horario.getHora(),horario.getFecha()));
+//                    }
                 }
             }
         } catch (Exception ex) {
@@ -345,6 +344,14 @@ public class MbVAsistencia implements Serializable {
                                     0.0));
                         }
                     }
+                    
+                    daoTasistencia = new DaoTAsistencias();
+                    for (int i = 0; i < lstTblNotas.size(); i++) {
+                        lstAsistencia = daoTasistencia.getAlumnoRetirado(lstTblNotas.get(i).getIdMatricula(),this.idModulo);
+                        if(lstAsistencia.size() > 0)
+                            lstTblNotas.get(i).setObservacion("R");
+                    }
+                    
 
                 }
             }

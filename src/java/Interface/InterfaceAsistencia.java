@@ -22,4 +22,5 @@ public interface InterfaceAsistencia {
     public boolean update(Asistencia tAsistencia) throws Exception;
     public boolean delete(List<ClsNotas> lstNotas, int idModulo) throws Exception;
     public List<Asistencia> getPerdidosxAsistencia(int idModulo) throws Exception;
+    public List<Asistencia> getAlumnoRetirado(int idMatricula, int idModulo) throws Exception;
 }

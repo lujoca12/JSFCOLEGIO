@@ -110,6 +110,18 @@ public class DaoTAsistencias implements InterfaceAsistencia{
     }
     
     @Override
+    public List<Asistencia> getAlumnoRetirado(int idMatricula, int idModulo) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String hql="from Asistencia asist where asist.matricula = "+idMatricula+" and asist.modulo="+idModulo+" and asist.observacion = 'R'";
+        Query query = sesion.createQuery(hql);
+        List<Asistencia> lstPermiso=(List<Asistencia>) query.list();
+        sesion.close();
+        return lstPermiso;
+    }
+    
+    @Override
     public List<Asistencia> getPerdidosxAsistencia(int idModulo) throws Exception {
         this.sesion = null;
         this.tx = null;

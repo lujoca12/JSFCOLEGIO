@@ -76,7 +76,7 @@ public class DaoTHorarioModulo implements InterfaceHorarioModulo{
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        String hql="from HorarioModulo horario inner join fetch horario.modulo mod where mod.id = "+idModulo+"";
+        String hql="from HorarioModulo horario inner join fetch horario.modulo mod where mod.id = "+idModulo+" order by horario.fecha asc";
         Query query = sesion.createQuery(hql);
         List<HorarioModulo> lstHorarioModulo =(List<HorarioModulo>) query.list();
         sesion.close();
@@ -166,9 +166,13 @@ public class DaoTHorarioModulo implements InterfaceHorarioModulo{
         segundosF = calendar.get(Calendar.SECOND);
         
         //String horaInicio = horaI + ":" + minutosI + ":" + segundosI;
-        String hql="from HorarioModulo horario inner join fetch horario.modulo mod where horario.horaInicio= '"+horaI + ':' + minutosI + ':' + segundosI+"' "
-                + "and horario.horaFin= '"+horaF + ':' + minutosF + ':' + segundosF+"' "
-                + "and horario.fecha='"+tHorarioModulo.getFecha()+"' "
+//        String hql="from HorarioModulo horario inner join fetch horario.modulo mod where horario.horaInicio= '"+horaI + ':' + minutosI + ':' + segundosI+"' "
+//                + "and horario.horaFin= '"+horaF + ':' + minutosF + ':' + segundosF+"' "
+//                + "and horario.fecha='"+tHorarioModulo.getFecha()+"' "
+//                + "and mod.id ="+tHorarioModulo.getModulo().getId()+" ";
+
+String hql="from HorarioModulo horario inner join fetch horario.modulo mod where "
+                + "horario.fecha='"+tHorarioModulo.getFecha()+"' "
                 + "and mod.id ="+tHorarioModulo.getModulo().getId()+" ";
         Query query = sesion.createQuery(hql);
         List<HorarioModulo> lstHorarioModulo =(List<HorarioModulo>) query.list();

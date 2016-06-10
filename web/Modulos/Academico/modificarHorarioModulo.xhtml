@@ -41,13 +41,7 @@
                                     <h:outputText value="#{lstTbl.fechaHorario}" />
                                 </f:facet>
                                 <f:facet name="input">
-                                    <p:calendar id="txtFechaInicio" class="date_input" required="true"
-                                                onkeypress="return permite(event, 'none')" 
-                                                locale="es" value="#{lstTbl.fechaHorario}" 
-                                                effect="fold" pattern="dd-MM-yyyy" mask="true" 
-                                                mindate="#{lstTbl.fechaInicio}"
-                                                maxdate="#{lstTbl.fechaFin}">
-                                    </p:calendar>
+                                    <f:facet name="input"><p:inputText readonly="true" value="#{lstTbl.fechaHorario}" style="width:100%"/></f:facet>
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
@@ -56,7 +50,7 @@
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.horaInicio}" /></f:facet>
                                 <f:facet name="input">
-                                    <p:calendar id="txtHoraInicio" value="#{lstTbl.horaInicio}" 
+                                    <p:calendar id="txtHoraInicio" value="#{lstTbl.horaInicio}" minHour="7" maxHour="20"
                                                 required="true" pattern="HH:mm" mask="true" timeOnly="true" >
                                     </p:calendar>
                                 </f:facet>
@@ -69,7 +63,7 @@
                                     <h:outputText value="#{lstTbl.horaFin}" />
                                 </f:facet>
                                 <f:facet name="input">
-                                    <p:calendar id="txtHoraFin" value="#{lstTbl.horaFin}" 
+                                    <p:calendar id="txtHoraFin" value="#{lstTbl.horaFin}" minHour="7" maxHour="20"
                                                 required="true" pattern="HH:mm" mask="true" timeOnly="true">
                                     </p:calendar>
                                 </f:facet>

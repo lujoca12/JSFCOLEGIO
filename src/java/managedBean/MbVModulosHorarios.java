@@ -5,6 +5,7 @@
  */
 package managedBean;
 
+import Clases.ClsFechaHoras;
 import Clases.ClsHorarioModulo;
 import Clases.ClsMaestria;
 import Clases.ClsTablaModulosRegistrados;
@@ -18,6 +19,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,6 +53,9 @@ public class MbVModulosHorarios implements Serializable{
     private String horasModulo;
     private String horasAsignadas;
     private String horasxRegistrar;
+    
+    private List<ClsFechaHoras> lstCboFecha;
+    private ClsFechaHoras clsFechaHora;
     
     public MbVModulosHorarios() {
         tHorarioModulo = new HorarioModulo();
@@ -133,6 +138,22 @@ public class MbVModulosHorarios implements Serializable{
     public void setHorasxRegistrar(String horasxRegistrar) {
         this.horasxRegistrar = horasxRegistrar;
     }
+
+    public List<ClsFechaHoras> getLstCboFecha() {
+        return lstCboFecha;
+    }
+    
+    
+
+    public ClsFechaHoras getClsFechaHora() {
+        return clsFechaHora;
+    }
+
+    public void setClsFechaHora(ClsFechaHoras clsFechaHora) {
+        this.clsFechaHora = clsFechaHora;
+    }
+    
+    
     
     public void llenarCboMaestria(){
         this.lstThemeMaestria = new ArrayList<ClsMaestria>();
@@ -246,10 +267,38 @@ public class MbVModulosHorarios implements Serializable{
         if (clsTblModulosReg != null) {
             estado = true;
             movimientoHoras();
-            
+            cargarCboFechas();
         } else {
             estado = false;
         }
+    }
+    
+    public void cargarCboFechas() {
+        lstCboFecha = new ArrayList<>();
+        
+        try {
+            lstCboFecha.clear();
+            DaoTModulo daoTmodulo = new DaoTModulo();
+            List<Modulo> lstModulo = daoTmodulo.getTodosModulo(clsTblModulosReg.getIdModulo());
+            
+            
+
+            if (lstModulo != null) {
+                if (lstModulo.size() > 0) {
+                    for (Modulo modulo : lstModulo) {
+                        lstCboFecha.add(new ClsFechaHoras(1, modulo.getCreditos(),modulo.getFechaInicio()));
+                        lstCboFecha.add(new ClsFechaHoras(2, modulo.getCreditos(),modulo.getFechaFin()));
+                        lstCboFecha.add(new ClsFechaHoras(3, modulo.getCreditos(),modulo.getFechaInicioExamen()));
+                        lstCboFecha.add(new ClsFechaHoras(4, modulo.getCreditos(),modulo.getFechaFinExamen()));
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
     }
     
     private void movimientoHoras(){
@@ -298,12 +347,20 @@ public class MbVModulosHorarios implements Serializable{
             Modulo modulo = new Modulo();
             modulo.setId(clsTblModulosReg.getIdModulo());
             tHorarioModulo.setModulo(modulo);
+            if(clsFechaHora != null){
+                tHorarioModulo.setFecha(clsFechaHora.getFecha());
+            }
             
             long tiempoInicial= tHorarioModulo.getHoraInicio().getTime();
             long tiempoFinal = tHorarioModulo.getHoraFin().getTime();
             long resta = tiempoFinal - tiempoInicial;
             
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(tHorarioModulo.getHoraInicio());
+            int horaInicio = calendar.get(Calendar.HOUR);
             
+            calendar.setTime(tHorarioModulo.getHoraFin());
+            int horaFin = calendar.get(Calendar.HOUR);
             
             //el metodo getTime te devuelve en mili segundos para saberlo en mins debes hacer
             resta = resta / (1000 * 60);
@@ -320,7 +377,12 @@ public class MbVModulosHorarios implements Serializable{
                 if (!repetida) {
                     
                     if(hora > 0 && hora <= Double.parseDouble(horasxRegistrar)){
-                        msg = daoThorariomodulo.registrar(tHorarioModulo);
+                        if(horaInicio >=  7 && horaFin <= 20){
+                            msg = daoThorariomodulo.registrar(tHorarioModulo);
+                        }else{
+                            mensajesError("error! hora minima 07:00 y hora máxima 20:00");
+                            return;
+                        }
                     }
                     else{
                         mensajesError("error! el total de horas no pueden ser mayor a "+horasxRegistrar+"");
@@ -380,6 +442,12 @@ public class MbVModulosHorarios implements Serializable{
             //el metodo getTime te devuelve en mili segundos para saberlo en mins debes hacer
             resta = resta / (1000 * 60);
             
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(tHorarioModulo.getHoraInicio());
+            int horaInicio = calendar.get(Calendar.HOUR);
+            
+            calendar.setTime(tHorarioModulo.getHoraFin());
+            int horaFin = calendar.get(Calendar.HOUR);
             
             if(resta >= 60){
             try {
@@ -388,23 +456,17 @@ public class MbVModulosHorarios implements Serializable{
                 double hora = ((minutos-(minutos%60))/60)+((minutos%60)/100);
                 bigdec = new BigDecimal(hora);
                 horarioModulo.setHora(bigdec);
-                repetida = daoThorariomodulo.existe(horarioModulo);
+               // repetida = daoThorariomodulo.existe(horarioModulo);
                 if (!repetida) {
                     edicMovimientoHoras(((ClsHorarioModulo) event.getObject()).getTotalHoras(), ((ClsHorarioModulo) event.getObject()).getIdModulo());
-                    if(hora > 0 && hora <= Double.parseDouble(horasxRegistrar)){
-                        if (tHorarioModulo.getFecha() != null) {
-                            if (tHorarioModulo.getFecha().before(this.clsTblModulosReg.getFechaInicio())) {
-                                mensajesOk("Le fecha no puede ser menor a " + this.clsTblModulosReg.getFechaInicio() + "");
-                                return;
-                            } else if (tHorarioModulo.getFecha().after(this.clsTblModulosReg.getFechaInicio())) {
-                                mensajesOk("La fecha no puede ser mayor a " + this.clsTblModulosReg.getFechaFin() + "");
-                                return;
-                            } else {
-                                msg = daoThorariomodulo.registrar(horarioModulo);
-                            }
+                    if (hora > 0 && hora <= Double.parseDouble(horasxRegistrar)) {
+                        if(horaInicio >=  7 && horaFin <= 20){
+                            msg = daoThorariomodulo.registrar(horarioModulo);
                         }else{
-                                msg = daoThorariomodulo.registrar(horarioModulo);
-                            }
+                            mensajesError("error! hora minima 07:00 y hora máxima 20:00");
+                            return;
+                        }
+                        
                     }
                     else{
                         mensajesError("error! el total de horas no pueden ser mayor a "+horasxRegistrar+"");
@@ -455,8 +517,9 @@ public class MbVModulosHorarios implements Serializable{
     
     private void vaciarCajas() {
         
-        tHorarioModulo.setHoraInicio(null);
-        tHorarioModulo.setHoraFin(null);
+        tHorarioModulo = new HorarioModulo();
+        cargarCboFechas();
+        
 
     }
     

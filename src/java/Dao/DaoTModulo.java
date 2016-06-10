@@ -73,6 +73,18 @@ public class DaoTModulo implements InterfaceModulos{
     }
     
     @Override
+    public List<Modulo> getTodosModulo(int idModulo) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String hql="from Modulo m where m.id = "+idModulo+"";
+        Query query = sesion.createQuery(hql);
+        List<Modulo> lstPermiso=(List<Modulo>) query.list();
+        sesion.close();
+        return lstPermiso;
+    }
+    
+    @Override
     public List<Modulo> getTblModulos() throws Exception {
         this.sesion = null;
         this.tx = null;
@@ -239,7 +251,7 @@ public class DaoTModulo implements InterfaceModulos{
         iniciaOperacion();
         String hql="from Modulo m where (m.descripcion='"+tModulo.getDescripcion()+"' or  m.descripcion<>'"+tModulo.getDescripcion()+"')and "
                 + "m.promocion="+tModulo.getPromocion().getId()+" and "
-                + "m.usuario="+tModulo.getUsuario().getId()+"";
+                + "m.usuario="+tModulo.getUsuario().getId()+" and m.modulo = '"+tModulo.getModulo()+"'";
         Query query = sesion.createQuery(hql);
         List<Modulo> modulo=(List<Modulo>) query.list();
         if(modulo.size() > 0)

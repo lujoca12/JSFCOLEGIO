@@ -55,12 +55,14 @@
                         </p:column>
 
                         <p:column headerText="Asistencia" style="text-align: center; width: 10%;">
-                            <p:selectBooleanCheckbox disabled="#{mbVAsistencia.habilitar eq 1 ? true:false}" value="#{notas.estado}" />
+                            <p:selectBooleanCheckbox disabled="#{mbVAsistencia.habilitar eq 1 ? true:false
+                            or notas.observacion eq 'R' ? true:false}" value="#{notas.estado}" />
                         </p:column>
 
                         <p:column headerText="Observación" style="text-align: center; width: 55%;">
-                            <h:selectOneMenu disabled="#{mbVAsistencia.habilitar eq 1 ? true:false}" style="width:100%"
-                                id="cboObservacion" class="form-control" value="#{notas.observacion eq 'N' ? null:'Retirado(a)'}">
+                            <h:selectOneMenu disabled="#{mbVAsistencia.habilitar eq 1 ? true:false 
+                            or notas.observacion eq 'R' ? true:false}" style="width:100%"
+                                id="cboObservacion" class="form-control" value="#{notas.observacion}">
                                 <f:selectItem itemLabel="Ninguna" itemValue="N" />
                                 <f:selectItem itemLabel="Retirado(a)" itemValue="R" />
                             </h:selectOneMenu>

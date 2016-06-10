@@ -25,4 +25,5 @@ public interface InterfaceModulos {
     public boolean existe(Modulo tModulo) throws Exception;
     public List<Modulo> getTblModulosMaestria(int idMaestria) throws Exception;
     public List<Modulo> validacionModulos(Modulo tModulo) throws Exception;
+    public List<Modulo> getTodosModulo(int idModulo) throws Exception;
 }

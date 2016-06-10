@@ -140,18 +140,7 @@
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.maestria}" /></f:facet>
                                 <f:facet name="input">
-                                    <p:selectOneMenu value="#{mbVModulos.themeMaestria}" converter="themeConverterMaestria"
-                                                     effect="fade" var="tProfesor" filter="true" filterMatchMode="contains">
-                                        <f:selectItem itemLabel="#{lstTbl.maestria}"/>
-                                        <f:selectItems value="#{mbVModulos.lstThemeMaestria}" var="themeProf" itemLabel="#{themeProf.displayName}" itemValue="#{themeProf}" />
-                                        <p:column style="width:10%">
-                                            <h:outputText styleClass="ui-theme ui-theme-#{tProfesor.name}" />
-                                        </p:column>
-
-                                        <p:column>
-                                            <h:outputText value="#{tProfesor.displayName}" />
-                                        </p:column>
-                                    </p:selectOneMenu>
+                                    <p:inputText readonly="true" style="width:100%" required="true" value="#{lstTbl.maestria}"  />
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
@@ -160,10 +149,7 @@
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.n_modulo}" /></f:facet>
                                 <f:facet name="input">
-                                    <p:selectOneMenu id="cboNmodulo" value="#{lstTbl.n_modulo}">
-                                        <f:selectItem itemLabel="#{lstTbl.n_modulo}"/>
-                                        <f:selectItems value="#{mbVModulos.lstTodosModulos}" />
-                                    </p:selectOneMenu>
+                                    <p:inputText readonly="true" style="width:100%" required="true" value="#{lstTbl.n_modulo}"  />
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>

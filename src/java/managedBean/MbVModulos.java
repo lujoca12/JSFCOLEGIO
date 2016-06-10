@@ -340,6 +340,9 @@ public class MbVModulos implements Serializable {
                     }
 
                 }
+                if (repetida) {
+                    mensajesError("Registro repetido");
+                }
 
                
             }
@@ -354,19 +357,19 @@ public class MbVModulos implements Serializable {
     
     private void validacionFechas(DaoTModulo daoTmodulo, int estado) {
         if (fechaInicio.after(tModulo.getFechaInicio()) || fechaFin.before(tModulo.getFechaInicio())){
-            mensajesError("La fecha de encuadre tiene que estar en este rango " + themeMaestria.getFechaInicioMaestria() + " y " + themeMaestria.getFechaFinMaestria() + "");
+            mensajesError("La fecha de encuadre tiene que estar en este rango " + fechaInicio + " y " + fechaFin + "");
             tModulo.setFechaInicio(null);
             return;
         }else if(fechaInicio.after(tModulo.getFechaFin()) || fechaFin.before(tModulo.getFechaFin())){
-            mensajesError("La 1ra asesoria tiene que estar en este rango " + themeMaestria.getFechaInicioMaestria() + " y " + themeMaestria.getFechaFinMaestria() + "");
+            mensajesError("La 1ra asesoria tiene que estar en este rango " + fechaInicio + " y " + fechaFin + "");
             tModulo.setFechaFin(null);
             return;
         }else if(fechaInicio.after(tModulo.getFechaInicioExamen()) || fechaFin.before(tModulo.getFechaInicioExamen())){
-            mensajesError("La 2da asesoria tiene que estar en este rango " + themeMaestria.getFechaInicioMaestria() + " y " + themeMaestria.getFechaFinMaestria() + "");
+            mensajesError("La 2da asesoria tiene que estar en este rango " + fechaInicio + " y " + fechaFin + "");
             tModulo.setFechaInicioExamen(null);
             return;
         }else if(fechaInicio.after(tModulo.getFechaFinExamen()) || fechaFin.before(tModulo.getFechaFinExamen())) {
-            mensajesError("La fecha de evaluacón tiene que estar en este rango " + themeMaestria.getFechaInicioMaestria() + " y " + themeMaestria.getFechaFinMaestria() + "");
+            mensajesError("La fecha de evaluacón tiene que estar en este rango " + fechaInicio + " y " + fechaFin + "");
             tModulo.setFechaFinExamen(null);
             return;
         } else {
@@ -436,18 +439,14 @@ public class MbVModulos implements Serializable {
                 }
             }
             if (estado == 0) {
-                if (repetida) {
-                    mensajesError("Registro repetido");
+                if (msg) {
+                    mensajesOk("Datos procesados correctamente");
                 } else {
-
-                    if (msg) {
-                        mensajesOk("Datos procesados correctamente");
-                    } else {
-                        mensajesError("Error al procesar datos");
-                    }
-
-                    vaciarCajas();
+                    mensajesError("Error al procesar datos");
                 }
+
+                vaciarCajas();
+
             } else if (estado == 1) {
                 if (msg) {
                     mensajesOk("Datos actualizados correctamente");
@@ -456,7 +455,7 @@ public class MbVModulos implements Serializable {
                 }
             }
         }
-        
+        //cargarTablaModulos();
     }
 
     private void vaciarCajas() {
@@ -530,6 +529,8 @@ public class MbVModulos implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(MbVTablaPermisos.class.getName()).log(Level.SEVERE, null, ex);
         }
+        vaciarCajas();
+        cargarTablaModulos();
 //        if (msg) {
 //            mensajesOk("Datos actualizados correctamente");
 //        } else {

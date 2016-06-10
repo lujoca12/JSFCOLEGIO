@@ -237,7 +237,7 @@ public class DaoTModulo implements InterfaceModulos{
         
         
         iniciaOperacion();
-        String hql="from Modulo m where m.descripcion='"+tModulo.getDescripcion()+"' and "
+        String hql="from Modulo m where (m.descripcion='"+tModulo.getDescripcion()+"' or  m.descripcion<>'"+tModulo.getDescripcion()+"')and "
                 + "m.promocion="+tModulo.getPromocion().getId()+" and "
                 + "m.usuario="+tModulo.getUsuario().getId()+"";
         Query query = sesion.createQuery(hql);

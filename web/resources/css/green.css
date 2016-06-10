@@ -718,16 +718,3 @@ th {
     
     /*table-layout: auto !important;*/
 }
-
-.cboAño{
-    width: 30% !important;
-    display: inline-block !important;
-    margin: 0;
-}
-
-.cboMes{
-    width: 33% !important;
-}
-.cboDia{
-    width: 33% !important;
-}

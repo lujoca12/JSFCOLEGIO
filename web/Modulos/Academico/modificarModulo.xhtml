@@ -6,6 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
+        <h:outputScript library="js" name="calendar_es.js" />
     </h:head>
     <h:body>
         <div class="ui-fluid" >
@@ -24,18 +25,7 @@
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.maestria}" /></f:facet>
                                 <f:facet name="input">
-                                    <p:selectOneMenu value="#{mbVModulos.themeMaestria}" converter="themeConverterMaestria"
-                                                     effect="fade" var="tProfesor" filter="true" filterMatchMode="contains">
-                                        <f:selectItem itemLabel="#{lstTbl.maestria}"/>
-                                        <f:selectItems value="#{mbVModulos.lstThemeMaestria}" var="themeProf" itemLabel="#{themeProf.displayName}" itemValue="#{themeProf}" />
-                                        <p:column style="width:10%">
-                                            <h:outputText styleClass="ui-theme ui-theme-#{tProfesor.name}" />
-                                        </p:column>
-
-                                        <p:column>
-                                            <h:outputText value="#{tProfesor.displayName}" />
-                                        </p:column>
-                                    </p:selectOneMenu>
+                                    <p:inputText readonly="true" style="width:100%" required="true" value="#{lstTbl.maestria}"  />
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
@@ -44,10 +34,7 @@
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.n_modulo}" /></f:facet>
                                 <f:facet name="input">
-                                    <p:selectOneMenu id="cboNmodulo" value="#{lstTbl.n_modulo}">
-                                        <f:selectItem itemLabel="#{lstTbl.n_modulo}"/>
-                                        <f:selectItems value="#{mbVModulos.lstTodosModulos}" />
-                                    </p:selectOneMenu>
+                                    <p:inputText readonly="true" style="width:100%" required="true" value="#{lstTbl.n_modulo}"  />
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
@@ -81,56 +68,70 @@
                             </p:cellEditor>
                         </p:column>
                         
-                        <p:column headerText="F. Inicio">
+                        <p:column headerText="F. encuadre">
                             <p:cellEditor>
                                 <f:facet name="output">
                                     <h:outputText value="#{lstTbl.fechaInicio}" />
                                 </f:facet>
                                 <f:facet name="input">
-                                    <p:calendar id="txtFechaInicio" required="true" onkeypress="return permite(event, 'none')" locale="es" value="#{lstTbl.fechaInicio}" effect="fold" pattern="dd-MM-yyyy" mask="true" >
-                                        <p:ajax event="dateSelect" update="txtFechaFin" />
-                                        <p:ajax event="blur" update="txtFechaFin" />
-                                        <f:attribute name="txtFechaFin" value="#{lstTbl.fechaFin}"/>
+                                    <p:calendar id="txtFechaInicio" required="true" 
+                                                class="date_input" onkeypress="return permite(event, 'none')" 
+                                                locale="es" value="#{lstTbl.fechaInicio}" effect="fold" 
+                                                pattern="dd-MM-yyyy" mask="true" 
+                                                mindate="#{lstTbl.fechaInicioMaestria}"
+                                                maxdate="#{lstTbl.fechaFinMaestria}" placeholder="dd-mm-aaaa">
+
                                         <f:validator validatorId="primeDateRangeValidator1" />
                                     </p:calendar>
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="F. Fin">
+                        <p:column headerText="1ra. Asesoria">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.fechaFin}" /></f:facet>
                                 <f:facet name="input">
-                                    <p:calendar id="txtFechaFin" required="true" mindate="#{lstTbl.fechaInicio}" locale="es" value="#{lstTbl.fechaFin}" onkeypress="return permite(event, 'none')" effect="fold" pattern="dd-MM-yyyy" mask="true" >
-                                        <f:attribute name="txtFechaInicio" value="#{lstTbl.fechaInicio}"/>
+                                    <p:calendar id="txtFechaFin" required="true" locale="es" 
+                                                value="#{lstTbl.fechaFin}"
+                                                onkeypress="return permite(event, 'none')" 
+                                                effect="fold" pattern="dd-MM-yyyy" mask="true" 
+                                                mindate="#{lstTbl.fechaInicioMaestria}"
+                                                maxdate="#{lstTbl.fechaFinMaestria}" placeholder="dd-mm-aaaa">
+
                                         <f:validator validatorId="primeDateRangeValidator1" />
                                     </p:calendar>
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
                         
-                        <p:column headerText="F.I. examen">
+                        <p:column headerText="2da. asesoria">
                             <p:cellEditor>
                                 <f:facet name="output">
                                     <h:outputText value="#{lstTbl.fechaInicioExamen}" />
                                 </f:facet>
                                 <f:facet name="input">
-                                    <p:calendar id="txtFechaInicioExamen" onkeypress="return permite(event, 'none')" locale="es" value="#{lstTbl.fechaInicioExamen}" effect="fold" pattern="dd-MM-yyyy" mask="true" >
-                                        <p:ajax event="dateSelect" update="txtFechaFin" />
-                                        <p:ajax event="blur" update="txtFechaFin" />
-                                        <f:attribute name="txtFechaFin" value="#{lstTbl.fechaFinExamen}"/>
+                                    <p:calendar id="txtFechaInicioExamen" onkeypress="return permite(event, 'none')" locale="es" 
+                                                value="#{lstTbl.fechaInicioExamen}" 
+                                                mindate="#{lstTbl.fechaInicioMaestria}"
+                                                maxdate="#{lstTbl.fechaFinMaestria}" required="true"
+                                                effect="fold" pattern="dd-MM-yyyy" mask="true" placeholder="dd-mm-aaaa">
+
                                         <f:validator validatorId="primeDateRangeValidator1" />
                                     </p:calendar>
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="F.F. examen">
+                        <p:column headerText="F. evaluación">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.fechaFinExamen}" /></f:facet>
                                 <f:facet name="input">
-                                    <p:calendar id="txtFechaFinExamen" mindate="#{lstTbl.fechaInicioExamen}" locale="es" value="#{lstTbl.fechaFinExamen}" onkeypress="return permite(event, 'none')" effect="fold" pattern="dd-MM-yyyy" mask="true" >
-                                        <f:attribute name="txtFechaInicio" value="#{lstTbl.fechaInicioExamen}"/>
+                                    <p:calendar id="txtFechaFinExamen"  onkeypress="return permite(event, 'none')"
+                                                locale="es" value="#{lstTbl.fechaFinExamen}" 
+                                                mindate="#{lstTbl.fechaInicioMaestria}" required="true"
+                                                maxdate="#{lstTbl.fechaFinMaestria}"
+                                                effect="fold" pattern="dd-MM-yyyy" mask="true" placeholder="dd-mm-aaaa">
+
                                         <f:validator validatorId="primeDateRangeValidator1" />
                                     </p:calendar>
                                 </f:facet>

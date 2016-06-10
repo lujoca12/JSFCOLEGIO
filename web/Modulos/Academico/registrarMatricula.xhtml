@@ -78,10 +78,7 @@
 
                 <p:outputPanel id="carDetail" styleClass="panel-cont">
                     <p:panelGrid  styleClass="datos-ob" columns="2" rendered="#{not empty matriculaBean.selectedInscripcion}" >
-                        <h:outputLabel value="Número de Matrícula: "/>
-                        <p:inputText value="#{matriculaBean.numM}" >
-                            <p:clientValidator event="keyup"/>
-                        </p:inputText>
+                       
                         <h:outputLabel value="Observacion: "/>
                         <p:inputTextarea rows="5" cols="30"  counter="display" maxlength="255" value="#{matriculaBean.observacion}" counterTemplate="{0} characters remaining." autoResize="false" />
                         <h:inputHidden/>

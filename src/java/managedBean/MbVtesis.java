@@ -343,8 +343,11 @@ public class MbVtesis implements Serializable{
                                 tes.getFechaSubida() , 
                                 tes.getRuta(),
                                 tes.getResumen(), 
-                                null,
-                               null));
+                                tes.getMaestria(),
+                                tes.getTutor(),
+                                tes.getEstado(),
+                                tes.getTitulacion().getId(),
+                                tes.getUsuario().getId()));
                       //LstTablatesis.add(new ClsTablaTesis(id, autor, titulo, fechaSubida, fechaSubida, ruta, resumen, idMaestria, idEstudiante));
                     }
                 }

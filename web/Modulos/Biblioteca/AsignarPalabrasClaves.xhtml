@@ -1,128 +1,188 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"      
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:h5="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:jsf="http://xmlns.jcp.org/jsf"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
+        <h:outputScript library="js" name="calendar_es.js" />
+        <h:outputScript name="jquery/jquery.js" library="primefaces" />
     </h:head>
     <h:body>
-        <ui:composition template="/templates/masterLayout.xhtml">
-            <ui:define name="content">
-                <h:outputStylesheet name="inscripcion.css" library="css"/>
-                <h:outputStylesheet name="fileinput.css" library="css"/>
-                <h:outputScript name="fileinput.min.js" library="js"/>
-                <h:outputScript name="verFoto.js" library="js"/>
-                <h:form id="form" enctype="multipart/form-data" >
-                    <p:growl id="messages" showDetail="true" />
-                    <div class="ui-fluid">
-                        <h1 style="text-align: center;">Registrar Tesis</h1> 
-                        <p:tab id="tesis" title="RegistrarTesis">
-                            <p:panel header="Registrar Tesis">                            
-                            <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
-                                <p:outputLabel for="txtTitulo" styleClass="labelDerecha" value="Título:" />
-                                <p:inputText id="txtTitulo" value="#{mbVtesis.tTesis.titulo}" maxlength="300" >
-                                    <f:validateLength minimum="5" maximum="300" />
-                                </p:inputText> 
-                                
-                                <p:outputLabel for="cboAutor" value="Autor:" styleClass="labelDerecha"/>
-                                <p:selectOneMenu id="cboAutor" value="#{mbVtesis.clsestudiante}" 
-                                                 converter="themeConverterEstudiante" required="true"
-                                                 effect="fade" var="t" filter="true" filterMatchMode="contains">
-                                    <f:selectItems value="#{mbVtesis.lstestudiante}" var="VarTesis" 
-                                                   itemLabel="#{VarTesis.nombres}" itemValue="#{VarTesis}" />
-                                    <p:column style="width:10%">                
-                                        <h:outputText styleClass="ui-theme ui-theme-#{t.apellidos}" />
-                                    </p:column>
-                                    <p:column>
-                                        <h:outputText value="#{t.nombres}" />
-                                    </p:column>
-                                </p:selectOneMenu>
-                                
-                                <p:outputLabel for="txtFechaS" styleClass="labelDerecha" value="Fecha sustentación:" />
-                                <p:calendar id="txtFechaS" value="#{mbVtesis.tTesis.fechaSustentacion}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" /> 
-                                <p:outputLabel for="txtRuta" styleClass="labelDerecha" value="Ruta:" />   
-                                
-                                <p:inputText id="txtRuta" value="#{mbVtesis.tTesis.ruta}" maxlength="100" >
-                                    <f:validateLength minimum="5" maximum="100" />
-                                </p:inputText>
-                                
-                                <p:outputLabel for="txtResumen" styleClass="labelDerecha" value="Resumen:" />
-                                <p:inputText id="txtResumen" value="#{mbVtesis.tTesis.resumen}" maxlength="300" >
-                                    <f:validateLength minimum="5" maximum="300" />
-                                </p:inputText>
-                                
-                                <p:outputLabel for="cboMaestria" value="Maestría:" styleClass="labelDerecha"/>
-                                <p:selectOneMenu id="cboMaestria" value="#{mbVtesis.clsMaestria}" 
-                                         converter="themeConverterMaestria" required="true" 
-                                         effect="fade" var="tmaestria" filter="true" filterMatchMode="contains">
-                                    <f:selectItems value="#{mbVtesis.lstThemeMaestria}" var="VarMaestria" 
-                                           itemLabel="#{VarMaestria.displayName}" itemValue="#{VarMaestria}" />
-                                    <p:column style="width:10%">                
-                                        <h:outputText styleClass="ui-theme ui-theme-#{tmaestria.name}" />
-                                    </p:column>
-                                    <p:column>
-                                        <h:outputText value="#{tmaestria.displayName}" />
-                                    </p:column>
-                                </p:selectOneMenu>
-                                
-                                <p:outputLabel for="txtFechaSubid" styleClass="labelDerecha" value="Fecha subida:" />
-                                <p:calendar id="txtFechaSubid" value="#{mbVtesis.tTesis.fechaSubida}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" />
-                                <p:commandButton id="mostrar" value="Guardar"  
-                                                 icon="ui-icon-disk"
-                                                 disabled="false"
-                                                 style="display:block;margin: auto;"
-                                                 actionListener="#{mbVtesis.registrarTesis()}" >
-                                    <p:effect type="fade" event="click" for="datos" >
-                                        <f:param name="mode" value="'show'" />
-                                    </p:effect>
-                                </p:commandButton>
-                                
-                            </p:panelGrid>
-                        </p:panel>
-                        </p:tab>
-                    </div>
-                    <p:panelGrid id="datos" style="display:none;" >
-                            <p:tab id="personal" title="Palabras claves">
-                            <p:panel header="Palabras claves">
-                                <p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">                                   
-                                    <p:outputLabel for="txtPc" value="Palabra Clave" styleClass="labelDerecha"/>                      
-                                    <p:inputText id="txtPc"  value="#{mbVtesis.tpalabrasclave.descripcion}" placeholder="palabra clave" maxlength="30" >
-                                        <f:validateLength minimum="5" maximum="30" />
-                                    </p:inputText>
-                                    
-                                    <p:commandButton process="@this" value="Guardar"  
-                                                     styleClass="anchoBotones" icon="ui-icon-disk"
-                                                     style="display:block;margin: auto;"
-                                                     actionListener="#{mbVtesis.registrarTesis()}" >
-                                    </p:commandButton>
-                                </p:panelGrid>
-                            </p:panel>
-                        </p:tab>
-                                
-                    </p:panelGrid>>
-                    
-            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
-            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-                <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
-            </p:dialog>
-                    
-                </h:form>
-                <h:outputScript name="jquery.bootstrap.wizard.min.js" library="js"/>
-                <h:outputScript name="jquery.validate.min.js" library="js"/>
-                <h:outputScript name="messages_es.min.js" library="js"/>
-                <h:outputScript name="validarInscripcion.js" library="js"/> 
-                <h:outputScript name="vistaPrevia.js" library="js"/> 
+        <div class="ui-fluid">
+            <h:form id="form">
+                <p:tab id="personal" title="RegistrarPalabrasClaves">
+                    <p:panel header="Registrar Palabras Claves">
+                        <p:growl id="msgs" showDetail="true" />
+                        <p:focus context="panel"/>
+                        <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
+                            
+                            <p:outputLabel for="cboMaestria" value="Título o Tema:" styleClass="labelDerecha"  />
+                            <p:selectOneMenu id="cboMaestria" value="#{mbVPalabrasClave.clsproyecto}" 
+                                             converter="themeConverterProyecto" required="true"
+                                             effect="fade" var="tProfesor" filter="true" filterMatchMode="contains">
+                                <f:selectItems value="#{mbVPalabrasClave.lstproyecto}" var="themeProf" 
+                                               itemLabel="#{themeProf.titulo}" itemValue="#{themeProf}" />
+                                <p:column style="width:10%">
+                                    <h:outputText styleClass="ui-theme ui-theme-#{tProfesor.titulo}" />
+                                </p:column>
 
-                <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
-            </ui:define>
-        </ui:composition>
-            
-        
+                                <p:column>
+                                    <h:outputText value="#{tProfesor.titulo}" />
+                                </p:column>
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel for="txt1" styleClass="labelDerecha" value="Palabra Clave 1:" />
+                            <p:inputText id="txt1" value="#{mbVPalabrasClave.palabra1}" maxlength="100" >
+                                <f:validateLength minimum="1" maximum="100" />
+                            </p:inputText>
+                            <p:outputLabel for="txt2" styleClass="labelDerecha" value="Palabra Clave 2:" />
+                            <p:inputText id="txt2" value="#{mbVPalabrasClave.palabra2}" maxlength="100" >
+                                <f:validateLength minimum="1" maximum="100" />
+                            </p:inputText>
+                            <p:outputLabel for="txt3" styleClass="labelDerecha" value="Palabra Clave 3:" />
+                            <p:inputText id="txt3" value="#{mbVPalabrasClave.palabra3}" maxlength="100" >
+                                <f:validateLength minimum="1" maximum="100" />
+                            </p:inputText>
+                            <p:outputLabel for="txt4" styleClass="labelDerecha" value="Palabra Clave 4:" />
+                            <p:inputText id="txt4" value="#{mbVPalabrasClave.palabra4}" maxlength="100" >
+                                <f:validateLength minimum="1" maximum="100" />
+                            </p:inputText>
+                            <p:outputLabel for="txt5" styleClass="labelDerecha" value="Palabra Clave 5:" />
+                            <p:inputText id="txt5" value="#{mbVPalabrasClave.palabra5}" maxlength="100" >
+                                <f:validateLength minimum="1" maximum="100" />
+                            </p:inputText>                            
+                            <h:outputText id="display" value="" />
+                            <p:commandButton id="mostrar" value="Guardar"  
+                                             update="@form"
+                                             styleClass="anchoBotones" icon="ui-icon-disk"
+                                             actionListener="#{mbVPalabrasClave.registrarPC()}" >
+                            </p:commandButton>
+
+
+
+                        </p:panelGrid>
+                    </p:panel>
+                </p:tab>
+                <br></br>
+                <p:panel id="panelTabla" style="height: 30%;">
+                    <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->   
+                    <p:dataTable class="tblDatos" id="tblMaestria" var="lstTbl" value="#{mbVMaestrias.lstTblMaestria}"
+                                 editable="true" scrollable="true" scrollHeight="150">
+                        <p:ajax event="rowEdit" listener="#{mbVMaestrias.onRowEdit}" update=":form:tblMaestria :form:msgs" />
+                        <p:ajax event="rowEditCancel" listener="#{mbVMaestrias.onRowCancel}" update=":form:msgs" />
+
+                        <p:column headerText="Maestria" style="width: 20%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.descripcionM}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:autoComplete readonly="true" style="width:100%" required="true" maxlength="150" value="#{lstTbl.descripcionM}" completeMethod="#{mbVMaestrias.completeText}" />
+                                    <!--<p:inputText value="#{lstTbl.descripcionM}" style="width:100%"/>-->
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Director" style="width: 20%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.nombresUsuarios}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:selectOneMenu value="#{mbVMaestrias.theme}" converter="themeConverter"
+                                                     effect="fade" var="t" filter="true" filterMatchMode="contains">
+                                        <f:selectItem itemLabel="#{lstTbl.nombresUsuarios}"/>
+                                        <f:selectItems value="#{mbVMaestrias.lstTheme}" var="theme" noSelectionValue="#{lstTbl.nombresUsuarios}" itemLabel="#{theme.displayName}" itemValue="#{theme}" />
+                                        <p:column style="width:10%">
+                                            <h:outputText styleClass="ui-theme ui-theme-#{t.name}" />
+                                        </p:column>
+
+                                        <p:column>
+                                            <h:outputText value="#{t.displayName}" />
+                                        </p:column>
+                                    </p:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="F. Resolución" style="width: 15%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.fechaResolucion}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:calendar id="txtFechaResol" locale="es" value="#{lstTbl.fechaResolucion}" effect="fold" pattern="dd-MM-yyyy" mask="true" >
+                                    </p:calendar>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="Resolución" style="width: 13%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.n_resolucion}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{lstTbl.n_resolucion}" maxlength="25" style="width:100%" label="text"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="F. Inicio" style="width: 13%;">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{lstTbl.fechaInicio}" />
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:calendar id="txtFechaInicio" onkeypress="return permite(event, 'none')" locale="es" value="#{lstTbl.fechaInicio}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" >
+                                        <p:ajax event="dateSelect" update="txtFechaFin" />
+                                        <p:ajax event="blur" update="txtFechaFin" />
+                                        <f:attribute name="txtFechaFin" value="#{lstTbl.fechaFin}"/>
+                                        <f:validator validatorId="primeDateRangeValidator" />
+                                    </p:calendar>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="F. Fin" style="width: 12%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.fechaFin}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:calendar id="txtFechaFin" mindate="#{lstTbl.fechaInicio}" locale="es" value="#{lstTbl.fechaFin}" onkeypress="return permite(event, 'none')" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" >
+                                        <f:attribute name="txtFechaInicio" value="#{lstTbl.fechaInicio}"/>
+                                        <f:validator validatorId="primeDateRangeValidator" />
+                                    </p:calendar>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Cupos" style="width: 7%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.cupo}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{lstTbl.cupo}" onkeypress="return isNumberKey(event)" style="width:100%" label="text">
+                                        <f:validateLongRange minimum="1"/>
+                                    </p:inputText>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Cuotas" style="width: 8%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.cuotas}"   /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{lstTbl.cuotas}" onkeypress="return isNumberKey(event)" style="width:100%" label="text">
+                                        <f:validateLongRange minimum="1"/>
+                                    </p:inputText>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column style="width:7%;">
+                            <p:rowEditor />   
+                        </p:column>
+                    </p:dataTable>
+                    <p:confirmDialog global="true" styleClass="change-position">
+                        <p:commandButton value="Confirmar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                        <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                    </p:confirmDialog>
+                </p:panel>
+            </h:form>
+        </div>
     </h:body>
 </html>
+

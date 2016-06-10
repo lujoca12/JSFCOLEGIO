@@ -16,109 +16,70 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
-    <body>        
+    <h:body>
+        <div>TODO write content</div>
         <ui:composition template="/templates/masterLayout.xhtml">
             <ui:define name="leftContent"></ui:define>
-            <ui:define name="content"> 
-                 <h:outputStylesheet name="inscripcion.css" library="css"/>
-                <h:outputStylesheet name="fileinput.css" library="css"/>
-                <h:outputScript name="fileinput.min.js" library="js"/>
-                <h:outputScript name="verFoto.js" library="js"/>
-        <div class="container">
-            <h2>BUSCAR "TESIS" POR MAESTRÍA</h2>  
-
-            <div id="browse_navigation" class="well text-center">
-                <form method="get" action="">
-                    <input type="hidden" name="type" value="author"/>
-                    <input type="hidden" name="order" value="ASC"/>
-                    <input type="hidden" name="rpp" value="5"/>  
-                    <div class="row">        
-                        <div class="col-md-8">
-                            <a>0-9</a>  
-                            <a><span>A</span></a>
-                            <a><span>B</span></a> 
-                            <a><span>C</span></a> 
-                            <a><span>D</span></a> 
-                            <a><span>E</span></a>                              
-                            <a><span>F</span></a>                
-                            <a><span>H</span></a>                
-                            <a><span>J</span></a>                
-                            <a><span>K</span></a>                
-                            <a><span>L</span></a>                
-                            <a><span>M</span></a>                
-                            <a><span>N</span></a>                
-                            <a><span>O</span></a>                
-                            <a><span>P</span></a>                
-                            <a><span>Q</span></a>                
-                            <a><span>R</span></a>                
-                            <a><span>S</span></a>                
-                            <a><span>T</span></a>                
-                            <a><span>U</span></a>                
-                            <a><span>V</span></a>                
-                            <a><span>W</span></a>                
-                            <a><span>X</span></a>                
-                            <a><span>Y</span></a>                
-                            <a><span>Z</span></a>
-                        </div>
-
-                            <div class="col-md-3">     
-                                <input class="form-control" placeholder="O introducir las primeras letras:" type="text" name="starts_with"/>
+            <ui:define name="content">  
+                <h:outputStylesheet name="green.css" library="css"/>
+                <h:outputScript name="ajax.js" library="js" />
+                <h:outputScript name="jquery/jquery.js" library="primefaces" />
+                <br></br>
+                <br></br>
+                <div class="ui-fluid">
+                    <h:form id="form">
+                        <p:growl id="msgs" showDetail="true" />
+                        <p:tab id="personal" title="ConsultaTesis"> 
+                        </p:tab>
+                        <div class="panel panel-primary" style="margin-left: 20px; margin-right: 20px;">
+                            <div class="panel-heading" >
+                                Consulta de Tesis por "Maestría"
                             </div>
-                            <div class="col-md-1">
-                                <input type="submit" class="btn btn-primary" value="Buscar" />
+                            <p:tab title="Consulta de Tesis">
+                                <p:remoteCommand name="test" update="form,msgs" actionListener="#{mbVtesis.consultarTesisMaestria()}"/>
+                                <p:panelGrid id="panel" columns="3" layout="grid" styleClass="ui-panelgrid-blank">
+                                    <p:outputLabel for="txtCedEstud" style="font-weight: bold !important;" styleClass="labelDerecha" value="Autor:" />
+                                    <p:inputText id="txtCedEstud" value="#{mbVtesis.maestria}" required="true" />
+                                    <p:commandButton value="Listar" update="form,msgs" styleClass="anchoBotonesConsulta" icon="ui-icon-search"
+                                                     actionListener="#{mbVtesis.consultarTesisMaestria()}" />
+                                </p:panelGrid>
+                            </p:tab>  
+                        </div>
+                        <p:panel id="panelBusquedaGenerada">
+                            <div class="panel panel-primary" >
+                                <p:panel style="padding: 0 !important; height: 50%" >
+                                    <p:separator />
+                                    <p:dataTable class="tblNotas DataTable datatableHover" scrollable="false" 
+                                                 var="notas" value="#{mbVtesis.lstTablatesis}" 
+                                                 emptyMessage="No hay datos"
+                                                 paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 rowsPerPageTemplate="5,10,15">
+                                        <p:column headerText="Autor" style="text-align: center;">
+                                            <h:outputText value="#{notas.autor}" />
+                                        </p:column>
+                                        <p:column headerText="Fecha sustentacion" style="text-align: center;">
+                                            <h:outputText value="#{notas.fechaSus}" />
+                                        </p:column>
+                                        <p:column headerText="Tesis" style="text-align: center;">
+                                            <h:outputText value="#{notas.titulo}" />
+                                        </p:column>
+                                        <p:column headerText="Resumen" style="text-align: center;">
+                                            <h:outputText value="#{notas.resumen}" />
+                                        </p:column>
+                                        
+                                        <p:column headerText="maestria" style="text-align: center;">
+                                            <h:outputText value="#{notas.ruta}" />
+                                        </p:column>
+                                    
+                                </p:dataTable>
+                                </p:panel>
                             </div>
-                    </div>
-                </form>
-            </div>	
-
-            <div id="browse_controls" class="well text-center">
-                <form method="get" action="/handle/123456789/1/browse">
-                    <input type="hidden" name="type" value="author"/>
-                    <div class="row">
-                        <div class="col-md-4 col-md-offset-2">
-                            <label for="order">Ordenar:</label>
-                            <select class="form-control" name="order">
-                                <option value="ASC" selected="selected">Ascendente</option>
-                                <option value="DESC" >Descendente</option>
-                            </select>
-                        </div>    
-                        <div class="col-md-4">
-                            <label for="rpp">Resultados por página</label>
-                            <select class="form-control" name="rpp">                	
-                        <option value="5" >5</option>                	
-                        <option value="10" >10</option>                	
-                        <option value="15" >15</option>                	
-                        <option value="20" selected="selected">20</option>                	
-                        <option value="25" >25</option>                	
-                        <option value="30" >30</option>                	
-                        <option value="35" >35</option>                	
-                        <option value="40" >40</option>                	
-                        <option value="45" >45</option>                	
-                        <option value="50" >50</option>                
-                            </select>
-                        </div>
-                        <div class="col-md-1">
-                            <label for="rpp">.</label>
-                            <input type="submit" class="btn btn-primary pull-right" name="submit_browse" value="Update"/>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            
-             <div class="panel panel-primary">
-                        <div class="panel-heading text-center"> 
-                            Mostrando resultados  
-                        </div>
-             </div>
-            <table align="center" class="table" summary="This table browses all dspace content">
-                <colgroup><col width="80" /><col width="130" /><col width="60%" /><col width="40%" /></colgroup>
-                <tr>
-                </tr>
-            </table>
-        </div>
+                        </p:panel>
+                    </h:form>
+                </div>
         
-            </ui:define>
+        </ui:define>
         </ui:composition>
-        
-    </body>
+    </h:body>
 </html>

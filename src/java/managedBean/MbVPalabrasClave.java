@@ -5,13 +5,18 @@
  */
 package managedBean;
 
+import Clases.ClsTitulacion;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import Dao.DaoTesis;
+import Dao.*;
+import Dao.DaoTitulacion;
 import Pojo.*;
+import Clases.*;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -21,61 +26,148 @@ import Pojo.*;
 @ViewScoped
 public class MbVPalabrasClave implements Serializable{
     
+    private int idpc;
+    private int idproyecto;
+    private String palabra1 = "";
+    private String palabra2 = "";
+    private String palabra3 = "";
+    private String palabra4 = "";
+    private String palabra5 = "";
     
-    private String palabra = "";
-    private String descripcion = "";
-    private String autor="";
-    private List<String> lstTbPalabras;
+    Proyecto tproyecto;
+    PalabrasClave tpalabrasclave;
+    
+    ClsPalabrasClave clspalabrasclaves;
+    private List<ClsPalabrasClave> lstpalabrasclaves;
+    
+    ClsTablaTesis clsproyecto;
+    private List<ClsTablaTesis> lstproyecto;
 
     /**
      * Creates a new instance of MbVPalabrasClave
      */
     public MbVPalabrasClave() {
+        llenarCboProyecto();
+        tpalabrasclave= new PalabrasClave();
+        tproyecto= new Proyecto();
+    }
+    private void vaciarCajas(){
+        tproyecto= new Proyecto();
+        tpalabrasclave = new PalabrasClave();
+        palabra1="";
     }
 
-    public String getPalabra() {
-        return palabra;
+    public String getPalabra1() {
+        return palabra1;
+    }
+    public void setPalabra1(String palabra1) {
+        this.palabra1 = palabra1;
+    }
+    public String getPalabra2() {
+        return palabra2;
+    }
+    public void setPalabra2(String palabra2) {
+        this.palabra2 = palabra2;
+    }
+    public String getPalabra3() {
+        return palabra3;
+    }
+    public void setPalabra3(String palabra3) {
+        this.palabra3 = palabra3;
+    }
+    public String getPalabra4() {
+        return palabra4;
+    }
+    public void setPalabra4(String palabra4) {
+        this.palabra4 = palabra4;
+    }
+    public String getPalabra5() {
+        return palabra5;
+    }
+    public void setPalabra5(String palabra5) {
+        this.palabra5 = palabra5;
+    }
+    public ClsTablaTesis getClsproyecto() {
+        return clsproyecto;
+    }
+    public void setClsproyecto(ClsTablaTesis clsproyecto) {
+        this.clsproyecto = clsproyecto;
+    }
+    public List<ClsTablaTesis> getLstproyecto() {
+        return lstproyecto;
+    }
+    public void setLstproyecto(List<ClsTablaTesis> lstproyecto) {
+        this.lstproyecto = lstproyecto;
     }
 
-    public void setPalabra(String palabra) {
-        this.palabra = palabra;
-    }
-
-    public List<String> getLstTbPalabras() {
-        return lstTbPalabras;
-    }
-
-    public void setLstTbPalabras(List<String> lstTbPalabras) {
-        this.lstTbPalabras = lstTbPalabras;
-    }
+    public void llenarCboProyecto(){
+         this.lstproyecto = new ArrayList<ClsTablaTesis>();
+         try {
+            DaoTesis daoTmaestria = new DaoTesis();
             
-    public void consultarTesis() {
-        if (this.palabra == "") {
-        } else {
-            cargarTblTesis();
+            List<Proyecto> lstMaestria = daoTmaestria.getTodasProyectoxEstado("E");
+            this.lstproyecto.clear();
+            this.lstproyecto.add(new ClsTablaTesis(-1,"(Seleccione)"));
+            
+            for(Proyecto maestria: lstMaestria){
+                this.lstproyecto.add(new ClsTablaTesis(maestria.getId(),
+                        maestria.getTitulo()));
+            }
+        } catch (Exception ex) {
+            
         }
     }
     
-    public void cargarTblTesis(){
-       lstTbPalabras = new ArrayList<>();
-       try{
-           lstTbPalabras.clear();
-           DaoTesis daotesis = new DaoTesis();
-           List<Proyecto> lsttesis = daotesis.getProyectoPalabrasclaves(this.palabra);
-           daotesis = new DaoTesis();
-           if(lsttesis.size() > 0){
-               for(Proyecto tesis : lsttesis){
-                   lstTbPalabras.add(palabra);
-                   
-                   
-               }
-           }
-           
-           
-       }
-       catch (Exception ex){
-       }
-                
+    public void registrarPC(){
+        llenarCboProyecto();
+        boolean repetida = false;  
+        boolean msg = false;
+        //int i=0;
+                DaoTesis daotesis = new DaoTesis();
+            List<String> palabrasc = new ArrayList<String>();
+            palabrasc.add(palabra1);
+            palabrasc.add(palabra2);
+            palabrasc.add(palabra3);
+            palabrasc.add(palabra4);
+            palabrasc.add(palabra5);
+        try{
+            for(int i=0;i<5;i++){
+                tproyecto.setId(clsproyecto.getIdTesis());
+                tpalabrasclave.setProyecto(tproyecto);
+                tpalabrasclave.setEstado('G'); 
+                tpalabrasclave.setDescripcion(palabrasc.get(i).toString());  
+                msg = daotesis.registrarPalabrasClave(tpalabrasclave);              
+            }               
+        }
+        catch(Exception ex){
+            vaciarCajas();
+        }
+        
+            if(msg){
+                vaciarCajas();
+                msg=UpdateProyecto();
+                mensajesOk("Datos procesados bien");  
+            
+            }
+            else
+                mensajesError("error al intentar procesar");
+        
+    }
+    public boolean UpdateProyecto(){
+        boolean msg=false;
+        
+        tproyecto.setId(clsproyecto.getIdTesis());
+        
+        return msg;
+    }
+    
+     private void mensajesOk(String msg){
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje de la Aplicacion", msg);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+    private void mensajesError(String msg){
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje de la Aplicacion", msg);
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
     
 }

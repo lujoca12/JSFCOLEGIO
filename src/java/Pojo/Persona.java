@@ -12,10 +12,7 @@ public class Persona  implements java.io.Serializable {
 
 
      private int id;
-     private String cedula;
      private String nombres;
-     private String apellidos;
-     private String titulo;
      private String cargo;
      private Set tribunals = new HashSet(0);
 
@@ -26,12 +23,9 @@ public class Persona  implements java.io.Serializable {
     public Persona(int id) {
         this.id = id;
     }
-    public Persona(int id, String cedula, String nombres, String apellidos, String titulo, String cargo, Set tribunals) {
+    public Persona(int id, String nombres, String cargo, Set tribunals) {
        this.id = id;
-       this.cedula = cedula;
        this.nombres = nombres;
-       this.apellidos = apellidos;
-       this.titulo = titulo;
        this.cargo = cargo;
        this.tribunals = tribunals;
     }
@@ -43,13 +37,7 @@ public class Persona  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    public String getCedula() {
-        return this.cedula;
-    }
     
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
-    }
     public String getNombres() {
         return this.nombres;
     }
@@ -57,20 +45,7 @@ public class Persona  implements java.io.Serializable {
     public void setNombres(String nombres) {
         this.nombres = nombres;
     }
-    public String getApellidos() {
-        return this.apellidos;
-    }
     
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
-    public String getTitulo() {
-        return this.titulo;
-    }
-    
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
     public String getCargo() {
         return this.cargo;
     }
@@ -85,9 +60,6 @@ public class Persona  implements java.io.Serializable {
     public void setTribunals(Set tribunals) {
         this.tribunals = tribunals;
     }
-
-
-
 
 }
 

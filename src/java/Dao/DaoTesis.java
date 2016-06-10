@@ -166,4 +166,29 @@ public class DaoTesis implements InterfaceTesis{
         }       
         return band;
     }
+
+    @Override
+    public List<Proyecto> getTodasProyectoxEstado(String estado) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String hql="from Proyecto pr\n" +
+                "where pr.estado = '"+estado+"'";
+        Query query = sesion.createQuery(hql);
+
+        List<Proyecto> lstProyecto=(List<Proyecto>) query.list();
+        sesion.close();
+        return lstProyecto;
+    }
+
+    @Override
+    public List<Proyecto> getProyectoxMaestria(String maestria) throws Exception {
+        this.sesion= null;
+        this.tx= null;
+        iniciaOperacion();
+        String hql="from Proyecto as t where t.maestria like '%"+maestria+"%'";
+        Query query = sesion.createQuery(hql);
+        List<Proyecto> lsttesis=(List<Proyecto>) query.list();
+        return lsttesis;
+    }
 }

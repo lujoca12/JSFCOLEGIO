@@ -55,7 +55,7 @@
                         <h:outputText value="#{s.estudiante.nombres}" />
                     </p:column>
 
-                    <p:column headerText="Maestria">
+                    <p:column headerText="Maestria" sortBy="#{s.promocion.maestria.descripcion}">
                         <h:outputText value="#{s.promocion.maestria.descripcion}" />
                     </p:column>
 
@@ -63,11 +63,17 @@
                         <h:outputText value="#{s.promocion.descripcion}" />
                     </p:column>
 
-                    <p:column headerText="Fecha de Realizacion">
+                    <p:column headerText="Fecha de Realizacion" sortBy="#{s.fechaRealizacion}">
                         <h:outputText value="#{s.fechaRealizacion}" />
                     </p:column>
-                    <p:column style="width:32px;text-align: center">
-                        <p:commandButton update=":form:carDetail" oncomplete="PF('carDialog').show()" icon="ui-icon-search" title="View">
+                    <p:column headerText="Lugar de la Entrevista">
+                        <h:outputText value="#{s.lugarEntrevista}" />
+                    </p:column>
+                    <p:column headerText="Fecha de la Entrevista" sortBy="#{s.fechaEntrevista}">
+                        <h:outputText value="#{s.fechaEntrevista}" />
+                    </p:column>
+                    <p:column style="width:50px;text-align: center">
+                        <p:commandButton  update=":form:carDetail" oncomplete="PF('carDialog').show()" icon="ui-icon-search" title="View">
                             <f:setPropertyActionListener value="#{s}" target="#{asignarEntrevistaBean.selectedInscripcion}" />
                         </p:commandButton>
                     </p:column>
@@ -89,14 +95,14 @@
                             </p:column>
 
                             <p:column>
-                                <p:calendar value="#{asignarEntrevistaBean.fecha}" mode="inline" pattern="dd-MM-yyyy" locale="es"/>
+                                <p:calendar value="#{asignarEntrevistaBean.fecha}" mode="inline" pattern="dd-MM-yyyy" mindate="#{asignarEntrevistaBean.fechaActual}" locale="es"/>
                             </p:column>
                             <p:column >
                                 <h:outputLabel value="Hora : "/>
                             </p:column>
                             <p:column>
-                                <p:inputText id="txtHora" value="#{asignarEntrevistaBean.hora}"><f:validateLongRange minimum="0" maximum="23"/> </p:inputText>
-                                <p:slider for="txtHora" maxValue="23" />
+                                <p:inputText id="txtHora" value="#{asignarEntrevistaBean.hora}"><f:validateLongRange minimum="8" maximum="20"/> </p:inputText>
+                                <p:slider for="txtHora" minValue="8" maxValue="20" />
                             </p:column>
                             <p:column >
                                 <h:outputLabel value="Minutos : "/>
@@ -107,8 +113,13 @@
 
                             </p:column>
                         </p:panelGrid>
-                        <p:commandButton actionListener="#{asignarEntrevistaBean.enviarEmail()}" update="msgs solicitudes" oncomplete="PF('carDialog').hide()" value="Aceptar"/>
+                        <p:commandButton  actionListener="#{asignarEntrevistaBean.enviarEmail()}" update="msgs solicitudes" oncomplete="PF('carDialog').hide()" value="Aceptar"/>
                     </p:outputPanel>
+                </p:dialog>
+                <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                   <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
                 </p:dialog>
 
             </h:form>

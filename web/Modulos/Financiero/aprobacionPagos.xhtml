@@ -13,33 +13,60 @@
                 <h:outputStylesheet name="matricula.css" library="css"/>
                 <p:growl id="msgs" showDetail="true"/>
                 <p:dataTable style="margin-bottom: 25px;" id="solicitudes" var="s" value="#{pagosBean.lstPagos}"  rows="10" selectionMode="single" selection="#{pagosBean.selectedPago}" rowKey="#{s.id}"
-                             paginator="true"
+                             paginator="true" widgetVar="tablaPagos"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                             rowsPerPageTemplate="5,10,15">
+                             rowsPerPageTemplate="5,10,15" emptyMessage="No hay datos con el criterio dado" filteredValue="#{pagosBean.lstPagosFiltrada}">>
                     <f:facet name="header">
                         Listas de Pagos por Revisar
                     </f:facet>                      
-                    <p:column headerText="Apellidos">
+                    <p:column headerText="Apellidos" sortBy="#{s.matricula.solicitudInscripcion.estudiante.apellidos}">
                         <h:outputText value="#{s.matricula.solicitudInscripcion.estudiante.apellidos}" />
                     </p:column>
-                    <p:column headerText="Nombres">
+                    <p:column headerText="Nombres" sortBy="#{s.matricula.solicitudInscripcion.estudiante.nombres}">
                         <h:outputText value="#{s.matricula.solicitudInscripcion.estudiante.nombres}" />
                     </p:column>
 
-                    <p:column headerText="Maestria">
+                    <p:column headerText="Maestria" sortBy="#{s.matricula.solicitudInscripcion.promocion.maestria.descripcion}">
                         <h:outputText value="#{s.matricula.solicitudInscripcion.promocion.maestria.descripcion}" />
                     </p:column>
 
-                    <p:column headerText="Promocion">
+                    <p:column headerText="Promocion" sortBy="#{s.matricula.solicitudInscripcion.promocion.descripcion}">
                         <h:outputText value="#{s.matricula.solicitudInscripcion.promocion.descripcion}" />
                     </p:column>
 
-                    <p:column headerText="Fecha">
+                    <p:column headerText="Fecha" sortBy="#{s.fecha}">
                         <h:outputText value="#{s.fecha}" />
+                    </p:column>
+                    
+                    <p:column headerText="# Comprobante">
+                        <h:outputText value="#{s.idComprobante}" />
+                    </p:column>
+                    
+                    <p:column headerText="Tipo de Pago" sortBy="#{s.tipoPago.descripcion}" filterBy="#{s.tipoPago.id}" filterMatchMode="exact">
+                        <f:facet name="filter">
+                            <p:selectOneMenu onchange="PF('tablaPagos').filter()" >
+                                <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItem itemLabel="banco" itemValue="1" />
+                                <f:selectItem itemLabel="UTEQ" itemValue="2" />                                
+                            </p:selectOneMenu>
+                        </f:facet>
+                        <h:outputText value="#{s.tipoPago.descripcion}" />
                     </p:column>
                     
                     <p:column headerText="Valor">
                         <h:outputText value="#{s.valor}" />
+                    </p:column>
+                    
+                    <p:column headerText="Estado" filterBy="#{s.estado}" filterMatchMode="exact">
+                        <f:facet name="filter">
+                            <p:selectOneMenu onchange="PF('tablaPagos').filter()" >
+                                <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItem itemLabel="En Espera" itemValue="E" />
+                                <f:selectItem itemLabel="Aceptado" itemValue="A" />
+                                <f:selectItem itemLabel="Rechazado" itemValue="R" />
+                            </p:selectOneMenu>
+                        </f:facet>
+                        <h:outputText value="#{s.estado}" />
                     </p:column>
 
 

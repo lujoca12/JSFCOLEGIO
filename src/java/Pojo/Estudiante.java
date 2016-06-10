@@ -21,6 +21,7 @@ public class Estudiante  implements java.io.Serializable {
      private Date fechaNac;
      private Character sexo;
      private Character estadoCivil;
+     private Character etnia;
      private String paisOrigen;
      private Integer dscColegiatura;
      private Set datosDoms = new HashSet(0);
@@ -36,7 +37,7 @@ public class Estudiante  implements java.io.Serializable {
         this.id = id;
         this.cedPasaporte = cedPasaporte;
     }
-    public Estudiante(int id, String cedPasaporte, String nombres, String apellidos, String email, String celular, Date fechaNac, Character sexo, Character estadoCivil, String paisOrigen, Integer dscColegiatura, Set datosDoms, Set datosNacs, Set datosLabs, Set solicitudInscripcions) {
+    public Estudiante(int id, String cedPasaporte, String nombres, String apellidos, String email, String celular, Date fechaNac, Character sexo, Character estadoCivil, String paisOrigen, Integer dscColegiatura, Set datosDoms, Set datosNacs, Set datosLabs, Set solicitudInscripcions,Character etnia) {
        this.id = id;
        this.cedPasaporte = cedPasaporte;
        this.nombres = nombres;
@@ -52,8 +53,17 @@ public class Estudiante  implements java.io.Serializable {
        this.datosNacs = datosNacs;
        this.datosLabs = datosLabs;
        this.solicitudInscripcions = solicitudInscripcions;
+       this.etnia = etnia;
     }
-   
+
+    public Character getEtnia() {
+        return etnia;
+    }
+
+    public void setEtnia(Character etnia) {
+        this.etnia = etnia;
+    }    
+       
     public int getId() {
         return this.id;
     }

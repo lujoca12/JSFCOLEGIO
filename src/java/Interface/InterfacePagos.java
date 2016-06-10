@@ -15,6 +15,6 @@ import java.util.List;
  */
 public interface InterfacePagos {
     public List<Pago> getTodosPagos(int idMatricula) throws Exception ;
-    public TipoPago getTipoPagoBanco() throws Exception ;
+    public TipoPago getTipoPago(int ID) throws Exception ;
      public boolean registrar(Pago pago) throws Exception;
 }

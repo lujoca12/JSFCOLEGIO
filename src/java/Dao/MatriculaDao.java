@@ -42,8 +42,8 @@ public class MatriculaDao {
         boolean band = false;
         try {
             iniciaOperacion();
-            sesion.save(tMatricula);
-            sesion.update(SInscripcion);
+            sesion.saveOrUpdate(tMatricula);
+            sesion.saveOrUpdate(SInscripcion);
             tx.commit();
             sesion.close();
             band = true;
@@ -89,6 +89,60 @@ public class MatriculaDao {
 
         }
         return existe;
+    }
+    public Matricula obtenerMatricula(String Cedula, String Promocion) {
+        boolean existe = false;
+        
+            this.sesion = null;
+            this.tx = null;
+            iniciaOperacion();
+            String hql = "from Matricula m inner join fetch m.solicitudInscripcion si inner join fetch si.estudiante e "
+                    + "inner join fetch si.promocion p where e.cedPasaporte='" + Cedula + "' and p.id='" + Promocion + "' ";
+            Query query = sesion.createQuery(hql);
+            //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+            Matricula lst = (Matricula) query.uniqueResult();
+            sesion.close();
+        
+        return lst;
+    }
+    
+    public int obtenerNumeroMatricula(String Cedula, String Promocion) {
+        int n = 0;
+        
+            this.sesion = null;
+            this.tx = null;
+            iniciaOperacion();
+            String hql = "from Matricula m inner join fetch m.solicitudInscripcion si inner join fetch si.estudiante e "
+                    + "inner join fetch si.promocion p where e.cedPasaporte='" + Cedula + "' and p.id='" + Promocion + "' ";
+            Query query = sesion.createQuery(hql);
+            //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+            Matricula lst = (Matricula) query.uniqueResult();
+            if(lst != null){
+                n = Integer.valueOf(lst.getNMatricula());}
+            else{
+                n=0;}
+            sesion.close();
+        
+        return n;
+    }
+    
+     public List<SolicitudInscripcion> obtenerTodasSolicitudes() {
+        List<SolicitudInscripcion> lst = null;
+        try {
+            this.sesion = null;
+            this.tx = null;
+            iniciaOperacion();
+            String hql="from SolicitudInscripcion si inner join fetch si.estudiante e inner join fetch si.promocion pr inner join fetch pr.maestria m"
+                + "  order by si.fechaRealizacion asc";
+            Query query = sesion.createQuery(hql);
+            //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+            lst = (List<SolicitudInscripcion>) query.list();
+            
+            sesion.close();
+        } catch (Exception ex) {
+
+        }
+        return lst;
     }
 
     public int VerificarNMatricula() {

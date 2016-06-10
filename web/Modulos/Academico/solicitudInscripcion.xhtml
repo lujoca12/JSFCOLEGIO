@@ -92,9 +92,21 @@
                                         <f:validateRegex pattern="[a-zA-Z ]+$"/>
                                         <f:validateLength  maximum="50" />
                                     </p:inputText>
+                                    
+                                    <h:outputLabel for="etnia" value="Etnia: " />
+                                    <h:selectOneMenu id="etnia" class="form-control" value="#{inscripcionBean.estudiante.etnia}">
+                                        <f:selectItem itemLabel="Indígena" itemValue="1" />
+                                        <f:selectItem itemLabel="Afroecuatoriano" itemValue="2" />
+                                        <f:selectItem itemLabel="Negro" itemValue="3" />
+                                        <f:selectItem itemLabel="Mulato" itemValue="4" />
+                                        <f:selectItem itemLabel="Montubio" itemValue="5" />
+                                        <f:selectItem itemLabel="Mestizo" itemValue="6" />
+                                        <f:selectItem itemLabel="Blanco" itemValue="7" />
+                                        <f:selectItem itemLabel="Otro" itemValue="8" />
+                                    </h:selectOneMenu>
 
                                     <h:outputLabel for="fNac" value="Fecha de Nacimiento: " />
-                                    <p:calendar  id="fNac" required="true"  navigator="true" mask="true" value="#{inscripcionBean.estudiante.fechaNac}" pattern="dd/MM/yyyy" mindate="01/01/1940" maxdate="#{validadorFecha.fechaMax}"  />                                  
+                                    <p:calendar  id="fNac" required="true"  navigator="true" mask="true" value="#{inscripcionBean.estudiante.fechaNac}" pattern="dd/MM/yyyy" mindate="01/01/1940"   />                                  
 
                                     <h:outputLabel for="email" value="Email: " />
                                     <p:inputText  required="true" id="email"  class="form-control  " value="#{inscripcionBean.estudiante.email}">
@@ -102,12 +114,12 @@
                                     </p:inputText>
                                     
                                     <h:outputLabel for="celular" value="Celular: " />
-                                    <p:inputMask id="celular"  required="true"  class="form-control" mask="9999999999" value="#{inscripcionBean.estudiante.celular}"/>
+                                    <p:inputMask id="celular"  required="true"  class="form-control" mask="0999999999" value="#{inscripcionBean.estudiante.celular}"/>
                                     
                                     <h:outputLabel for="sexo" value="Sexo: " />
                                     <h:selectOneMenu id="sexo" class="form-control" value="#{inscripcionBean.estudiante.sexo}" >
-                                        <f:selectItem itemLabel="Masculino" itemValue="M" />
-                                        <f:selectItem itemLabel="Femenino" itemValue="F" />
+                                        <f:selectItem itemLabel="Masculino" itemValue="1" />
+                                        <f:selectItem itemLabel="Femenino" itemValue="2" />
                                     </h:selectOneMenu>
                                     
                                     <h:outputLabel for="paisO" value="País de Origen: "/>
@@ -180,7 +192,7 @@
                                     </p:inputText>
 
                                     <h:outputLabel for="telefono" value="Teléfono: " />
-                                    <p:inputMask id="telefono"  required="true" class="form-control" mask="999999999" value="#{inscripcionBean.datosDom.telefono}"/>
+                                    <p:inputMask id="telefono"  required="true" class="form-control" mask="099999999" value="#{inscripcionBean.datosDom.telefono}"/>
 
                                 </h:panelGrid>
                             </p:panel>
@@ -220,7 +232,7 @@
                                     </p:inputText>
 
                                     <h:outputLabel for="telefonoTra" value="Teléfono: " />
-                                    <p:inputMask id="telefonoTra"  required="true" class="form-control" mask="999999999" value="#{inscripcionBean.datosLab.telefono}"/>
+                                    <p:inputMask id="telefonoTra"  required="true" class="form-control" mask="099999999" value="#{inscripcionBean.datosLab.telefono}"/>
 
                                     <h:outputLabel for="direccionTra" value="Dirección: " />
                                     <p:inputText  required="true" id="direccionTra" class="form-control " value="#{inscripcionBean.datosLab.direccion}">
@@ -267,7 +279,7 @@
                                         </h:selectOneMenu>
                                     </h:panelGroup>
                                     <h:outputLabel for="nregistro" value="Número de registro del Senecyt: " />
-                                    <p:inputText  required="true" id="nregistro" class="form-control " value="#{inscripcionBean.numeroSenecyt}">
+                                    <p:inputText  id="nregistro" class="form-control " value="#{inscripcionBean.numeroSenecyt}">
                                         <f:validateLength maximum="30"/>
                                     </p:inputText>
 

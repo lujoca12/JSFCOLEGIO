@@ -13,8 +13,11 @@
         <property name="descripcion" type="string">
             <column name="descripcion" length="50" />
         </property>
-        <property name="codigo" type="string">
-            <column name="codigo" length="5" />
+        <property name="codigoLetra" type="string">
+            <column name="codigo_letra" length="5" />
+        </property>
+        <property name="codigo" type="java.lang.Integer">
+            <column name="codigo" />
         </property>
         <set name="universidads" table="universidad" inverse="true" lazy="true" fetch="select">
             <key>

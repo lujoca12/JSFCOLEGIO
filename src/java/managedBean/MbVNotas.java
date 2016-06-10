@@ -83,7 +83,16 @@ public class MbVNotas implements Serializable {
     private ClsNotas selectedNota;
     private String idComprobante;
     private BigDecimal valor;
+    private int idTipoPago=1;
 
+    public int getIdTipoPago() {
+        return idTipoPago;
+    }
+
+    public void setIdTipoPago(int idTipoPago) {
+        this.idTipoPago = idTipoPago;
+    }
+    
     public String getIdComprobante() {
         return idComprobante;
     }
@@ -792,7 +801,7 @@ public class MbVNotas implements Serializable {
 
     public void guardarPago() {
         try {
-            if ((file != null && valor != null) && valor.doubleValue() > 0) {
+            if ((!file.getFileName().equals("") && valor != null) && valor.doubleValue() > 0) {
                 PagosDao pDao = new PagosDao();
                 Matricula m = new Matricula();
                 pago = new Pago();
@@ -806,7 +815,7 @@ public class MbVNotas implements Serializable {
                 Date dateobj = new Date();
                 String nombreCarpeta = selectedNota.getNombresEstudiante().trim();
                 String maest = removeCaractEspeciales(selectedNota.getDescripMaestria()).trim();
-                File directorio = new File("d:/Postgrado/pagos/" + maest + "/" + selectedNota.getIdMatricula() + "-" + nombreCarpeta + "/");
+                File directorio = new File("c:/Postgrado/pagos/" + maest + "/" + selectedNota.getIdMatricula() + "-" + nombreCarpeta + "/");
                 if (!directorio.exists()) {
                     directorio.mkdirs();
                 }
@@ -816,7 +825,7 @@ public class MbVNotas implements Serializable {
                 InputStream input = file.getInputstream();
                 Files.copy(input, ruta, StandardCopyOption.REPLACE_EXISTING);
                 pago.setMatricula(m);
-                pago.setTipoPago(pDao.getTipoPagoBanco());
+                pago.setTipoPago(pDao.getTipoPago(idTipoPago));
                 pago.setRutaComprobante(ruta.toString());
                 pDao.registrar(pago);
 
@@ -826,20 +835,21 @@ public class MbVNotas implements Serializable {
                 valor = BigDecimal.valueOf(0.00);
                 FacesMessage message = new FacesMessage("Error", "Ingrese datos");
                 FacesContext.getCurrentInstance().addMessage(null, message);
-            }
-            idComprobante = "";
-            valor = BigDecimal.valueOf(0.00);
-            file = null;
+            }           
         } catch (IOException ex) {
             Logger.getLogger(MbVNotas.class.getName()).log(Level.SEVERE, null, ex);
             FacesMessage message = new FacesMessage("Error", ex.toString());
             System.out.println(ex.toString());
             FacesContext.getCurrentInstance().addMessage(null, message);
         } catch (Exception ex) {
-            Logger.getLogger(MbVNotas.class.getName()).log(Level.SEVERE, null, ex);
-            //mentira revisar xq file es null !!!
+            Logger.getLogger(MbVNotas.class.getName()).log(Level.SEVERE, null, ex);            
+            FacesMessage message = new FacesMessage("Error", ex.toString());
             System.out.println(ex.toString());
+            FacesContext.getCurrentInstance().addMessage(null, message);
         }
+         idComprobante = "";
+            valor = BigDecimal.valueOf(0.00);
+            file = null;
     }
 
     public String removeCaractEspeciales(String input) {

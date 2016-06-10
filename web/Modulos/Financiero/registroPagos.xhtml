@@ -100,16 +100,25 @@
                                 </p:panel>
                             </div>
                         </p:panel>
-                        
+
 
                         <p:dialog header="Car Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                             <p:outputPanel id="carDetail" style="text-align:center;">
                                 <p:panelGrid  columns="2"  >
                                     <p:column >
+                                        <h:outputLabel value="Tipo de Pago: "/>
+                                    </p:column>
+                                    <p:column >
+                                        <p:selectOneRadio  id="tipoPag" value="#{mbVNotas.idTipoPago}" >
+                                            <f:selectItem itemLabel="Banco" itemValue="1"  />
+                                            <f:selectItem itemLabel="UTEQ" itemValue="2" />                                        
+                                        </p:selectOneRadio>
+                                    </p:column>
+                                    <p:column >
                                         <h:outputLabel value="Id del Comprobante: "/>
                                     </p:column>
                                     <p:column >
-                                        <h:inputText  value="#{mbVNotas.idComprobante}"  />
+                                        <h:inputText   value="#{mbVNotas.idComprobante}"  />
                                     </p:column>
 
                                     <p:column >
@@ -125,7 +134,7 @@
                                         <h:outputLabel value="Comprobante : "/>
                                     </p:column>
                                     <p:column>
-                                        <p:fileUpload mode="simple" value="#{mbVNotas.file}" accept=".jpg,.png" />                                  
+                                        <p:fileUpload mode="simple"  value="#{mbVNotas.file}" accept=".jpg,.png" />                                  
                                     </p:column>
 
                                 </p:panelGrid>

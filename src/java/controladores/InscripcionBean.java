@@ -641,7 +641,7 @@ public class InscripcionBean implements Serializable {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date dateobj = new Date();
             String nombreCarpeta = (descripcionMaetria + "-" + descripcionPromo + "-" + estudiante.getApellidos() + " " + estudiante.getNombres() + "-" + df.format(dateobj).replaceAll(":", "-")).trim();
-            File directorio = new File("d:/Postgrado/inscripciones/requisitos/" + nombreCarpeta + "/");
+            File directorio = new File("c:/Postgrado/inscripciones/requisitos/" + nombreCarpeta + "/");
             if (!directorio.exists()) {
                 directorio.mkdirs();
             }

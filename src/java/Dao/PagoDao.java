@@ -92,8 +92,8 @@ public class PagoDao {
         iniciaOperacion();
        
         String hql="from Pago p inner join fetch p.matricula m inner join fetch m.solicitudInscripcion si "
-                + "inner join fetch si.estudiante inner join fetch si.promocion pr inner join fetch pr.maestria m"
-                + " where p.estado ='E'";
+                + "inner join fetch si.estudiante inner join fetch si.promocion pr inner join fetch pr.maestria m inner join fetch p.tipoPago"
+                + " order by p.fecha";
        
         Query query = sesion.createQuery(hql);
         //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);

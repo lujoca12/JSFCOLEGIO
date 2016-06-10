@@ -34,6 +34,9 @@
         <property name="estadoCivil" type="java.lang.Character">
             <column name="estado_civil" length="1" />
         </property>
+        <property name="etnia" type="java.lang.Character">
+            <column name="etnia_id" length="1" />
+        </property>
         <property name="paisOrigen" type="string">
             <column name="pais_origen" length="25" />
         </property>

@@ -43,6 +43,15 @@ public class PagosBean implements Serializable {
     private Pago pago;
     private List<Archivos> lstArchivos;
     private List<ClsArchivos> archivos;
+    private List<Pago> lstPagosFiltrada;
+
+    public List<Pago> getLstPagosFiltrada() {
+        return lstPagosFiltrada;
+    }
+
+    public void setLstPagosFiltrada(List<Pago> lstPagosFiltrada) {
+        this.lstPagosFiltrada = lstPagosFiltrada;
+    }
 
     public List<ClsArchivos> getArchivos() {
         return archivos;
@@ -125,14 +134,15 @@ public class PagosBean implements Serializable {
         try {
             pDao = new PagoDao();
             selectedPago.setEstado('A');
-            if(pDao.insertarPago(selectedPago)){
-            FacesMessage message = new FacesMessage("Succesful", "Datos guardados");
-            FacesContext.getCurrentInstance().addMessage(null, message);
-            }else{
+            if (pDao.insertarPago(selectedPago)) {
+                FacesMessage message = new FacesMessage("Succesful", "Datos guardados");
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            } else {
                 FacesMessage message = new FacesMessage("Erorr", "Error al guardarlos datos");
-            FacesContext.getCurrentInstance().addMessage(null, message);
+                FacesContext.getCurrentInstance().addMessage(null, message);
             }
-            lstPagos.remove(selectedPago);
+            lstPagos.clear();
+            lstPagos = pDao.getPagosAprobar();
             selectedPago = null;
         } catch (Exception ex) {
             FacesMessage message = new FacesMessage("Erorr", "Error al guardar los datos");
@@ -144,14 +154,15 @@ public class PagosBean implements Serializable {
         try {
             pDao = new PagoDao();
             selectedPago.setEstado('R');
-            if(pDao.insertarPago(selectedPago)){
-            FacesMessage message = new FacesMessage("Succesful", "Datos guardados");
-            FacesContext.getCurrentInstance().addMessage(null, message);
-            }else{
+            if (pDao.insertarPago(selectedPago)) {
+                FacesMessage message = new FacesMessage("Succesful", "Datos guardados");
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            } else {
                 FacesMessage message = new FacesMessage("Erorr", "Error al guardar los datos");
-            FacesContext.getCurrentInstance().addMessage(null, message);
+                FacesContext.getCurrentInstance().addMessage(null, message);
             }
-            lstPagos.remove(selectedPago);
+            lstPagos.clear();
+            lstPagos = pDao.getPagosAprobar();
             selectedPago = null;
         } catch (Exception ex) {
             FacesMessage message = new FacesMessage("Erorr", "Error al guardar los datos");

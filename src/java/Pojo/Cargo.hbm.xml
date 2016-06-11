@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="Pojo.Cargo" table="cargo" schema="public" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="sequence" >
+                <param name="sequence">cargo_id_seq</param>
+            </generator>
+            <property name="descripcion" type="string">
+                <column name="descripcion" length="255" />
+            </property>
+            <property name="estado" type="java.lang.Character">
+                <column name="estado" length="1" />
+            </property>
+            <set name="personas" table="persona" inverse="true" lazy="true" fetch="select">
+                <key>
+                    <column name="id_cargo" not-null="true" />
+                </key>
+                <one-to-many class="Pojo.Persona" />
+            </set>
+        </id>
+    </class>
+</hibernate-mapping>

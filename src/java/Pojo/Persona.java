@@ -12,8 +12,11 @@ public class Persona  implements java.io.Serializable {
 
 
      private int id;
+     private String cedula;
      private String nombres;
-     private String cargo;
+     private String apellidos;
+     private String titulo;
+     private Cargo cargo;
      private Set tribunals = new HashSet(0);
 
     public Persona() {
@@ -23,13 +26,17 @@ public class Persona  implements java.io.Serializable {
     public Persona(int id) {
         this.id = id;
     }
-    public Persona(int id, String nombres, String cargo, Set tribunals) {
-       this.id = id;
-       this.nombres = nombres;
-       this.cargo = cargo;
-       this.tribunals = tribunals;
+
+    public Persona(int id, String cedula, String nombres, String apellidos, String titulo, Cargo cargo,Set tribunals) {
+        this.id = id;
+        this.cedula = cedula;
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.titulo = titulo;
+        this.cargo = cargo;
+        this.tribunals = tribunals;
     }
-   
+       
     public int getId() {
         return this.id;
     }
@@ -45,14 +52,7 @@ public class Persona  implements java.io.Serializable {
     public void setNombres(String nombres) {
         this.nombres = nombres;
     }
-    
-    public String getCargo() {
-        return this.cargo;
-    }
-    
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
-    }
+        
     public Set getTribunals() {
         return this.tribunals;
     }
@@ -60,6 +60,40 @@ public class Persona  implements java.io.Serializable {
     public void setTribunals(Set tribunals) {
         this.tribunals = tribunals;
     }
+
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public Cargo getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(Cargo cargo) {
+        this.cargo = cargo;
+    }
+    
+    
 
 }
 

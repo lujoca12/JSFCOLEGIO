@@ -8,12 +8,21 @@
             <column name="id" />
             <generator class="increment" />
         </id>
+        <property name="cedula" type="string">
+            <column name="cedula" length="10" />
+        </property> 
         <property name="nombres" type="string">
             <column name="nombres" length="50" />
-        </property>
-        <property name="cargo" type="string">
-            <column name="cargo" length="100" />
-        </property>
+        </property> 
+         <property name="apellidos" type="string">
+            <column name="apellidos" length="50" />
+        </property>  
+        <property name="titulo" type="string">
+            <column name="titulo" length="20" />
+        </property>        
+        <many-to-one name="cargo" class="Pojo.Cargo" fetch="select">
+            <column name="id_cargo" not-null="true" />
+        </many-to-one>
         <set name="tribunals" table="tribunal" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="id_persona" />

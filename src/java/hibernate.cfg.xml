@@ -49,5 +49,6 @@
     <mapping resource="Pojo/TipoTitulacion.hbm.xml"/>
     <mapping resource="Pojo/TipoUsuario.hbm.xml"/>
     <mapping resource="Pojo/PalabrasClave.hbm.xml"/>
+    <mapping resource="Pojo/Cargo.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

@@ -15,18 +15,27 @@
                 <p:panel id="panelTabla" style="height: 30%;">
                     <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->
                     <p:dataTable class="tblDatos fuenteTamanio" id="tblHorarios" var="lstTbl" value="#{mbVModulosHorarios.lstTblHorarioModulo}"
-                                 editable="true" scrollable="true" scrollHeight="150" >
+                                 editable="true" scrollable="true" scrollHeight="150" sortMode="multiple">
                         <p:ajax event="rowEdit" listener="#{mbVModulosHorarios.onRowEdit}" update=":form:msgs" />
                         <p:ajax event="rowEditCancel" listener="#{mbVModulosHorarios.onRowCancel}" update=":form:msgs" />
+                        
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="Buscar Módulo: " />
+                                <p:inputText id="globalFilter" value="#{mbVModulosHorarios.moduloDescripcion}" style="width:250px" placeholder="Enter keyword"/>
+                                <p:commandButton value="Buscar" update="form" styleClass="anchoBotones" icon="ui-icon-search"
+                                         actionListener="#{mbVModulosHorarios.cargarTablaHorarioModulos()}" />
+                            </p:outputPanel>
+                        </f:facet>
 
-                        <p:column headerText="Maestría" >
+                        <p:column headerText="Maestría" sortBy="#{lstTbl.maestria}">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.maestria}" /></f:facet>
                                 <f:facet name="input"><p:inputText readonly="true" value="#{lstTbl.maestria}" style="width:100%"/></f:facet>
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="Módulo">
+                        <p:column headerText="Módulo" sortBy="#{lstTbl.moduloNombre}">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.moduloNombre}" /></f:facet>
                                 <f:facet name="input">
@@ -35,7 +44,7 @@
                             </p:cellEditor>
                         </p:column>
                         
-                        <p:column headerText="Fecha">
+                        <p:column headerText="Fecha" sortBy="#{lstTbl.fechaHorario}">
                             <p:cellEditor>
                                 <f:facet name="output">
                                     <h:outputText value="#{lstTbl.fechaHorario}" />
@@ -46,7 +55,7 @@
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="Hora inicio">
+                        <p:column headerText="Hora inicio" sortBy="#{lstTbl.horaInicio}">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.horaInicio}" /></f:facet>
                                 <f:facet name="input">
@@ -57,7 +66,7 @@
                             </p:cellEditor>
                         </p:column>
                         
-                        <p:column headerText="Hora fin">
+                        <p:column headerText="Hora fin" sortBy="#{lstTbl.horaFin}">
                             <p:cellEditor>
                                 <f:facet name="output">
                                     <h:outputText value="#{lstTbl.horaFin}" />

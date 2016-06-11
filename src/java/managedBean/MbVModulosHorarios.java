@@ -56,6 +56,7 @@ public class MbVModulosHorarios implements Serializable{
     
     private List<ClsFechaHoras> lstCboFecha;
     private ClsFechaHoras clsFechaHora;
+    private String moduloDescripcion;
     
     public MbVModulosHorarios() {
         tHorarioModulo = new HorarioModulo();
@@ -152,6 +153,14 @@ public class MbVModulosHorarios implements Serializable{
     public void setClsFechaHora(ClsFechaHoras clsFechaHora) {
         this.clsFechaHora = clsFechaHora;
     }
+
+    public String getModuloDescripcion() {
+        return moduloDescripcion;
+    }
+
+    public void setModuloDescripcion(String moduloDescripcion) {
+        this.moduloDescripcion = moduloDescripcion;
+    }
     
     
     
@@ -160,7 +169,7 @@ public class MbVModulosHorarios implements Serializable{
          try {
             DaoTMaestrias daoTmaestria = new DaoTMaestrias();
             
-            List<Maestria> lstMaestria = daoTmaestria.getMaestrias();
+            List<Maestria> lstMaestria = daoTmaestria.getMaestriasD("");
             this.lstThemeMaestria.clear();
             this.lstThemeMaestria.add(new ClsMaestria(-1,"Ninguno","Ninguno",0,0,0, null, null));
             
@@ -233,9 +242,15 @@ public class MbVModulosHorarios implements Serializable{
         //Time horaInicio = null, horaFin = null;
         
         try {
+            List<HorarioModulo> lstHorario = null;
             lstTblHorarioModulo.clear();
             DaoTHorarioModulo daoThorariomodulo = new DaoTHorarioModulo();
-            List<HorarioModulo> lstHorario = daoThorariomodulo.getTblHorarios();
+            if(moduloDescripcion == null){
+                lstHorario = daoThorariomodulo.getTblHorarios("");
+            }else{
+                lstHorario = daoThorariomodulo.getTblHorarios(moduloDescripcion);
+            }
+            
             if(lstHorario != null){
                 if(lstHorario.size()>0){
                     for(HorarioModulo horario: lstHorario){

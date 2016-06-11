@@ -97,11 +97,19 @@ public class DaoTMaestrias implements InterfaceMaestrias{
     }
     
     @Override
-    public List<Maestria> getMaestrias() throws Exception {
+    public List<Maestria> getMaestriasD(String maestriaDescripcion) throws Exception {
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        String hql="from Maestria m where m.estado = '1' order by m.id desc";
+        
+        String consulta = "";
+        
+        if(maestriaDescripcion.isEmpty())
+            consulta = "";
+        else
+            consulta = "and m.descripcion like '%"+maestriaDescripcion+"%'";
+        
+        String hql="from Maestria m where m.estado = '1' "+consulta+" order by m.id desc";
         Query query = sesion.createQuery(hql);
 
         List<Maestria> lstMaestrias=(List<Maestria>) query.list();
@@ -194,6 +202,7 @@ public class DaoTMaestrias implements InterfaceMaestrias{
         
         return band;
     }
+
     
     
 }

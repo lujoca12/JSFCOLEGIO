@@ -15,7 +15,7 @@ import java.util.List;
 public interface InterfaceHorarioModulo {
     public boolean registrar(HorarioModulo tHorarioModulo) throws Exception;
     public List<HorarioModulo> getTodosHorarios() throws Exception;
-    public List<HorarioModulo> getTblHorarios() throws Exception;
+    public List<HorarioModulo> getTblHorarios(String moduloDescripcion) throws Exception;
     public HorarioModulo getHorario(String idHorarioModulo) throws Exception;
     public boolean update(HorarioModulo tHorarioModulo) throws Exception;
     public boolean delete(HorarioModulo tHorarioModulo) throws Exception;

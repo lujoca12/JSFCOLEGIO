@@ -159,7 +159,7 @@ public class MbVtitulacion implements Serializable{
          try {
             DaoTMaestrias daoTmaestria = new DaoTMaestrias();
             
-        List<Maestria> lst = daoTmaestria.getMaestrias();
+        List<Maestria> lst = daoTmaestria.getMaestriasD("");
             this.lstmaestria.clear();
             this.lstmaestria.add(new ClsMaestria(-1, "ninguno", "ninguno", -1, -1, -1, null, null));
             for(Maestria tt: lst){

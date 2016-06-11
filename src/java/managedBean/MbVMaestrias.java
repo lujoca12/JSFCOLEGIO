@@ -62,6 +62,7 @@ public class MbVMaestrias implements Serializable{
     private int idMaestria;
     private int idDirector;
     private Date date;
+    private String maestriaDescripcion;
     
     public MbVMaestrias() {
         tMaestria = new Maestria();
@@ -168,6 +169,16 @@ public class MbVMaestrias implements Serializable{
         return lstThemeMaestria;
     }
 
+    public String getMaestriaDescripcion() {
+        return maestriaDescripcion;
+    }
+
+    public void setMaestriaDescripcion(String maestriaDescripcion) {
+        this.maestriaDescripcion = maestriaDescripcion;
+    }
+    
+    
+
     public void llenarCboDirector(){
         this.lstTheme = new ArrayList<ClsProfesor>();
          try {
@@ -191,7 +202,7 @@ public class MbVMaestrias implements Serializable{
          try {
             DaoTMaestrias daoTmaestria = new DaoTMaestrias();
             
-            List<Maestria> lstMaestria = daoTmaestria.getMaestrias();
+            List<Maestria> lstMaestria = daoTmaestria.getMaestriasD("");
             this.lstThemeMaestria.clear();
             this.lstThemeMaestria.add(new ClsMaestria(-1,"Ninguno","Ninguno",0,0,0,null, null));
             
@@ -246,8 +257,14 @@ public class MbVMaestrias implements Serializable{
         lstTablamaestria = new ArrayList<>();
         try {
             lstTablamaestria.clear();
+            List<Maestria> lstMaestria = null;
             DaoTMaestrias daoTmaestria = new DaoTMaestrias();
-            List<Maestria> lstMaestria = daoTmaestria.getMaestrias();
+            if(maestriaDescripcion == null){
+                lstMaestria = daoTmaestria.getMaestriasD("");
+            }else{
+                lstMaestria = daoTmaestria.getMaestriasD(maestriaDescripcion);
+            }
+            
             
             if(lstMaestria != null){
                 if(lstMaestria.size() > 0){

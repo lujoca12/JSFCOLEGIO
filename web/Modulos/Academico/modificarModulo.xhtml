@@ -17,7 +17,7 @@
                     <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->
                     <p:dataTable class="tblDatos fuenteTamanio" id="tblModulos" var="lstTbl" value="#{mbVModulos.lstTblModulosReg}"
                                  editable="true" scrollable="true" scrollHeight="150" emptyMessage="No hay Datos"
-                                 widgetVar="tablaModulo" filteredValue="#{mbVModulos.filteredCars}">
+                                 sortMode="multiple">
                         
                         <f:facet name="header">
                             <p:outputPanel>
@@ -31,7 +31,7 @@
                         <p:ajax event="rowEdit" listener="#{mbVModulos.onRowEdit}" update=":form:msgs" />
                         <p:ajax event="rowEditCancel" listener="#{mbVModulos.onRowCancel}" update=":form:msgs" />
 
-                        <p:column headerText="Maestria" >
+                        <p:column headerText="Maestria" sortBy="#{lstTbl.maestria}">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.maestria}" /></f:facet>
                                 <f:facet name="input">
@@ -40,7 +40,7 @@
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="Módulo">
+                        <p:column headerText="Módulo" sortBy="#{lstTbl.n_modulo}">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.n_modulo}" /></f:facet>
                                 <f:facet name="input">
@@ -49,7 +49,7 @@
                             </p:cellEditor>
                         </p:column>
                         
-                        <p:column headerText="Descripciòn">
+                        <p:column headerText="Descrip." sortBy="#{lstTbl.modulo}">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.modulo}" /></f:facet>
                                 <f:facet name="input"><p:inputText required="true" value="#{lstTbl.modulo}" style="width:100%"/></f:facet>
@@ -58,7 +58,7 @@
                         
                         
 
-                        <p:column headerText="Docente">
+                        <p:column headerText="Docente" sortBy="#{lstTbl.usuario}">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.usuario}" /></f:facet>
                                 <f:facet name="input">
@@ -78,7 +78,7 @@
                             </p:cellEditor>
                         </p:column>
                         
-                        <p:column headerText="F. encuadre">
+                        <p:column headerText="encuadre" sortBy="#{lstTbl.fechaInicio}">
                             <p:cellEditor>
                                 <f:facet name="output">
                                     <h:outputText value="#{lstTbl.fechaInicio}" />
@@ -97,7 +97,7 @@
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="1ra. Asesoria">
+                        <p:column headerText="1 Asesoria" sortBy="#{lstTbl.fechaFin}">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.fechaFin}" /></f:facet>
                                 <f:facet name="input">
@@ -114,7 +114,7 @@
                             </p:cellEditor>
                         </p:column>
                         
-                        <p:column headerText="2da. asesoria">
+                        <p:column headerText="2 asesoria" sortBy="#{lstTbl.fechaInicioExamen}">
                             <p:cellEditor>
                                 <f:facet name="output">
                                     <h:outputText value="#{lstTbl.fechaInicioExamen}" />
@@ -132,7 +132,7 @@
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="F. evaluación">
+                        <p:column headerText="F. eval." sortBy="#{lstTbl.fechaFinExamen}">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.fechaFinExamen}" /></f:facet>
                                 <f:facet name="input">
@@ -148,7 +148,7 @@
                             </p:cellEditor>
                         </p:column>
                         
-                        <p:column headerText="Horas" style="text-align: center;">
+                        <p:column headerText="Horas" style="text-align: center;" sortBy="#{lstTbl.totalHorasModulo}">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.totalHorasModulo}"   /></f:facet>
                                 <f:facet name="input">
@@ -158,7 +158,7 @@
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="Creditos" style="text-align: center;">
+                        <p:column headerText="Creditos" style="text-align: center;" sortBy="#{lstTbl.creditos}">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.creditos}"   /></f:facet>
                                 <f:facet name="input">

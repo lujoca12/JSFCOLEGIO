@@ -279,7 +279,7 @@ public class MbVtesis implements Serializable{
             DaoTMaestrias DaoTMaestria1 = new DaoTMaestrias();
 
             List<Estudiante> lstTEstudia = DaoEstudia.getEstudiantes();
-            List<Maestria> lstTMaestria = DaoTMaestria1.getMaestrias();                      
+            List<Maestria> lstTMaestria = DaoTMaestria1.getMaestriasD("");                      
             lstEstudiantes.clear();
             for (Estudiante tipoUser : lstTEstudia) {
                 SelectItem usuarioItem = new SelectItem(tipoUser.getId(), tipoUser.getNombres());
@@ -297,7 +297,7 @@ public class MbVtesis implements Serializable{
         try {
             DaoTMaestrias DaoTMaestria = new DaoTMaestrias();
 
-            List<Maestria> lstTMaestria = DaoTMaestria.getMaestrias();
+            List<Maestria> lstTMaestria = DaoTMaestria.getMaestriasD("");
             lstTodoMaestria.clear();
             for (Maestria tipoUser : lstTMaestria) {
                 SelectItem usuarioItem = new SelectItem(tipoUser.getId(), tipoUser.getDescripcion());
@@ -492,7 +492,7 @@ public class MbVtesis implements Serializable{
          try {
             DaoTMaestrias daoTmaestria = new DaoTMaestrias();
             
-            List<Maestria> lstMaestria = daoTmaestria.getMaestrias();
+            List<Maestria> lstMaestria = daoTmaestria.getMaestriasD("");
             this.lstThemeMaestria.clear();
             this.lstThemeMaestria.add(new ClsMaestria(-1,"(Escoja una Maestría)","(Escoja una Maestría)",0,0,0, null,null));
             

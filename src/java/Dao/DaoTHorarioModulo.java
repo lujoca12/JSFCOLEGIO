@@ -84,15 +84,22 @@ public class DaoTHorarioModulo implements InterfaceHorarioModulo{
     }
 
     @Override
-    public List<HorarioModulo> getTblHorarios() throws Exception {
+    public List<HorarioModulo> getTblHorarios(String moduloDescripcion) throws Exception {
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
+        String consulta = "";
+        
+        if(moduloDescripcion.isEmpty())
+            consulta = "";
+        else
+            consulta = "where mod.modulo like '%"+moduloDescripcion+"%'";
+        
         String hql = "from HorarioModulo horario \n"
                 + "inner join fetch horario.modulo mod \n"
                 + "inner join fetch mod.promocion pr \n"
                 + "inner join fetch pr.maestria maest \n"
-                + "order by horario.id desc";
+                + ""+consulta+" order by horario.id desc";
         Query query = sesion.createQuery(hql);
         List<HorarioModulo> lstHorarioModulo =(List<HorarioModulo>) query.list();
         sesion.close();

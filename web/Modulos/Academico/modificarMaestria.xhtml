@@ -17,11 +17,20 @@
                 <p:panel id="panelTabla" style="height: 30%;">
                     <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->
                     <p:dataTable class="tblDatos" id="tblMaestria" var="lstTbl" value="#{mbVMaestrias.lstTablamaestria}"
-                                 editable="true" scrollable="true" scrollHeight="150">
+                                 editable="true" scrollable="true" scrollHeight="150" sortMode="multiple">
                         <p:ajax event="rowEdit" listener="#{mbVMaestrias.onRowEditMaestria}" update=":form:msgs" />
                         <p:ajax event="rowEditCancel" listener="#{mbVMaestrias.onRowCancel}" update=":form:msgs" />
+                        
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="Buscar Módulo: " />
+                                <p:inputText id="globalFilter" value="#{mbVMaestrias.moduloDescripcion}" style="width:250px" placeholder="Enter keyword"/>
+                                <p:commandButton value="Buscar" update="form" styleClass="anchoBotones" icon="ui-icon-search"
+                                         actionListener="#{mbVMaestrias.cargarTablaModulos()}" />
+                            </p:outputPanel>
+                        </f:facet>
 
-                        <p:column headerText="Codigo" style="width: 10%;">
+                        <p:column headerText="Codigo" style="width: 10%;" sortBy="#{lstTbl.idMaestria}">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.idMaestria}" /></f:facet>
                                 <f:facet name="input">
@@ -30,7 +39,7 @@
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="Maestria" style="width: 50%;">
+                        <p:column headerText="Maestria" style="width: 50%;" sortBy="#{lstTbl.descripcionM}">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.descripcionM}" /></f:facet>
                                 <f:facet name="input">

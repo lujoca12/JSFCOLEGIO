@@ -42,4 +42,5 @@
   <table-filter match-name="datos_dom"/>
   <table-filter match-name="tipo_tribunal"/>
   <table-filter match-name="pago"/>
+  <table-filter match-name="cargo"/>
 </hibernate-reverse-engineering>

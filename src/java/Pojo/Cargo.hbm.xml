@@ -7,18 +7,19 @@
             <generator class="sequence" >
                 <param name="sequence">cargo_id_seq</param>
             </generator>
-            <property name="descripcion" type="string">
-                <column name="descripcion" length="255" />
-            </property>
-            <property name="estado" type="java.lang.Character">
-                <column name="estado" length="1" />
-            </property>
-            <set name="personas" table="persona" inverse="true" lazy="true" fetch="select">
-                <key>
-                    <column name="id_cargo" not-null="true" />
-                </key>
-                <one-to-many class="Pojo.Persona" />
-            </set>
         </id>
+        <property name="descripcion" type="string">
+            <column name="descripcion" />
+        </property>
+        <property name="estado" type="java.lang.Character">
+            <column name="estado" length="1" />
+        </property>
+        <set name="personas" table="persona" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_cargo" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Persona" />
+        </set>
+        
     </class>
 </hibernate-mapping>

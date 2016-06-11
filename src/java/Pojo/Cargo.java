@@ -6,6 +6,8 @@
 package Pojo;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -16,6 +18,7 @@ public class Cargo implements Serializable {
     private int id;
     private String descripcion;
     private Character estado;
+    private Set personas = new HashSet(0);
 
     public Cargo() {
     }
@@ -24,10 +27,11 @@ public class Cargo implements Serializable {
         this.id = id;
     }
 
-    public Cargo(int id, String descripcion, Character estado) {
+    public Cargo(int id, String descripcion, Character estado,Set personas) {
         this.id = id;
         this.descripcion = descripcion;
         this.estado = estado;
+        this.personas = personas;
     }
 
     public int getId() {
@@ -52,6 +56,14 @@ public class Cargo implements Serializable {
 
     public void setEstado(Character estado) {
         this.estado = estado;
+    }
+
+    public Set getPersonas() {
+        return personas;
+    }
+
+    public void setPersonas(Set personas) {
+        this.personas = personas;
     }
     
     

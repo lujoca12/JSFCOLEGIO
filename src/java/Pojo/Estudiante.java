@@ -28,6 +28,10 @@ public class Estudiante  implements java.io.Serializable {
      private Set datosNacs = new HashSet(0);
      private Set datosLabs = new HashSet(0);
      private Set solicitudInscripcions = new HashSet(0);
+     private String primerNombre;
+     private String segundoNombre;
+     private String primerApellido;
+     private String segundoApellido;
 
     public Estudiante() {
     }
@@ -37,7 +41,7 @@ public class Estudiante  implements java.io.Serializable {
         this.id = id;
         this.cedPasaporte = cedPasaporte;
     }
-    public Estudiante(int id, String cedPasaporte, String nombres, String apellidos, String email, String celular, Date fechaNac, Character sexo, Character estadoCivil, String paisOrigen, Integer dscColegiatura, Set datosDoms, Set datosNacs, Set datosLabs, Set solicitudInscripcions,Character etnia) {
+    public Estudiante(int id, String cedPasaporte, String nombres, String apellidos, String email, String celular, Date fechaNac, Character sexo, Character estadoCivil, String paisOrigen, Integer dscColegiatura, Set datosDoms, Set datosNacs, Set datosLabs, Set solicitudInscripcions,Character etnia,String primerNombre,String segundoNombre,String primerApellido,String segundoApellido) {
        this.id = id;
        this.cedPasaporte = cedPasaporte;
        this.nombres = nombres;
@@ -54,7 +58,43 @@ public class Estudiante  implements java.io.Serializable {
        this.datosLabs = datosLabs;
        this.solicitudInscripcions = solicitudInscripcions;
        this.etnia = etnia;
+       this.primerNombre=primerNombre;
+       this.segundoNombre=segundoNombre;
+       this.primerApellido=primerApellido;
+       this.segundoApellido=segundoApellido;
     }
+
+    public String getPrimerNombre() {
+        return primerNombre;
+    }
+
+    public void setPrimerNombre(String primerNombre) {
+        this.primerNombre = primerNombre;
+    }
+
+    public String getSegundoNombre() {
+        return segundoNombre;
+    }
+
+    public void setSegundoNombre(String segundoNombre) {
+        this.segundoNombre = segundoNombre;
+    }
+
+    public String getPrimerApellido() {
+        return primerApellido;
+    }
+
+    public void setPrimerApellido(String primerApellido) {
+        this.primerApellido = primerApellido;
+    }
+
+    public String getSegundoApellido() {
+        return segundoApellido;
+    }
+
+    public void setSegundoApellido(String segundoApellido) {
+        this.segundoApellido = segundoApellido;
+    }    
 
     public Character getEtnia() {
         return etnia;

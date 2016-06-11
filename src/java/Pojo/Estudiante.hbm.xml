@@ -67,5 +67,17 @@
             </key>
             <one-to-many class="Pojo.SolicitudInscripcion" />
         </set>
+         <property name="primerNombre" type="string">
+            <column name="primer_nombre" length="25" />
+        </property>
+         <property name="segundoNombre" type="string">
+            <column name="segundo_nombre" length="25" />
+        </property>
+         <property name="primerApellido" type="string">
+            <column name="primer_apellido" length="25" />
+        </property>
+         <property name="segundoApellido" type="string">
+            <column name="segundo_apellido" length="25" />
+        </property>
     </class>
 </hibernate-mapping>

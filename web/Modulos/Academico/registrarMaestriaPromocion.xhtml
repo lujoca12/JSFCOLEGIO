@@ -33,7 +33,7 @@
                                 </p:column>
                             </p:selectOneMenu>
                             
-                            <p:outputLabel for="txtDirector" value="Director:" styleClass="labelDerecha"  />
+                            <p:outputLabel for="txtDirector" value="Coordinador:" styleClass="labelDerecha"  />
                             <p:selectOneMenu id="txtDirector" value="#{mbVMaestrias.theme}" 
                                              converter="themeConverter" required="true"
                                              effect="fade" var="t" filter="true" filterMatchMode="contains">
@@ -48,7 +48,8 @@
                                 </p:column>
                             </p:selectOneMenu>
 
-
+                           
+                            
                             <p:outputLabel for="txtFechaInicio" value="Fecha inicio:" styleClass="labelDerecha" />
                             <p:calendar id="txtFechaInicio" 
                                         onkeypress="return permite(event, 'none')" 
@@ -97,7 +98,7 @@
                 <br></br>
                 <p:panel id="panelTabla" style="height: 30%;">
                     <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->   
-                    <p:dataTable class="tblDatos" id="tblMaestria" var="lstTbl" value="#{mbVMaestrias.lstTblMaestria}"
+                    <p:dataTable class="tblDatos fuenteTamanio" id="tblMaestria" var="lstTbl" value="#{mbVMaestrias.lstTblMaestria}"
                                  editable="true" scrollable="true" scrollHeight="150">
                         <p:ajax event="rowEdit" listener="#{mbVMaestrias.onRowEdit}" update=":form:tblMaestria :form:msgs" />
                         <p:ajax event="rowEditCancel" listener="#{mbVMaestrias.onRowCancel}" update=":form:msgs" />

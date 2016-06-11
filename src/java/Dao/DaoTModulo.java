@@ -85,16 +85,23 @@ public class DaoTModulo implements InterfaceModulos{
     }
     
     @Override
-    public List<Modulo> getTblModulos() throws Exception {
+    public List<Modulo> getTblModulos(String moduloDescripcion) throws Exception {
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
+        String consulta = "";
         //Presento los modulos registrados x años 
+        if(moduloDescripcion.isEmpty())
+            consulta = "";
+        else
+            consulta = "and mod.modulo like '%"+moduloDescripcion+"%'";
+        
         String hql="from Modulo mod inner join fetch mod.promocion p "
                 + "inner join fetch mod.usuario user "
                 + "inner join fetch p.maestria m where m.estado='1' and "
                 + "(year(current_date) >= year(p.fechaInicio) "
-                + "and year(current_date)<= year(p.fechaFin)) order by mod.id desc";
+                + "and year(current_date)<= year(p.fechaFin)) "
+                + ""+consulta+" order by mod.id desc";
         Query query = sesion.createQuery(hql);
         List<Modulo> lstPermiso=(List<Modulo>) query.list();
         sesion.close();

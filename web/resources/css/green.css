@@ -718,3 +718,7 @@ th {
     
     /*table-layout: auto !important;*/
 }
+
+.customHeader th{
+    background-color: white !important;
+}

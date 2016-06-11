@@ -15,7 +15,7 @@ import java.util.List;
 public interface InterfaceModulos {
     public boolean registrar(Modulo tModulo) throws Exception;
     public List<Modulo> getTodosModulo() throws Exception;
-    public List<Modulo> getTblModulos() throws Exception;
+    public List<Modulo> getTblModulos(String moduloDescripcion) throws Exception;
     public List<Modulo> getCboModulosNotas(int usuario_id) throws Exception;
     public List<Modulo> getTblModulosNotas(int idPromocion) throws Exception;
     public List<Modulo> getCboModulosAsistencias(int usuario_id) throws Exception;

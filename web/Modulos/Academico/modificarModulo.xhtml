@@ -16,7 +16,17 @@
                 <p:panel id="panelTabla" style="height: 30%;">
                     <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->
                     <p:dataTable class="tblDatos fuenteTamanio" id="tblModulos" var="lstTbl" value="#{mbVModulos.lstTblModulosReg}"
-                                 editable="true" scrollable="true" scrollHeight="150" emptyMessage="No hay Datos">
+                                 editable="true" scrollable="true" scrollHeight="150" emptyMessage="No hay Datos"
+                                 widgetVar="tablaModulo" filteredValue="#{mbVModulos.filteredCars}">
+                        
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="Buscar Módulo: " />
+                                <p:inputText id="globalFilter" value="#{mbVModulos.moduloDescripcion}" style="width:250px" placeholder="Enter keyword"/>
+                                <p:commandButton value="Buscar" update="form" styleClass="anchoBotones" icon="ui-icon-search"
+                                         actionListener="#{mbVModulos.cargarTablaModulos()}" />
+                            </p:outputPanel>
+                        </f:facet>
 
                         <p:ajax event="rowEdit" listener="#{mbVModulos.onRowEdit}" update=":form:msgs" />
                         <p:ajax event="rowEditCancel" listener="#{mbVModulos.onRowCancel}" update=":form:msgs" />

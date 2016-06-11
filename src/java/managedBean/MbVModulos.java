@@ -209,7 +209,12 @@ public class MbVModulos implements Serializable {
         try {
             lstTblModulosReg.clear();
             DaoTModulo daoTmodulo = new DaoTModulo();
-            lstModulo = daoTmodulo.getTblModulos();
+            if(moduloDescripcion == null){
+                lstModulo = daoTmodulo.getTblModulos("");
+            }else{
+                lstModulo = daoTmodulo.getTblModulos(moduloDescripcion);
+            }
+                
 
             if (lstModulo != null) {
                 if (lstModulo.size() > 0) {

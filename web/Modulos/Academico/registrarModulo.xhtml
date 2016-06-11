@@ -20,7 +20,7 @@
                         <p:growl id="msgs" showDetail="true" />
                         <p:focus context="cboMaestria"/>
 
-                        <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
+                        <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
                             
 
                             <p:outputLabel for="cboMaestria" value="Maestria:" styleClass="labelDerecha"  />
@@ -36,6 +36,14 @@
                                 </p:column>
                                 <p:ajax listener="#{mbVModulos.onMaestriaChange}" update="form txtFechaInicio txtFechaFin" />
                             </p:selectOneMenu>
+                            
+                            <p:outputLabel styleClass="labelDerecha" rendered="#{mbVModulos.fechaInicio eq null ? false:true}" />
+                            <p:outputLabel styleClass="labelDerecha" rendered="#{mbVModulos.fechaInicio eq null ? false:true}" >
+                                <h5>
+                                    Fecha Inicio: <span style="color: red;">#{mbVModulos.fechaInicio}</span> -- 
+                                    Fecha fin: <span style="color: red;">#{mbVModulos.fechaFin}</span> 
+                                </h5>
+                            </p:outputLabel>
                             
                             <p:outputLabel for="cboNmodulo" value="Nº Mòdulo:" styleClass="labelDerecha"/>
                             <p:selectOneMenu id="cboNmodulo" required="true" value="#{mbVModulos.tModulo.modulo}">
@@ -62,6 +70,8 @@
                                 </p:column>
                             </p:selectOneMenu>
                             
+                            
+                             
                             
                             <p:outputLabel for="txtFechaInicio" value="Fecha encuadre:" styleClass="labelDerecha" rendered="#{mbVModulos.fechaInicio eq null ? false:true}" />
                             <p:calendar id="txtFechaInicio" required="true" rendered="#{mbVModulos.fechaInicio eq null ? false:true}"

@@ -98,7 +98,7 @@ public class MbVActaEmision implements Serializable {
             Calendar calendar = Calendar.getInstance();
         
 
-            List<Promocion> lstPromocion = daoTpromocion.getPromocionesMaestrias();
+            List<Promocion> lstPromocion = daoTpromocion.getPromocionesMaestrias("");
             this.lstThemeMaestria.clear();
             this.lstThemeMaestria.add(new ClsMaestria(-1, "Ninguno", "Ninguno", 0, 0,0, null, null));
 

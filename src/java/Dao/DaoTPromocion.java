@@ -72,11 +72,21 @@ public class DaoTPromocion implements InterfacePromocion{
     }
     
     @Override
-    public List<Promocion> getPromocionesMaestrias() throws Exception {
+    public List<Promocion> getPromocionesMaestrias(String maestriaDescripcion) throws Exception {
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        String hql="from Promocion pr inner join fetch pr.maestria m where pr.estado = '1' and m.estado='1' and (year(current_date) >= year(pr.fechaInicio) and year(current_date)<= year(pr.fechaFin)) order by pr.id desc";
+        String consulta = "";
+        
+        if(maestriaDescripcion.isEmpty())
+            consulta = "";
+        else
+            consulta = "and m.descripcion like '%"+maestriaDescripcion+"%'";
+        
+        String hql="from Promocion pr inner join fetch pr.maestria m "
+                + "where pr.estado = '1' and m.estado='1' and "
+                + "(year(current_date) >= year(pr.fechaInicio) and "
+                + "year(current_date)<= year(pr.fechaFin)) "+consulta+" order by pr.id desc";
         Query query = sesion.createQuery(hql);
         List<Promocion> lstPermiso=(List<Promocion>) query.list();
         sesion.close();

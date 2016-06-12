@@ -24,9 +24,9 @@
                         <f:facet name="header">
                             <p:outputPanel>
                                 <h:outputText value="Buscar Módulo: " />
-                                <p:inputText id="globalFilter" value="#{mbVMaestrias.moduloDescripcion}" style="width:250px" placeholder="Enter keyword"/>
+                                <p:inputText id="globalFilter" value="#{mbVMaestrias.maestriaDescripcion}" style="width:250px" placeholder="Enter keyword"/>
                                 <p:commandButton value="Buscar" update="form" styleClass="anchoBotones" icon="ui-icon-search"
-                                         actionListener="#{mbVMaestrias.cargarTablaModulos()}" />
+                                         actionListener="#{mbVMaestrias.cargarTablaMaestria()}" />
                             </p:outputPanel>
                         </f:facet>
 

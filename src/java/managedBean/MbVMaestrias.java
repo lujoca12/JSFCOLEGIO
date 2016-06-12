@@ -235,7 +235,11 @@ public class MbVMaestrias implements Serializable{
             lstTblMaestriaPromocion.clear();
             DaoTPromocion daoTmodulo = new DaoTPromocion();
             //lstPromocion = null;
-            lstPromocion = daoTmodulo.getPromocionesMaestrias();
+            if(maestriaDescripcion == null){
+                lstPromocion = daoTmodulo.getPromocionesMaestrias("");
+            }else{
+                lstPromocion = daoTmodulo.getPromocionesMaestrias(maestriaDescripcion);
+            }
             
             if(lstPromocion != null){
                 if(lstPromocion.size() > 0){

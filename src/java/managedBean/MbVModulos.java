@@ -267,7 +267,7 @@ public class MbVModulos implements Serializable {
             DaoTMaestrias daoTmaestria = new DaoTMaestrias();
             DaoTPromocion daoTpromocion = new DaoTPromocion();
 
-            List<Promocion> lstPromocion = daoTpromocion.getPromocionesMaestrias();
+            List<Promocion> lstPromocion = daoTpromocion.getPromocionesMaestrias("");
             this.lstThemeMaestria.clear();
             this.lstThemeMaestria.add(new ClsMaestria(-1, "Ninguno", "Ninguno", 0, 0, 0, null, null));
 

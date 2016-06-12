@@ -46,9 +46,9 @@
                 </p:selectOneMenu>
                 <p:message for="cboPadre" id="msgDescrPadre" rendered="#{mbVPermisos.nivel == 2 ? true:false}"/>
                 
-                <p:outputLabel for="txtContenedor" styleClass="labelDerecha" value="Contenedor:" rendered="#{mbVPermisos.nivel == 2 ? true:false}" />
-                <p:inputText id="txtContenedor" required="true" value="#{mbVPermisos.contenedor}" placeholder="" rendered="#{mbVPermisos.nivel == 2 ? true:false}" />
-                <p:message for="txtContenedor" rendered="#{mbVPermisos.nivel == 2 ? true:false}"/>
+                <p:outputLabel for="txtContenedor" styleClass="labelDerecha" value="Contenedor:" rendered="#{mbVPermisos.nivel == 2 ? false:false}" />
+                <p:inputText id="txtContenedor" required="true" value="#{mbVPermisos.contenedor}" placeholder="" rendered="#{mbVPermisos.nivel == 2 ? false:false}" />
+                <p:message for="txtContenedor" rendered="#{mbVPermisos.nivel == 2 ? false:false}"/>
                 
                 <p:outputLabel for="txtRuta" styleClass="labelDerecha" value="Ruta:" rendered="#{mbVPermisos.nivel == 2 ? true:false}" />
                 <p:inputText id="txtRuta" required="true" value="#{mbVPermisos.tuDirectorioPagina}" placeholder="MiCarpeta/NombrePagina o Página" rendered="#{mbVPermisos.nivel == 2 ? true:false}" />

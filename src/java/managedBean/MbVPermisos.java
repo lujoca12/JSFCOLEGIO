@@ -136,7 +136,7 @@ public class MbVPermisos implements Serializable{
     
     public void registrar(){
         DaoTMenu daoTmenu = new DaoTMenu();
-        
+        contenedor = "cargar_Elementos";
         try {
             if(nivel == 1){
             tPermiso.setPadre(0);

@@ -90,6 +90,10 @@ public class MbVtesis implements Serializable{
     
     private ClsTipoTitulacion clstipot;
     private List<ClsTipoTitulacion> lstipot;
+    
+    private ClsMatricula clsmatricula;
+    private List<ClsMatricula> lstmatricula;
+    
     private ClsProfesor theme;
     private List<ClsProfesor> lstTheme;
     
@@ -111,11 +115,13 @@ public class MbVtesis implements Serializable{
     public MbVtesis(){
  //      llenarCboEstudiantes();
 //        llenarTablaTesis();
+        llenarCboProyecto();
         llenarCboTutor();
         llenarCboMaestria();
         tMaestria= new Maestria();
         ttitulacion= new Titulacion();
         tTesis = new Proyecto();
+        ttipot = new TipoTitulacion();
         tpalabrasclave = new PalabrasClave();
         tEstudiante= new Estudiante();
     }   
@@ -249,6 +255,29 @@ public class MbVtesis implements Serializable{
     public void settMaestria(Maestria tMaestria) {
         this.tMaestria = tMaestria;
     }   
+     public void llenarCboProyecto(){
+         this.LstTablatesis = new ArrayList<ClsTablaTesis>();
+         try {
+            DaoTesis daoTmaestria = new DaoTesis();
+            
+            List<Proyecto> lstMaestria = daoTmaestria.getTodasProyectoxEstado("E");
+            this.LstTablatesis.clear();
+            this.LstTablatesis.add(new ClsTablaTesis(-1,"(Seleccione)"));
+            
+            for(Proyecto maestria: lstMaestria){
+                this.LstTablatesis.add(new ClsTablaTesis(maestria.getId(), 
+                        maestria.getAutor(), maestria.getTitulo(), 
+                        maestria.getFechaSustentacion(), maestria.getFechaSubida(), 
+                        maestria.getRuta(), maestria.getResumen(), maestria.getMaestria(),
+                        maestria.getTutor(), 
+                        maestria.getEstado(), 
+                        maestria.getTitulacion().getId(),
+                        maestria.getUsuario().getId()));
+            }
+        } catch (Exception ex) {
+            
+        }
+    }
     
     public void llenarCboEstudiantes(){
 //        this.lstestudiante = new ArrayList<ClsEstudiante>();
@@ -364,30 +393,30 @@ public class MbVtesis implements Serializable{
         }        
     }
     public void CargarTesisAutor(){
-//        LstTablatesis= new ArrayList<>();
-//        try{
-//            LstTablatesis.clear();
-//           DaoTesis dtesis = new DaoTesis();
-//           List<Proyecto> lsttesis= dtesis.getProyectoxAutor(this.autor);
-//           if (lsttesis.size() > 0) {
-//               for(Proyecto tesi : lsttesis){
-//                   LstTablatesis.add(new ClsTablaTesis(
-//                           tesi.getId(), 
-//                           tesi.getAutor(), 
-//                           tesi.getTitulo(),
-//                           tesi.getFechaSustentacion(), 
-//                           tesi.getFechaSubida(), 
-//                           tesi.getRuta(), 
-//                           tesi.getResumen(), 
-//                           1, 
-//                           "") );
-//                  // LstTablatesis.add(new ClsTablaTesis(id, autor, titulo, fechaSubida, fechaSubida, ruta, resumen, tMaestria, tEstudiante) );
-//               }
-//           }           
-//        }
-//        catch (Exception e){
-//            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, e);
-//        }
+////        LstTablatesis= new ArrayList<>();
+////        try{
+////            LstTablatesis.clear();
+////           DaoTesis dtesis = new DaoTesis();
+////           List<Proyecto> lsttesis= dtesis.getProyectoxAutor(this.autor);
+////           if (lsttesis.size() > 0) {
+////               for(Proyecto tesi : lsttesis){
+////                   LstTablatesis.add(new ClsTablaTesis(
+////                           tesi.getId(), 
+////                           tesi.getAutor(), 
+////                           tesi.getTitulo(),
+////                           tesi.getFechaSustentacion(), 
+////                           tesi.getFechaSubida(), 
+////                           tesi.getRuta(), 
+////                           tesi.getResumen(), 
+////                           1, 
+////                           "") );
+////                  // LstTablatesis.add(new ClsTablaTesis(id, autor, titulo, fechaSubida, fechaSubida, ruta, resumen, tMaestria, tEstudiante) );
+////               }
+////           }           
+////        }
+////        catch (Exception e){
+////            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, e);
+////        }
         
     }
     public void consultarTesisTitulo(){
@@ -437,7 +466,7 @@ public class MbVtesis implements Serializable{
         DaoTEstudiante daoestudiante = new DaoTEstudiante();
         List<Estudiante> lstestud= null;
         
-        if(clsMaestria != null && !clsMaestria.equals(""))
+        if(clsMaestria != null)
             lstestud = daoestudiante.getEstudiantesMaestriaTitulacion(clsMaestria.getId());
         else{
             lstestudiante.clear();
@@ -519,17 +548,11 @@ public class MbVtesis implements Serializable{
             this.lsttitulacion.clear();
             for(Titulacion tt : resul){
                 lsttitulacion.add(new ClsTitulacion(tt.getId(), 
-                        0.00,
-                        tt.getFechaInicio(), 
-                        tt.getFechaFin(), 
+                        tt.getNota(), 
+                        tt.getFechaInicio(),tt.getFechaFin(),
                         tt.getTipoTitulacion().getId(), 
-                        clsMaestria.getId(), 
                         tt.getMatricula().getId(), 
-                        clsestudiante.getId(), 
-                        clsMaestria.getDisplayName(), 
-                        clsestudiante.getApellidos(),
-                        "", 
-                        'E'));
+                        tt.getEstado()));
             }
         }
         catch(Exception e){
@@ -551,10 +574,25 @@ public class MbVtesis implements Serializable{
         }
         return lstipot;
     }
+    public List<ClsMatricula> matriculaID(){
+         this.lstmatricula = new ArrayList<>();
+        try{
+            DaoTitulacion daotitul = new DaoTitulacion();
+            List<Matricula> resul = daotitul.getMatriculaid(this.lsttitulacion.get(0).getId());
+            this.lstmatricula.clear();
+            for(Matricula tt : resul){
+                lstmatricula.add(new ClsMatricula(tt.getId(), tt.getEstado()));
+            }
+        }
+        catch(Exception e){
+        }
+        return lstmatricula;
+    }
     
     public void registrarTesis(){        
         obteneridtitulacionestu();
         tipotitulacionid();
+        matriculaID();
         //Variable para saber si esta registrada
         boolean repetida = false;       
         boolean pcc = false;
@@ -591,22 +629,19 @@ public class MbVtesis implements Serializable{
             else{
                 //Si la maestria no existe se la registra
                 msg =  daoTesis.registrarProyecto(tTesis);
-                Titulacion titulacio = new Titulacion();
-                titulacio.setEstado('G');
-                titulacio.setId(lsttitulacion.get(0).getId());
-                
-                ttipot.setId(lstipot.get(0).getId());
-//                titulacio.setTipoTitulacion(ttipot);
-                
-//                tmatricula.setId(lsttitulacion.get(0).getIdmatricula());
-//                titulacio.setMatricula(tmatricula);
-                        
-                
-                titulacio.setFechaFin(lsttitulacion.get(0).getFechaFin());
-                titulacio.setFechaInicio(lsttitulacion.get(0).getFechaInicio());
-                  
-                msg = daot.update(titulacio);
             }
+            ttitulacion.setId(lsttitulacion.get(0).getId());
+            ttitulacion.setFechaFin(lsttitulacion.get(0).getFechaFin());
+            ttitulacion.setFechaInicio(lsttitulacion.get(0).getFechaInicio());
+            
+            ttipot.setId(lstipot.get(0).getId());
+            ttitulacion.setTipoTitulacion(ttipot);
+            
+//            tmatricula.setId(lstmatricula.get(0).getId());
+//            ttitulacion.setMatricula(tmatricula);
+            
+            ttitulacion.setEstado('G');
+            msg = daot.update(ttitulacion);
         }
         catch (Exception e){
             vaciarCajas();
@@ -617,6 +652,7 @@ public class MbVtesis implements Serializable{
           //  pcc = registrarPC(tTesis);
             vaciarCajas();            
             if(msg){
+                llenarCboMaestria();
                 mensajesOk("Datos procesados bien");  
             
             }

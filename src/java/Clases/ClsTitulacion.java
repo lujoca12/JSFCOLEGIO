@@ -5,6 +5,7 @@
  */
 package Clases;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import static org.joda.time.format.ISODateTimeFormat.date;
 
@@ -14,7 +15,7 @@ import static org.joda.time.format.ISODateTimeFormat.date;
  */
 public class ClsTitulacion {
      private int id;    
-    private Double nota; 
+    private BigDecimal nota; 
     private Date fechaInicio;
     private Date fechaFin;
     private int idtipotitulacion;
@@ -30,7 +31,7 @@ public class ClsTitulacion {
         this.id = id;
     }
     
-    public ClsTitulacion(int id, Double nota, Date fechaInicio, Date fechaFin, int idmatricula, Character estado) {
+    public ClsTitulacion(int id, BigDecimal nota, Date fechaInicio, Date fechaFin, int idmatricula, Character estado) {
         this.id = id;
         this.nota = nota;
         this.fechaInicio = fechaInicio;
@@ -39,18 +40,17 @@ public class ClsTitulacion {
         this.estado = estado;
     }
 
-    public ClsTitulacion(int id, Double nota, Date fechaInicio, Date fechaFin, int idtipotitulacion, int idmatricula, String maestria, String estudiante) {
+    public ClsTitulacion(int id, BigDecimal nota, Date fechaInicio, Date fechaFin, int idtipotitulacion, int idmatricula, Character estado) {
         this.id = id;
         this.nota = nota;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.idtipotitulacion = idtipotitulacion;
         this.idmatricula = idmatricula;
-        this.maestria = maestria;
-        this.estudiante = estudiante;
+        this.estado = estado;
     }
 
-    public ClsTitulacion(int id, Double nota, Date fechaInicio, Date fechaFin, int idtipotitulacion, int idmaestria, int idmatricula, int idestudiante, String maestria, String estudiante, String tipotitulacion, Character estado) {
+    public ClsTitulacion(int id, BigDecimal nota, Date fechaInicio, Date fechaFin, int idtipotitulacion, int idmaestria, int idmatricula, int idestudiante, String maestria, String estudiante, String tipotitulacion, Character estado) {
         this.id = id;
         this.nota = nota;
         this.fechaInicio = fechaInicio;
@@ -82,10 +82,10 @@ public class ClsTitulacion {
     public void setId(int id) {
         this.id = id;
     }
-    public Double getNota() {
+    public BigDecimal getNota() {
         return nota;
     }
-    public void setNota(Double nota) {
+    public void setNota(BigDecimal nota) {
         this.nota = nota;
     }
     public Date getFechaInicio() {

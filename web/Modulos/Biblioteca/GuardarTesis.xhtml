@@ -24,36 +24,26 @@
                         <p:tab id="tesis" title="RegistrarTesis">
                         <p:panel header="Registrar Tesis">
                             <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
+                                
+                                 <p:outputLabel for="cboMaestria" value="Título o Tema:" styleClass="labelDerecha"  />
+                                 <p:selectOneMenu id="cboMaestria" value="#{mbVtesis.clsTablaTesis}" 
+                                                  converter="themeConverterProyecto" required="true"
+                                                  effect="fade" var="tProfesor" filter="true" filterMatchMode="contains">
+                                     <f:selectItems value="#{mbVtesis.lstTablatesis}" var="themeProf" 
+                                               itemLabel="#{themeProf.titulo}" itemValue="#{themeProf}" />
+                                <p:column style="width:10%">
+                                    <h:outputText styleClass="ui-theme ui-theme-#{tProfesor.titulo}" />
+                                </p:column>
+
+                                <p:column>
+                                    <h:outputText value="#{tProfesor.titulo}" />
+                                </p:column>
+                            </p:selectOneMenu>
                         
-                        <p:outputLabel for="txtTitulo" styleClass="labelDerecha" value="Título:" />
-                        <p:inputText id="txtTitulo" value="#{mbVtesis.tTesis.titulo}" maxlength="100" >
-                            <f:validateLength minimum="5" maximum="100" />
-                        </p:inputText> 
-                        
-                        <p:outputLabel for="cboAutor" value="Autor:" styleClass="labelDerecha"/>
-                        <p:selectOneMenu id="cboAutor" value="#{mbVtesis.clsestudiante}" 
-                                         converter="themeConverterEstudiante" required="true"
-                                         effect="fade" var="t" filter="true" filterMatchMode="contains">
-                            <f:selectItems value="#{mbVtesis.lstestudiante}" var="VarTesis" 
-                                           itemLabel="#{VarTesis.nombres}" itemValue="#{VarTesis}" />
-                            <p:column style="width:10%">                
-                                <h:outputText styleClass="ui-theme ui-theme-#{t.apellidos}" />
-                            </p:column>
-                            <p:column>
-                                <h:outputText value="#{t.nombres}" />
-                            </p:column>
-                        </p:selectOneMenu>
-                        
-                        <p:outputLabel for="txtFechaS" styleClass="labelDerecha" value="Fecha sustentación:" />
-                        <p:calendar id="txtFechaS" value="#{mbVtesis.tTesis.fechaSustentacion}" 
-                                    effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" /> 
-                        
-                        
-                                   
                         <p:outputLabel styleClass="labelDerecha" value="Archivos PDF:" />   
                         <p:fileUpload  required="true" mode="simple"  style="margin-bottom: 10px;"  
                                        value=""   
-                                       accept="" 
+                                       accept="application/pdf" 
                                          /> 
                         
                         <p:outputLabel for="txtResumen" styleClass="labelDerecha" value="Resumen:" />
@@ -61,19 +51,6 @@
                             <f:validateLength minimum="5" maximum="100" />
                         </p:inputText>
                         
-                        <p:outputLabel for="cboMaestria" value="Maestría:" styleClass="labelDerecha"/>
-                        <p:selectOneMenu id="cboMaestria" value="#{mbVtesis.clsMaestria}" 
-                                         converter="themeConverterMaestria" required="true" 
-                                         effect="fade" var="tmaestria" filter="true" filterMatchMode="contains">
-                            <f:selectItems value="#{mbVtesis.lstThemeMaestria}" var="VarMaestria" 
-                                           itemLabel="#{VarMaestria.displayName}" itemValue="#{VarMaestria}" />
-                            <p:column style="width:10%">                
-                                <h:outputText styleClass="ui-theme ui-theme-#{tmaestria.name}" />
-                            </p:column>
-                            <p:column>
-                                <h:outputText value="#{tmaestria.displayName}" />
-                            </p:column>
-                        </p:selectOneMenu>
                         <p:outputLabel for="txtFechaSubid" styleClass="labelDerecha" value="Fecha subida:" />
                         <p:calendar id="txtFechaSubid" value="#{mbVtesis.tTesis.fechaSubida}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" />
                         

@@ -188,7 +188,7 @@ public class MbVtitulacion implements Serializable{
         DaoTEstudiante daoestudiante = new DaoTEstudiante();
         List<Estudiante> lstestud= null;
         
-        if(clsmaestria != null && !clsmaestria.equals(""))
+        if(clsmaestria != null)
             lstestud = daoestudiante.getEstudiantesMaestriaTitulacion(clsmaestria.getId());
         else{
             lstestudiante.clear();
@@ -219,7 +219,7 @@ public class MbVtitulacion implements Serializable{
         DaoTEstudiante daoestudiante = new DaoTEstudiante();
         List<Estudiante> lstestud= null;
         
-        if(clsmaestria != null && !clsmaestria.equals(""))
+        if(clsmaestria != null)
             lstestud = daoestudiante.getEstudiantesMaestria(clsmaestria.getId());
         else{
             lstestudiante.clear();
@@ -376,13 +376,12 @@ public class MbVtitulacion implements Serializable{
            // }
                 //    String maestria =ti.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion();
                         lsttitulacion.add(new ClsTitulacion(ti.getId(),
-                                ti.getNota().doubleValue(), 
+                                ti.getNota(), 
                                 ti.getFechaInicio(), 
                                 ti.getFechaFin(),
                                 ti.getTipoTitulacion().getId(),
                                 ti.getMatricula().getId(),
-                                "maestria",
-                                "estudiante"));
+                                ti.getEstado()));
                     }
                 }
             }
@@ -407,14 +406,12 @@ public class MbVtitulacion implements Serializable{
                       //String valor=ti.getNota().toString();
                         nota= 0.00;
                         lsttitulacion1.add(new ClsTitulacion(ti.getId(),
-                                nota, 
+                                ti.getNota(), 
                                 ti.getFechaInicio(), 
                                 ti.getFechaFin(),
-                                1,
-                                ti.getMatricula().getId(),
-                                //ti.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion()
-                                "maestria",
-                                "estudiante"));
+                                ti.getTipoTitulacion().getId(),
+                                ti.getMatricula().getId(),                               
+                                ti.getEstado()));
                     }
                 }
             }

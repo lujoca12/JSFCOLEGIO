@@ -152,8 +152,7 @@ public class DaoTitulacion implements InterfaceTitulacion{
          boolean band = false;
         try {
             iniciaOperacion();
-            sesion.update(ttitulacion);
-
+            sesion.saveOrUpdate(ttitulacion);
             tx.commit();
             sesion.close();
             band = true;
@@ -175,6 +174,20 @@ public class DaoTitulacion implements InterfaceTitulacion{
                 "where ti.id='"+titulacion+"'";
         Query query = sesion.createQuery(hql);
          List<TipoTitulacion> lstPermiso=(List<TipoTitulacion>) query.list();
+        sesion.close();
+        return lstPermiso;
+    }
+
+    @Override
+    public List<Matricula> getMatriculaid(int titulacion) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String hql= "from Matricula m\n" +
+                "inner join fetch m.titulacions t\n" +
+                "where t.id ='"+titulacion+"'";
+        Query query = sesion.createQuery(hql);
+         List<Matricula> lstPermiso=(List<Matricula>) query.list();
         sesion.close();
         return lstPermiso;
     }

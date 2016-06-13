@@ -191,4 +191,22 @@ public class DaoTesis implements InterfaceTesis{
         List<Proyecto> lsttesis=(List<Proyecto>) query.list();
         return lsttesis;
     }
+
+    @Override
+    public boolean UpdateProyecto(Proyecto ttesis) throws Exception {
+        boolean band = false;
+        try {
+            iniciaOperacion();
+            sesion.saveOrUpdate(ttesis);
+
+            tx.commit();
+            sesion.close();
+            band = true;
+        } catch (Exception e) {
+            tx.rollback();
+            band = false;
+        }
+        
+        return band;
+    }
 }

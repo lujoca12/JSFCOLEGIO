@@ -35,6 +35,8 @@ public class MbVPalabrasClave implements Serializable{
     private String palabra5 = "";
     
     Proyecto tproyecto;
+    Usuario tusuario;
+    Titulacion ttitulacion;
     PalabrasClave tpalabrasclave;
     
     ClsPalabrasClave clspalabrasclaves;
@@ -48,8 +50,8 @@ public class MbVPalabrasClave implements Serializable{
      */
     public MbVPalabrasClave() {
         llenarCboProyecto();
-        tpalabrasclave= new PalabrasClave();
-        tproyecto= new Proyecto();
+        tpalabrasclave= new PalabrasClave(); tusuario= new Usuario();
+        tproyecto= new Proyecto();ttitulacion = new Titulacion();
     }
     private void vaciarCajas(){
         tproyecto= new Proyecto();
@@ -110,8 +112,14 @@ public class MbVPalabrasClave implements Serializable{
             this.lstproyecto.add(new ClsTablaTesis(-1,"(Seleccione)"));
             
             for(Proyecto maestria: lstMaestria){
-                this.lstproyecto.add(new ClsTablaTesis(maestria.getId(),
-                        maestria.getTitulo()));
+                this.lstproyecto.add(new ClsTablaTesis(maestria.getId(), 
+                        maestria.getAutor(), maestria.getTitulo(), 
+                        maestria.getFechaSustentacion(), maestria.getFechaSubida(), 
+                        maestria.getRuta(), maestria.getResumen(), maestria.getMaestria(),
+                        maestria.getTutor(), 
+                        maestria.getEstado(), 
+                        maestria.getTitulacion().getId(),
+                        maestria.getUsuario().getId()));
             }
         } catch (Exception ex) {
             
@@ -137,7 +145,20 @@ public class MbVPalabrasClave implements Serializable{
                 tpalabrasclave.setEstado('G'); 
                 tpalabrasclave.setDescripcion(palabrasc.get(i).toString());  
                 msg = daotesis.registrarPalabrasClave(tpalabrasclave);              
-            }               
+            }              
+            tproyecto.setId(clsproyecto.getIdTesis());
+            tproyecto.setAutor(clsproyecto.getAutor());
+            tproyecto.setTitulo(clsproyecto.getTitulo());
+            tproyecto.setFechaSustentacion(clsproyecto.getFechaSus());
+            tproyecto.setResumen(clsproyecto.getResumen());
+            ttitulacion.setId(clsproyecto.getIdtitulacion());
+            tproyecto.setTitulacion(ttitulacion);
+            tusuario.setId(clsproyecto.getIdusuario());
+            tproyecto.setUsuario(tusuario);
+            tproyecto.setMaestria(clsproyecto.getMaestria());
+            tproyecto.setTutor(clsproyecto.getTutor());
+            tproyecto.setEstado('G');
+            msg = daotesis.UpdateProyecto(tproyecto);
         }
         catch(Exception ex){
             vaciarCajas();
@@ -145,20 +166,13 @@ public class MbVPalabrasClave implements Serializable{
         
             if(msg){
                 vaciarCajas();
-                msg=UpdateProyecto();
+                llenarCboProyecto();
                 mensajesOk("Datos procesados bien");  
             
             }
             else
                 mensajesError("error al intentar procesar");
         
-    }
-    public boolean UpdateProyecto(){
-        boolean msg=false;
-        
-        tproyecto.setId(clsproyecto.getIdTesis());
-        
-        return msg;
     }
     
      private void mensajesOk(String msg){

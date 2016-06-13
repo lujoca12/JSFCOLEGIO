@@ -295,11 +295,17 @@
 
                                     <c:forEach   items="#{inscripcionBean.reqPro}"  var="r" >                                       
                                         <h:outputText value="#{r.requisitos.pedidoArchivo}" style="font-weight:  bold"/> 
-                                        <p:fileUpload  h5:required="true" mode="simple"  style="margin-bottom: 10px;"  value="#{inscripcionBean.file}"   accept="#{r.requisitos.tipoArchivo}" h5:title="#{r.requisitos.pedidoArchivo}"  /> 
+                                        <p:fileUpload  h5:required="true" mode="simple"  style="margin-bottom: 10px;"  
+                                                       value="#{inscripcionBean.file}"   
+                                                       accept="#{r.requisitos.tipoArchivo}" 
+                                                       h5:title="#{r.requisitos.pedidoArchivo}"  /> 
                                     </c:forEach>
 
                                 </h:panelGrid>
-                                <p:commandButton type="submit" action="#{inscripcionBean.guardar()}" disabled="#{inscripcionBean.btnGuardar}" update="messages datos" ajax="false"  value="Guardar Datos" process="@this" />
+                                <p:commandButton type="submit" action="#{inscripcionBean.guardar()}" 
+                                                 disabled="#{inscripcionBean.btnGuardar}" 
+                                                 update="messages datos" ajax="false"  
+                                                 value="Guardar Datos" process="@this" />
                             </p:panel>
                         </p:tab>       
 

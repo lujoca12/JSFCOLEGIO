@@ -375,6 +375,7 @@ public class MbVModulosHorarios implements Serializable{
             int horaInicio = calendar.get(Calendar.HOUR);
             
             calendar.setTime(tHorarioModulo.getHoraFin());
+            
             int horaFin = calendar.get(Calendar.HOUR);
             
             //el metodo getTime te devuelve en mili segundos para saberlo en mins debes hacer
@@ -392,12 +393,15 @@ public class MbVModulosHorarios implements Serializable{
                 if (!repetida) {
                     
                     if(hora > 0 && hora <= Double.parseDouble(horasxRegistrar)){
-                        if(horaInicio >=  7 && horaFin <= 20){
-                            msg = daoThorariomodulo.registrar(tHorarioModulo);
+                        if(hora >= 3 && hora <= 6){
+                            
+                                msg = daoThorariomodulo.registrar(tHorarioModulo);
+                            
                         }else{
-                            mensajesError("error! hora minima 07:00 y hora máxima 20:00");
+                            mensajesError("error! Solo se pueden recibir entre 3 y 6 hrs diarias");
                             return;
                         }
+                        
                     }
                     else{
                         mensajesError("error! el total de horas no pueden ser mayor a "+horasxRegistrar+"");
@@ -458,10 +462,10 @@ public class MbVModulosHorarios implements Serializable{
             resta = resta / (1000 * 60);
             
             Calendar calendar = Calendar.getInstance();
-            calendar.setTime(tHorarioModulo.getHoraInicio());
+            calendar.setTime(horarioModulo.getHoraInicio());
             int horaInicio = calendar.get(Calendar.HOUR);
             
-            calendar.setTime(tHorarioModulo.getHoraFin());
+            calendar.setTime(horarioModulo.getHoraFin());
             int horaFin = calendar.get(Calendar.HOUR);
             
             if(resta >= 60){
@@ -475,16 +479,20 @@ public class MbVModulosHorarios implements Serializable{
                 if (!repetida) {
                     edicMovimientoHoras(((ClsHorarioModulo) event.getObject()).getTotalHoras(), ((ClsHorarioModulo) event.getObject()).getIdModulo());
                     if (hora > 0 && hora <= Double.parseDouble(horasxRegistrar)) {
-                        if(horaInicio >=  7 && horaFin <= 20){
-                            msg = daoThorariomodulo.registrar(horarioModulo);
+                       if(hora >= 3 && hora <= 6){
+                            
+                                msg = daoThorariomodulo.registrar(horarioModulo);
+                            
                         }else{
-                            mensajesError("error! hora minima 07:00 y hora máxima 20:00");
+                            mensajesError("error! Solo se pueden recibir entre 3 y 6 hrs diarias");
+                            cargarTablaHorarioModulos();
                             return;
                         }
                         
                     }
                     else{
                         mensajesError("error! el total de horas no pueden ser mayor a "+horasxRegistrar+"");
+                        cargarTablaHorarioModulos();
                         return;
                     }
                 }

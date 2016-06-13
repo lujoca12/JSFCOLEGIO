@@ -40,7 +40,7 @@
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="Director" style="width: 20%;" sortBy="#{lstTbl.nombresUsuarios}">
+                        <p:column headerText="Coordinador" style="width: 20%;" sortBy="#{lstTbl.nombresUsuarios}">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.nombresUsuarios}" /></f:facet>
                                 <f:facet name="input">
@@ -59,8 +59,17 @@
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
+                        
+                        <p:column headerText="Promoc." style="width: 15%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.descripcionP}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:autoComplete readonly="true" style="width:100%" required="true" maxlength="150" value="#{lstTbl.descripcionP}" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
 
-                        <p:column headerText="F. Resolución" style="width: 15%;" sortBy="#{lstTbl.fechaResolucion}">
+                        <p:column headerText="F. Resol." style="width: 15%;" sortBy="#{lstTbl.fechaResolucion}">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.fechaResolucion}" /></f:facet>
                                 <f:facet name="input">
@@ -70,7 +79,7 @@
                             </p:cellEditor>
                         </p:column>
                         
-                        <p:column headerText="Resolución" style="width: 13%;" sortBy="#{lstTbl.n_resolucion}">
+                        <p:column headerText="Resol." style="width: 13%;" sortBy="#{lstTbl.n_resolucion}">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.n_resolucion}" /></f:facet>
                                 <f:facet name="input">

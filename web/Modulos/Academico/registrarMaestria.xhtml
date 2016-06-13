@@ -29,7 +29,7 @@
                 <br></br>
                 <p:panel id="panelTabla" style="height: 30%;">
                     <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->   
-                    <p:dataTable class="tblDatos" id="tblMaestria" var="lstTbl" value="#{mbVMaestrias.lstTablamaestria}"
+                    <p:dataTable class="tblDatos fuenteTamanio" id="tblMaestria" var="lstTbl" value="#{mbVMaestrias.lstTablamaestria}"
                                  editable="true" scrollable="true" scrollHeight="150">
                         <p:ajax event="rowEdit" listener="#{mbVMaestrias.onRowEditMaestria}" update=":form:tblMaestria :form:msgs" />
                         <p:ajax event="rowEditCancel" listener="#{mbVMaestrias.onRowCancel}" update=":form:msgs" />

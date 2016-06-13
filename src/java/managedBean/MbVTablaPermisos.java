@@ -262,6 +262,7 @@ public class MbVTablaPermisos implements Serializable{
                     }
                 }
             }
+            permisoDescripcion = null;
             cargarTablaPermisos();
             
         } catch (Exception ex) {

@@ -246,7 +246,7 @@ public class MbVAsistencia implements Serializable {
 
             if (lstHorario != null) {
                 if (lstHorario.size() > 0) {
-                    for (int i = 0; i < lstHorario.size()-1; i++) {
+                    for (int i = 0; i < lstHorario.size(); i++) {
                         lstCboFecha.add(new ClsFechaHoras(lstHorario.get(i).getId(), lstHorario.get(i).getHora(),lstHorario.get(i).getFecha()));
                     }
 //                    for (HorarioModulo horario : lstHorario) {

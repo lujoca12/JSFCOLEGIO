@@ -245,9 +245,17 @@ public class MbVMaestrias implements Serializable{
                 if(lstPromocion.size() > 0){
                     for(Promocion promocion : lstPromocion){
                         lstTblMaestriaPromocion.add(new ClsTablaMaestriaPromocion(promocion.getMaestria().getId(),
-                                promocion.getMaestria().getDescripcion(),promocion.getMaestria().getEstado(),
-                                promocion.getId(),promocion.getDescripcion(),promocion.getFechaResolucion(),promocion.getFechaInicio(),
-                                promocion.getFechaFin(),promocion.getCupo(),promocion.getNCuotas(),promocion.getIdUsuario(),promocion.getUsuario(),
+                                promocion.getMaestria().getDescripcion(),
+                                promocion.getMaestria().getEstado(),
+                                promocion.getId(),
+                                promocion.getDescripcion(),
+                                promocion.getFechaResolucion(),
+                                promocion.getFechaInicio(),
+                                promocion.getFechaFin(),
+                                promocion.getCupo(),
+                                promocion.getNCuotas(),
+                                promocion.getIdUsuario(),
+                                promocion.getUsuario(),
                                 promocion.getResolucion()));
                     }
                 }
@@ -444,7 +452,8 @@ public class MbVMaestrias implements Serializable{
     }
     
     public void onRowCancel(RowEditEvent event) {
-        //cargarTablaMaestriaPromocion();
+        
+        cargarTablaMaestriaPromocion();
     }
     public void onDelete(ClsTablaMaestriaPromocion clsTblMaestrias){
         DaoTPromocion daoTpromocion = new DaoTPromocion();

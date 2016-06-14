@@ -45,7 +45,10 @@ public class MbVModulos implements Serializable {
 
     private ClsMaestria themeMaestria;
     private List<ClsMaestria> lstThemeMaestria;
-
+    
+    private ClsMaestria themePromociones;
+    private List<ClsMaestria> lstThemePromociones;
+    
     private List<SelectItem> lstTodosModulos;
 
     private ClsTablaModulosRegistrados clsTblModulosReg;
@@ -181,7 +184,20 @@ public class MbVModulos implements Serializable {
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
     }
-    
+
+    public ClsMaestria getThemePromociones() {
+        return themePromociones;
+    }
+
+    public void setThemePromociones(ClsMaestria themePromociones) {
+        this.themePromociones = themePromociones;
+    }
+
+    public List<ClsMaestria> getLstThemePromociones() {
+        
+        return lstThemePromociones;
+    }
+
     public List<SelectItem> getLstTodosModulos() {
         this.lstTodosModulos = new ArrayList<SelectItem>();
         try {
@@ -221,7 +237,7 @@ public class MbVModulos implements Serializable {
                     for (Modulo modulo : lstModulo) {
                         
                         lstTblModulosReg.add(new ClsTablaModulosRegistrados(modulo.getPromocion().getMaestria().getId(),
-                                modulo.getPromocion().getMaestria().getDescripcion() + " (Dir.(a)" + modulo.getPromocion().getUsuario() + ")",
+                                modulo.getPromocion().getMaestria().getDescripcion()+" Promoción "+modulo.getPromocion().getDescripcion().toString() + " (Dir.(a)" + modulo.getPromocion().getUsuario() + ")",
                                 modulo.getPromocion().getId(),
                                 modulo.getDescripcion(),
                                 modulo.getUsuario().getId(),
@@ -235,7 +251,8 @@ public class MbVModulos implements Serializable {
                                 modulo.getFechaFinExamen() == null ? null:modulo.getFechaFinExamen(),
                                 modulo.getTotalHorasModulo() == null ? null:modulo.getTotalHorasModulo().toString(),
                                 modulo.getPromocion().getFechaInicio(),
-                                modulo.getPromocion().getFechaFin()
+                                modulo.getPromocion().getFechaFin(),
+                                modulo.getPromocion().getDescripcion()
                                 ));
                     }
                 }
@@ -252,7 +269,7 @@ public class MbVModulos implements Serializable {
 
             List<Usuario> lstUsuario = daoTusuario.getDocentes();
             this.lstTheme.clear();
-            this.lstTheme.add(new ClsProfesor(-1, "Ninguno", "Ninguno"));
+            this.lstTheme.add(new ClsProfesor(-1, "Escoja un Docente", "Escoja un Docente"));
             for (Usuario user : lstUsuario) {
                 this.lstTheme.add(new ClsProfesor(user.getId(), user.getApellidos() + " " + user.getNombres(), user.getApellidos() + " " + user.getNombres()));
             }
@@ -261,21 +278,75 @@ public class MbVModulos implements Serializable {
         }
     }
 
+//    public void llenarCboMaestria() {
+//        this.lstThemeMaestria = new ArrayList<ClsMaestria>();
+//        try {
+//            DaoTMaestrias daoTmaestria = new DaoTMaestrias();
+//            DaoTPromocion daoTpromocion = new DaoTPromocion();
+//
+//            List<Promocion> lstPromocion = daoTpromocion.getPromocionesMaestrias("");
+//            this.lstThemeMaestria.clear();
+//            this.lstThemeMaestria.add(new ClsMaestria(-1, "Ninguno", "Ninguno", 0, 0, 0, null, null));
+//
+//            for (Promocion promocion : lstPromocion) {
+//
+//                this.lstThemeMaestria.add(new ClsMaestria(promocion.getId(),
+//                        promocion.getMaestria().getDescripcion() + " (" + promocion.getUsuario() + ")",
+//                        promocion.getMaestria().getDescripcion(), promocion.getId(),
+//                        0, 0,
+//                        promocion.getFechaInicio(),
+//                        promocion.getFechaFin()));
+//            }
+//        } catch (Exception ex) {
+//
+//        }
+//    }
+    
     public void llenarCboMaestria() {
         this.lstThemeMaestria = new ArrayList<ClsMaestria>();
-        try {
+         try {
             DaoTMaestrias daoTmaestria = new DaoTMaestrias();
+            
+            List<Maestria> lstMaestria = daoTmaestria.getMaestriasD("");
+            this.lstThemeMaestria.clear();
+            this.lstThemeMaestria.add(new ClsMaestria(-1,"Seleccione....","Seleccione....",0,0,0,null, null));
+            
+             this.lstThemePromociones = new ArrayList<ClsMaestria>();
+             lstThemePromociones.clear();
+             this.lstThemePromociones.add(new ClsMaestria(-1, "Seleccione..", "Seleccione..", 0, 0, 0, null, null));
+            
+            for(Maestria maestria: lstMaestria){
+                this.lstThemeMaestria.add(new ClsMaestria(maestria.getId(),
+                        maestria.getDescripcion(),
+                        maestria.getDescripcion(),
+                        maestria.getId(),
+                        0,
+                        0, 
+                        null,
+                        null));
+            }
+        } catch (Exception ex) {
+            
+        }
+    }
+    
+    public void onMaestriaChange() throws Exception {
+            
+            this.lstThemePromociones = new ArrayList<ClsMaestria>();
+        try {
+            
             DaoTPromocion daoTpromocion = new DaoTPromocion();
 
-            List<Promocion> lstPromocion = daoTpromocion.getPromocionesMaestrias("");
-            this.lstThemeMaestria.clear();
-            this.lstThemeMaestria.add(new ClsMaestria(-1, "Ninguno", "Ninguno", 0, 0, 0, null, null));
-
+            List<Promocion> lstPromocion = daoTpromocion.getPromocionesMaestrias(themeMaestria.getId());
+            
+            lstThemePromociones.clear();
+            this.lstThemePromociones.add(new ClsMaestria(-1,"Seleccione..","Seleccione..",0,0,0,null, null));
             for (Promocion promocion : lstPromocion) {
-
-                this.lstThemeMaestria.add(new ClsMaestria(promocion.getId(),
-                        promocion.getMaestria().getDescripcion() + " (" + promocion.getUsuario() + ")",
-                        promocion.getMaestria().getDescripcion(), promocion.getId(),
+                
+                this.lstThemePromociones.add(new ClsMaestria(promocion.getId(),
+                        promocion.getDescripcion() + " (" + promocion.getUsuario() + ")",
+                        promocion.getUsuario(), 
+                        promocion.getId(),
                         0, 0,
                         promocion.getFechaInicio(),
                         promocion.getFechaFin()));
@@ -283,13 +354,14 @@ public class MbVModulos implements Serializable {
         } catch (Exception ex) {
 
         }
+
     }
     
-    public void onMaestriaChange() throws Exception {
-        if(themeMaestria != null){
-            fechaInicio = themeMaestria.getFechaInicioMaestria();
-            fechaFin = themeMaestria.getFechaFinMaestria();
-        }else{
+    public void onPromocionChange() throws Exception {
+        if (themePromociones != null) {
+            fechaInicio = themePromociones.getFechaInicioMaestria();
+            fechaFin = themePromociones.getFechaFinMaestria();
+        } else {
             fechaInicio = null;
             fechaFin = null;
         }
@@ -323,7 +395,7 @@ public class MbVModulos implements Serializable {
             } else {
                 DaoTPromocion daoTpromocion = new DaoTPromocion();
                 Promocion promocion = new Promocion();
-                promocion.setId(this.themeMaestria.getIdPromocion());
+                promocion.setId(this.themePromociones.getIdPromocion());
                 BigDecimal bigdec;
                 bigdec = new BigDecimal(Double.parseDouble(creditos));
                 tModulo.setCreditos(bigdec);

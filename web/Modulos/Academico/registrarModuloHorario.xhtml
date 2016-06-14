@@ -31,7 +31,21 @@
                                 <p:column>
                                     <h:outputText value="#{tProfesor.displayName}" />
                                 </p:column>
-                                <p:ajax listener="#{mbVModulosHorarios.onMaestriaChange}" update="form cboModulo panel" />
+                                <p:ajax listener="#{mbVModulosHorarios.onMaestriaChange}" update="form cboModulo panel panelTabla" />
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel for="cboPromocion" value="Promoción:" styleClass="labelDerecha"/>
+                            <p:selectOneMenu id="cboPromocion" value="#{mbVModulosHorarios.themePromociones}" converter="themeConverterMaestria" required="false"
+                                             effect="fade" var="tProfesor" filter="true" filterMatchMode="contains">
+                                <f:selectItems value="#{mbVModulosHorarios.lstThemePromociones}" var="themeProf" itemLabel="#{themeProf.displayName}" itemValue="#{themeProf}" />
+                                <p:column style="width:10%">
+                                    <h:outputText styleClass="ui-theme ui-theme-#{tProfesor.name}" />
+                                </p:column>
+
+                                <p:column>
+                                    <h:outputText value="#{tProfesor.displayName}" />
+                                </p:column>
+                                <p:ajax listener="#{mbVModulosHorarios.onPromocionChange}" update="form cboModulo" />
                             </p:selectOneMenu>
                             
                             <p:outputLabel for="cboModulo" value="Módulos:" styleClass="labelDerecha"/>

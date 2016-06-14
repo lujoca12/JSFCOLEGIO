@@ -22,11 +22,11 @@
 
                         <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
                             
-                            <p:outputLabel styleClass="labelDerecha" rendered="#{mbVModulos.fechaInicio eq null ? false:true}" />
-                            <p:outputLabel styleClass="labelDerecha" rendered="#{mbVModulos.fechaInicio eq null ? false:true}" >
-                                <h5> #{mbVModulos.themeMaestria.displayName}
-                                    Fecha Inicio: <span style="color: red;">#{mbVModulos.fechaInicio}</span> -- 
-                                    Fecha fin: <span style="color: red;">#{mbVModulos.fechaFin}</span> 
+                            <p:outputLabel id="cont1" styleClass="labelDerecha" rendered="#{mbVModulos.fechaInicio eq null ? false:true}" />
+                            <p:outputLabel id="cont2" styleClass="labelDerecha" rendered="#{mbVModulos.fechaInicio eq null ? false:true}" >
+                                <h5>Coordinador: #{mbVModulos.themePromociones.name} -- 
+                                    Fecha Inicio: <span style="color: red;">#{mbVModulos.fechaInicio}</span> y 
+                                    Fecha fin: <span style="color: red;">#{mbVModulos.fechaFin}</span> de la maestría
                                 </h5>
                             </p:outputLabel>
 
@@ -41,18 +41,36 @@
                                 <p:column>
                                     <h:outputText value="#{tProfesor.displayName}" />
                                 </p:column>
-                                <p:ajax listener="#{mbVModulos.onMaestriaChange}" update="form txtFechaInicio txtFechaFin" />
+                                <p:ajax listener="#{mbVModulos.onMaestriaChange}" update="cboPromocion" />
                             </p:selectOneMenu>
                             
                             
+                            
+                        </p:panelGrid>
+                        
+                        <p:panelGrid id="panel1a" columns="4" columnClasses="ui-grid-col-3,ui-grid-col-2, ui-grid-col-2, ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank">
+                            <p:outputLabel for="cboPromocion" value="Promoción:" styleClass="labelDerecha"/>
+                            <p:selectOneMenu id="cboPromocion" value="#{mbVModulos.themePromociones}" converter="themeConverterMaestria" required="true"
+                                             effect="fade" var="tProfesor" filter="true" filterMatchMode="contains">
+                                <f:selectItems value="#{mbVModulos.lstThemePromociones}" var="themeProf" itemLabel="#{themeProf.displayName}" itemValue="#{themeProf}" />
+                                <p:column style="width:10%">
+                                    <h:outputText styleClass="ui-theme ui-theme-#{tProfesor.name}" />
+                                </p:column>
+
+                                <p:column>
+                                    <h:outputText value="#{tProfesor.displayName}" />
+                                </p:column>
+                                <p:ajax listener="#{mbVModulos.onPromocionChange}" update="form txtFechaInicio txtFechaFin" />
+                            </p:selectOneMenu>
                             
                             <p:outputLabel for="cboNmodulo" value="Nº Mòdulo:" styleClass="labelDerecha"/>
                             <p:selectOneMenu id="cboNmodulo" required="true" value="#{mbVModulos.tModulo.modulo}">
-                                <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                                <f:selectItem itemLabel="Seleccione.." itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{mbVModulos.lstTodosModulos}" />
                             </p:selectOneMenu>
-
-
+                        </p:panelGrid>
+                        
+                        <p:panelGrid id="panel1b" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
                             <p:outputLabel for="txtModulos" styleClass="labelDerecha" value="Descripciòn:" />
                             <p:inputText id="txtModulos" value="#{mbVModulos.tModulo.descripcion}" required="true" maxlength="100"/>
 
@@ -70,10 +88,9 @@
                                     <h:outputText value="#{t.displayName}" />
                                 </p:column>
                             </p:selectOneMenu>
-                            
-                            
-                             
-                            
+                        </p:panelGrid>
+                        
+                        <p:panelGrid id="panel1c" columns="4" columnClasses="ui-grid-col-3,ui-grid-col-2, ui-grid-col-2, ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank">
                             <p:outputLabel for="txtFechaInicio" value="Fecha encuadre:" styleClass="labelDerecha" rendered="#{mbVModulos.fechaInicio eq null ? false:true}" />
                             <p:calendar id="txtFechaInicio" required="true" rendered="#{mbVModulos.fechaInicio eq null ? false:true}"
                                         class="date_input" onkeypress="return permite(event, 'none')" 
@@ -86,7 +103,7 @@
                             </p:calendar>
 
 
-                            <p:outputLabel for="txtFechaFin" value="Primera asesoria:" styleClass="labelDerecha" rendered="#{mbVModulos.fechaInicio eq null ? false:true}"  />
+                            <p:outputLabel for="txtFechaFin" value="1ra asesoria:" styleClass="labelDerecha" rendered="#{mbVModulos.fechaInicio eq null ? false:true}"  />
                             <p:calendar id="txtFechaFin" required="true" locale="es" rendered="#{mbVModulos.fechaInicio eq null ? false:true}"
                                         value="#{mbVModulos.tModulo.fechaFin}"
                                         onkeypress="return permite(event, 'none')" 
@@ -97,7 +114,7 @@
                                 <f:validator validatorId="primeDateRangeValidator1" />
                             </p:calendar>
                             
-                            <p:outputLabel for="txtFechaInicioExamen" value="Segunda asesoria:" styleClass="labelDerecha" rendered="#{mbVModulos.fechaInicio eq null ? false:true}" />
+                            <p:outputLabel for="txtFechaInicioExamen" value="2da asesoria:" styleClass="labelDerecha" rendered="#{mbVModulos.fechaInicio eq null ? false:true}" />
                             <p:calendar id="txtFechaInicioExamen" onkeypress="return permite(event, 'none')" locale="es" 
                                         value="#{mbVModulos.tModulo.fechaInicioExamen}" rendered="#{mbVModulos.fechaInicio eq null ? false:true}"
                                         mindate="#{mbVModulos.fechaInicio}"
@@ -108,7 +125,7 @@
                             </p:calendar>
 
 
-                            <p:outputLabel for="txtFechaFinExamen" value="Fecha evaluación:" styleClass="labelDerecha" rendered="#{mbVModulos.fechaInicio eq null ? false:true}" />
+                            <p:outputLabel for="txtFechaFinExamen" value="Fecha eval:" styleClass="labelDerecha" rendered="#{mbVModulos.fechaInicio eq null ? false:true}" />
                             <p:calendar id="txtFechaFinExamen"  onkeypress="return permite(event, 'none')"
                                         locale="es" value="#{mbVModulos.tModulo.fechaFinExamen}" rendered="#{mbVModulos.fechaInicio eq null ? false:true}"
                                         mindate="#{mbVModulos.fechaInicio}" required="true"
@@ -128,12 +145,14 @@
                             <p:inputText id="txtCreditos" value="#{mbVModulos.creditos}" maxlength="3" required="true" onkeypress="return validarNum(event, true)">
                                 <f:validateDoubleRange minimum="1"/>
                             </p:inputText>
-
-
+                        </p:panelGrid>
+                        
+                        <p:panelGrid id="panel1d" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
                             <h:outputText id="display" value="" />
                             <p:commandButton value="Guardar" update="form,tblModulos" styleClass="anchoBotones" icon="ui-icon-disk"
                                              actionListener="#{mbVModulos.registrar()}" />
                         </p:panelGrid>
+                        
                     </p:panel>
                 </p:tab>
 
@@ -155,6 +174,7 @@
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
+                        
 
                         <p:column headerText="Módulo">
                             <p:cellEditor>

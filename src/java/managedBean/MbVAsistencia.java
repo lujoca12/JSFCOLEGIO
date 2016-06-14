@@ -226,7 +226,8 @@ public class MbVAsistencia implements Serializable {
                                 modulo.getFechaFinExamen() == null ? null:modulo.getFechaFinExamen(),
                                 modulo.getTotalHorasModulo() == null ? null:modulo.getTotalHorasModulo().toString(),
                                 modulo.getPromocion().getFechaInicio(),
-                                modulo.getPromocion().getFechaFin()
+                                modulo.getPromocion().getFechaFin(),
+                                modulo.getPromocion().getDescripcion()
                                 ));
                     }
                 }

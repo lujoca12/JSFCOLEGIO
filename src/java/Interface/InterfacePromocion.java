@@ -17,9 +17,11 @@ public interface InterfacePromocion {
     public boolean registrar(Promocion tPromocion) throws Exception;
     public List<Promocion> getTodasPromociones() throws Exception;
     public List<Promocion> getPromocionesMaestrias(String maestriaDescripcion) throws Exception;
+    public List<Promocion> getPromocionesMaestrias(int idMaestria) throws Exception;
     public int getUltimoidPromocion(String descripcion) throws Exception;
     public Promocion getPromocion(int idMaestria) throws Exception;
     public boolean update(Promocion tPromocion) throws Exception;
     public boolean delete(Promocion tPromocion) throws Exception;
     public boolean existe(Promocion tPromocion) throws Exception;
+    
 }

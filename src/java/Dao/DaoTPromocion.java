@@ -92,6 +92,24 @@ public class DaoTPromocion implements InterfacePromocion{
         sesion.close();
         return lstPermiso;
     }
+    
+    @Override
+    public List<Promocion> getPromocionesMaestrias(int idMaestria) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        
+        
+        String hql="from Promocion pr inner join fetch pr.maestria m "
+                + "where pr.estado = '1' and m.estado='1' and "
+                + "(year(current_date) >= year(pr.fechaInicio) and "
+                + "year(current_date)<= year(pr.fechaFin)) and "
+                + "m.id = "+idMaestria+" order by pr.id desc";
+        Query query = sesion.createQuery(hql);
+        List<Promocion> lstPermiso=(List<Promocion>) query.list();
+        sesion.close();
+        return lstPermiso;
+    }
 
     @Override
     public Promocion getPromocion(int idMaestria) throws Exception {
@@ -129,7 +147,7 @@ public class DaoTPromocion implements InterfacePromocion{
         this.tx = null;
         int ultimoId = 0;
         iniciaOperacion();
-        String hql="from Promocion as p inner join fetch p.maestria as m where m.descripcion like '%"+descripcion+"%' order by p.descripcion desc";
+        String hql="from Promocion as p inner join fetch p.maestria as m where m.descripcion like '%"+descripcion+"%' and p.estado = '1' order by p.descripcion desc";
         Query query = sesion.createQuery(hql);
         List<Promocion> lstPromocion=(List<Promocion>) query.list();
         if(lstPromocion.size() > 0)
@@ -146,18 +164,23 @@ public class DaoTPromocion implements InterfacePromocion{
         this.sesion = null;
         this.tx = null;
         boolean band = false;
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(tPromocion.getFechaInicio());
-        int anioInicio = calendar.get(Calendar.YEAR);
-        
-        calendar.setTime(tPromocion.getFechaFin());
-        int anioFin = calendar.get(Calendar.YEAR);
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(tPromocion.getFechaInicio());
+//        int anioInicio = calendar.get(Calendar.YEAR);
+//        
+//        calendar.setTime(tPromocion.getFechaFin());
+//        int anioFin = calendar.get(Calendar.YEAR);
         
         iniciaOperacion();
+//        String hql="from Promocion as pr where pr.maestria = "+tPromocion.getMaestria().getId()+" and "
+//                + "pr.idUsuario = "+tPromocion.getIdUsuario()+" and "
+//                + "year(pr.fechaInicio) = "+anioInicio+" and "
+//                + "year(pr.fechaFin) = "+anioFin+"";
+
         String hql="from Promocion as pr where pr.maestria = "+tPromocion.getMaestria().getId()+" and "
                 + "pr.idUsuario = "+tPromocion.getIdUsuario()+" and "
-                + "year(pr.fechaInicio) = "+anioInicio+" and "
-                + "year(pr.fechaFin) = "+anioFin+"";
+                + "pr.fechaInicio = '"+tPromocion.getFechaInicio()+"' and "
+                + "pr.fechaFin = '"+tPromocion.getFechaFin()+"' and pr.estado = '1'";
         Query query = sesion.createQuery(hql);
         List<Promocion> promocion=(List<Promocion>) query.list();
         if(promocion.size() > 0)

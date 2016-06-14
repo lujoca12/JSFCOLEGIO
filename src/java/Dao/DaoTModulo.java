@@ -101,7 +101,7 @@ public class DaoTModulo implements InterfaceModulos{
                 + "inner join fetch p.maestria m where m.estado='1' and "
                 + "(year(current_date) >= year(p.fechaInicio) "
                 + "and year(current_date)<= year(p.fechaFin)) "
-                + ""+consulta+" order by mod.id desc";
+                + ""+consulta+" and p.estado = '1' order by mod.id desc";
         Query query = sesion.createQuery(hql);
         List<Modulo> lstPermiso=(List<Modulo>) query.list();
         sesion.close();
@@ -118,10 +118,10 @@ public class DaoTModulo implements InterfaceModulos{
                 + "inner join fetch  user.tipoUsuario tuser \n"
                 + "inner join fetch modul.promocion pr \n"
                 + "inner join fetch pr.maestria maest \n"
-                + "where maest.id = "+idMaestria+" and\n"
+                + "where pr.id = "+idMaestria+" and\n"
                 + "(year(current_date) >= year(pr.fechaInicio) and year(current_date)<= year(pr.fechaFin))\n"
                 + "and (tuser.descripcion like '%Prof%' or tuser.descripcion like '%prof%' or tuser.descripcion like '%Docen%' or tuser.descripcion like '%docent%') \n"
-                + "order by modul.descripcion asc";
+                + " and pr.estado = '1' order by modul.descripcion asc";
         Query query = sesion.createQuery(hql);
         List<Modulo> lstPermiso=(List<Modulo>) query.list();
         sesion.close();

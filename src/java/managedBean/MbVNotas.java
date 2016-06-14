@@ -392,7 +392,7 @@ public class MbVNotas implements Serializable {
         try {
             lstCboModulos.clear();
 
-            this.lstCboModulos.add(new ClsTablaModulosRegistrados(-1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)", "(Escoja un Módulo)", -1, "(Escoja un Módulo)", null, null, null, null, "", null, null));
+            this.lstCboModulos.add(new ClsTablaModulosRegistrados(-1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)", "(Escoja un Módulo)", -1, "(Escoja un Módulo)", null, null, null, null, "", null, null,0));
             if (usuario.getTipoUsuario().getDescripcion().equals("Profesor(a)") || usuario.getTipoUsuario().getDescripcion().equals("Docente") || usuario.getTipoUsuario().getDescripcion().equals("PROFESOR(A)") || usuario.getTipoUsuario().getDescripcion().equals("DOCENTE")) {
                 DaoTModulo daoTmodulo = new DaoTModulo();
                 List<Modulo> lstModulo = daoTmodulo.getCboModulosNotas(usuario.getId());
@@ -415,7 +415,8 @@ public class MbVNotas implements Serializable {
                                     modulo.getFechaFinExamen() == null ? null : modulo.getFechaFinExamen(),
                                     modulo.getTotalHorasModulo() == null ? null : modulo.getTotalHorasModulo().toString(),
                                     modulo.getPromocion().getFechaInicio(),
-                                    modulo.getPromocion().getFechaFin()
+                                    modulo.getPromocion().getFechaFin(),
+                                    modulo.getPromocion().getDescripcion()
                             ));
                         }
                     }
@@ -442,7 +443,8 @@ public class MbVNotas implements Serializable {
                                     modulo.getFechaFinExamen() == null ? null : modulo.getFechaFinExamen(),
                                     modulo.getTotalHorasModulo() == null ? null : modulo.getTotalHorasModulo().toString(),
                                     modulo.getPromocion().getFechaInicio(),
-                                    modulo.getPromocion().getFechaFin()
+                                    modulo.getPromocion().getFechaFin(),
+                                    modulo.getPromocion().getDescripcion()
                             ));
                         }
                     }

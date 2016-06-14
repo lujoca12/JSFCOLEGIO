@@ -12,9 +12,11 @@ import Clases.ClsTablaModulosRegistrados;
 import Dao.DaoTHorarioModulo;
 import Dao.DaoTMaestrias;
 import Dao.DaoTModulo;
+import Dao.DaoTPromocion;
 import Pojo.HorarioModulo;
 import Pojo.Maestria;
 import Pojo.Modulo;
+import Pojo.Promocion;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Time;
@@ -39,6 +41,9 @@ public class MbVModulosHorarios implements Serializable{
 
     private ClsMaestria themeMaestria; 
     private List<ClsMaestria> lstThemeMaestria;
+    
+    private ClsMaestria themePromociones;
+    private List<ClsMaestria> lstThemePromociones;
     
     private ClsTablaModulosRegistrados clsTblModulosReg;
     private List<ClsTablaModulosRegistrados> lstCboModulos;
@@ -161,9 +166,19 @@ public class MbVModulosHorarios implements Serializable{
     public void setModuloDescripcion(String moduloDescripcion) {
         this.moduloDescripcion = moduloDescripcion;
     }
-    
-    
-    
+
+    public ClsMaestria getThemePromociones() {
+        return themePromociones;
+    }
+
+    public void setThemePromociones(ClsMaestria themePromociones) {
+        this.themePromociones = themePromociones;
+    }
+
+    public List<ClsMaestria> getLstThemePromociones() {
+        return lstThemePromociones;
+    }
+
     public void llenarCboMaestria(){
         this.lstThemeMaestria = new ArrayList<ClsMaestria>();
          try {
@@ -172,6 +187,10 @@ public class MbVModulosHorarios implements Serializable{
             List<Maestria> lstMaestria = daoTmaestria.getMaestriasD("");
             this.lstThemeMaestria.clear();
             this.lstThemeMaestria.add(new ClsMaestria(-1,"Ninguno","Ninguno",0,0,0, null, null));
+            
+            this.lstThemePromociones = new ArrayList<ClsMaestria>();
+            lstThemePromociones.clear();
+            this.lstThemePromociones.add(new ClsMaestria(-1, "Seleccione..", "Seleccione..", 0, 0, 0, null, null));
             
             for(Maestria maestria: lstMaestria){
                 this.lstThemeMaestria.add(new ClsMaestria(maestria.getId(),
@@ -189,16 +208,55 @@ public class MbVModulosHorarios implements Serializable{
     }
     
     public void onMaestriaChange() throws Exception {
+        
+        
+        this.lstThemePromociones = new ArrayList<ClsMaestria>();
+        List<Promocion> lstPromocion = null;
+        try {
+            
+            DaoTPromocion daoTpromocion = new DaoTPromocion();
+            if(themeMaestria != null)
+                lstPromocion = daoTpromocion.getPromocionesMaestrias(themeMaestria.getId());
+            else 
+                lstPromocion = daoTpromocion.getPromocionesMaestrias(0);
+                
+            if(lstCboModulos != null){
+                lstCboModulos.clear();
+                estado = false;
+            }
+            else{
+                estado = false;
+            }
+                
+                
+            lstThemePromociones.clear();
+            this.lstThemePromociones.add(new ClsMaestria(-1,"Seleccione..","Seleccione..",0,0,0,null, null));
+            for (Promocion promocion : lstPromocion) {
+                
+                this.lstThemePromociones.add(new ClsMaestria(promocion.getId(),
+                        "Promoción "+promocion.getDescripcion().toString() + " (Coord. " + promocion.getUsuario() + ")",
+                        promocion.getUsuario(), 
+                        promocion.getId(),
+                        0, 0,
+                        promocion.getFechaInicio(),
+                        promocion.getFechaFin()));
+            }
+        } catch (Exception ex) {
+
+        }
+    }
+    
+    public void onPromocionChange() throws Exception {
         try {
             
             lstCboModulos = new ArrayList<>();
             lstCboModulos.clear();
-            this.lstCboModulos.add(new ClsTablaModulosRegistrados(-1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)","(Escoja un Módulo)",-1,"(Escoja un Módulo)",null,null,null,null,"",null,null));
+            this.lstCboModulos.add(new ClsTablaModulosRegistrados(-1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)","(Escoja un Módulo)",-1,"(Escoja un Módulo)",null,null,null,null,"",null,null,0));
             DaoTModulo daoTmodulo = new DaoTModulo();
             List<Modulo> lstModulo = null;
             
-            if(themeMaestria != null)
-                lstModulo = daoTmodulo.getTblModulosMaestria(themeMaestria.getId());
+            if(themePromociones != null)
+                lstModulo = daoTmodulo.getTblModulosMaestria(themePromociones.getIdPromocion());
             else{
                 lstCboModulos.clear();
                 estado = false;
@@ -223,7 +281,8 @@ public class MbVModulosHorarios implements Serializable{
                                 modulo.getFechaFinExamen() == null ? null : modulo.getFechaFinExamen(),
                                 modulo.getTotalHorasModulo() == null ? null : modulo.getTotalHorasModulo().toString(),
                                 modulo.getPromocion().getFechaInicio(),
-                                modulo.getPromocion().getFechaFin()
+                                modulo.getPromocion().getFechaFin(),
+                                modulo.getPromocion().getDescripcion()
                         ));
                     }
                    
@@ -234,7 +293,6 @@ public class MbVModulosHorarios implements Serializable{
         } catch (Exception ex) {
             
         }
-
     }
     
     public void cargarTablaHorarioModulos() {
@@ -257,7 +315,7 @@ public class MbVModulosHorarios implements Serializable{
 //                        horaInicio = new Time(horario.getHoraInicio().getTime());
 //                        horaFin = new Time(horario.getHoraFin().getTime());
                         lstTblHorarioModulo.add(new ClsHorarioModulo(horario.getModulo().getPromocion().getMaestria().getId(), 
-                                horario.getModulo().getPromocion().getMaestria().getDescripcion(), 
+                                horario.getModulo().getPromocion().getMaestria().getDescripcion() + " Promoción " + horario.getModulo().getPromocion().getDescripcion().toString(), 
                                 horario.getModulo().getId(), 
                                 horario.getModulo().getModulo()+": "+horario.getModulo().getDescripcion()+ " (Dir.(a)" + horario.getModulo().getPromocion().getUsuario() + ")",
                                 horario.getModulo().getCreditos().toString(), 

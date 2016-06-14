@@ -5,14 +5,17 @@
  */
 package managedBean;
 
+import Clases.ClsGenerarUserClaves;
 import Clases.ClsProfesor;
 import Clases.Document;
 import Dao.DaoTDetallePermiso;
 import Dao.DaoTMenu;
 import Dao.DaoTTipoUsuario;
 import Dao.DaoTUsuario;
+import Dao.postgradoDao;
 import Pojo.DetallePermiso;
 import Pojo.Permiso;
+import Pojo.Postgrado;
 import Pojo.TipoUsuario;
 import Pojo.Usuario;
 import encriptacion.Class_Encript;
@@ -28,6 +31,17 @@ import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import org.primefaces.model.TreeNode;
 import org.primefaces.model.DefaultTreeNode;
+
+import java.util.Properties;
+import javax.mail.Session;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 /**
  *
@@ -66,6 +80,7 @@ public class MbVUsuario implements Serializable {
     private TreeNode selectedNode;
     
     private int estado;
+    private boolean estadoCorreo;
 
     public MbVUsuario() {
         tUsuario = new Usuario();
@@ -197,7 +212,9 @@ public class MbVUsuario implements Serializable {
             DaoTUsuario daoTusuario = new DaoTUsuario();
 
             List<Usuario> lstUsuario = daoTusuario.getDocentes();
-            this.lstTheme.clear();
+            if(this.lstTheme.size() > 0)
+                this.lstTheme.clear();
+            
             this.lstTheme.add(new ClsProfesor(-1, "Ninguno", "Ninguno"));
             for (Usuario user : lstUsuario) {
                 this.lstTheme.add(new ClsProfesor(user.getId(), 
@@ -215,7 +232,9 @@ public class MbVUsuario implements Serializable {
             DaoTUsuario daoTusuario = new DaoTUsuario();
 
             List<Usuario> lstUsuario = daoTusuario.getTodosUsuarios();
-            this.lstThemeUsuarios.clear();
+            if(this.lstThemeUsuarios.size() > 0)
+                this.lstThemeUsuarios.clear();
+            
             this.lstThemeUsuarios.add(new ClsProfesor(-1, "Ninguno", "Ninguno"));
             for (Usuario user : lstUsuario) {
                 this.lstThemeUsuarios.add(new ClsProfesor(user.getId(), 
@@ -233,7 +252,8 @@ public class MbVUsuario implements Serializable {
             DaoTTipoUsuario daoTtipoUsuario = new DaoTTipoUsuario();
 
             List<TipoUsuario> lstTtipoUsuario = daoTtipoUsuario.getTodosTipoUsuarios();
-            lstTodosUsuarios.clear();
+            if(lstTodosUsuarios.size() > 0)
+                lstTodosUsuarios.clear();
             for (TipoUsuario tipoUser : lstTtipoUsuario) {
                 SelectItem usuarioItem = new SelectItem(tipoUser.getId(), tipoUser.getDescripcion());
                 this.lstTodosUsuarios.add(usuarioItem);
@@ -250,7 +270,9 @@ public class MbVUsuario implements Serializable {
         DaoTUsuario daoTUsuario = new DaoTUsuario();
 
         List<Usuario> lstUser = daoTUsuario.getTodosUsuarios();
-        lstUsuario.clear();
+        if(lstUsuario.size() > 0)
+            lstUsuario.clear();
+        
         for (Usuario usuario : lstUser) {
             SelectItem usuarioItem = new SelectItem(usuario.getId(), usuario.getApellidos() + " " + usuario.getNombres());
             this.lstUsuario.add(usuarioItem);
@@ -429,17 +451,26 @@ public class MbVUsuario implements Serializable {
             DaoTTipoUsuario daoTipoUsuario = new DaoTTipoUsuario();
             TipoUsuario tipoUsuario = new TipoUsuario();
 
-            tUsuario.setClave(Class_Encript.getStringMessageDigest(this.clave, Class_Encript.SHA256));
+            //tUsuario.setClave(Class_Encript.getStringMessageDigest(this.clave, Class_Encript.SHA256));
             tUsuario.setTelefono(telefono.replaceAll("[()-]", ""));
             tUsuario.setCelular(celular.replaceAll("[()-]", ""));
             tUsuario.setEstado('1');
+            
+            String usuarioGenerado = ClsGenerarUserClaves.getUsuarioAleatorio(10);
+            String claveGenerada = ClsGenerarUserClaves.getPassword(ClsGenerarUserClaves.MINUSCULAS.concat(ClsGenerarUserClaves.MAYUSCULAS).concat(ClsGenerarUserClaves.ESPECIALES),10);
+            tUsuario.setClave(Class_Encript.getStringMessageDigest(claveGenerada, Class_Encript.SHA256));
+            tUsuario.setNick(usuarioGenerado);
+            
             band = daoTusuario.verificarUsuarioNick(tUsuario.getNick());
             if (band) {
                 tipoUsuario.setId(idRol);
                 tUsuario.setTipoUsuario(tipoUsuario);
 //                if(validarCedula()){
-                    band = daoTusuario.registrar(tUsuario);
-                    vaciarCajas();
+                    enviarEmail(claveGenerada);
+                    if(estadoCorreo){
+                        band = daoTusuario.registrar(tUsuario);
+                        vaciarCajas();
+                    }
 //                }else{
 //                    return;
 //                }
@@ -456,6 +487,70 @@ public class MbVUsuario implements Serializable {
         } else {
             mensajesError("Error al procesar datos");
         }
+    }
+    
+    public void enviarEmail(String claveGen) throws Exception {
+        postgradoDao psgDao = new postgradoDao();
+        Postgrado psg = psgDao.getPostgrado();
+        if(psg.getEmail() != null || psg.getEmail().isEmpty()){
+        final String username = psg.getEmail();
+        final String password = psg.getClaveEmail();
+
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+
+        Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        });
+
+        try {
+            
+            
+            String msj = "Saludos Sr(a). "+tUsuario.getNombres()+" "+tUsuario.getApellidos()+" \n Bienvenido a la Unidad de Postgrado \n usuario: "+tUsuario.getNick()+" \n clave:"+claveGen+"";
+                    
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(tUsuario.getEmail()));
+            message.setSubject("POSTGRADO UTEQ");
+            //message.setText("La entrevista tendrá lugar en " + lugar + " el " + dateFormat.format(fecha));
+            message.setText(msj);
+            Transport.send(message);
+            estadoCorreo = true;
+            
+        } catch (AddressException e) {
+            System.out.println(e.toString());
+            FacesMessage m = new FacesMessage("Error", "La dirección de correo no existe");
+            FacesContext.getCurrentInstance().addMessage(null, m);
+            estadoCorreo = false;
+            // ...
+        } catch (MessagingException e) {
+            // ...
+            System.out.println(e.toString());
+            FacesMessage m = new FacesMessage("Error", "No se ha podido conectar con el servidor, inténtelo de nuevo");
+            FacesContext.getCurrentInstance().addMessage(null, m);
+            estadoCorreo = false;
+        } catch (Exception ex) {
+            
+            System.out.println(ex.toString());
+            FacesMessage m = new FacesMessage("Error", "No se ha podido guardar los datos");
+            FacesContext.getCurrentInstance().addMessage(null, m);
+            estadoCorreo = false;
+        }
+        }else{
+            FacesMessage m = new FacesMessage("Error", "No se tiene un correo registrado en el sistema");
+            FacesContext.getCurrentInstance().addMessage(null, m);
+            estadoCorreo = false;
+        }
+
     }
     
 //    private boolean validarCedula() {

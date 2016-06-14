@@ -17,6 +17,7 @@ import Dao.DaoTMatricula;
 import Pojo.Maestria;
 import Pojo.Titulacion;
 import Dao.DaoTitulacion;
+import Pojo.Cargo;
 import Pojo.Estudiante;
 import Pojo.Matricula;
 import Pojo.SolicitudInscripcion;
@@ -67,6 +68,7 @@ public class MbVtitulacion implements Serializable{
      private TipoTitulacion ttipotitulacion;
      private Matricula tmatricula;
      private Estudiante testudiante;
+     private Cargo tcargo;
     /**
      * Creates a new instance of MbVtitulacion
      */
@@ -85,6 +87,15 @@ public class MbVtitulacion implements Serializable{
         tmatricula = new Matricula();
         ttipotitulacion = new TipoTitulacion();
     }
+
+    public Cargo getTcargo() {
+        return tcargo;
+    }
+
+    public void setTcargo(Cargo tcargo) {
+        this.tcargo = tcargo;
+    }
+    
 
     public ClsMatricula getClsmatricula() {
         return clsmatricula;
@@ -420,6 +431,9 @@ public class MbVtitulacion implements Serializable{
          }catch(Exception e){             
             Logger.getLogger(MbVtitulacion.class.getName()).log(Level.SEVERE, null, e);
          }
+     }
+     public void registrarCargo(){
+         
      }
      
      

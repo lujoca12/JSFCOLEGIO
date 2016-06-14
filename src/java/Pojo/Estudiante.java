@@ -32,6 +32,7 @@ public class Estudiante  implements java.io.Serializable {
      private String segundoNombre;
      private String primerApellido;
      private String segundoApellido;
+     private Set titulos = new HashSet(0);
 
     public Estudiante() {
     }
@@ -41,7 +42,7 @@ public class Estudiante  implements java.io.Serializable {
         this.id = id;
         this.cedPasaporte = cedPasaporte;
     }
-    public Estudiante(int id, String cedPasaporte, String nombres, String apellidos, String email, String celular, Date fechaNac, Character sexo, Character estadoCivil, String paisOrigen, Integer dscColegiatura, Set datosDoms, Set datosNacs, Set datosLabs, Set solicitudInscripcions,Character etnia,String primerNombre,String segundoNombre,String primerApellido,String segundoApellido) {
+    public Estudiante(int id, String cedPasaporte, String nombres, String apellidos, String email, String celular, Date fechaNac, Character sexo, Character estadoCivil, String paisOrigen, Integer dscColegiatura, Set datosDoms, Set datosNacs, Set datosLabs, Set solicitudInscripcions,Character etnia,String primerNombre,String segundoNombre,String primerApellido,String segundoApellido,Set titulos) {
        this.id = id;
        this.cedPasaporte = cedPasaporte;
        this.nombres = nombres;
@@ -62,6 +63,15 @@ public class Estudiante  implements java.io.Serializable {
        this.segundoNombre=segundoNombre;
        this.primerApellido=primerApellido;
        this.segundoApellido=segundoApellido;
+       this.titulos=titulos;
+    }
+
+    public Set getTitulos() {
+        return titulos;
+    }
+
+    public void setTitulos(Set titulos) {
+        this.titulos = titulos;
     }
 
     public String getPrimerNombre() {

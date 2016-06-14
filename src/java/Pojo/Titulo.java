@@ -13,6 +13,7 @@ public class Titulo  implements java.io.Serializable {
      private Universidad universidad;
      private String descripcion;
      private String NSenecyt;
+     private Estudiante estudiante;
 
     public Titulo() {
     }
@@ -22,11 +23,20 @@ public class Titulo  implements java.io.Serializable {
         this.id = id;
         this.universidad = universidad;
     }
-    public Titulo(int id, Universidad universidad, String descripcion, String NSenecyt) {
+    public Titulo(int id, Universidad universidad, String descripcion, String NSenecyt,Estudiante estudiante) {
        this.id = id;
        this.universidad = universidad;
        this.descripcion = descripcion;
        this.NSenecyt = NSenecyt;
+       this.estudiante=estudiante;
+    }
+
+    public Estudiante getEstudiante() {
+        return estudiante;
+    }
+
+    public void setEstudiante(Estudiante estudiante) {
+        this.estudiante = estudiante;
     }
    
     public int getId() {

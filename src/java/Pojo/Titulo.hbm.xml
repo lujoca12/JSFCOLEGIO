@@ -19,5 +19,8 @@
         <property name="NSenecyt" type="string">
             <column name="n_senecyt" length="20" />
         </property>
+        <many-to-one name="estudiante" class="Pojo.Estudiante" fetch="select">
+            <column name="id_estudiante" not-null="true" />
+        </many-to-one>
     </class>
 </hibernate-mapping>

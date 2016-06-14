@@ -134,6 +134,15 @@ public class InscripcionBean implements Serializable {
     private String filename = "";
     private String extension = "";
     private String cedOpas = "cedula";
+    private String step="personal";
+
+    public String getStep() {
+        return step;
+    }
+
+    public void setStep(String step) {
+        this.step = step;
+    }
 
     public String getCedOpas() {
         return cedOpas;
@@ -950,7 +959,16 @@ public class InscripcionBean implements Serializable {
                     guardarArchivos();
                     FacesMessage message = new FacesMessage("Succesful", "Datos guardados");
                     FacesContext.getCurrentInstance().addMessage(null, message);
-                    btnGuardar = true;
+                    btnGuardar = false;
+                    estudiante = new Estudiante();
+                    datosDom = new DatosDom();
+                    datosLab = new DatosLab();
+                    datosNac = new DatosNac();
+                    universidad = new Universidad();
+                    titulo = new Titulo();
+                    numeroSenecyt ="";
+                    tituloDescr="";
+                    
                 } else {
                     FacesMessage message = new FacesMessage("Error", "Ha habido un problema");
                     FacesContext.getCurrentInstance().addMessage(null, message);

@@ -91,6 +91,26 @@ public class PagosDao implements InterfacePagos{
         
         return band;
     }
+    
+    @Override
+    public boolean existeComprobante(String IDCOMPROBANTE) throws Exception {
+        boolean band = false;
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        //String hql="from Notas nota inner join fetch nota.modulo modul where nota.modulo = "+idModulo+" and "
+          //      + "nota.matricula="+idMatricula+" order by modul.descripcion asc";
+        String hql="from Pago p where p.idComprobante ='"+IDCOMPROBANTE+"'";
+        Query query = sesion.createQuery(hql);
+        
+        Pago p = (Pago) query.uniqueResult();
+        if(!p.getIdComprobante().equals(""))
+            band=true;
+        sesion.close();
+        
+        return band;
+    }
+    
    
     
 }

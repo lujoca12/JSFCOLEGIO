@@ -17,4 +17,5 @@ public interface InterfacePagos {
     public List<Pago> getTodosPagos(int idMatricula) throws Exception ;
     public TipoPago getTipoPago(int ID) throws Exception ;
      public boolean registrar(Pago pago) throws Exception;
+     public boolean existeComprobante(String IDCOMPROBANTE) throws Exception;
 }

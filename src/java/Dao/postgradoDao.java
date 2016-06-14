@@ -62,11 +62,22 @@ public class postgradoDao {
         Postgrado p = null;
         Query query = sesion.createQuery(hql);
         //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-        List<Postgrado> lst = (List<Postgrado>) query.list();
-        if (!lst.isEmpty()) {
-            p = lst.get(0);
-        }
+        p = (Postgrado) query.uniqueResult();
+        
         sesion.close();
         return p;
+    }
+    
+    public int getNMatricula(){
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+
+        String hql = "from Postgrado";
+        Postgrado p = null;
+        Query query = sesion.createQuery(hql);
+        p = (Postgrado) query.uniqueResult();        
+        sesion.close();
+        return p.getNumMatricula();
     }
 }

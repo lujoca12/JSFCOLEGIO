@@ -11,30 +11,12 @@
        <div class="ui-fluid">
             <h:form id="form">
                 
-                <p:tab id="personal" title="ReporteIngresosMensuales">
-                    <p:panel header="Reporte Ingresos Mensuales">
+                <p:tab id="personal" title="ReporteIngresosAnual">
+                    <p:panel header="Reporte Ingresos Anual">
                         <p:growl id="msgs" showDetail="true" />
                         <p:focus context="panel"/>
                         <p:panelGrid id="panel" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
-                            
-                            <p:outputLabel for="mes" value="Mes:" styleClass="labelDerecha"  />
-                            <p:selectOneMenu id="mes" value="#{reportesBean.month}" 
-                                             effect="fade" >
-                                <f:selectItem  itemLabel="Enero" itemValue="1" />
-                                <f:selectItem  itemLabel="Febrero" itemValue="2" />
-                                <f:selectItem  itemLabel="Marzo" itemValue="3" />
-                                <f:selectItem  itemLabel="Abril" itemValue="4" />
-                                <f:selectItem  itemLabel="Mayo" itemValue="5" />
-                                <f:selectItem  itemLabel="Junio" itemValue="6" />
-                                <f:selectItem  itemLabel="Julio" itemValue="7" />
-                                <f:selectItem  itemLabel="Agosto" itemValue="8" />
-                                <f:selectItem  itemLabel="Septiembre" itemValue="9" />
-                                <f:selectItem  itemLabel="Ocutbre" itemValue="10" />
-                                <f:selectItem  itemLabel="Noviembre" itemValue="11" />
-                                <f:selectItem  itemLabel="Diciembre" itemValue="12" />
-                            </p:selectOneMenu>
-                             <h:inputHidden/>
-                             
+                                                                                     
                             <p:outputLabel for="anio" value="Año: " styleClass="labelDerecha"  />
                             <p:selectOneMenu id="anio" value="#{reportesBean.year}" 
                                              effect="fade" >
@@ -52,7 +34,7 @@
                             </p:selectOneMenu>
                             <h:inputHidden/>
                             <p:commandButton value="Ver Reporte" update="form,msgs" styleClass="anchoBotones" icon="ui-icon-search"
-                                             actionListener="#{reportesBean.cargarReporte()}" ajax="true"  >
+                                             actionListener="#{reportesBean.cargarReporteAnual()}" ajax="true"  >
                             </p:commandButton>
                             <!--<h:commandLink>
                                 <p:graphicImage onclick="this.form.target='_self'" value="#{resource['img/pdf.png']}" width="24"/>

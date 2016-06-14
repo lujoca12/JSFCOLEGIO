@@ -56,7 +56,7 @@
 
 
                     </div>
-                    <p:wizard id="datos" flowListener="#{userWizard.onFlowProcess}" style="display:none;" backLabel="Regresar" nextLabel="Siguiente" >
+                    <p:wizard id="datos" step="#{inscripcionBean.step}" flowListener="#{userWizard.onFlowProcess}" style="display:none;" backLabel="Regresar" nextLabel="Siguiente" >
 
                         <p:tab id="personal" title="Personal">
                             <p:panel header="Información Personal">
@@ -106,7 +106,7 @@
                                     </h:selectOneMenu>
 
                                     <h:outputLabel for="fNac" value="Fecha de Nacimiento: " />
-                                    <p:calendar  id="fNac" required="true"  navigator="true" mask="true" value="#{inscripcionBean.estudiante.fechaNac}" pattern="dd/MM/yyyy" mindate="01/01/1940"   />                                  
+                                    <p:calendar  id="fNac" required="true" yearRange="c-50:c+0" navigator="true" mask="true" value="#{inscripcionBean.estudiante.fechaNac}" pattern="dd/MM/yyyy" mindate="01/01/1940"   />                                  
 
                                     <h:outputLabel for="email" value="Email: " />
                                     <p:inputText  required="true" id="email"  class="form-control  " value="#{inscripcionBean.estudiante.email}">

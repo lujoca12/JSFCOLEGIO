@@ -12,6 +12,7 @@ public class Postgrado  implements java.io.Serializable {
      private int id;
      private String email;
      private String claveEmail;
+     private int numMatricula;
 
     public Postgrado() {
     }
@@ -20,10 +21,11 @@ public class Postgrado  implements java.io.Serializable {
     public Postgrado(int id) {
         this.id = id;
     }
-    public Postgrado(int id, String email, String claveEmail) {
+    public Postgrado(int id, String email, String claveEmail,int numMatricula) {
        this.id = id;
        this.email = email;
        this.claveEmail = claveEmail;
+       this.numMatricula=numMatricula;
     }
    
     public int getId() {
@@ -46,6 +48,14 @@ public class Postgrado  implements java.io.Serializable {
     
     public void setClaveEmail(String claveEmail) {
         this.claveEmail = claveEmail;
+    }
+
+    public int getNumMatricula() {
+        return numMatricula;
+    }
+
+    public void setNumMatricula(int numMatricula) {
+        this.numMatricula = numMatricula;
     }
 
 

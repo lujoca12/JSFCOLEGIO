@@ -14,6 +14,7 @@ import Dao.DaoTEstudiante;
 import Dao.DaoTMatricula;
 import Dao.DaoTModulo;
 import Dao.DaoTNotas;
+import Dao.InscripcionDao;
 import Dao.PagosDao;
 import Pojo.Asistencia;
 import Pojo.Estudiante;
@@ -83,7 +84,26 @@ public class MbVNotas implements Serializable {
     private ClsNotas selectedNota;
     private String idComprobante;
     private BigDecimal valor;
-    private int idTipoPago=1;
+    private int idTipoPago = 1;
+    private List<SolicitudInscripcion> lstSolicitudes;
+    private SolicitudInscripcion selectedPago;
+
+    public SolicitudInscripcion getSelectedPago() {
+        return selectedPago;
+    }
+
+    public void setSelectedPago(SolicitudInscripcion selectedPago) {
+        this.selectedPago = selectedPago;
+    }
+    
+    public List<SolicitudInscripcion> getLstSolicitudes() {
+        return lstSolicitudes;
+    }
+
+    public void setLstSolicitudes(List<SolicitudInscripcion> lstSolicitudes) {
+        this.lstSolicitudes = lstSolicitudes;
+    }
+    
 
     public int getIdTipoPago() {
         return idTipoPago;
@@ -92,7 +112,7 @@ public class MbVNotas implements Serializable {
     public void setIdTipoPago(int idTipoPago) {
         this.idTipoPago = idTipoPago;
     }
-    
+
     public String getIdComprobante() {
         return idComprobante;
     }
@@ -392,7 +412,7 @@ public class MbVNotas implements Serializable {
         try {
             lstCboModulos.clear();
 
-            this.lstCboModulos.add(new ClsTablaModulosRegistrados(-1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)", "(Escoja un Módulo)", -1, "(Escoja un Módulo)", null, null, null, null, "", null, null,0));
+            this.lstCboModulos.add(new ClsTablaModulosRegistrados(-1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)", "(Escoja un Módulo)", -1, "(Escoja un Módulo)", null, null, null, null, "", null, null, 0));
             if (usuario.getTipoUsuario().getDescripcion().equals("Profesor(a)") || usuario.getTipoUsuario().getDescripcion().equals("Docente") || usuario.getTipoUsuario().getDescripcion().equals("PROFESOR(A)") || usuario.getTipoUsuario().getDescripcion().equals("DOCENTE")) {
                 DaoTModulo daoTmodulo = new DaoTModulo();
                 List<Modulo> lstModulo = daoTmodulo.getCboModulosNotas(usuario.getId());
@@ -746,6 +766,7 @@ public class MbVNotas implements Serializable {
         }
 
     }
+    
 
     public void eliminarNotas() {
 
@@ -805,53 +826,58 @@ public class MbVNotas implements Serializable {
         try {
             if ((!file.getFileName().equals("") && valor != null) && valor.doubleValue() > 0) {
                 PagosDao pDao = new PagosDao();
-                Matricula m = new Matricula();
-                pago = new Pago();
-                m.setId(selectedNota.getIdMatricula());
-                pago.setValor(valor);
-                pago.setIdComprobante(idComprobante);
-                pago.setEstado('E');
-                Date fecha = new Date();
-                pago.setFecha(fecha);
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                Date dateobj = new Date();
-                String nombreCarpeta = selectedNota.getNombresEstudiante().trim();
-                String maest = removeCaractEspeciales(selectedNota.getDescripMaestria()).trim();
-                File directorio = new File("c:/Postgrado/pagos/" + maest + "/" + selectedNota.getIdMatricula() + "-" + nombreCarpeta + "/");
-                if (!directorio.exists()) {
-                    directorio.mkdirs();
-                }
-                String filename = selectedNota.getIdMatricula() + (df.format(dateobj).replaceAll(":", "-")).trim();
-                String extension = FilenameUtils.getExtension(file.getFileName());
-                Path ruta = Paths.get(directorio + "/" + filename + "." + extension);
-                InputStream input = file.getInputstream();
-                Files.copy(input, ruta, StandardCopyOption.REPLACE_EXISTING);
-                pago.setMatricula(m);
-                pago.setTipoPago(pDao.getTipoPago(idTipoPago));
-                pago.setRutaComprobante(ruta.toString());
-                pDao.registrar(pago);
+                if (!pDao.existeComprobante(idComprobante)) {
+                    Matricula m = new Matricula();
+                    pago = new Pago();
+                    m.setId(selectedNota.getIdMatricula());
+                    pago.setValor(valor);
+                    pago.setIdComprobante(idComprobante);
+                    pago.setEstado('E');
+                    Date fecha = new Date();
+                    pago.setFecha(fecha);
+                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date dateobj = new Date();
+                    String nombreCarpeta = selectedNota.getNombresEstudiante().trim();
+                    String maest = removeCaractEspeciales(selectedNota.getDescripMaestria()).trim();
+                    File directorio = new File("c:/Postgrado/pagos/" + maest + "/" + selectedNota.getIdMatricula() + "-" + nombreCarpeta + "/");
+                    if (!directorio.exists()) {
+                        directorio.mkdirs();
+                    }
+                    String filename = selectedNota.getIdMatricula() + (df.format(dateobj).replaceAll(":", "-")).trim();
+                    String extension = FilenameUtils.getExtension(file.getFileName());
+                    Path ruta = Paths.get(directorio + "/" + filename + "." + extension);
+                    InputStream input = file.getInputstream();
+                    Files.copy(input, ruta, StandardCopyOption.REPLACE_EXISTING);
+                    pago.setMatricula(m);
+                    pago.setTipoPago(pDao.getTipoPago(idTipoPago));
+                    pago.setRutaComprobante(ruta.toString());
+                    pDao.registrar(pago);
 
-                FacesMessage message = new FacesMessage("Succesful", "Datos Guardados correctamente");
-                FacesContext.getCurrentInstance().addMessage(null, message);
+                    FacesMessage message = new FacesMessage("Succesful", "Datos Guardados correctamente");
+                    FacesContext.getCurrentInstance().addMessage(null, message);
+                } else {
+                    FacesMessage message = new FacesMessage("Error", "El número de comprobante ya existe");
+                    FacesContext.getCurrentInstance().addMessage(null, message);
+                }
             } else {
                 valor = BigDecimal.valueOf(0.00);
                 FacesMessage message = new FacesMessage("Error", "Ingrese datos");
                 FacesContext.getCurrentInstance().addMessage(null, message);
-            }           
+            }
         } catch (IOException ex) {
             Logger.getLogger(MbVNotas.class.getName()).log(Level.SEVERE, null, ex);
             FacesMessage message = new FacesMessage("Error", ex.toString());
             System.out.println(ex.toString());
             FacesContext.getCurrentInstance().addMessage(null, message);
         } catch (Exception ex) {
-            Logger.getLogger(MbVNotas.class.getName()).log(Level.SEVERE, null, ex);            
+            Logger.getLogger(MbVNotas.class.getName()).log(Level.SEVERE, null, ex);
             FacesMessage message = new FacesMessage("Error", ex.toString());
             System.out.println(ex.toString());
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
-         idComprobante = "";
-            valor = BigDecimal.valueOf(0.00);
-            file = null;
+        idComprobante = "";
+        valor = BigDecimal.valueOf(0.00);
+        file = null;
     }
 
     public String removeCaractEspeciales(String input) {
@@ -866,4 +892,8 @@ public class MbVNotas implements Serializable {
         }//for i
         return output;
     }//remove1
+
+   
+   
+    
 }

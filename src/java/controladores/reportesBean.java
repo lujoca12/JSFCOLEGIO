@@ -8,7 +8,7 @@ package controladores;
 import Dao.reportesDao;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import org.primefaces.model.StreamedContent;
 
@@ -20,24 +20,24 @@ import org.primefaces.model.StreamedContent;
 @SessionScoped
 public class reportesBean implements Serializable {
     private StreamedContent media;
-    private int mes;
-    private int anio;
+    private int month;
+    private int year;
 
-    public int getMes() {
-        return mes;
+    public int getMonth() {
+        return month;
     }
 
-    public void setMes(int mes) {
-        this.mes = mes;
+    public void setMonth(int month) {
+        this.month = month;
     }
 
-    public int getAnio() {
-        return anio;
+    public int getYear() {
+        return year;
     }
 
-    public void setAnio(int anio) {
-        this.anio = anio;
-    }        
+    public void setYear(int year) {
+        this.year = year;
+    }             
 
     public StreamedContent getMedia() {
         return media;
@@ -57,6 +57,12 @@ public class reportesBean implements Serializable {
         media = null;
         reportesDao daoReport = new reportesDao();
         
-           media = daoReport.reporteIngresoMensuales(mes,anio);
+           media = daoReport.reporteIngresoMensuales(month,year);
+    }
+    public void cargarReporteAnual(){
+        media = null;
+        reportesDao daoReport = new reportesDao();
+        
+           media = daoReport.reporteIngresoAnuales(year);
     }
 }

@@ -30,65 +30,141 @@ import util.HibernateUtil;
  * @author chiti
  */
 public class reportesDao {
+
     private Session sesion;
     private Transaction tx;
     private Map param = new HashMap();
     private Date date = new Date();
     private SimpleDateFormat sf = new SimpleDateFormat("dd-M-yyyy@HH.mm.ss");
-    
-    
-    
-    
-    private void iniciaOperacion()
-    {
-        try{
+
+    private void iniciaOperacion() {
+        try {
             sesion = HibernateUtil.getSessionFactory().openSession();
             tx = sesion.beginTransaction();
-        }catch(HibernateException ex){
-            
+        } catch (HibernateException ex) {
+
         }
-        
+
     }
-     
-    private void manejaExcepcion(HibernateException he) throws HibernateException
-    {
+
+    private void manejaExcepcion(HibernateException he) throws HibernateException {
         tx.rollback();
         throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
     }
-    public StreamedContent reporteIngresoMensuales(int Mes,int Anio){
+
+    public StreamedContent reporteIngresoMensuales(int Mes, int Anio) {
         //boolean band = false;
         StreamedContent media = null;
         ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance()
-        .getExternalContext().getContext();
+                .getExternalContext().getContext();
         String realPath = ctx.getRealPath("/");
         realPath += "Modulos\\Reportes\\";
-        
+
         iniciaOperacion();
-        
+
         param.put(JRHibernateQueryExecuterFactory.PARAMETER_HIBERNATE_SESSION, sesion);
-        
-        param.put("fecha",String.valueOf(Anio+"/"+Mes+"/"+"01"));
-        
+        String mesLetra="";
+        switch (Mes) {
+            case 1:
+                mesLetra = "Enero";
+                break;
+            case 2:
+                mesLetra = "Febrero";
+                break;
+            case 3:
+                mesLetra = "Marzo";
+                break;
+            case 4:
+                mesLetra = "Abril";
+                break;
+            case 5:
+                mesLetra = "Mayo";
+                break;
+            case 6:
+                mesLetra = "Junio";
+                break;
+            case 7:
+                mesLetra = "Julio";
+                break;
+            case 8:
+                mesLetra = "Agosto";
+                break;
+            case 9:
+                mesLetra = "Septiembre";
+                break;
+            case 10:
+                mesLetra = "Ocutbre";
+                break;
+            case 11:
+                mesLetra = "Noviembre";
+                break;
+            case 12:
+                mesLetra = "Diciembre";
+                break;
+        }
+
+        param.put("mes", Mes);
+        param.put("anio", Anio);
+        param.put("mesLetra", mesLetra);
+
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        
-        String file = "reporte" + sf.format(date.getTime())+ ".pdf";
+
+        String file = "reporte" + sf.format(date.getTime()) + ".pdf";
         JasperPrint jPrint = null;
         try {
-           // JasperReport JReporte = JasperCompileManager.compileReport(realPath+"actaAdmision.jasper");
-            jPrint = JasperFillManager.fillReport(realPath+"reporteIngresosMensual.jasper", param);
+            // JasperReport JReporte = JasperCompileManager.compileReport(realPath+"actaAdmision.jasper");
+            jPrint = JasperFillManager.fillReport(realPath + "reporteIngresosMensual.jasper", param);
             JasperExportManager.exportReportToPdfStream(jPrint, baos);
-            
-             baos.flush();
-        baos.close();
 
-        InputStream is = new ByteArrayInputStream(baos.toByteArray());
-        media = new DefaultStreamedContent(is, "application/pdf", file);
-            
+            baos.flush();
+            baos.close();
+
+            InputStream is = new ByteArrayInputStream(baos.toByteArray());
+            media = new DefaultStreamedContent(is, "application/pdf", file);
+
         } catch (Exception ex) {
             System.out.println(ex.toString());
             //band = false;
         }
-        
+
+        //return band;
+        return media;
+    }
+
+    public StreamedContent reporteIngresoAnuales(int Anio) {
+        //boolean band = false;
+        StreamedContent media = null;
+        ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance()
+                .getExternalContext().getContext();
+        String realPath = ctx.getRealPath("/");
+        realPath += "Modulos\\Reportes\\";
+
+        iniciaOperacion();
+
+        param.put(JRHibernateQueryExecuterFactory.PARAMETER_HIBERNATE_SESSION, sesion);
+
+        param.put("anio", Anio);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        String file = "reporte" + sf.format(date.getTime()) + ".pdf";
+        JasperPrint jPrint = null;
+        try {
+            // JasperReport JReporte = JasperCompileManager.compileReport(realPath+"actaAdmision.jasper");
+            jPrint = JasperFillManager.fillReport(realPath + "reporteAnual.jasper", param);
+            JasperExportManager.exportReportToPdfStream(jPrint, baos);
+
+            baos.flush();
+            baos.close();
+
+            InputStream is = new ByteArrayInputStream(baos.toByteArray());
+            media = new DefaultStreamedContent(is, "application/pdf", file);
+
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+            //band = false;
+        }
+
         //return band;
         return media;
     }

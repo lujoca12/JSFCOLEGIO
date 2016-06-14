@@ -152,19 +152,19 @@ public class MatriculaDao {
             this.sesion = null;
             this.tx = null;
             iniciaOperacion();
-            String hql = "select max(NMatricula) from Matricula ";
+            String hql = "select max(m.NMatricula) from Matricula m ";
             Query query = sesion.createQuery(hql);
             //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
             List<Matricula> lst = (List<Matricula>) query.list();
             existe = !lst.isEmpty();
             if (existe) {
-                n = Integer.valueOf(lst.get(0).getNMatricula());
+                n = Integer.valueOf(lst.get(0).getNMatricula())+1;
             } else {
                 n = 0;
             }
             sesion.close();
         } catch (Exception ex) {
-
+                System.out.println(ex.toString());
         }
         return n;
     }

@@ -111,4 +111,18 @@ public class InscripcionDao implements Serializable{
         sesion.close();
         return lst;
     }
+    public List<SolicitudInscripcion> getInscripcionesPorEstudiante(String CED) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+       
+        String hql="from SolicitudInscripcion si inner join fetch si.estudiante e inner join fetch si.promocion pr inner join fetch pr.maestria m"
+                + "  where si.estado='A' and e.cedPasaporte ='"+CED+"' ";
+       
+        Query query = sesion.createQuery(hql);
+        //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        List<SolicitudInscripcion> lst=(List<SolicitudInscripcion>) query.list();
+        sesion.close();
+        return lst;
+    }
 }

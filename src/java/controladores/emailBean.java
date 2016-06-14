@@ -20,7 +20,7 @@ import javax.faces.view.ViewScoped;
  */
 @Named(value = "emailBean")
 @ViewScoped
-public class emailBean implements Serializable{
+public class emailBean implements Serializable {
 
     /**
      * Creates a new instance of emailBean
@@ -28,7 +28,16 @@ public class emailBean implements Serializable{
     private String email;
     private String clave;
     private postgradoDao pDao = new postgradoDao();
-    private Postgrado p = new Postgrado() ;
+    private Postgrado p = new Postgrado();
+    private int numMatricula;
+
+    public int getNumMatricula() {
+        return numMatricula;
+    }
+
+    public void setNumMatricula(int numMatricula) {
+        this.numMatricula = numMatricula;
+    }
 
     public String getEmail() {
         return email;
@@ -45,37 +54,44 @@ public class emailBean implements Serializable{
     public void setClave(String clave) {
         this.clave = clave;
     }
-    
-    
+
     public emailBean() {
     }
-   @PostConstruct
+
+    @PostConstruct
     public void init() {
         try {
-           p= pDao.getPostgrado();
-           if(p!=null){
-           email = p.getEmail();
-           clave=p.getClaveEmail();}
-           else{
-               p = new Postgrado();
-           }
+            p = pDao.getPostgrado();
+            if (!"".equals(p.getEmail())) {
+                email = p.getEmail();
+                clave = p.getClaveEmail();
+                numMatricula = p.getNumMatricula();
+                FacesMessage message = new FacesMessage("Succesful", p.getEmail());
+            FacesContext.getCurrentInstance().addMessage(null, message);
+            } else {
+                p = new Postgrado();
+            }
         } catch (Exception ex) {
+            System.out.println(ex.toString());
         }
     }
-    
-    public void guardar(){
-        try{       
-        
-        p.setEmail(email);
-        p.setClaveEmail(clave);
-        pDao.insertar(p);
-        FacesMessage message = new FacesMessage("Succesful", "Datos guardados");
+
+    public void guardar() {
+        try {
+
+            p.setEmail(email);
+            p.setClaveEmail(clave);
+            p.setNumMatricula(numMatricula);
+            pDao.insertar(p);
+            FacesMessage message = new FacesMessage("Succesful", "Datos guardados");
             FacesContext.getCurrentInstance().addMessage(null, message);
-        }catch(Exception ex){
-         FacesMessage message = new FacesMessage("Erorr", "Error al guardarlos datos ");
+        } catch (Exception ex) {
+            FacesMessage message = new FacesMessage("Erorr", "Error al guardarlos datos ");
             FacesContext.getCurrentInstance().addMessage(null, message);
-            System.out.println( ex.toString());
+            System.out.println(ex.toString());
         }
     }
+
     
+
 }

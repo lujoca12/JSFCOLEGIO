@@ -27,7 +27,13 @@
 
                         <p:outputLabel for="txtRClave" styleClass="labelDerecha" value="Repetir clave:" />
                         <p:password id="txtRClave" value="#{emailBean.clave}" required="true" feedback="true" inline="true"  maxlength="20"/>
-                        <p:message for="txtRClave"/>                        
+                        <p:message for="txtRClave"/> 
+                        
+                        <p:outputLabel for="nmatricula" value="Número Matrícula: " styleClass="labelDerecha"/>
+                        <p:inputText id="nmatricula" h5:required="true" value="#{emailBean.numMatricula}" validatorMessage="Ingrese solo números.">                            
+                            <f:validateDoubleRange minimum="1"  />
+                        </p:inputText>
+                        <p:message for="nmatricula"/> 
 
                     </p:panelGrid>
                 </p:panel>
@@ -35,6 +41,11 @@
                                  actionListener="#{emailBean.guardar()}" />
                
             </h:form>
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+                    <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                        <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+                    </p:dialog>
         </div>
     </h:body>
 </html>

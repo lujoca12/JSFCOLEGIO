@@ -8,8 +8,10 @@ package controladores;
 import Clases.ClsArchivos;
 import Dao.InscripcionDao;
 import Dao.MatriculaDao;
+import Dao.postgradoDao;
 import Pojo.Archivos;
 import Pojo.Matricula;
+import Pojo.Postgrado;
 import Pojo.SolicitudInscripcion;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -54,7 +56,7 @@ public class MatriculaBean implements Serializable {
 
     public void setNumM(int numM) {
         this.numM = numM;
-    }    
+    }
 
     public boolean isDesc() {
         return desc;
@@ -157,11 +159,17 @@ public class MatriculaBean implements Serializable {
     public void guardarMatricula() {
         try {
             MatriculaDao mDao = new MatriculaDao();
+
+            
+            postgradoDao pDao = new postgradoDao();
+            Postgrado p =pDao.getPostgrado();
+            int nMatri = p.getNumMatricula();
+
             if (SelectedInscripcion != null) {
                 if (!mDao.existeMatricula(SelectedInscripcion.getEstudiante().getCedPasaporte(), String.valueOf(SelectedInscripcion.getPromocion().getId()))) {
-                    
+
                     Matricula m = new Matricula();
-//                    m.setNMatricula(String.valueOf(numM));
+                    m.setNMatricula(String.valueOf(nMatri));
                     m.setEstado('1');
                     Date fechaM = new Date();
                     m.setFechaMatricula(fechaM);
@@ -170,11 +178,13 @@ public class MatriculaBean implements Serializable {
                     SelectedInscripcion.setFechaRevision(fechaM);
                     SelectedInscripcion.setObservacion(observacion);
                     mDao.insertar(m, SelectedInscripcion);
+                    p.setNumMatricula(nMatri+1);
+                    pDao.insertar(p);
 
                 } else if (SelectedInscripcion.getEstado() == 'R') {
-                    
+
                     Matricula m = new Matricula();
-//                    m.setNMatricula(String.valueOf(numM));
+                    m.setNMatricula(String.valueOf(nMatri));
                     m.setEstado('1');
                     Date fechaM = new Date();
                     m.setFechaMatricula(fechaM);
@@ -182,7 +192,9 @@ public class MatriculaBean implements Serializable {
                     SelectedInscripcion.setEstado('A');
                     SelectedInscripcion.setFechaRevision(fechaM);
                     SelectedInscripcion.setObservacion(observacion);
-                    mDao.insertar(m, SelectedInscripcion);    
+                    mDao.insertar(m, SelectedInscripcion);
+                    p.setNumMatricula(nMatri+1);
+                    pDao.insertar(p);
                 } else if (SelectedInscripcion.getEstado() == 'E') {
                     rechazarMatricula();
                 }
@@ -198,6 +210,7 @@ public class MatriculaBean implements Serializable {
         } catch (Exception ex) {
             FacesMessage message = new FacesMessage("Error", "Error al guardar los datos");
             FacesContext.getCurrentInstance().addMessage(null, message);
+            System.out.println(ex.toString());
         }
         SelectedInscripcion = null;
         observacion = "";
@@ -232,6 +245,7 @@ public class MatriculaBean implements Serializable {
         } catch (Exception ex) {
             FacesMessage message = new FacesMessage("Erorr", "Error al guardar los datos");
             FacesContext.getCurrentInstance().addMessage(null, message);
+            System.out.println(ex.toString());
         }
 
         SelectedInscripcion = null;
@@ -245,6 +259,7 @@ public class MatriculaBean implements Serializable {
             archivos = new ArrayList<>();
             lstArchivos = new ArrayList<>();
             if (SelectedInscripcion != null) {
+                d = new InscripcionDao();
                 lstArchivos = d.getArchivosInscripciones(String.valueOf(SelectedInscripcion.getId()));
 
                 for (Archivos a : lstArchivos) {
@@ -256,7 +271,7 @@ public class MatriculaBean implements Serializable {
             }
         } catch (Exception ex) {
             Logger.getLogger(AsignarEntrevistaBean.class.getName()).log(Level.SEVERE, null, ex);
-
+            System.out.println(ex.toString());
         }
 
     }

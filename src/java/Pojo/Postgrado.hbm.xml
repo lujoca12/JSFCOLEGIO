@@ -16,5 +16,8 @@
         <property name="claveEmail" type="string">
             <column name="clave_email" length="50" />
         </property>
+        <property name="numMatricula" type="java.lang.Integer">
+            <column name="num_matricula" />
+        </property>
     </class>
 </hibernate-mapping>

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="90e659b5-2543-4541-80fd-f209dc778c26">
+	<property name="ireport.zoom" value="1.2100000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="anio" class="java.lang.Integer"/>
+	<queryString language="hql">
+		<![CDATA[select p.fecha as Fecha, p.idComprobante as Comprobante,
+p.valor as Valor, CONCAT(maest.descripcion,' ',pr.descripcion) as Maestria
+from Pago p
+inner join  p.matricula m 
+inner join  m.solicitudInscripcion si 
+inner join  si.estudiante 
+inner join si.promocion pr 
+inner join  pr.maestria maest 
+inner join  p.tipoPago 
+where year(p.fecha) = $P{anio} and p.estado = 'A'
+order by p.fecha]]>
+	</queryString>
+	<field name="Fecha" class="java.util.Date"/>
+	<field name="Comprobante" class="java.lang.String"/>
+	<field name="Valor" class="java.math.BigDecimal"/>
+	<field name="Maestria" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="61" y="0" width="414" height="20" uuid="1b3d4fbe-7ffd-4d75-918a-3c4f286bb4cb"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIVERSIDAD TÉCNICA ESTATAL DE QUEVEDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="188" y="30" width="155" height="20" uuid="271093a7-0186-4b9e-9088-c1597a28dc85"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIDAD DE POSTGRADO]]></text>
+			</staticText>
+			<image>
+				<reportElement x="475" y="19" width="70" height="60" uuid="e5dfd316-c58b-4ec8-8564-a127044fca7e"/>
+				<imageExpression><![CDATA["C:\\Users\\chiti\\Documents\\NetBeansProjects\\JSFSISFIAC\\web\\Modulos\\Reportes\\logoUTEQoriginal1.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="197" y="59" width="142" height="20" uuid="955ff24b-9389-49e3-8d40-950839c034a4"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Quevedo - Los Rios - Ecuador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="98" y="49" width="88" height="20" uuid="216695c6-bd98-41e5-a1ae-6d1a69d90663"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Conmutador: 2751 430]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="346" y="34" width="97" height="20" uuid="65e82822-a2f2-4316-bc7c-65fffef695ab"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[P.O.BOX Guayaquil: 5620]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="98" y="34" width="88" height="20" uuid="e6207250-b1da-4fa6-ae6e-dfdcdd21cac8"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Telefax:        2759 244]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="346" y="49" width="97" height="20" uuid="4ee01344-b8f0-4cb1-9d73-8bde5bfa5db4"/>
+				<textElement>
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[P.O.BOX Quevedo 73]]></text>
+			</staticText>
+			<image>
+				<reportElement x="7" y="19" width="70" height="60" uuid="b9566812-2507-46e0-87b5-1b50b8c2f29a"/>
+				<imageExpression><![CDATA["C:\\Users\\chiti\\Documents\\NetBeansProjects\\JSFSISFIAC\\web\\Modulos\\Reportes\\logoPostgrado.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="212" y="0" width="99" height="20" uuid="d1b35756-4778-4a74-a36e-596890e9e116"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Ingresos Anuales ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="311" y="0" width="100" height="20" uuid="391a8217-a1f2-4ed2-ac0f-93eafc57de1d"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{anio}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="455" y="0" width="100" height="20" uuid="57e9faaf-df52-4b99-a7ce-c63ea5adb078"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="49" y="0" width="100" height="20" uuid="95d4799b-01a8-4dcc-99ad-8fff330c1271"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="149" y="0" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="cb5d5ace-63fa-4812-86e5-cb7421c6062c"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Comprobante]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="249" y="0" width="100" height="20" uuid="eced43a7-8e91-4a41-8f97-cb2985fd7852"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="349" y="0" width="161" height="20" uuid="2ff67481-05a2-46a3-9fe1-c26f349f19c5"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Maestria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="21" y="0" width="28" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="fc79229e-85e9-4090-875a-7c7e66fc331d"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[N°]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="49" y="0" width="100" height="20" uuid="2c3a8b3a-3e89-452f-9907-dc22279826db"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="149" y="0" width="100" height="20" uuid="16cd7733-b020-4121-8d3c-33a3cb27dd43"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Comprobante}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="249" y="0" width="100" height="20" uuid="a26b9c02-412a-4ccf-b1e0-02f89638913e"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Valor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="349" y="0" width="161" height="20" uuid="1bb5b64a-ad1b-4cab-b09e-16b72730d981"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Maestria}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="21" y="0" width="28" height="20" uuid="11e44d34-4567-489c-98a4-2f864b5310ed"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

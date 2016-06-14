@@ -28,7 +28,9 @@
 		</conditionalStyle>
 	</style>
 	<subDataset name="Table Dataset 1" uuid="6d5c335f-5966-48d9-b1da-7608ebcc021c"/>
-	<parameter name="fecha" class="java.lang.String"/>
+	<parameter name="mes" class="java.lang.Integer"/>
+	<parameter name="anio" class="java.lang.Integer"/>
+	<parameter name="mesLetra" class="java.lang.String"/>
 	<queryString language="hql">
 		<![CDATA[select p.fecha as Fecha, p.idComprobante as Comprobante,
 p.valor as Valor, CONCAT(maest.descripcion,' ',pr.descripcion) as Maestria
@@ -39,7 +41,7 @@ inner join  si.estudiante
 inner join si.promocion pr 
 inner join  pr.maestria maest 
 inner join  p.tipoPago 
-where month(p.fecha) = 6
+where month(p.fecha) = $P{mes} and year(p.fecha) = $P{anio} and p.estado = 'A'
 order by p.fecha]]>
 	</queryString>
 	<field name="Fecha" class="java.util.Date"/>
@@ -100,47 +102,105 @@ order by p.fecha]]>
 				</textElement>
 				<text><![CDATA[UNIVERSIDAD TÉCNICA ESTATAL DE QUEVEDO]]></text>
 			</staticText>
+			<image>
+				<reportElement x="7" y="19" width="70" height="60" uuid="9caa7e9f-9e30-4e6b-9568-c5894ed4d06c"/>
+				<imageExpression><![CDATA["C:\\Users\\chiti\\Documents\\NetBeansProjects\\JSFSISFIAC\\web\\Modulos\\Reportes\\logoPostgrado.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="475" y="19" width="70" height="60" uuid="090dc24b-08c9-4e53-a1d6-258781eb427f"/>
+				<imageExpression><![CDATA["C:\\Users\\chiti\\Documents\\NetBeansProjects\\JSFSISFIAC\\web\\Modulos\\Reportes\\logoUTEQoriginal1.jpg"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement x="219" y="0" width="127" height="20" uuid="b7e35e02-c8e7-4f35-b609-69bf72fa95ad"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Ingresos Mensuales ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="280" y="20" width="66" height="20" uuid="59120a87-30c1-4d17-947e-2d19ef4143dc"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{anio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="219" y="20" width="61" height="20" uuid="b794c99f-63d5-488a-bd23-9fbaec324c6b"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{mesLetra}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch">
+		<band height="35" splitType="Stretch">
 			<staticText>
-				<reportElement x="112" y="41" width="100" height="20" uuid="c66bda91-0acc-40ff-845d-654190b3e2d8"/>
-				<text><![CDATA[N Comprpbante]]></text>
+				<reportElement style="table" x="146" y="14" width="100" height="20" uuid="c66bda91-0acc-40ff-845d-654190b3e2d8"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N Comprobante]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="312" y="41" width="100" height="20" uuid="2ca1e918-0aa8-40eb-b9b4-12f78ba98bd6"/>
+				<reportElement style="table" x="346" y="14" width="178" height="20" uuid="2ca1e918-0aa8-40eb-b9b4-12f78ba98bd6"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Maestria]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="212" y="41" width="100" height="20" uuid="18efef18-f752-4b02-8305-f93bfe3b2575"/>
+				<reportElement style="table" x="246" y="14" width="100" height="20" uuid="18efef18-f752-4b02-8305-f93bfe3b2575"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Valor]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="12" y="41" width="100" height="20" uuid="98658ad4-b69f-4aaf-b99d-a34b1d094df2"/>
+				<reportElement style="table" x="46" y="14" width="100" height="20" uuid="98658ad4-b69f-4aaf-b99d-a34b1d094df2"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Fecha Comprobante]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table" x="7" y="14" width="39" height="20" uuid="bc8c2eb2-05f5-4087-b0ba-4022e9904f17"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N°]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="12" y="0" width="100" height="20" uuid="aed09d9b-bb57-48bc-9fa2-5873b1fef3f4"/>
-				<textFieldExpression><![CDATA[$F{Fecha}]]></textFieldExpression>
+				<reportElement style="table" x="7" y="0" width="39" height="20" uuid="2a81a0ad-c6cc-408c-a308-2b9663022183"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="112" y="0" width="100" height="20" uuid="41127a6f-d226-4880-afc2-de8729b893ea"/>
+				<reportElement style="table" x="146" y="0" width="100" height="20" uuid="41127a6f-d226-4880-afc2-de8729b893ea"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{Comprobante}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="212" y="0" width="100" height="20" uuid="b519066b-2da4-4e64-80cd-139a0b9e656e"/>
+				<reportElement style="table" x="46" y="0" width="100" height="20" uuid="aed09d9b-bb57-48bc-9fa2-5873b1fef3f4"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="table" x="246" y="0" width="100" height="20" uuid="b519066b-2da4-4e64-80cd-139a0b9e656e"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{Valor}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="312" y="0" width="100" height="20" uuid="6cde3d8c-a6b4-4560-8fdf-b9c9ef82d7af"/>
+				<reportElement style="table" x="346" y="0" width="178" height="20" uuid="6cde3d8c-a6b4-4560-8fdf-b9c9ef82d7af"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{Maestria}]]></textFieldExpression>
 			</textField>
 		</band>

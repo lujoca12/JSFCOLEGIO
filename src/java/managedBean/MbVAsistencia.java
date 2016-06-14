@@ -238,23 +238,29 @@ public class MbVAsistencia implements Serializable {
     }
     
     public void cargarCboFechas() {
-        lstCboFecha = new ArrayList<>();
+        lstCboFecha = new ArrayList<ClsFechaHoras>();
         this.estado = 0;
         try {
-            lstCboFecha.clear();
-            DaoTHorarioModulo daoHorario = new DaoTHorarioModulo();
-            List<HorarioModulo> lstHorario = daoHorario.getFechaHorasModulos(idModulo);
+            if (this.lstCboFecha == null) {
+                return;
+            } else {
+                if(this.lstCboFecha.size() > 0)
+                    lstCboFecha.clear();
+                DaoTHorarioModulo daoHorario = new DaoTHorarioModulo();
+                List<HorarioModulo> lstHorario = daoHorario.getFechaHorasModulos(idModulo);
 
-            if (lstHorario != null) {
-                if (lstHorario.size() > 0) {
-                    for (int i = 0; i < lstHorario.size(); i++) {
-                        lstCboFecha.add(new ClsFechaHoras(lstHorario.get(i).getId(), lstHorario.get(i).getHora(),lstHorario.get(i).getFecha()));
-                    }
+                if (lstHorario != null) {
+                    if (lstHorario.size() > 0) {
+                        for (int i = 0; i < lstHorario.size(); i++) {
+                            lstCboFecha.add(new ClsFechaHoras(lstHorario.get(i).getId(), lstHorario.get(i).getHora(), lstHorario.get(i).getFecha()));
+                        }
 //                    for (HorarioModulo horario : lstHorario) {
 //                        lstCboFecha.add(new ClsFechaHoras(horario.getId(), horario.getHora(),horario.getFecha()));
 //                    }
+                    }
                 }
             }
+
         } catch (Exception ex) {
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -364,7 +370,7 @@ public class MbVAsistencia implements Serializable {
     }
     
     public void cargarTablaEdiAsistencia() {
-        lstTblNotas = new ArrayList<>();
+        lstTblNotas = new ArrayList<ClsNotas>();
         Calendar calendar = Calendar.getInstance();
         int añoInicio = 0;
         int añoFin = 0;

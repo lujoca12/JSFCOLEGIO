@@ -83,7 +83,11 @@
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{notas.observacion eq 'N' ? null:'Retirado(a)'}" /></f:facet>
                                 <f:facet name="input">
-                                    <p:inputText value="#{notas.observacion eq 'N' ? null:'Retirado(a)'}" style="width:100%"/>
+                                    <h:selectOneMenu style="width:100%"
+                                                     id="cboObservacion" class="form-control" value="#{notas.observacion}">
+                                        <f:selectItem itemLabel="Ninguna" itemValue="N" />
+                                        <f:selectItem itemLabel="Retirado(a)" itemValue="R" />
+                                    </h:selectOneMenu>
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>

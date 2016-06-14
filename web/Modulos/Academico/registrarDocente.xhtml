@@ -41,7 +41,7 @@
                 
 
                 <p:outputLabel for="txtCedula" styleClass="labelDerecha" value="Cédula:" />
-                <p:inputMask id="txtCedula" value="#{mbVUsuario.tUsuario.cedPasaporte}" required="true" mask="999999999-9"/>
+                <p:inputMask id="txtCedula" class="validarCedula" onblur="validarCedulaUsuarios();" value="#{mbVUsuario.tUsuario.cedPasaporte}" required="true" mask="9999999999"/>
                 
 
                 <p:outputLabel for="txtDireccion" styleClass="labelDerecha" value="Dirección:" />

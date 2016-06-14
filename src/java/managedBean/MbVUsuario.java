@@ -437,8 +437,13 @@ public class MbVUsuario implements Serializable {
             if (band) {
                 tipoUsuario.setId(idRol);
                 tUsuario.setTipoUsuario(tipoUsuario);
-                band = daoTusuario.registrar(tUsuario);
-                vaciarCajas();
+//                if(validarCedula()){
+                    band = daoTusuario.registrar(tUsuario);
+                    vaciarCajas();
+//                }else{
+//                    return;
+//                }
+                
             } else {
                 mensajesError("Usuario ya existe");
             }
@@ -452,6 +457,54 @@ public class MbVUsuario implements Serializable {
             mensajesError("Error al procesar datos");
         }
     }
+    
+//    private boolean validarCedula() {
+//
+//        boolean cedulaCorrecta = false;
+//        //alert(cedula);
+//        try {
+//
+//            if (tUsuario.getCedPasaporte().length() == 10) // ConstantesApp.LongitudCedula
+//            {
+//                int tercerDigito = Integer.parseInt(tUsuario.getCedPasaporte().substring(2, 3));
+//                if (tercerDigito < 6) {
+//// Coeficientes de validación cédula
+//// El decimo digito se lo considera dígito verificador
+//                    int[] coefValCedula = {2, 1, 2, 1, 2, 1, 2, 1, 2};
+//                    int verificador = Integer.parseInt(tUsuario.getCedPasaporte().substring(9, 10));
+//                    int suma = 0;
+//                    int digito = 0;
+//                    for (int i = 0; i < coefValCedula.length; i++) {
+//                        digito = Integer.parseInt(tUsuario.getCedPasaporte().substring(i, i + 1)) * coefValCedula[i];
+//                        suma += ((digito % 10) + (digito / 10));
+//                    }
+//
+//                    if ((suma % 10 == 0) && (suma % 10 == verificador)) {
+//                        cedulaCorrecta = true;
+//                    } else if ((10 - (suma % 10)) == verificador) {
+//                        cedulaCorrecta = true;
+//                    } else {
+//                        cedulaCorrecta = false;
+//                    }
+//                } else {
+//                    cedulaCorrecta = false;
+//                }
+//            } else {
+//                cedulaCorrecta = false;
+//            }
+//        } catch (NumberFormatException nfe) {
+//            cedulaCorrecta = false;
+//        } catch (Exception err) {
+//            mensajesError("Una excepcion ocurrio en el proceso de validadcion");
+//            cedulaCorrecta = false;
+//        }
+//
+//        if (!cedulaCorrecta) {
+//            mensajesError("La Cédula ingresada es Incorrecta");
+//        }
+//        return cedulaCorrecta;
+//    }
+        
     
     public void cargarDatosDocentes(){
         DaoTUsuario daoTusuario = new DaoTUsuario();

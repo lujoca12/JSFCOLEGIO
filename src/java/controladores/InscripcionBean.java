@@ -908,6 +908,8 @@ public class InscripcionBean implements Serializable {
                 //estudiante ya se ha obtenido los datos solo hay q poner el paisOrigen
                 LocalizacionDao lDao = new LocalizacionDao();
                 Parroquia p;
+                estudiante.setNombres(estudiante.getPrimerNombre()+" "+estudiante.getSegundoNombre());
+                estudiante.setApellidos(estudiante.getPrimerApellido()+" "+estudiante.getSegundoApellido());
                 estudiante.setPaisOrigen(lDao.getNombrePais(idPaisOrigen));
                 //datosNac
                 if (!"".equals(idProvinciaNac) && !"".equals(idParroquiaNac) && !"".equals(idCantonNac)) {

@@ -81,14 +81,26 @@
                                         <f:selectItem itemLabel="Union Libre" itemValue="U" />
                                     </h:selectOneMenu>
 
-                                    <h:outputLabel for="nombres" value="Nombres: " />
-                                    <p:inputText  required="true"  id="nombres" class="form-control " value="#{inscripcionBean.estudiante.nombres}">
+                                    <h:outputLabel for="primerNombre" value="Primer Nombre: " />
+                                    <p:inputText  required="true"  id="primerNombre" class="form-control " value="#{inscripcionBean.estudiante.primerNombre}">
+                                        <f:validateRegex pattern="[a-zA-Z ]+$+"/>
+                                        <f:validateLength  maximum="50" />
+                                    </p:inputText>
+                                    
+                                    <h:outputLabel for="segundoNombre" value="Segundo Nombre: " />
+                                    <p:inputText  id="segundoNombre" class="form-control " value="#{inscripcionBean.estudiante.segundoNombre}">
                                         <f:validateRegex pattern="[a-zA-Z ]+$+"/>
                                         <f:validateLength  maximum="50" />
                                     </p:inputText>
 
-                                    <h:outputLabel for="apellidos" value="Apellidos: "  />
-                                    <p:inputText  required="true" id="apellidos"  class="form-control " value="#{inscripcionBean.estudiante.apellidos}">
+                                    <h:outputLabel for="primerApellido" value="Primer Apellidos: "  />
+                                    <p:inputText  required="true" id="primerApellido"  class="form-control " value="#{inscripcionBean.estudiante.primerApellido}">
+                                        <f:validateRegex pattern="[a-zA-Z ]+$"/>
+                                        <f:validateLength  maximum="50" />
+                                    </p:inputText>
+                                    
+                                    <h:outputLabel for="segundoApellido" value="Segundo Apellido: "  />
+                                    <p:inputText  required="true" id="segundoApellido"  class="form-control " value="#{inscripcionBean.estudiante.segundoApellido}">
                                         <f:validateRegex pattern="[a-zA-Z ]+$"/>
                                         <f:validateLength  maximum="50" />
                                     </p:inputText>

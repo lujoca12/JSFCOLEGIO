@@ -99,7 +99,7 @@ public class DaoTModulo implements InterfaceModulos{
         
         String hql="from Modulo mod inner join fetch mod.promocion p "
                 + "inner join fetch mod.usuario user "
-                + "inner join fetch p.maestria m where m.estado='1' and mod.estado = '1' and "
+                + "inner join fetch p.maestria m where m.estado='1' and "
                 + "(year(current_date) >= year(p.fechaInicio) "
                 + "and year(current_date)<= year(p.fechaFin)) "
                 + ""+consulta+" and p.estado = '1' order by mod.id desc";

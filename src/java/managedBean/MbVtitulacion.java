@@ -170,7 +170,7 @@ public class MbVtitulacion implements Serializable{
          try {
             DaoTMaestrias daoTmaestria = new DaoTMaestrias();
             
-        List<Maestria> lst = daoTmaestria.getMaestriasD("");
+        List<Maestria> lst = daoTmaestria.getMaestriasD("", false);
             this.lstmaestria.clear();
             this.lstmaestria.add(new ClsMaestria(-1, "ninguno", "ninguno", -1, -1, -1, null, null));
             for(Maestria tt: lst){
@@ -195,7 +195,7 @@ public class MbVtitulacion implements Serializable{
        try{
         lstestudiante = new ArrayList<>();
         lstestudiante.clear();
-        this.lstestudiante.add(new ClsEstudiante(-1, "(Escoja un Estudiant)","(Escoja un Estudiant)",-1));
+        this.lstestudiante.add(new ClsEstudiante(-1, "(Escoja un Estudiante)","(Escoja un Estudiante)",-1));
         DaoTEstudiante daoestudiante = new DaoTEstudiante();
         List<Estudiante> lstestud= null;
         

@@ -68,6 +68,7 @@ public class MbVMaestrias implements Serializable{
     
     private BigDecimal precioMatricula;
     private BigDecimal precioColegiatura;
+    private boolean mostrarEliminados;
     
     public MbVMaestrias() {
         tMaestria = new Maestria();
@@ -197,6 +198,14 @@ public class MbVMaestrias implements Serializable{
     public void setPrecioColegiatura(BigDecimal precioColegiatura) {
         this.precioColegiatura = precioColegiatura;
     }
+
+    public boolean isMostrarEliminados() {
+        return mostrarEliminados;
+    }
+
+    public void setMostrarEliminados(boolean mostrarEliminados) {
+        this.mostrarEliminados = mostrarEliminados;
+    }
     
     
 
@@ -223,7 +232,7 @@ public class MbVMaestrias implements Serializable{
          try {
             DaoTMaestrias daoTmaestria = new DaoTMaestrias();
             
-            List<Maestria> lstMaestria = daoTmaestria.getMaestriasD("");
+            List<Maestria> lstMaestria = daoTmaestria.getMaestriasD("", mostrarEliminados);
             this.lstThemeMaestria.clear();
             this.lstThemeMaestria.add(new ClsMaestria(-1,"Ninguno","Ninguno",0,0,0,null, null));
             
@@ -311,9 +320,9 @@ public class MbVMaestrias implements Serializable{
             List<Maestria> lstMaestria = null;
             DaoTMaestrias daoTmaestria = new DaoTMaestrias();
             if(maestriaDescripcion == null){
-                lstMaestria = daoTmaestria.getMaestriasD("");
+                lstMaestria = daoTmaestria.getMaestriasD("", mostrarEliminados);
             }else{
-                lstMaestria = daoTmaestria.getMaestriasD(maestriaDescripcion);
+                lstMaestria = daoTmaestria.getMaestriasD(maestriaDescripcion, mostrarEliminados);
             }
             
             
@@ -330,6 +339,11 @@ public class MbVMaestrias implements Serializable{
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+//    public void onMostrarElminados(){
+//        cargarTablaMaestria();
+//        
+//    }
     
     public void registrar(){
 

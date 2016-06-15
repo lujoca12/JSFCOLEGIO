@@ -32,9 +32,10 @@ public class ClsTablaModulosRegistrados implements Serializable {
     private Date fechaInicioMaestria;
     private Date fechaFinMaestria;
     private int numPromociones;
+    private Character estadoModulo;
     
 
-    public ClsTablaModulosRegistrados(int idMaestria, String maestria, int idPromocion, String modulo, int idUsuario, String usuario, String creditos, int idModulo, String n_modulo, Date fechaInicio, Date fechaFin, Date fechaInicioExamen, Date fechaFinExamen, String totalHorasModulo, Date fechaInicioMaestria, Date fechaFinMaestria, int numPromociones) {
+    public ClsTablaModulosRegistrados(int idMaestria, String maestria, int idPromocion, String modulo, int idUsuario, String usuario, String creditos, int idModulo, String n_modulo, Date fechaInicio, Date fechaFin, Date fechaInicioExamen, Date fechaFinExamen, String totalHorasModulo, Date fechaInicioMaestria, Date fechaFinMaestria, int numPromociones, Character estadoModulo) {
         this.idMaestria = idMaestria;
         this.maestria = maestria;
         this.idPromocion = idPromocion;
@@ -52,6 +53,7 @@ public class ClsTablaModulosRegistrados implements Serializable {
         this.fechaInicioMaestria = fechaInicioMaestria;
         this.fechaFinMaestria = fechaFinMaestria;
         this.numPromociones = numPromociones;
+        this.estadoModulo = estadoModulo;
     }
 
     public int getIdMaestria() {
@@ -188,6 +190,14 @@ public class ClsTablaModulosRegistrados implements Serializable {
 
     public void setNumPromociones(int numPromociones) {
         this.numPromociones = numPromociones;
+    }
+
+    public Character getEstadoModulo() {
+        return estadoModulo;
+    }
+
+    public void setEstadoModulo(Character estadoModulo) {
+        this.estadoModulo = estadoModulo;
     }
     
     

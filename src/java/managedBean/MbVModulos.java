@@ -69,6 +69,7 @@ public class MbVModulos implements Serializable {
     boolean repetida;
     private boolean valor1;
     private Date fechaUltimaModulo;
+    private boolean mostrarEliminados;
 
     public MbVModulos() {
         cargarTablaModulos();
@@ -207,7 +208,14 @@ public class MbVModulos implements Serializable {
     public void setValor1(boolean valor1) {
         this.valor1 = valor1;
     }
-    
+
+    public boolean isMostrarEliminados() {
+        return mostrarEliminados;
+    }
+
+    public void setMostrarEliminados(boolean mostrarEliminados) {
+        this.mostrarEliminados = mostrarEliminados;
+    }
 
     public List<SelectItem> getLstTodosModulos() {
         this.lstTodosModulos = new ArrayList<SelectItem>();
@@ -220,7 +228,7 @@ public class MbVModulos implements Serializable {
                 "Mòdulo XXI", "Mòdulo XXII", "Mòdulo XXIII", "Mòdulo XXIV", "Mòdulo XXV"
             };
             
-            int[] idModulo = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
+          //  int[] idModulo = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
             lstTodosModulos.clear();
             for (int i = 0; i < modulos.length; i++) {
                 SelectItem usuarioItem = new SelectItem(modulos[i].toString(), modulos[i].toString());
@@ -264,8 +272,8 @@ public class MbVModulos implements Serializable {
                                 modulo.getTotalHorasModulo() == null ? null:modulo.getTotalHorasModulo().toString(),
                                 modulo.getPromocion().getFechaInicio(),
                                 modulo.getPromocion().getFechaFin(),
-                                modulo.getPromocion().getDescripcion()
-                                ));
+                                modulo.getPromocion().getDescripcion(),
+                                modulo.getEstado()));
                     }
                 }
             }
@@ -319,7 +327,7 @@ public class MbVModulos implements Serializable {
          try {
             DaoTMaestrias daoTmaestria = new DaoTMaestrias();
             
-            List<Maestria> lstMaestria = daoTmaestria.getMaestriasD("");
+            List<Maestria> lstMaestria = daoTmaestria.getMaestriasD("",mostrarEliminados);
             this.lstThemeMaestria.clear();
             this.lstThemeMaestria.add(new ClsMaestria(-1,"Seleccione....","Seleccione....",0,0,0,null, null));
             

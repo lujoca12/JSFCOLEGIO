@@ -184,7 +184,7 @@ public class MbVModulosHorarios implements Serializable{
          try {
             DaoTMaestrias daoTmaestria = new DaoTMaestrias();
             
-            List<Maestria> lstMaestria = daoTmaestria.getMaestriasD("");
+            List<Maestria> lstMaestria = daoTmaestria.getMaestriasD("", false);
             this.lstThemeMaestria.clear();
             this.lstThemeMaestria.add(new ClsMaestria(-1,"Ninguno","Ninguno",0,0,0, null, null));
             
@@ -251,7 +251,7 @@ public class MbVModulosHorarios implements Serializable{
             
             lstCboModulos = new ArrayList<>();
             lstCboModulos.clear();
-            this.lstCboModulos.add(new ClsTablaModulosRegistrados(-1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)","(Escoja un Módulo)",-1,"(Escoja un Módulo)",null,null,null,null,"",null,null,0));
+            this.lstCboModulos.add(new ClsTablaModulosRegistrados(-1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)","(Escoja un Módulo)",-1,"(Escoja un Módulo)",null,null,null,null,"",null,null,0,'1'));
             DaoTModulo daoTmodulo = new DaoTModulo();
             List<Modulo> lstModulo = null;
             
@@ -282,7 +282,8 @@ public class MbVModulosHorarios implements Serializable{
                                 modulo.getTotalHorasModulo() == null ? null : modulo.getTotalHorasModulo().toString(),
                                 modulo.getPromocion().getFechaInicio(),
                                 modulo.getPromocion().getFechaFin(),
-                                modulo.getPromocion().getDescripcion()
+                                modulo.getPromocion().getDescripcion(),
+                                modulo.getEstado()
                         ));
                     }
                    

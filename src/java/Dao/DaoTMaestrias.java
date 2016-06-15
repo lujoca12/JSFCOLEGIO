@@ -97,19 +97,25 @@ public class DaoTMaestrias implements InterfaceMaestrias{
     }
     
     @Override
-    public List<Maestria> getMaestriasD(String maestriaDescripcion) throws Exception {
+    public List<Maestria> getMaestriasD(String maestriaDescripcion, boolean mostrar) throws Exception {
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
         
         String consulta = "";
+        String estado = "";
+        if(mostrar)
+            estado = "0";
+        else
+            estado = "1";
         
         if(maestriaDescripcion.isEmpty())
             consulta = "";
         else
             consulta = "and m.descripcion like '%"+maestriaDescripcion+"%'";
         
-        String hql="from Maestria m where m.estado = '1' "+consulta+" order by m.id desc";
+        //String hql="from Maestria m where m.estado = '1' "+consulta+" order by m.id desc";
+        String hql="from Maestria m where m.estado = '"+estado+"' "+consulta+" order by m.id desc";
         Query query = sesion.createQuery(hql);
 
         List<Maestria> lstMaestrias=(List<Maestria>) query.list();

@@ -27,6 +27,11 @@
                                 <p:inputText id="globalFilter" value="#{mbVMaestrias.maestriaDescripcion}" style="width:250px" placeholder="Enter keyword"/>
                                 <p:commandButton value="Buscar" update="form" styleClass="anchoBotones" icon="ui-icon-search"
                                          actionListener="#{mbVMaestrias.cargarTablaMaestria()}" />
+                                
+                                <h:outputText value=" Mostrar Eliminados" styleClass="labelDerecha" />
+                                <p:selectBooleanCheckbox value="#{mbVMaestrias.mostrarEliminados}" styleClass="labelDerecha" >
+                                    <p:ajax update="form, edicionColumn" listener="#{mbVMaestrias.cargarTablaMaestria}" />
+                                </p:selectBooleanCheckbox>
                             </p:outputPanel>
                         </f:facet>
 
@@ -48,8 +53,8 @@
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column style="width:10%;">
-                            <p:rowEditor />   
+                        <p:column style="width:10%;" >
+                            <p:rowEditor/>   
                         </p:column>
                         <p:column style="width:5%;">
                             <p:commandButton id="btnEliminar"

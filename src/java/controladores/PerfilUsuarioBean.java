@@ -89,8 +89,7 @@ public class PerfilUsuarioBean implements Serializable {
             usuario.setCelular(usuario.getCelular().replaceAll("[()-]", ""));
             if (!nickViejo.equals(usuario.getNick())) {
                 if (!uD.existeNick(usuario.getNick())) {
-
-                    usuario.setNick(nickViejo);
+                    
                     String encript = Class_Encript.getStringMessageDigest(nuevaClave, Class_Encript.SHA256);
                     usuario.setClave(encript);
                     exito = uD.insertar(usuario);
@@ -117,6 +116,7 @@ public class PerfilUsuarioBean implements Serializable {
             System.out.println(ex.toString());
         }
         nuevaClave="";
+        nickViejo="";
         
     }
 

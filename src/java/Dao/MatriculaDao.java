@@ -91,8 +91,8 @@ public class MatriculaDao {
         return existe;
     }
     public Matricula obtenerMatricula(String Cedula, String Promocion) {
-        boolean existe = false;
-        
+        boolean existe = false;Matricula lst=null;
+        try{
             this.sesion = null;
             this.tx = null;
             iniciaOperacion();
@@ -100,7 +100,10 @@ public class MatriculaDao {
                     + "inner join fetch si.promocion p where e.cedPasaporte='" + Cedula + "' and p.id='" + Promocion + "' ";
             Query query = sesion.createQuery(hql);
             //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-            Matricula lst = (Matricula) query.uniqueResult();
+            lst = (Matricula) query.uniqueResult();
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
             sesion.close();
         
         return lst;

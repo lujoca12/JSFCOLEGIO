@@ -49,6 +49,7 @@ public class MatriculaBean implements Serializable {
     private InscripcionDao d;
     private boolean desc;
     private int numM;
+    private boolean existM = false;
 
     public int getNumM() {
         return numM;
@@ -160,9 +161,8 @@ public class MatriculaBean implements Serializable {
         try {
             MatriculaDao mDao = new MatriculaDao();
 
-            
             postgradoDao pDao = new postgradoDao();
-            Postgrado p =pDao.getPostgrado();
+            Postgrado p = pDao.getPostgrado();
             int nMatri = p.getNumMatricula();
 
             if (SelectedInscripcion != null) {
@@ -178,8 +178,10 @@ public class MatriculaBean implements Serializable {
                     SelectedInscripcion.setFechaRevision(fechaM);
                     SelectedInscripcion.setObservacion(observacion);
                     mDao.insertar(m, SelectedInscripcion);
-                    p.setNumMatricula(nMatri+1);
+                    p.setNumMatricula(nMatri + 1);
                     pDao.insertar(p);
+                    FacesMessage message = new FacesMessage("Succesful", "Datos guardados");
+                    FacesContext.getCurrentInstance().addMessage(null, message);
 
                 } else if (SelectedInscripcion.getEstado() == 'R') {
 
@@ -193,15 +195,17 @@ public class MatriculaBean implements Serializable {
                     SelectedInscripcion.setFechaRevision(fechaM);
                     SelectedInscripcion.setObservacion(observacion);
                     mDao.insertar(m, SelectedInscripcion);
-                    p.setNumMatricula(nMatri+1);
+                    p.setNumMatricula(nMatri + 1);
                     pDao.insertar(p);
+                    FacesMessage message = new FacesMessage("Succesful", "Datos guardados");
+                    FacesContext.getCurrentInstance().addMessage(null, message);
                 } else if (SelectedInscripcion.getEstado() == 'E') {
+                    existM = true;
                     rechazarMatricula();
                 }
                 lstSInscripcion.clear();
                 lstSInscripcion = mDao.obtenerTodasSolicitudes();
-                FacesMessage message = new FacesMessage("Succesful", "Datos guardados");
-                FacesContext.getCurrentInstance().addMessage(null, message);
+
             } else {
                 FacesMessage message = new FacesMessage("Error", "Selecciona una solicitud");
                 FacesContext.getCurrentInstance().addMessage(null, message);
@@ -235,8 +239,14 @@ public class MatriculaBean implements Serializable {
                 }
                 lstSInscripcion.clear();
                 lstSInscripcion = mDao.obtenerTodasSolicitudes();
-                FacesMessage message = new FacesMessage("Succesful", "Datos guardados");
-                FacesContext.getCurrentInstance().addMessage(null, message);
+                if (existM) {
+                    FacesMessage message = new FacesMessage("Succesful", "Matricula Rechazada ya existe esta persona matriculada");
+                    FacesContext.getCurrentInstance().addMessage(null, message);
+                } else {
+                    FacesMessage message = new FacesMessage("Succesful", "Matricula Rechazada");
+                    FacesContext.getCurrentInstance().addMessage(null, message);
+                }
+                existM = false;
 
             } else {
                 FacesMessage message = new FacesMessage("Error", "Selecciona una solicitud");

@@ -114,3 +114,7 @@ td{
 input.file{
     
 }
+.ui-growl {
+    position:absolute !important;
+    z-index:9999 !important;
+}

@@ -5,7 +5,9 @@
  */
 package Interface;
 
+import Pojo.Precio;
 import Pojo.Promocion;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -14,14 +16,14 @@ import java.util.List;
  */
 public interface InterfacePromocion {
     
-    public boolean registrar(Promocion tPromocion) throws Exception;
+    public boolean registrar(Promocion tPromocion, BigDecimal precioMatricula, BigDecimal precioColegiatura) throws Exception;
     public List<Promocion> getTodasPromociones() throws Exception;
     public List<Promocion> getPromocionesMaestrias(String maestriaDescripcion) throws Exception;
     public List<Promocion> getPromocionesMaestrias(int idMaestria) throws Exception;
     public int getUltimoidPromocion(String descripcion) throws Exception;
     public Promocion getPromocion(int idMaestria) throws Exception;
-    public boolean update(Promocion tPromocion) throws Exception;
+    public boolean update(Promocion tPromocion, BigDecimal precioMatricula, BigDecimal precioColegiatura) throws Exception;
     public boolean delete(Promocion tPromocion) throws Exception;
     public boolean existe(Promocion tPromocion) throws Exception;
-    
+    public List<Precio> getPromocionesPrecios(int idPromocion) throws Exception;
 }

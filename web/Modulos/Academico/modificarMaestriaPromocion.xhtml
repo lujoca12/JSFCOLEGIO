@@ -30,7 +30,7 @@
                             </p:outputPanel>
                         </f:facet>
 
-                        <p:column headerText="Maestria" style="width: 20%;" sortBy="#{lstTbl.descripcionM}">
+                        <p:column headerText="Maestria" style="width: 15%;" sortBy="#{lstTbl.descripcionM}">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.descripcionM}" /></f:facet>
                                 <f:facet name="input">
@@ -60,11 +60,33 @@
                             </p:cellEditor>
                         </p:column>
                         
-                        <p:column headerText="Promoc." style="width: 15%;">
+                        <p:column headerText="Promoc." style="width: 10%;">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.descripcionP}" /></f:facet>
                                 <f:facet name="input">
                                     <p:autoComplete readonly="true" style="width:100%" required="true" maxlength="150" value="#{lstTbl.descripcionP}" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="P. Matr." style="width: 10%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.precioMatricula}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="precioMatricula" onkeypress="return validarNum(event, true)" required="true" value="#{lstTbl.precioMatricula}">
+                                        <f:validateDoubleRange minimum="0"  />
+                                    </p:inputText>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="P. Col." style="width: 10%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.precioColegiatura}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="precioColegiatura" onkeypress="return validarNum(event, true)" required="true" value="#{lstTbl.precioColegiatura}">
+                                        <f:validateDoubleRange minimum="0"  />
+                                    </p:inputText> 
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
@@ -104,7 +126,7 @@
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="F. Fin" style="width: 12%;" sortBy="#{lstTbl.fechaFin}">
+                        <p:column headerText="F. Fin" style="width: 14%;" sortBy="#{lstTbl.fechaFin}">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.fechaFin}" /></f:facet>
                                 <f:facet name="input">

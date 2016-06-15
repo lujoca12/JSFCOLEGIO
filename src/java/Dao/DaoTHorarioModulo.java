@@ -91,9 +91,9 @@ public class DaoTHorarioModulo implements InterfaceHorarioModulo{
         String consulta = "";
         
         if(moduloDescripcion.isEmpty())
-            consulta = "";
+            consulta = "where mod.estado = '1'";
         else
-            consulta = "where mod.modulo like '%"+moduloDescripcion+"%'";
+            consulta = "where mod.modulo like '%"+moduloDescripcion+"%' and mod.estado = '1'";
         
         String hql = "from HorarioModulo horario \n"
                 + "inner join fetch horario.modulo mod \n"

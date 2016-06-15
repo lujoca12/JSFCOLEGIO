@@ -6,6 +6,7 @@
 package Clases;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -28,8 +29,11 @@ public class ClsTablaMaestriaPromocion implements Serializable {
     private int idUsuario;
     private String nombresUsuarios;
     private String n_resolucion;
+    private BigDecimal precioMatricula;
+    private BigDecimal precioColegiatura;
+    
 
-    public ClsTablaMaestriaPromocion(int idMaestria, String descripcionM, char estado, int idPromocion, int descripcionP, Date fechaResolucion, Date fechaInicio, Date fechaFin, int cupo, int cuotas, int idUsuario, String nombresUsuarios, String n_resolucion) {
+    public ClsTablaMaestriaPromocion(int idMaestria, String descripcionM, char estado, int idPromocion, int descripcionP, Date fechaResolucion, Date fechaInicio, Date fechaFin, int cupo, int cuotas, int idUsuario, String nombresUsuarios, String n_resolucion, BigDecimal precioMatricula, BigDecimal precioColegiatura) {
         this.idMaestria = idMaestria;
         this.descripcionM = descripcionM;
         this.estado = estado;
@@ -43,6 +47,8 @@ public class ClsTablaMaestriaPromocion implements Serializable {
         this.idUsuario = idUsuario;
         this.nombresUsuarios = nombresUsuarios;
         this.n_resolucion = n_resolucion;
+        this.precioMatricula = precioMatricula;
+        this.precioColegiatura = precioColegiatura;
     }
 
     public int getIdMaestria() {
@@ -148,5 +154,21 @@ public class ClsTablaMaestriaPromocion implements Serializable {
     public void setN_resolucion(String n_resolucion) {
         this.n_resolucion = n_resolucion;
     }
-    
+
+    public BigDecimal getPrecioMatricula() {
+        return precioMatricula;
+    }
+
+    public void setPrecioMatricula(BigDecimal precioMatricula) {
+        this.precioMatricula = precioMatricula;
+    }
+
+    public BigDecimal getPrecioColegiatura() {
+        return precioColegiatura;
+    }
+
+    public void setPrecioColegiatura(BigDecimal precioColegiatura) {
+        this.precioColegiatura = precioColegiatura;
+    }
+
 }

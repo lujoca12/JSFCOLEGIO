@@ -6,7 +6,10 @@
 package Dao;
 
 import Interface.InterfacePromocion;
+import Pojo.Precio;
 import Pojo.Promocion;
+import Pojo.TipoPrecio;
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -42,13 +45,33 @@ public class DaoTPromocion implements InterfacePromocion{
     }
 
     @Override
-    public boolean registrar(Promocion tPromocion) throws Exception {
+    public boolean registrar(Promocion tPromocion, BigDecimal precioMatricula, BigDecimal precioColegiatura) throws Exception {
         boolean band = false;
         try {
             iniciaOperacion();
             sesion.save(tPromocion);
-
             tx.commit();
+            sesion.close();
+            
+            iniciaOperacion();
+            TipoPrecio tipo_Precio = null;
+            Precio precio = null;
+            for (int i = 1; i < 3; i++) {
+                tipo_Precio = new TipoPrecio();
+                tipo_Precio.setId(i);
+                precio = new Precio();
+                precio.setTipoPrecio(tipo_Precio);
+                precio.setPromocion(tPromocion);
+                if(i == 1)
+                    precio.setValor(precioMatricula);
+                else
+                    precio.setValor(precioColegiatura);
+                
+                sesion.save(precio);
+            }
+            
+            tx.commit();
+            
             sesion.close();
             band = true;
         } catch (Exception e) {
@@ -94,6 +117,20 @@ public class DaoTPromocion implements InterfacePromocion{
     }
     
     @Override
+    public List<Precio> getPromocionesPrecios(int idPromocion) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        
+        String hql="from Precio precio inner join fetch precio.promocion pr inner join fetch precio.tipoPrecio tipoPrecio where pr.id = "+idPromocion+" ";
+               
+        Query query = sesion.createQuery(hql);
+        List<Precio> lstPermiso=(List<Precio>) query.list();
+        sesion.close();
+        return lstPermiso;
+    }
+    
+    @Override
     public List<Promocion> getPromocionesMaestrias(int idMaestria) throws Exception {
         this.sesion = null;
         this.tx = null;
@@ -124,11 +161,52 @@ public class DaoTPromocion implements InterfacePromocion{
     }
 
     @Override
-    public boolean update(Promocion tPromocion) throws Exception {
+    public boolean update(Promocion tPromocion, BigDecimal precioMatricula, BigDecimal precioColegiatura) throws Exception {
         boolean band = false;
         try {
             iniciaOperacion();
             sesion.update(tPromocion);
+            tx.commit();
+            sesion.close();
+            
+            iniciaOperacion();
+            
+            String hql="from Precio precio inner join fetch precio.promocion pr inner join fetch precio.tipoPrecio tipoPrecio where pr.id = "+tPromocion.getId()+" ";
+            Query query = sesion.createQuery(hql);
+            List<Precio> lstPrecio=(List<Precio>) query.list();
+            sesion.close();
+            
+            iniciaOperacion();
+            
+            TipoPrecio tipo_Precio = null;
+            Precio precio = null;
+            for (int i = 0; i < lstPrecio.size(); i++) {
+                
+                precio = lstPrecio.get(i);
+                
+                if(lstPrecio.get(i).getTipoPrecio().getId() == 1)
+                    precio.setValor(precioMatricula);
+                else if(lstPrecio.get(i).getTipoPrecio().getId() == 2)
+                    precio.setValor(precioColegiatura);
+                
+                sesion.update(precio);
+            }
+            if (lstPrecio.size() <= 0) {
+                for (int i = 1; i < 3; i++) {
+                    tipo_Precio = new TipoPrecio();
+                    tipo_Precio.setId(i);
+                    precio = new Precio();
+                    precio.setTipoPrecio(tipo_Precio);
+                    precio.setPromocion(tPromocion);
+                    if (i == 1) {
+                        precio.setValor(precioMatricula);
+                    } else {
+                        precio.setValor(precioColegiatura);
+                    }
+
+                    sesion.save(precio);
+                }
+            }
 
             tx.commit();
             sesion.close();

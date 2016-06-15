@@ -557,8 +557,39 @@ public class MbVModulos implements Serializable {
                         }
                         
                     }else if(estado == 1){
-                        msg = daoTmodulo.update(tModulo);
-                        cargarTablaModulos();
+//                        List<Modulo> lstPermiso = daoTmodulo.getNumeroModulo(tModulo.getPromocion().getId());
+//
+//                        if (lstPermiso.size() == 1) {
+//                            fechaUltimaModulo = lstPermiso.get(0).getFechaFinExamen();
+//                        }else if(lstPermiso.size() > 1) {
+//                            fechaUltimaModulo = lstPermiso.get(1).getFechaFinExamen();
+//                        }
+//                        if(fechaUltimaModulo != null){
+//                            if (fechaUltimaModulo.after(tModulo.getFechaInicio()) || fechaUltimaModulo.equals(tModulo.getFechaInicio())) {
+//                                mensajesError("La fecha de encuadre no puede ser menor o igual a " + fechaUltimaModulo + "");
+//                                tModulo.setFechaInicio(null);
+//                                return;
+//                            }else if (fechaUltimaModulo.after(tModulo.getFechaFin()) || fechaUltimaModulo.equals(tModulo.getFechaFin())) {
+//                                mensajesError("La 1ra sesión no puede ser menor o igual a " + fechaUltimaModulo + "");
+//                                tModulo.setFechaFin(null);
+//                                return;
+//                            } else if (fechaUltimaModulo.after(tModulo.getFechaInicioExamen()) || fechaUltimaModulo.equals(tModulo.getFechaInicioExamen())) {
+//                                mensajesError("La 2da sesión no puede ser menor o igual a " + fechaUltimaModulo + "");
+//                                tModulo.setFechaInicioExamen(null);
+//                                return;
+//                            } else if (fechaUltimaModulo.after(tModulo.getFechaFinExamen()) || fechaUltimaModulo.equals(tModulo.getFechaFinExamen())) {
+//                                mensajesError("La fecha evaluación no puede ser menor o igual a " + fechaUltimaModulo + "");
+//                                tModulo.setFechaFinExamen(null);
+//                                return;
+//                            }else{
+//                                msg = daoTmodulo.update(tModulo);
+//                                cargarTablaModulos();
+//                            }
+//                        }else{
+                            msg = daoTmodulo.update(tModulo);
+                            cargarTablaModulos();
+//                        }
+                        
                     }
                     
                 } catch (Exception ex) {
@@ -703,20 +734,76 @@ public class MbVModulos implements Serializable {
     }
 
     public void onDelete(ClsTablaModulosRegistrados clsTblModulos) {
+//        DaoTModulo daoTmodulo = new DaoTModulo();
+//        Modulo modulo = new Modulo();
+//        modulo.setId(clsTblModulos.getIdModulo());
+//        try {
+//            msg = daoTmodulo.delete(modulo);
+//        } catch (Exception ex) {
+//            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        cargarTablaModulos();
+//        if (msg) {
+//            mensajesOk("Dato eliminado correctamente");
+//        } else {
+//            mensajesError("Error al eliminar dato");
+//        }
         DaoTModulo daoTmodulo = new DaoTModulo();
-        Modulo modulo = new Modulo();
-        modulo.setId(clsTblModulos.getIdModulo());
-        try {
-            msg = daoTmodulo.delete(modulo);
-        } catch (Exception ex) {
-            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        cargarTablaModulos();
-        if (msg) {
-            mensajesOk("Dato eliminado correctamente");
+        Usuario user = new Usuario();
+        Promocion promocion = new Promocion();
+
+        if (theme == null && themeMaestria == null) {
+            user.setId(clsTblModulos.getIdUsuario());
+            promocion.setId(clsTblModulos.getIdPromocion());
+        } else if (theme == null && themeMaestria != null) {
+            promocion.setId(themeMaestria.getIdPromocion());
+            user.setId(clsTblModulos.getIdUsuario());
+        } else if (themeMaestria == null && theme != null) {
+            user.setId(theme.getId());
+            promocion.setId(clsTblModulos.getIdPromocion());
         } else {
-            mensajesError("Error al eliminar dato");
+            promocion.setId(themeMaestria.getIdPromocion());
+            user.setId(theme.getId());
         }
+
+        try {
+            tModulo = new Modulo();
+            tModulo.setPromocion(promocion);
+            tModulo.setUsuario(user);
+            tModulo.setId(clsTblModulos.getIdModulo());
+            tModulo.setDescripcion(clsTblModulos.getModulo());
+            BigDecimal bigdec;
+            String valorHoras = (clsTblModulos.getTotalHorasModulo().toString());
+            if(!valorHoras.isEmpty()){
+                bigdec = new BigDecimal(Double.parseDouble(clsTblModulos.getTotalHorasModulo()));
+                tModulo.setTotalHorasModulo(bigdec);
+            }
+            bigdec = new BigDecimal(Double.parseDouble(clsTblModulos.getCreditos()));
+            tModulo.setCreditos(bigdec);
+            
+            tModulo.setFechaInicio(clsTblModulos.getFechaInicio());
+            tModulo.setFechaFin(clsTblModulos.getFechaFin());
+            tModulo.setFechaInicioExamen(clsTblModulos.getFechaInicioExamen());
+            tModulo.setFechaFinExamen(clsTblModulos.getFechaFinExamen());
+            tModulo.setModulo(clsTblModulos.getN_modulo());
+            this.fechaInicio = (clsTblModulos.getFechaInicioMaestria());
+            this.fechaFin = (clsTblModulos.getFechaFinMaestria());
+            tModulo.setEstado('0');
+            //validacionFechas(daoTmodulo,1);
+            msg = daoTmodulo.update(tModulo);
+            cargarTablaModulos();
+            
+            if (msg) {
+                mensajesOk("Dato eliminado correctamente");
+            } else {
+                mensajesError("Error al eliminar dato");
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(MbVTablaPermisos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        vaciarCajas();
+        cargarTablaModulos();
     }
 
 }

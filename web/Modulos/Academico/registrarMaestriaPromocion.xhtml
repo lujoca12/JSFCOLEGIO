@@ -16,7 +16,7 @@
                     <p:panel header="Registrar Maestria Promociòn">
                         <p:growl id="msgs" showDetail="true" />
                         <p:focus context="panel"/>
-                        <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
+                        <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
                             
                             <p:outputLabel styleClass="labelDerecha" rendered="#{mbVMaestrias.themeMaestria.fechaInicioMaestria eq null ? false:true}" />
                             <p:outputLabel styleClass="labelDerecha" rendered="#{mbVMaestrias.themeMaestria.fechaInicioMaestria eq null ? false:true}" >
@@ -82,6 +82,16 @@
                             </p:calendar>
 
 
+                            
+
+
+                            
+
+
+
+                        </p:panelGrid>
+                        
+                        <p:panelGrid id="panel1a" columns="4" columnClasses="ui-grid-col-3,ui-grid-col-2, ui-grid-col-2, ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank">
                             <p:outputLabel for="txtCupos" styleClass="labelDerecha" value="Cupos:" />
                             <p:inputText id="txtCupos" value="#{mbVMaestrias.tPromocion.cupo}" required="true" onkeypress="return isNumberKey(event)">
                                 <f:validateLongRange minimum="1"/>
@@ -92,15 +102,24 @@
                             <p:inputText id="txtNCuotas" value="#{mbVMaestrias.tPromocion.NCuotas}" required="true" onkeypress="return isNumberKey(event)">
                                 <f:validateLongRange minimum="1"/>
                             </p:inputText>
+                            
+                            <h:outputLabel for="precioMatricula" value="Precio de la Matrícula: " styleClass="labelDerecha" />
+                            <p:inputText id="precioMatricula" onkeypress="return validarNum(event, true)" required="true" value="#{mbVMaestrias.precioMatricula}">
+                                <f:validateDoubleRange minimum="0"  />
+                            </p:inputText> 
 
-
+                            <h:outputLabel for="precioColegiatura" value="P. Colegiatura: " styleClass="labelDerecha" />
+                            <p:inputText id="precioColegiatura" onkeypress="return validarNum(event, true)" required="true" value="#{mbVMaestrias.precioColegiatura}">
+                                <f:validateDoubleRange minimum="0"  />
+                            </p:inputText> 
+                            
+                        </p:panelGrid>
+                        
+                        <p:panelGrid id="panel1b" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
                             <h:outputText id="display" value="" />
                             <p:commandButton value="Guardar" update="form,msgs" 
                                              styleClass="anchoBotones" icon="ui-icon-disk"
                                              actionListener="#{mbVMaestrias.registrar()}" />
-
-
-
                         </p:panelGrid>
                     </p:panel>
                 </p:tab>
@@ -113,7 +132,7 @@
                         <p:ajax event="rowEditCancel" listener="#{mbVMaestrias.onRowCancel}" update=":form:msgs" />
                         
 
-                        <p:column headerText="Maestria" style="width: 20%;">
+                        <p:column headerText="Maestria" style="width: 15%;">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.descripcionM}" /></f:facet>
                                 <f:facet name="input">
@@ -143,11 +162,33 @@
                             </p:cellEditor>
                         </p:column>
                         
-                        <p:column headerText="Promoc." style="width: 15%;">
+                        <p:column headerText="Promoc." style="width: 10%;">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.descripcionP}" /></f:facet>
                                 <f:facet name="input">
                                     <p:autoComplete readonly="true" style="width:100%" required="true" maxlength="150" value="#{lstTbl.descripcionP}" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="P. Matr." style="width: 10%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.precioMatricula}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="precioMatricula" onkeypress="return validarNum(event, true)" required="true" value="#{lstTbl.precioMatricula}">
+                                        <f:validateDoubleRange minimum="0"  />
+                                    </p:inputText>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="P. Col." style="width: 10%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.precioColegiatura}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="precioColegiatura" onkeypress="return validarNum(event, true)" required="true" value="#{lstTbl.precioColegiatura}">
+                                        <f:validateDoubleRange minimum="0"  />
+                                    </p:inputText> 
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
@@ -187,7 +228,7 @@
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="F. Fin" style="width: 12%;">
+                        <p:column headerText="F. Fin" style="width: 14%;">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.fechaFin}" /></f:facet>
                                 <f:facet name="input">

@@ -99,7 +99,7 @@ public class DaoTModulo implements InterfaceModulos{
         
         String hql="from Modulo mod inner join fetch mod.promocion p "
                 + "inner join fetch mod.usuario user "
-                + "inner join fetch p.maestria m where m.estado='1' and "
+                + "inner join fetch p.maestria m where m.estado='1' and mod.estado = '1' and "
                 + "(year(current_date) >= year(p.fechaInicio) "
                 + "and year(current_date)<= year(p.fechaFin)) "
                 + ""+consulta+" and p.estado = '1' order by mod.id desc";
@@ -122,7 +122,7 @@ public class DaoTModulo implements InterfaceModulos{
                 + "where pr.id = "+idMaestria+" and\n"
                 + "(year(current_date) >= year(pr.fechaInicio) and year(current_date)<= year(pr.fechaFin))\n"
                 + "and (tuser.descripcion like '%Prof%' or tuser.descripcion like '%prof%' or tuser.descripcion like '%Docen%' or tuser.descripcion like '%docent%') \n"
-                + " and pr.estado = '1' order by modul.descripcion asc";
+                + " and pr.estado = '1' and modul.estado = '1' order by modul.descripcion asc";
         Query query = sesion.createQuery(hql);
         List<Modulo> lstPermiso=(List<Modulo>) query.list();
         sesion.close();
@@ -188,7 +188,7 @@ public class DaoTModulo implements InterfaceModulos{
                 + "(year(current_date) >= year(pr.fechaInicio) and year(current_date)<= year(pr.fechaFin)) and \n"
                 + ""+fecha+"\n"
                 + "and (tuser.descripcion like '%Prof%' or tuser.descripcion like '%prof%' or tuser.descripcion like '%Docen%' or tuser.descripcion like '%docent%') \n"
-                + "order by modul.descripcion asc";
+                + " and modul.estado = '1' order by modul.descripcion asc";
         Query query = sesion.createQuery(hql);
         List<Modulo> lstPermiso=(List<Modulo>) query.list();
         sesion.close();
@@ -257,9 +257,11 @@ public class DaoTModulo implements InterfaceModulos{
         
         
         iniciaOperacion();
-        String hql="from Modulo m where (m.descripcion='"+tModulo.getDescripcion()+"' or  m.descripcion<>'"+tModulo.getDescripcion()+"')and "
+        //or  m.descripcion<>'"+tModulo.getDescripcion()+"'
+        String hql="from Modulo m where (m.descripcion='"+tModulo.getDescripcion()+"')and "
                 + "m.promocion="+tModulo.getPromocion().getId()+" and "
-                + "m.usuario="+tModulo.getUsuario().getId()+" and m.modulo = '"+tModulo.getModulo()+"'";
+                + "m.usuario="+tModulo.getUsuario().getId()+" and m.modulo = '"+tModulo.getModulo()+"' and "
+                + "m.estado = '1'";
         Query query = sesion.createQuery(hql);
         List<Modulo> modulo=(List<Modulo>) query.list();
         if(modulo.size() > 0)

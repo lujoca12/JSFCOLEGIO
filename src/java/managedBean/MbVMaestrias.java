@@ -13,9 +13,11 @@ import Dao.DaoTMaestrias;
 import Dao.DaoTPromocion;
 import Dao.DaoTUsuario;
 import Pojo.Maestria;
+import Pojo.Precio;
 import Pojo.Promocion;
 import Pojo.Usuario;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -63,6 +65,9 @@ public class MbVMaestrias implements Serializable{
     private int idDirector;
     private Date date;
     private String maestriaDescripcion;
+    
+    private BigDecimal precioMatricula;
+    private BigDecimal precioColegiatura;
     
     public MbVMaestrias() {
         tMaestria = new Maestria();
@@ -177,6 +182,22 @@ public class MbVMaestrias implements Serializable{
         this.maestriaDescripcion = maestriaDescripcion;
     }
     
+    public BigDecimal getPrecioMatricula() {
+        return precioMatricula;
+    }
+
+    public void setPrecioMatricula(BigDecimal precioMatricula) {
+        this.precioMatricula = precioMatricula;
+    }
+
+    public BigDecimal getPrecioColegiatura() {
+        return precioColegiatura;
+    }
+
+    public void setPrecioColegiatura(BigDecimal precioColegiatura) {
+        this.precioColegiatura = precioColegiatura;
+    }
+    
     
 
     public void llenarCboDirector(){
@@ -256,10 +277,28 @@ public class MbVMaestrias implements Serializable{
                                 promocion.getNCuotas(),
                                 promocion.getIdUsuario(),
                                 promocion.getUsuario(),
-                                promocion.getResolucion()));
+                                promocion.getResolucion(),
+                                precioMatricula,
+                                precioColegiatura));
                     }
                 }
+                List<Precio> lstPrecio = null;
+                for (int i = 0; i < lstTblMaestriaPromocion.size(); i++) {
+                    lstPrecio = daoTmodulo.getPromocionesPrecios(lstTblMaestriaPromocion.get(i).getIdPromocion());
+                    
+                    if(lstPrecio.size() > 0){
+                        for (int j = 0; j < lstPrecio.size(); j++) {
+                            if(lstPrecio.get(j).getTipoPrecio().getId() == 1)
+                                lstTblMaestriaPromocion.get(i).setPrecioMatricula(lstPrecio.get(j).getValor());
+                            else if(lstPrecio.get(j).getTipoPrecio().getId() == 2)
+                                lstTblMaestriaPromocion.get(i).setPrecioColegiatura(lstPrecio.get(j).getValor());
+                        }
+                        
+                    }
+                }
+                
             }
+            
         } catch (Exception ex) {
             Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -317,7 +356,7 @@ public class MbVMaestrias implements Serializable{
             //Si la maestria existe comparo que no este repetida
             repetida = daoTpromocion.existe(tPromocion);
             if (!repetida) {
-                msg = daoTpromocion.registrar(tPromocion);
+                msg = daoTpromocion.registrar(tPromocion, precioMatricula, precioColegiatura);
             }
 
         } catch (Exception e) {
@@ -415,8 +454,10 @@ public class MbVMaestrias implements Serializable{
         promocion.setId(((ClsTablaMaestriaPromocion) event.getObject()).getIdPromocion());
         promocion.setMaestria(maestria);
         promocion.setResolucion(((ClsTablaMaestriaPromocion) event.getObject()).getN_resolucion());
+        precioMatricula = ((ClsTablaMaestriaPromocion) event.getObject()).getPrecioMatricula();
+        precioColegiatura = ((ClsTablaMaestriaPromocion) event.getObject()).getPrecioColegiatura();
         try {
-            msg = daoTpromocion.update(promocion);
+            msg = daoTpromocion.update(promocion, precioMatricula, precioColegiatura);
             cargarTablaMaestriaPromocion();
         } catch (Exception ex) {
             Logger.getLogger(MbVMaestrias.class.getName()).log(Level.SEVERE, null, ex);
@@ -473,9 +514,11 @@ public class MbVMaestrias implements Serializable{
         Maestria maestria = new Maestria();
         maestria.setId(clsTblMaestrias.getIdMaestria());
         promocion.setMaestria(maestria);
+        precioMatricula = (clsTblMaestrias.getPrecioMatricula());
+        precioColegiatura = (clsTblMaestrias.getPrecioColegiatura());
         
         try {
-            msg = daoTpromocion.update(promocion);
+            msg = daoTpromocion.update(promocion, precioMatricula,precioColegiatura);
             cargarTablaMaestriaPromocion();
         } catch (Exception ex) {
             Logger.getLogger(MbVMaestrias.class.getName()).log(Level.SEVERE, null, ex);

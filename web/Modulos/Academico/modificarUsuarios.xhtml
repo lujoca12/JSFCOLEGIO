@@ -42,12 +42,6 @@
                     
                     <p:panelGrid id="panelDocente" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
         
-                        <p:outputLabel for="txtUsuario" styleClass="labelDerecha" value="Usuario:" />
-                        <p:inputText id="txtUsuario" value="#{mbVUsuario.tUsuario.nick}" maxlength="10" >
-                            <f:validateLength minimum="5" maximum="10" />
-                        </p:inputText>
-                        
-                        
                         <p:outputLabel for="txtApellidos" styleClass="labelDerecha" value="Apellidos:" />
                         <p:inputText id="txtApellidos" value="#{mbVUsuario.tUsuario.apellidos}" required="true" maxlength="30"/>
                         
@@ -57,7 +51,7 @@
                         
 
                         <p:outputLabel for="txtCedula" styleClass="labelDerecha" value="Cédula:" />
-                        <p:inputMask id="txtCedula" value="#{mbVUsuario.tUsuario.cedPasaporte}" required="true" mask="999999999-9"/>
+                        <p:inputMask id="txtCedula" value="#{mbVUsuario.tUsuario.cedPasaporte}" required="true" mask="9999999999"/>
                         
 
                         <p:outputLabel for="txtDireccion" styleClass="labelDerecha" value="Dirección:" />

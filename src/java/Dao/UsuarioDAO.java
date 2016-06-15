@@ -23,7 +23,8 @@ public class UsuarioDAO {
         Usuario us= null;
         try{
             session = HibernateUtil.getSessionFactory().openSession();
-            String hql = "FROM Usuario user inner join fetch user.tipoUsuario tuser WHERE nick='"+usuario.getNick()+ "' and clave='"+usuario.getClave()+"'";
+            String hql = "FROM Usuario user inner join fetch user.tipoUsuario tuser WHERE nick='"+usuario.getNick()+ "' and "
+                    + "clave='"+usuario.getClave()+"' and user.estado = '1'";
             Query query = session.createQuery(hql);
             if(!query.list().isEmpty()){
                 us = (Usuario) query.list().get(0);

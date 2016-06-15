@@ -59,6 +59,7 @@ public class DaoTModulo implements InterfaceModulos{
         
         return band;
     }
+    
 
     @Override
     public List<Modulo> getTodosModulo() throws Exception {
@@ -290,6 +291,30 @@ public class DaoTModulo implements InterfaceModulos{
         
         sesion.close();
         return modulo;
+    }
+    
+    @Override
+    public List<Modulo> getNumeroModulo(int idPromocion) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String hql="from Modulo m inner join fetch m.promocion pr where pr.id = "+idPromocion+" order by m.fechaFinExamen desc";
+        Query query = sesion.createQuery(hql);
+        List<Modulo> lstPermiso=(List<Modulo>) query.list();
+        sesion.close();
+        return lstPermiso;
+    }
+    
+    @Override
+    public List<Modulo> getProyectoTesisRegistrado(int idPromocion, String moduloDescripcion) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String hql="from Modulo m inner join fetch m.promocion pr where pr.id = "+idPromocion+" and m.modulo like '%Proyecto%' order by m.fechaFinExamen desc";
+        Query query = sesion.createQuery(hql);
+        List<Modulo> lstPermiso=(List<Modulo>) query.list();
+        sesion.close();
+        return lstPermiso;
     }
     
 }

@@ -27,6 +27,7 @@ public class Modulo  implements java.io.Serializable {
      private Date fechaInicioExamen;
      private Date fechaFinExamen;
      private BigDecimal totalHorasModulo;
+     private Character estado;
 
     public Modulo() {
     }
@@ -37,7 +38,7 @@ public class Modulo  implements java.io.Serializable {
         this.promocion = promocion;
         this.usuario = usuario;
     }
-    public Modulo(int id, Promocion promocion, Usuario usuario, BigDecimal creditos, String descripcion, Date fechaInicio, Date fechaFin, String modulo, Set asistencias, Set notases, Set horariomodulo, Date fechaInicioExamen, Date fechaFinExamen, BigDecimal totalHorasModulo) {
+    public Modulo(int id, Promocion promocion, Usuario usuario, BigDecimal creditos, String descripcion, Date fechaInicio, Date fechaFin, String modulo, Set asistencias, Set notases, Set horariomodulo, Date fechaInicioExamen, Date fechaFinExamen, BigDecimal totalHorasModulo, Character estado) {
        this.id = id;
        this.promocion = promocion;
        this.usuario = usuario;
@@ -52,6 +53,7 @@ public class Modulo  implements java.io.Serializable {
        this.fechaInicioExamen = fechaInicioExamen;
        this.fechaFinExamen = fechaFinExamen;
        this.totalHorasModulo = totalHorasModulo;
+       this.estado = estado;
     }
    
     public int getId() {
@@ -156,6 +158,15 @@ public class Modulo  implements java.io.Serializable {
     public void setTotalHorasModulo(BigDecimal totalHorasModulo) {
         this.totalHorasModulo = totalHorasModulo;
     }
+
+    public Character getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Character estado) {
+        this.estado = estado;
+    }
+    
 }
 
 

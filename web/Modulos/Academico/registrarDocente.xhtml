@@ -18,20 +18,6 @@
             <p:focus context="panel"/>
             <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
         
-                <p:outputLabel for="txtUsuario" styleClass="labelDerecha" value="Usuario:" />
-                <p:inputText id="txtUsuario" value="#{mbVUsuario.tUsuario.nick}" maxlength="10" >
-                    <f:validateLength minimum="5" maximum="10" />
-                </p:inputText>
-                
-
-                <p:outputLabel for="txtClave" styleClass="labelDerecha" value="Clave:" />
-                <p:password id="txtClave" value="#{mbVUsuario.clave}" required="true" feedback="true" match="txtRClave" inline="true" />
-                
-
-                <p:outputLabel for="txtRClave" styleClass="labelDerecha" value="Repetir clave:" />
-                <p:password id="txtRClave" value="#{mbVUsuario.clave}" required="true" feedback="true" inline="true" />
-                
-
                 <p:outputLabel for="txtApellidos" styleClass="labelDerecha" value="Apellidos:" />
                 <p:inputText id="txtApellidos" value="#{mbVUsuario.tUsuario.apellidos}" required="true" maxlength="30"/>
                 

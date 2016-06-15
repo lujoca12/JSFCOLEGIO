@@ -370,16 +370,26 @@ public class MbVUsuario implements Serializable {
             TipoUsuario tipoUsuario = new TipoUsuario();
             tipoUsuario = (TipoUsuario) daoTipoUsuario.getTipoUsuarios("Prof");
 
-            tUsuario.setClave(Class_Encript.getStringMessageDigest(this.clave, Class_Encript.SHA256));
+            //tUsuario.setClave(Class_Encript.getStringMessageDigest(this.clave, Class_Encript.SHA256));
             tUsuario.setTelefono(telefono.replaceAll("[()-]", ""));
             tUsuario.setCelular(celular.replaceAll("[()-]", ""));
             tUsuario.setEstado('1');
+            
+            String usuarioGenerado = ClsGenerarUserClaves.getUsuarioAleatorio(10);
+            String claveGenerada = ClsGenerarUserClaves.getPassword(ClsGenerarUserClaves.MINUSCULAS.concat(ClsGenerarUserClaves.MAYUSCULAS).concat(ClsGenerarUserClaves.ESPECIALES),10);
+            tUsuario.setClave(Class_Encript.getStringMessageDigest(claveGenerada, Class_Encript.SHA256));
+            tUsuario.setNick(usuarioGenerado);
+            
             band = daoTusuario.verificarUsuarioNick(tUsuario.getNick());
             if (band) {
                 if (tipoUsuario != null) {
                     tUsuario.setTipoUsuario(tipoUsuario);
-                    band = daoTusuario.registrar(tUsuario);
-                    vaciarCajas();
+                    enviarEmail(claveGenerada);
+                    if(estadoCorreo){
+                        band = daoTusuario.registrar(tUsuario);
+                        vaciarCajas();
+                    }
+                    
                 }
             } else {
                 mensajesError("Usuario ya existe");
@@ -403,7 +413,17 @@ public class MbVUsuario implements Serializable {
             tUsuario.setTipoUsuario(tipoUser);
             tUsuario.setTelefono(tUsuario.getTelefono().replaceAll("[()-]", ""));
             tUsuario.setCelular(tUsuario.getCelular().replaceAll("[()-]", ""));
-            band = daoTusuario.update(tUsuario);
+            
+            String usuarioGenerado = ClsGenerarUserClaves.getUsuarioAleatorio(10);
+            String claveGenerada = ClsGenerarUserClaves.getPassword(ClsGenerarUserClaves.MINUSCULAS.concat(ClsGenerarUserClaves.MAYUSCULAS).concat(ClsGenerarUserClaves.ESPECIALES),10);
+            tUsuario.setClave(Class_Encript.getStringMessageDigest(claveGenerada, Class_Encript.SHA256));
+            tUsuario.setNick(usuarioGenerado);
+            
+             enviarEmail(claveGenerada);
+                    if(estadoCorreo){
+                        band = daoTusuario.update(tUsuario);
+                    }
+            
         } catch (Exception ex) {
             Logger.getLogger(MbVUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -26,4 +26,6 @@ public interface InterfaceModulos {
     public List<Modulo> getTblModulosMaestria(int idMaestria) throws Exception;
     public List<Modulo> validacionModulos(Modulo tModulo) throws Exception;
     public List<Modulo> getTodosModulo(int idModulo) throws Exception;
+    public List<Modulo> getNumeroModulo(int idPromocion) throws Exception;
+    public List<Modulo> getProyectoTesisRegistrado(int idPromocion, String moduloDescripcion) throws Exception;
 }

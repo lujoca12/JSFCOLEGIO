@@ -63,11 +63,9 @@
                                 <p:ajax listener="#{mbVModulos.onPromocionChange}" update="form txtFechaInicio txtFechaFin" />
                             </p:selectOneMenu>
                             
-                            <p:outputLabel for="cboNmodulo" value="Nº Mòdulo:" styleClass="labelDerecha"/>
-                            <p:selectOneMenu id="cboNmodulo" required="true" value="#{mbVModulos.tModulo.modulo}">
-                                <f:selectItem itemLabel="Seleccione.." itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{mbVModulos.lstTodosModulos}" />
-                            </p:selectOneMenu>
+                            <h:outputText value="Proyecto de Tesis: " />
+                            <p:selectBooleanCheckbox value="#{mbVModulos.valor1}" />
+                            
                         </p:panelGrid>
                         
                         <p:panelGrid id="panel1b" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">

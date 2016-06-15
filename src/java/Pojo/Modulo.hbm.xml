@@ -27,7 +27,7 @@
             <column name="fecha_fin" length="13" />
         </property>
         <property name="modulo" type="string">
-            <column name="modulo" length="15" />
+            <column name="modulo" length="20" />
         </property>
         <set name="asistencias" table="asistencia" inverse="true" lazy="true" fetch="select">
             <key>
@@ -55,6 +55,9 @@
         </property>
         <property name="totalHorasModulo" type="big_decimal">
             <column name="total_horas_modulo" precision="4" />
+        </property>
+        <property name="estado" type="java.lang.Character">
+            <column name="estado" length="1" />
         </property>
     </class>
 </hibernate-mapping>

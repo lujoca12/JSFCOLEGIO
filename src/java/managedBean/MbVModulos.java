@@ -67,6 +67,8 @@ public class MbVModulos implements Serializable {
     private Date fechaInicio;
     private Date fechaFin;
     boolean repetida;
+    private boolean valor1;
+    private Date fechaUltimaModulo;
 
     public MbVModulos() {
         cargarTablaModulos();
@@ -198,6 +200,15 @@ public class MbVModulos implements Serializable {
         return lstThemePromociones;
     }
 
+    public boolean isValor1() {
+        return valor1;
+    }
+
+    public void setValor1(boolean valor1) {
+        this.valor1 = valor1;
+    }
+    
+
     public List<SelectItem> getLstTodosModulos() {
         this.lstTodosModulos = new ArrayList<SelectItem>();
         try {
@@ -206,9 +217,10 @@ public class MbVModulos implements Serializable {
                 "Mòdulo VI", "Mòdulo VII", "Mòdulo VIII", "Mòdulo IX", "Mòdulo X",
                 "Mòdulo XI", "Mòdulo XII", "Mòdulo XIII", "Mòdulo XIV", "Mòdulo XV",
                 "Mòdulo XVI", "Mòdulo XVII", "Mòdulo XVIII", "Mòdulo XIX", "Mòdulo XX",
-                "Mòdulo XXI", "Mòdulo XXII", "Mòdulo XXIII", "Mòdulo XXIV", "Mòdulo XXV",
-                "Proyecto de Tesis"
+                "Mòdulo XXI", "Mòdulo XXII", "Mòdulo XXIII", "Mòdulo XXIV", "Mòdulo XXV"
             };
+            
+            int[] idModulo = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
             lstTodosModulos.clear();
             for (int i = 0; i < modulos.length; i++) {
                 SelectItem usuarioItem = new SelectItem(modulos[i].toString(), modulos[i].toString());
@@ -503,9 +515,47 @@ public class MbVModulos implements Serializable {
                 return;
             } else {
                 try {
-                    if(estado == 0){
-                        msg = daoTmodulo.registrar(tModulo);
-                        cargarTablaModulos();
+                    if (estado == 0) {
+                        asignarModuloProyecto();
+                        if (fechaUltimaModulo != null) {
+                            if (fechaUltimaModulo.after(tModulo.getFechaInicio()) || fechaUltimaModulo.equals(tModulo.getFechaInicio())) {
+                                mensajesError("La fecha de encuadre no puede ser menor o igual a " + fechaUltimaModulo + "");
+                                tModulo.setFechaInicio(null);
+                                return;
+                            } else if (fechaUltimaModulo.after(tModulo.getFechaFin()) || fechaUltimaModulo.equals(tModulo.getFechaFin())) {
+                                mensajesError("La 1ra sesión no puede ser menor o igual a " + fechaUltimaModulo + "");
+                                tModulo.setFechaFin(null);
+                                return;
+                            } else if (fechaUltimaModulo.after(tModulo.getFechaInicioExamen()) || fechaUltimaModulo.equals(tModulo.getFechaInicioExamen())) {
+                                mensajesError("La 2da sesión no puede ser menor o igual a " + fechaUltimaModulo + "");
+                                tModulo.setFechaInicioExamen(null);
+                                return;
+                            } else if (fechaUltimaModulo.after(tModulo.getFechaFinExamen()) || fechaUltimaModulo.equals(tModulo.getFechaFinExamen())) {
+                                mensajesError("La fecha evaluación no puede ser menor o igual a " + fechaUltimaModulo + "");
+                                tModulo.setFechaFinExamen(null);
+                                return;
+                            } else {
+                                List<Modulo> lstPermiso = daoTmodulo.getProyectoTesisRegistrado(tModulo.getPromocion().getId(), tModulo.getModulo());
+                                if (lstPermiso.size() <= 0) {
+                                    msg = daoTmodulo.registrar(tModulo);
+                                    cargarTablaModulos();
+                                } else {
+                                    mensajesError("Ultimo módulo ya registrado");
+                                    return;
+                                }
+
+                            }
+                        }else {
+                            List<Modulo> lstPermiso = daoTmodulo.getProyectoTesisRegistrado(tModulo.getPromocion().getId(), tModulo.getModulo());
+                            if (lstPermiso.size() <= 0) {
+                                msg = daoTmodulo.registrar(tModulo);
+                                cargarTablaModulos();
+                            } else {
+                                mensajesError("Ultimo módulo ya registrado");
+                                return;
+                            }
+                        }
+                        
                     }else if(estado == 1){
                         msg = daoTmodulo.update(tModulo);
                         cargarTablaModulos();
@@ -533,6 +583,39 @@ public class MbVModulos implements Serializable {
             }
         }
         //cargarTablaModulos();
+    }
+    
+    private void asignarModuloProyecto(){
+        String[] modulos = {
+                "Mòdulo I", "Mòdulo II", "Mòdulo III", "Mòdulo IV", "Mòdulo V",
+                "Mòdulo VI", "Mòdulo VII", "Mòdulo VIII", "Mòdulo IX", "Mòdulo X",
+                "Mòdulo XI", "Mòdulo XII", "Mòdulo XIII", "Mòdulo XIV", "Mòdulo XV",
+                "Mòdulo XVI", "Mòdulo XVII", "Mòdulo XVIII", "Mòdulo XIX", "Mòdulo XX",
+                "Mòdulo XXI", "Mòdulo XXII", "Mòdulo XXIII", "Mòdulo XXIV", "Mòdulo XXV"
+            };
+            
+            //int[] idModulo = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25};
+            
+            DaoTModulo daoTmodulo = new DaoTModulo();
+        try {
+            
+            if (valor1) {
+                tModulo.setModulo("Proyecto de Tesis");
+            } else {
+                List<Modulo> lstPermiso = daoTmodulo.getNumeroModulo(tModulo.getPromocion().getId());
+                
+
+                if (lstPermiso.size() <= 0) {
+                    tModulo.setModulo(modulos[0].toString());
+                } else {
+                    fechaUltimaModulo = lstPermiso.get(0).getFechaFinExamen();
+                    tModulo.setModulo(modulos[lstPermiso.size()].toString());
+                }
+            }
+            
+        } catch (Exception ex) {
+            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void vaciarCajas() {

@@ -106,6 +106,8 @@ public class reportesDao {
         param.put("mes", Mes);
         param.put("anio", Anio);
         param.put("mesLetra", mesLetra);
+         param.put("logoUteq",realPath+"logoUTEQoriginal1.jpg");
+        param.put("logoPostgrado",realPath+"logoPostgrado.jpg");
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
@@ -144,6 +146,8 @@ public class reportesDao {
         param.put(JRHibernateQueryExecuterFactory.PARAMETER_HIBERNATE_SESSION, sesion);
 
         param.put("anio", Anio);
+         param.put("logoUteq",realPath+"logoUTEQoriginal1.jpg");
+        param.put("logoPostgrado",realPath+"logoPostgrado.jpg");
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 

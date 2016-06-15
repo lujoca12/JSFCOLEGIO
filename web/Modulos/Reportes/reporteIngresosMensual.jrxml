@@ -31,6 +31,8 @@
 	<parameter name="mes" class="java.lang.Integer"/>
 	<parameter name="anio" class="java.lang.Integer"/>
 	<parameter name="mesLetra" class="java.lang.String"/>
+	<parameter name="logoUteq" class="java.lang.String"/>
+	<parameter name="logoPostgrado" class="java.lang.String"/>
 	<queryString language="hql">
 		<![CDATA[select p.fecha as Fecha, p.idComprobante as Comprobante,
 p.valor as Valor, CONCAT(maest.descripcion,' ',pr.descripcion) as Maestria
@@ -103,12 +105,12 @@ order by p.fecha]]>
 				<text><![CDATA[UNIVERSIDAD TÉCNICA ESTATAL DE QUEVEDO]]></text>
 			</staticText>
 			<image>
-				<reportElement x="7" y="19" width="70" height="60" uuid="9caa7e9f-9e30-4e6b-9568-c5894ed4d06c"/>
-				<imageExpression><![CDATA["C:\\Users\\chiti\\Documents\\NetBeansProjects\\JSFSISFIAC\\web\\Modulos\\Reportes\\logoPostgrado.jpg"]]></imageExpression>
+				<reportElement x="7" y="20" width="75" height="50" uuid="b366f1b4-306c-4ce2-bb47-7252429eae81"/>
+				<imageExpression><![CDATA[$P{logoPostgrado}]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="475" y="19" width="70" height="60" uuid="090dc24b-08c9-4e53-a1d6-258781eb427f"/>
-				<imageExpression><![CDATA["C:\\Users\\chiti\\Documents\\NetBeansProjects\\JSFSISFIAC\\web\\Modulos\\Reportes\\logoUTEQoriginal1.jpg"]]></imageExpression>
+				<reportElement x="455" y="20" width="87" height="50" uuid="96b8f83e-5116-4e6e-bc95-65e6bfa789a5"/>
+				<imageExpression><![CDATA[$P{logoUteq}]]></imageExpression>
 			</image>
 		</band>
 	</title>

@@ -946,6 +946,7 @@ public class InscripcionBean implements Serializable {
                     titulo.setUniversidad(uDao.getUniversidad(idUniversidad));
                     titulo.setNSenecyt(numeroSenecyt);
                     titulo.setDescripcion(tituloDescr);
+                    titulo.setEstudiante(estudiante);
                 }
                 sInscripcion = new SolicitudInscripcion();
                 sInscripcion.setEstado('E');

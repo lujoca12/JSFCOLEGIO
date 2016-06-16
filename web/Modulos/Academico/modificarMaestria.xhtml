@@ -30,7 +30,7 @@
                                 
                                 <h:outputText value=" Mostrar Eliminados" styleClass="labelDerecha" />
                                 <p:selectBooleanCheckbox value="#{mbVMaestrias.mostrarEliminados}" styleClass="labelDerecha" >
-                                    <p:ajax update="form, edicionColumn" listener="#{mbVMaestrias.cargarTablaMaestria}" />
+                                    <p:ajax update="form" listener="#{mbVMaestrias.cargarTablaMaestria}" />
                                 </p:selectBooleanCheckbox>
                             </p:outputPanel>
                         </f:facet>

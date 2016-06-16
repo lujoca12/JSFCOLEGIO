@@ -266,9 +266,9 @@ public class MbVMaestrias implements Serializable{
             DaoTPromocion daoTmodulo = new DaoTPromocion();
             //lstPromocion = null;
             if(maestriaDescripcion == null){
-                lstPromocion = daoTmodulo.getPromocionesMaestrias("");
+                lstPromocion = daoTmodulo.getPromocionesMaestrias("", mostrarEliminados);
             }else{
-                lstPromocion = daoTmodulo.getPromocionesMaestrias(maestriaDescripcion);
+                lstPromocion = daoTmodulo.getPromocionesMaestrias(maestriaDescripcion, mostrarEliminados);
             }
             
             if(lstPromocion != null){
@@ -434,6 +434,8 @@ public class MbVMaestrias implements Serializable{
         idDirector = 0;
         llenarCboDirector();
         llenarCboMaestria();
+        precioMatricula = null;
+        precioColegiatura = null;
     }
     
     private void mensajesOk(String msg){

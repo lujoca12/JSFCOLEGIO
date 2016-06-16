@@ -18,7 +18,7 @@ public interface InterfacePromocion {
     
     public boolean registrar(Promocion tPromocion, BigDecimal precioMatricula, BigDecimal precioColegiatura) throws Exception;
     public List<Promocion> getTodasPromociones() throws Exception;
-    public List<Promocion> getPromocionesMaestrias(String maestriaDescripcion) throws Exception;
+    public List<Promocion> getPromocionesMaestrias(String maestriaDescripcion, boolean mostrar) throws Exception;
     public List<Promocion> getPromocionesMaestrias(int idMaestria) throws Exception;
     public int getUltimoidPromocion(String descripcion) throws Exception;
     public Promocion getPromocion(int idMaestria) throws Exception;

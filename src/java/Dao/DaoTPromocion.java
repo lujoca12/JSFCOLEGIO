@@ -95,11 +95,17 @@ public class DaoTPromocion implements InterfacePromocion{
     }
     
     @Override
-    public List<Promocion> getPromocionesMaestrias(String maestriaDescripcion) throws Exception {
+    public List<Promocion> getPromocionesMaestrias(String maestriaDescripcion, boolean mostrar) throws Exception {
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
         String consulta = "";
+        
+        String estado = "";
+        if(mostrar)
+            estado = "0";
+        else
+            estado = "1";
         
         if(maestriaDescripcion.isEmpty())
             consulta = "";
@@ -107,7 +113,7 @@ public class DaoTPromocion implements InterfacePromocion{
             consulta = "and m.descripcion like '%"+maestriaDescripcion+"%'";
         
         String hql="from Promocion pr inner join fetch pr.maestria m "
-                + "where pr.estado = '1' and m.estado='1' and "
+                + "where pr.estado = '"+estado+"' and m.estado='1' and "
                 + "(year(current_date) >= year(pr.fechaInicio) and "
                 + "year(current_date)<= year(pr.fechaFin)) "+consulta+" order by pr.id desc";
         Query query = sesion.createQuery(hql);

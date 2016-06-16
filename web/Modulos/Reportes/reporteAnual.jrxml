@@ -79,11 +79,11 @@ order by p.fecha]]>
 			</staticText>
 			<image>
 				<reportElement x="0" y="19" width="100" height="50" uuid="9c751a7a-a3f1-4e9d-86fc-98d2f0dfd556"/>
-				<imageExpression><![CDATA[$P{logoPostgrado}]]></imageExpression>
+				<imageExpression><![CDATA[new File($P{logoPostgrado})]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="444" y="20" width="100" height="50" uuid="5a07793c-7300-4dc6-a0df-66e03b0587b6"/>
-				<imageExpression><![CDATA[$P{logoUteq}]]></imageExpression>
+				<imageExpression><![CDATA[new File($P{logoUteq})]]></imageExpression>
 			</image>
 		</band>
 	</title>

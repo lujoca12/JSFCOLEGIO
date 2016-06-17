@@ -17,8 +17,8 @@
                     <p:growl id="msgs" showDetail="true"/>
 
 
-                    <p:dataTable class="tblDatos" id="tablaPermisos" var="menu" value="#{mbVTablaPermisos.lstTablaPermisos}" editable="true"
-                                 scrollable="true" emptyMessage="No hay Datos" scrollHeight="100%" rowStyleClass="#{menu.padre le 0 ? 'colored' : 'colored1'}">
+                    <p:dataTable class="tblDatos fuenteTamanio" id="tablaPermisos" var="menu" value="#{mbVTablaPermisos.lstTablaPermisos}" editable="true"
+                                 scrollable="true" emptyMessage="No hay Datos" scrollHeight="60%" rowStyleClass="#{menu.padre le 0 ? 'colored' : 'colored1'}">
 
 
                         <p:ajax event="rowEdit" listener="#{mbVTablaPermisos.onRowEdit}" update=":form:msgs" />
@@ -43,7 +43,7 @@
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="Contenedor" style="width: 20%;">
+                        <p:column headerText="Contenedor" style="width: 20%;" rendered="false">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{menu.contenedor}"   /></f:facet>
                                 <f:facet name="input"><p:inputText value="#{menu.contenedor}" rendered="#{menu.padre > 0 ? true:false}" style="width:100%" label="text"/></f:facet>

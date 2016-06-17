@@ -14,10 +14,10 @@
             <h4 style="text-align: center">Edición de Maestria Promociòn</h4>
             <h:form id="form">
                 <p:growl id="msgs" showDetail="true"/>
-                <p:panel id="panelTabla" style="height: 30%;">
+                <p:panel id="panelTabla" style="height: 80%;">
                     <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->
                     <p:dataTable class="tblDatos fuenteTamanio" id="tblMaestria" var="lstTbl" value="#{mbVMaestrias.lstTblMaestria}"
-                                 editable="true" scrollable="true" scrollHeight="150" sortMode="multiple" emptyMessage="No hay Datos">
+                                 editable="true" scrollable="true" scrollHeight="400" sortMode="multiple" emptyMessage="No hay Datos">
                         <p:ajax event="rowEdit" listener="#{mbVMaestrias.onRowEdit}" update=":form:msgs" />
                         <p:ajax event="rowEditCancel" listener="#{mbVMaestrias.onRowCancel}" update=":form:msgs" />
                         
@@ -165,10 +165,10 @@
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column style="width:6%;">
+                        <p:column style="width:6%;" rendered="#{!mbVMaestrias.mostrarEliminados}">
                             <p:rowEditor />   
                         </p:column>
-                        <p:column style="width:4%;">
+                        <p:column style="width:4%;" rendered="#{!mbVMaestrias.mostrarEliminados}">
                             <p:commandButton id="btnEliminar"
                                              action="#{mbVMaestrias.onDelete(lstTbl)}"
                                              update="form,tblMaestria"
@@ -176,6 +176,17 @@
                                              style="border-style: hidden;background-color: transparent;"
                                              >
                                 <p:confirm header="Eliminación de Maestria/Promociòn" message="Presiona confirmar para realizar acción" icon="ui-icon-alert" />
+                            </p:commandButton>
+                        </p:column>
+                        
+                        <p:column style="width:4%;" rendered="#{mbVMaestrias.mostrarEliminados}">
+                            <p:commandButton id="btnRecuperar"
+                                             action="#{mbVMaestrias.onRecuperacionMaestria(lstTbl)}"
+                                             update="form,tblMaestria"
+                                             icon="ui-icon-disk"
+                                             style="border-style: hidden;background-color: transparent;"
+                                             >
+                                <p:confirm header="Recuperación de Maestria/Promociòn" message="Presiona confirmar para realizar acción" icon="ui-icon-alert" />
                             </p:commandButton>
                         </p:column>
 

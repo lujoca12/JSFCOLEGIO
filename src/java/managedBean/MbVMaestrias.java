@@ -488,24 +488,36 @@ public class MbVMaestrias implements Serializable{
     }
     
     public void onRowEditMaestria(RowEditEvent event) {
+        boolean repetida = false;
         DaoTMaestrias daoTmaestrias = new DaoTMaestrias();
         tMaestria.setId(((ClsTablaMaestria) event.getObject()).getIdMaestria());
         tMaestria.setDescripcion(((ClsTablaMaestria) event.getObject()).getDescripcionM());
         tMaestria.setEstado('1');
         
         try {
-            msg = daoTmaestrias.update(tMaestria);
+            List<Maestria> lstMaestria = (List<Maestria>)daoTmaestrias.getMaestriasxDescripcion(tMaestria.getDescripcion());
+
+            if(lstMaestria.size() > 0){
+                repetida = true;
+            }
+            else{
+                msg = daoTmaestrias.update(tMaestria);
+            }
             
         } catch (Exception ex) {
             Logger.getLogger(MbVMaestrias.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        if (msg) {
-            cargarTablaMaestria();
-            mensajesOk("Datos actualizados correctamente");
-        } else {
-            mensajesError("Error al actualizar datos");
+        if(repetida){
+            mensajesError("Registro repetido");
+        } else{ 
+            if (msg) {
+                cargarTablaMaestria();
+                mensajesOk("Datos actualizados correctamente");
+            }else {
+                mensajesError("Error al actualizar datos");
+            }
         }
+        
     }
     
     public void onRowCancel(RowEditEvent event) {
@@ -547,6 +559,49 @@ public class MbVMaestrias implements Serializable{
         }
     }
     
+    public void onRecuperacionMaestria(ClsTablaMaestriaPromocion clsTblMaestrias){
+        DaoTPromocion daoTpromocion = new DaoTPromocion();
+        Promocion promocion = new Promocion();
+        
+        promocion.setId(clsTblMaestrias.getIdPromocion());
+        promocion.setCupo(clsTblMaestrias.getCupo());
+        promocion.setDescripcion(clsTblMaestrias.getDescripcionP());
+        promocion.setEstado('1');
+        promocion.setFechaFin(clsTblMaestrias.getFechaFin());
+        promocion.setFechaInicio(clsTblMaestrias.getFechaInicio());
+        promocion.setFechaResolucion(clsTblMaestrias.getFechaResolucion());
+        promocion.setIdUsuario(clsTblMaestrias.getIdUsuario());
+        promocion.setNCuotas(clsTblMaestrias.getCuotas());
+        promocion.setResolucion(clsTblMaestrias.getN_resolucion());
+        promocion.setUsuario(clsTblMaestrias.getNombresUsuarios());
+        Maestria maestria = new Maestria();
+        maestria.setId(clsTblMaestrias.getIdMaestria());
+        maestria.setDescripcion(clsTblMaestrias.getDescripcionM());
+        promocion.setMaestria(maestria);
+        precioMatricula = (clsTblMaestrias.getPrecioMatricula());
+        precioColegiatura = (clsTblMaestrias.getPrecioColegiatura());
+        
+        try {
+            List<Promocion> lstPromocion = daoTpromocion.getValidacionPromocionesMaestrias(maestria.getDescripcion(),promocion.getDescripcion());
+            if(lstPromocion.size() <= 0){
+                msg = daoTpromocion.update(promocion, precioMatricula,precioColegiatura);
+                cargarTablaMaestriaPromocion();
+            }else{
+                mensajesError("error! maestría-promoción repetida");
+                return;
+            }
+            
+        } catch (Exception ex) {
+            Logger.getLogger(MbVMaestrias.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if (msg) {
+            mensajesOk("Dato recuperado correctamente");
+        } else {
+            mensajesError("Error al recuperar dato");
+        }
+    }
+    
     public void onDeleteMaestria(ClsTablaMaestria clsTblMaestriaD){
         DaoTMaestrias daoTmaestrias = new DaoTMaestrias();
         
@@ -566,6 +621,40 @@ public class MbVMaestrias implements Serializable{
         } else {
             mensajesError("Error al eliminar datos");
         }
+    }
+    
+    public void onRecuperar(ClsTablaMaestria clsTblMaestriaD){
+        boolean repetida = false;
+        DaoTMaestrias daoTmaestrias = new DaoTMaestrias();
+        
+        tMaestria.setId(clsTblMaestriaD.getIdMaestria());
+        tMaestria.setDescripcion(clsTblMaestriaD.getDescripcionM());
+        tMaestria.setEstado('1');
+        
+        try {
+            List<Maestria> lstMaestria = (List<Maestria>)daoTmaestrias.getMaestriasxDescripcion(tMaestria.getDescripcion());
+
+            if(lstMaestria.size() > 0){
+                repetida = true;
+            }
+            else{
+                msg = daoTmaestrias.update(tMaestria);
+                cargarTablaMaestria();
+            }
+            
+        } catch (Exception ex) {
+            Logger.getLogger(MbVMaestrias.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(repetida){
+            mensajesError("Registro repetido");
+        } else{
+            if (msg) {
+                mensajesOk("Dato Restaurado correctamente");
+            } else {
+                mensajesError("No se pudo recuperar el dato");
+            }
+        }
+        
     }
     
 }

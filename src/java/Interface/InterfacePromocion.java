@@ -26,4 +26,5 @@ public interface InterfacePromocion {
     public boolean delete(Promocion tPromocion) throws Exception;
     public boolean existe(Promocion tPromocion) throws Exception;
     public List<Precio> getPromocionesPrecios(int idPromocion) throws Exception;
+    public List<Promocion> getValidacionPromocionesMaestrias(String maestriaDescripcion, int promocion) throws Exception;
 }

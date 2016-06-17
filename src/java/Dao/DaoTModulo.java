@@ -86,23 +86,58 @@ public class DaoTModulo implements InterfaceModulos{
     }
     
     @Override
-    public List<Modulo> getTblModulos(String moduloDescripcion) throws Exception {
+    public List<Modulo> getTblModulos(String moduloDescripcion, boolean mostrar) throws Exception {
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
         String consulta = "";
+        
+        String estado = "";
+        if(mostrar)
+            estado = "0";
+        else
+            estado = "1";
+        
         //Presento los modulos registrados x años 
         if(moduloDescripcion.isEmpty())
             consulta = "";
         else
-            consulta = "and mod.modulo like '%"+moduloDescripcion+"%'";
+            consulta = "and m.descripcion like '%"+moduloDescripcion+"%'";
         
         String hql="from Modulo mod inner join fetch mod.promocion p "
                 + "inner join fetch mod.usuario user "
                 + "inner join fetch p.maestria m where m.estado='1' and "
                 + "(year(current_date) >= year(p.fechaInicio) "
                 + "and year(current_date)<= year(p.fechaFin)) "
-                + ""+consulta+" and p.estado = '1' order by mod.id desc";
+                + ""+consulta+" and p.estado = '1' and mod.estado = '"+estado+"' order by mod.id desc";
+        Query query = sesion.createQuery(hql);
+        List<Modulo> lstPermiso=(List<Modulo>) query.list();
+        sesion.close();
+        return lstPermiso;
+    }
+    
+    @Override
+    public List<Modulo> getValidacionModulos(String moduloDescripcion, String nModulo) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String consulta = "";
+        
+        String estado = "1";
+       
+        
+        //Presento los modulos registrados x años 
+        if(moduloDescripcion.isEmpty())
+            consulta = "";
+        else
+            consulta = "and m.descripcion = '"+moduloDescripcion+"'";
+        
+        String hql="from Modulo mod inner join fetch mod.promocion p "
+                + "inner join fetch mod.usuario user "
+                + "inner join fetch p.maestria m where m.estado='1' and "
+                + "(year(current_date) >= year(p.fechaInicio) "
+                + "and year(current_date)<= year(p.fechaFin)) "
+                + ""+consulta+" and p.estado = '1' and mod.estado = '"+estado+"' and mod.modulo = '"+nModulo+"' order by mod.id desc";
         Query query = sesion.createQuery(hql);
         List<Modulo> lstPermiso=(List<Modulo>) query.list();
         sesion.close();

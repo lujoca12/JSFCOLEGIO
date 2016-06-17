@@ -84,11 +84,17 @@ public class DaoTHorarioModulo implements InterfaceHorarioModulo{
     }
 
     @Override
-    public List<HorarioModulo> getTblHorarios(String moduloDescripcion) throws Exception {
+    public List<HorarioModulo> getTblHorarios(String moduloDescripcion, boolean mostrar) throws Exception {
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
         String consulta = "";
+        
+        String estado = "";
+        if(mostrar)
+            estado = "0";
+        else
+            estado = "1";
         
         if(moduloDescripcion.isEmpty())
             consulta = "where mod.estado = '1'";

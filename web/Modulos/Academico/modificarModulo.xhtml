@@ -13,18 +13,23 @@
             <h4 style="text-align: center">Edición de Módulos</h4>
             <h:form id="form">
                 <p:growl id="msgs" showDetail="true"/>
-                <p:panel id="panelTabla" style="height: 30%;">
+                <p:panel id="panelTabla" style="height: 80%;">
                     <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->
                     <p:dataTable class="tblDatos fuenteTamanio" id="tblModulos" var="lstTbl" value="#{mbVModulos.lstTblModulosReg}"
-                                 editable="true" scrollable="true" scrollHeight="150" emptyMessage="No hay Datos"
+                                 editable="true" scrollable="true" scrollHeight="400" emptyMessage="No hay Datos"
                                  sortMode="multiple">
                         
                         <f:facet name="header">
                             <p:outputPanel>
-                                <h:outputText value="Buscar Módulo: " />
+                                <h:outputText value="Buscar Maestría: " />
                                 <p:inputText id="globalFilter" value="#{mbVModulos.moduloDescripcion}" style="width:250px" placeholder="Enter keyword"/>
                                 <p:commandButton value="Buscar" update="form" styleClass="anchoBotones" icon="ui-icon-search"
                                          actionListener="#{mbVModulos.cargarTablaModulos()}" />
+                                
+                                <h:outputText value=" Mostrar Eliminados" styleClass="labelDerecha" />
+                                <p:selectBooleanCheckbox value="#{mbVModulos.mostrarEliminados}" styleClass="labelDerecha" >
+                                    <p:ajax update="form" listener="#{mbVModulos.cargarTablaModulos}" />
+                                </p:selectBooleanCheckbox>
                             </p:outputPanel>
                         </f:facet>
 
@@ -167,10 +172,10 @@
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
-                        <p:column style="width:60px;">
+                        <p:column style="width:60px;" rendered="#{!mbVModulos.mostrarEliminados}">
                             <p:rowEditor />   
                         </p:column>
-                        <p:column style="width:20px;">
+                        <p:column style="width:20px;" rendered="#{!mbVModulos.mostrarEliminados}">
                             <p:commandButton id="btnEliminar"
                                              action="#{mbVModulos.onDelete(lstTbl)}"
                                              update="form,tblModulos"
@@ -178,6 +183,16 @@
                                              style="border-style: hidden;background-color: transparent;"
                                              >
                                 <p:confirm header="Eliminación de Módulo" message="Presiona confirmar para realizar acción" icon="ui-icon-alert" />
+                            </p:commandButton>
+                        </p:column>
+                        <p:column style="width:20px;" rendered="#{mbVModulos.mostrarEliminados}">
+                            <p:commandButton id="btnRecuperarM"
+                                             action="#{mbVModulos.onRecuperarModulo(lstTbl)}"
+                                             update="form,tblModulos"
+                                             icon="ui-icon-disk"
+                                             style="border-style: hidden;background-color: transparent;"
+                                             >
+                                <p:confirm header="Recuperación de Módulo" message="Presiona confirmar para realizar acción" icon="ui-icon-alert" />
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>

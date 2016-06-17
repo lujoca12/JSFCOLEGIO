@@ -123,6 +123,25 @@ public class DaoTPromocion implements InterfacePromocion{
     }
     
     @Override
+    public List<Promocion> getValidacionPromocionesMaestrias(String maestriaDescripcion, int promocion) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String consulta = "";
+        
+        String estado = "1";
+        
+        consulta = "and m.descripcion = '"+maestriaDescripcion+"'";
+        
+        String hql="from Promocion pr inner join fetch pr.maestria m "
+                + "where pr.estado = '"+estado+"' and m.estado='1' "+consulta+" and pr.descripcion = "+promocion+" order by pr.id desc";
+        Query query = sesion.createQuery(hql);
+        List<Promocion> lstPermiso=(List<Promocion>) query.list();
+        sesion.close();
+        return lstPermiso;
+    }
+    
+    @Override
     public List<Precio> getPromocionesPrecios(int idPromocion) throws Exception {
         this.sesion = null;
         this.tx = null;

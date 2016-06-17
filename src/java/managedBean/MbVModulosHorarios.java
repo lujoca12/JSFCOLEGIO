@@ -63,6 +63,8 @@ public class MbVModulosHorarios implements Serializable{
     private ClsFechaHoras clsFechaHora;
     private String moduloDescripcion;
     
+    private boolean mostrarEliminados;
+    
     public MbVModulosHorarios() {
         tHorarioModulo = new HorarioModulo();
         llenarCboMaestria();
@@ -179,6 +181,14 @@ public class MbVModulosHorarios implements Serializable{
         return lstThemePromociones;
     }
 
+    public boolean isMostrarEliminados() {
+        return mostrarEliminados;
+    }
+
+    public void setMostrarEliminados(boolean mostrarEliminados) {
+        this.mostrarEliminados = mostrarEliminados;
+    }
+    
     public void llenarCboMaestria(){
         this.lstThemeMaestria = new ArrayList<ClsMaestria>();
          try {
@@ -305,9 +315,9 @@ public class MbVModulosHorarios implements Serializable{
             lstTblHorarioModulo.clear();
             DaoTHorarioModulo daoThorariomodulo = new DaoTHorarioModulo();
             if(moduloDescripcion == null){
-                lstHorario = daoThorariomodulo.getTblHorarios("");
+                lstHorario = daoThorariomodulo.getTblHorarios("", mostrarEliminados);
             }else{
-                lstHorario = daoThorariomodulo.getTblHorarios(moduloDescripcion);
+                lstHorario = daoThorariomodulo.getTblHorarios(moduloDescripcion, mostrarEliminados);
             }
             
             if(lstHorario != null){

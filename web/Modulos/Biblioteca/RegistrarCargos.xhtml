@@ -16,10 +16,12 @@
                     <p:panel header="Registrar Cargo">
                         <p:growl id="msgs" showDetail="true" />
                         <p:focus context="panel"/>
-                        <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
-                            <p:outputLabel for="txtDescripcion" styleClass="labelDerecha" value="Descripción:" />
-                            <p:inputText id="txtDescripcion" value="#{mbVtitulacion.tcargo.descripcion}" required="true" maxlength="150"/>
-
+                        <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" 
+                                     styleClass="ui-panelgrid-blank">
+                            <p:outputLabel for="txtDescripcion" styleClass="labelDerecha" 
+                                           value="Descripción:" />
+                            <p:inputText id="txtDescripcion" value="#{mbVtitulacion.tcargo.descripcion}" 
+                                         required="true" maxlength="150"/>
                             <h:outputText id="display" value="" />
                             <p:commandButton value="Guardar" update="form,msgs" styleClass="anchoBotones" icon="ui-icon-disk"
                                              actionListener="#{mbVtitulacion.registrarCargo()}" />
@@ -29,7 +31,7 @@
                 <br></br>
                 <p:panel id="panelTabla" style="height: 30%;">
                     <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->   
-                    <p:dataTable class="tblDatos fuenteTamanio" id="tblMaestria" var="lstTbl" value="#{mbVtitulacion.lstcargos}"
+                    <p:dataTable class="tblDatos fuenteTamanio" id="tblMaestria" var="lstTbl" value="#{mbVtitulacion.lstcargo}"
                                  editable="true" scrollable="true" scrollHeight="150">
                        <!-- <p:ajax event="rowEdit" listener="#{mbVMaestrias.onRowEditMaestria}" update=":form:tblMaestria :form:msgs" />
                         <p:ajax event="rowEditCancel" listener="#{mbVMaestrias.onRowCancel}" update=":form:msgs" />

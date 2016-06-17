@@ -38,13 +38,20 @@
                                 <p:column>
                                     <h:outputText value="#{tProfesor.titulo}" />
                                 </p:column>
+                                 </p:selectOneMenu>
+                                 <p:outputLabel for="cboTipotribunal" value="Tipo de Tribunal:" styleClass="labelDerecha"  />
+                                 <p:selectOneMenu id="cboTipotribunal" value="#{mbVTribunal.clstitotribunal}" 
+                                                  effect="fade" var="tProfesor" filter="true" filterMatchMode="contains">
+                                     <f:selectItems value="#{mbVTribunal.lstttipotribunal}" var="themeProf" 
+                                                    itemLabel="#{themeProf.tipotribunalD}" itemValue="#{themeProf}" />
+                                <p:column style="width:10%">
+                                    <h:outputText styleClass="ui-theme ui-theme-#{tProfesor.tipotribunalD}" />
+                                </p:column>
+
+                                <p:column>
+                                    <h:outputText value="#{tProfesor.tipotribunalD}" />
+                                </p:column>
                             </p:selectOneMenu>
-                        
-                        <p:outputLabel styleClass="labelDerecha" value="Archivos PDF:" />   
-                        <p:fileUpload  required="true" mode="simple"  style="margin-bottom: 10px;"  
-                                       value=""   
-                                       accept="application/pdf" 
-                                         /> 
                         
                         <p:outputLabel for="txtResumen" styleClass="labelDerecha" value="Resumen:" />
                         <p:inputText id="txtResumen" value="#{mbVtesis.tTesis.resumen}" maxlength="100" >

@@ -7,6 +7,7 @@ package Dao;
 
 import Interface.InterfaceUsuario;
 import Pojo.DetallePermiso;
+import Pojo.Persona;
 import Pojo.Usuario;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -123,6 +124,37 @@ public class DaoTUsuario implements InterfaceUsuario{
         sesion.close();
         
         return band;
+    }
+
+    @Override
+    public boolean registrarPersona(Persona tPersona) throws Exception {
+       boolean band = false;
+        try {
+            iniciaOperacion();
+            sesion.save(tPersona);
+
+            tx.commit();
+            sesion.close();
+            band = true;
+        } catch (Exception e) {
+            tx.rollback();
+            band = false;
+        }
+        
+        return band;
+    }
+
+    @Override
+    public List<Persona> getPersonas() throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String hql = "from Persona p\n" +
+                "inner join fetch p.cargo";
+        Query query = sesion.createQuery(hql);
+        List<Persona> lstUsuarios=(List<Persona>) query.list();
+        sesion.close();
+        return lstUsuarios;  
     }
     
     

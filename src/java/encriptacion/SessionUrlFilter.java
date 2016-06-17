@@ -63,6 +63,8 @@ public class SessionUrlFilter implements Filter{
              "faces/Modulos/Biblioteca/Unidaddetitulacion.xhtml",
              "faces/Modulos/Biblioteca/RegistrarTribunal.xhtml",
              "faces/Modulos/Biblioteca/RegistrarCargos.xhtml",
+             "faces/Modulos/Biblioteca/Sustentacion.xhtml",
+             "faces/Modulos/Biblioteca/RegistroPersonaTribunal.xhtml",
              "faces/Modulos/Financiero/registroPagos.xhtml",
         };
         

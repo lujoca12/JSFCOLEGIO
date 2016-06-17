@@ -7,6 +7,7 @@ package Interface;
 
 import Pojo.Titulacion;
 import Pojo.Maestria;
+import Pojo.Cargo;
 import Pojo.Matricula;
 import Pojo.TipoTitulacion;
 import java.util.List;
@@ -25,4 +26,8 @@ public interface InterfaceTitulacion {
      public List<Titulacion> getTitulacionNO() throws Exception;
      public List<Titulacion> getTitulacionEstudianteMaestria(int estudiante,int maestria) throws Exception;
      public List<Maestria> obtenermaestria(int matricula) throws Exception;
+     
+     public List<Cargo> getCargosxDescripcion(String CargoDescripcion) throws Exception;
+     public List<Cargo> getCargosD(String descripcion)throws Exception;
+     public boolean registrarCargo(Cargo t) throws Exception;
 }

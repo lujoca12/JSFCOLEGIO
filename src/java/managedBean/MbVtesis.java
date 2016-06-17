@@ -100,6 +100,9 @@ public class MbVtesis implements Serializable{
     ClsTitulacion clstitulacion;
     private List<ClsTitulacion> lsttitulacion;
     
+    private List<Titulacion> lstitulacion = new ArrayList<>();
+    private List<Proyecto> lstproyectos = new ArrayList<>();
+    
     ClsMaestria clsMaestria;
     private List<ClsMaestria> lstThemeMaestria;
     
@@ -126,9 +129,30 @@ public class MbVtesis implements Serializable{
         tEstudiante= new Estudiante();
     }   
     private void vaciarCajas(){
-        tEstudiante= new Estudiante();tMaestria= new Maestria();tTesis = new Proyecto();ttitulacion= new Titulacion();tpalabrasclave = new PalabrasClave();
+        tEstudiante= new Estudiante();
+        tMaestria= new Maestria();
+        tTesis = new Proyecto();
+        ttitulacion= new Titulacion();
+        tpalabrasclave = new PalabrasClave();
     }
 
+    public List<Proyecto> getLstproyectos() {
+        return lstproyectos;
+    }
+
+    public void setLstproyectos(List<Proyecto> lstproyectos) {
+        this.lstproyectos = lstproyectos;
+    }
+
+    public List<Titulacion> getLstitulacion() {
+        return lstitulacion;
+    }
+
+    public void setLstitulacion(List<Titulacion> lstitulacion) {
+        this.lstitulacion = lstitulacion;
+    }
+
+    
     public ClsProfesor getTheme() {
         return theme;
     }
@@ -357,10 +381,11 @@ public class MbVtesis implements Serializable{
         
     public void llenarTablaTesis()
     {
+            DaoTesis daoTesis = new DaoTesis();
           LstTablatesis = new ArrayList<>();
         try {
+            lstproyectos = daoTesis.getProyecto();
             LstTablatesis.clear();            
-            DaoTesis daoTesis = new DaoTesis();
             List<Proyecto> lsttesis = daoTesis.getProyecto();            
             if(lsttesis != null){
                 if(lsttesis.size() > 0){
@@ -541,9 +566,10 @@ public class MbVtesis implements Serializable{
     }
     
     public List<ClsTitulacion> obteneridtitulacionestu(){
+            DaoTitulacion daotitul = new DaoTitulacion();
          this.lsttitulacion = new ArrayList<>();
         try{
-            DaoTitulacion daotitul = new DaoTitulacion();
+            lstitulacion = daotitul.getTitulacionEstudianteMaestria(this.clsestudiante.getId(), this.clsMaestria.getId());
             List<Titulacion> resul = daotitul.getTitulacionEstudianteMaestria(this.clsestudiante.getId(), this.clsMaestria.getId());
             this.lsttitulacion.clear();
             for(Titulacion tt : resul){
@@ -616,7 +642,7 @@ public class MbVtesis implements Serializable{
         ttitulacion.setId(lsttitulacion.get(0).getId());
         tTesis.setTitulacion(ttitulacion);
         
-        tTesis.setResumen(this.tTesis.getResumen());       
+       // tTesis.setResumen(this.tTesis.getResumen());       
         //tTesis.setRuta(this.tTesis.getRuta());
         tTesis.setEstado('E');
         tTesis.setTitulo(this.tTesis.getTitulo());        
@@ -629,16 +655,15 @@ public class MbVtesis implements Serializable{
             else{
                 //Si la maestria no existe se la registra
                 msg =  daoTesis.registrarProyecto(tTesis);
-            }
-            ttitulacion.setId(lsttitulacion.get(0).getId());
-            ttitulacion.setFechaFin(lsttitulacion.get(0).getFechaFin());
-            ttitulacion.setFechaInicio(lsttitulacion.get(0).getFechaInicio());
+            }                    
+            ttitulacion.setId(lstitulacion.get(0).getId());
+            ttitulacion.setFechaFin(lstitulacion.get(0).getFechaFin());
+            ttitulacion.setFechaInicio(lstitulacion.get(0).getFechaInicio());
             
             ttipot.setId(lstipot.get(0).getId());
-            ttitulacion.setTipoTitulacion(ttipot);
-            
-//            tmatricula.setId(lstmatricula.get(0).getId());
-//            ttitulacion.setMatricula(tmatricula);
+            ttitulacion.setTipoTitulacion(lstitulacion.get(0).getTipoTitulacion());
+            //tmatricula.setId(lstmatricula.get(0).getId());
+            ttitulacion.setMatricula(lstitulacion.get(0).getMatricula());
             
             ttitulacion.setEstado('G');
             msg = daot.update(ttitulacion);

@@ -5,6 +5,7 @@
  */
 package Dao;
 import Interface.InterfaceTitulacion;
+import Pojo.Cargo;
 import Pojo.Maestria;
 import Pojo.Matricula;
 import Pojo.TipoTitulacion;
@@ -35,11 +36,8 @@ public class DaoTitulacion implements InterfaceTitulacion{
             tx = sesion.beginTransaction();
             sesion1 = HibernateUtil.getSessionFactory().openSession();
             tx1 = sesion1.beginTransaction();
-        }catch(HibernateException ex){
-            
+        }catch(HibernateException ex){            
         }
-        
-        
     }
 
     @Override
@@ -85,7 +83,13 @@ public class DaoTitulacion implements InterfaceTitulacion{
         // estado
         //A= guardo; E=espera
         String hql="from Titulacion t\n" +
-                "where t.estado ='A' and t.nota != null";
+"inner join fetch t.tipoTitulacion\n" +
+"inner join fetch t.matricula m \n" +
+"inner join fetch m.solicitudInscripcion si\n" +
+"inner join fetch si.estudiante es\n" +
+"inner join fetch si.promocion pr\n" +
+"inner join fetch pr.maestria mm\n" +
+"where t.estado = 'A' and t.nota != null";
         Query query = sesion.createQuery(hql);
 
         List<Titulacion> lstProyecto=(List<Titulacion>) query.list();
@@ -121,7 +125,13 @@ public class DaoTitulacion implements InterfaceTitulacion{
         // estado
         //A= Aprobado;R:Reprobado; E=espera
         String hql="from Titulacion t\n" +
-                "where t.estado = 'E'";
+"inner join fetch t.tipoTitulacion\n" +
+"inner join fetch t.matricula m \n" +
+"inner join fetch m.solicitudInscripcion si\n" +
+"inner join fetch si.estudiante es\n" +
+"inner join fetch si.promocion pr\n" +
+"inner join fetch pr.maestria mm\n" +
+"where t.estado = 'E'";
         Query query = sesion.createQuery(hql);
 
         List<Titulacion> lstProyecto=(List<Titulacion>) query.list();
@@ -135,6 +145,7 @@ public class DaoTitulacion implements InterfaceTitulacion{
         this.tx = null;
         iniciaOperacion();
         String hql= "from Titulacion t\n" +
+                "inner join fetch t.tipoTitulacion tt\n" +
                 "inner join fetch t.matricula m\n" +
                 "inner join fetch m.solicitudInscripcion si\n" +
                 "inner join fetch si.estudiante e\n" +
@@ -190,6 +201,57 @@ public class DaoTitulacion implements InterfaceTitulacion{
          List<Matricula> lstPermiso=(List<Matricula>) query.list();
         sesion.close();
         return lstPermiso;
+    }
+
+    @Override
+    public List<Cargo> getCargosxDescripcion(String CargoDescripcion) throws Exception {
+   this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String hql="from Cargo m where m.estado='1' and m.descripcion like '%"+CargoDescripcion+"%' order by m.descripcion asc";
+        Query query = sesion.createQuery(hql);
+        List<Cargo> lstMaestrias=(List<Cargo>) query.list();
+        sesion.close();
+        return lstMaestrias;
+    }
+
+    @Override
+    public List<Cargo> getCargosD(String descripcion) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        
+        String consulta = "";
+        
+        if(descripcion.isEmpty())
+            consulta = "";
+        else
+            consulta = "and m.descripcion like '%"+descripcion+"%'";
+        
+        String hql="from Cargo m where m.estado = '1' "+consulta+" order by m.id desc";
+        Query query = sesion.createQuery(hql);
+
+        List<Cargo> lstMaestrias=(List<Cargo>) query.list();
+        sesion.close();
+        return lstMaestrias;
+    }
+
+    @Override
+    public boolean registrarCargo(Cargo t) throws Exception {
+        boolean band = false;
+        try{
+            iniciaOperacion();
+            sesion.save(t);
+            tx.commit();
+            sesion.close();
+            band=true;
+        }catch(Exception e){
+            tx.rollback();
+            band=false;
+        }
+        
+        
+        return band;
     }
 
 

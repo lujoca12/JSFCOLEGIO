@@ -17,6 +17,9 @@
         <property name="numeracion" type="string">
             <column name="numeracion" length="10" />
         </property>
+        <property name="descripcion" type="string">
+            <column name="descripcion" />
+        </property>
         <set name="sustentacions" table="sustentacion" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="id_acta" />

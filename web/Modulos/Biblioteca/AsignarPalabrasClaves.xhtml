@@ -23,11 +23,10 @@
                                              converter="themeConverterProyecto" required="true"
                                              effect="fade" var="tProfesor" filter="true" filterMatchMode="contains">
                                 <f:selectItems value="#{mbVPalabrasClave.lstproyecto}" var="themeProf" 
-                                               itemLabel="#{themeProf.titulo}" itemValue="#{themeProf}" />
+                                               itemLabel="#{themeProf.titulo}" itemValue="#{themeProf}" />                                
                                 <p:column style="width:10%">
                                     <h:outputText styleClass="ui-theme ui-theme-#{tProfesor.titulo}" />
                                 </p:column>
-
                                 <p:column>
                                     <h:outputText value="#{tProfesor.titulo}" />
                                 </p:column>
@@ -68,17 +67,18 @@
                 <br></br>
                 <p:panel id="panelTabla" style="height: 30%;">
                     <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->   
-                    <p:dataTable class="tblDatos" id="tblMaestria" var="lstTbl" value="#{mbVMaestrias.lstTblMaestria}"
+                    <p:dataTable class="tblDatos" id="tblMaestria" var="lstTbl" value="#{mbVPalabrasClave.lstpclaves}"
                                  editable="true" scrollable="true" scrollHeight="150">
-                        <p:ajax event="rowEdit" listener="#{mbVMaestrias.onRowEdit}" update=":form:tblMaestria :form:msgs" />
+                     <!--   <p:ajax event="rowEdit" listener="#{mbVMaestrias.onRowEdit}" update=":form:tblMaestria :form:msgs" />
                         <p:ajax event="rowEditCancel" listener="#{mbVMaestrias.onRowCancel}" update=":form:msgs" />
-
+-->
                         <p:column headerText="Maestria" style="width: 20%;">
                             <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{lstTbl.descripcionM}" /></f:facet>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.descripcion}" /></f:facet>
                                 <f:facet name="input">
-                                    <p:autoComplete readonly="true" style="width:100%" required="true" maxlength="150" value="#{lstTbl.descripcionM}" completeMethod="#{mbVMaestrias.completeText}" />
-                                    <!--<p:inputText value="#{lstTbl.descripcionM}" style="width:100%"/>-->
+                                    <p:autoComplete readonly="true" style="width:100%" required="true" maxlength="150"
+                                                    value="#{lstTbl.descripcion}" />
+                                    <!--<p:inputText value="#{lstTbl.descripcion}" style="width:100%"/>-->
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>

@@ -63,7 +63,10 @@ public class DaoTesis implements InterfaceTesis{
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        String hql="from Proyecto";
+        String hql="from Proyecto p\n" +
+                "inner join fetch p.titulacion t\n" +
+                "inner join fetch t.tipoTitulacion\n" +
+                "";
         Query query = sesion.createQuery(hql);
 
         List<Proyecto> lstProyecto=(List<Proyecto>) query.list();
@@ -208,5 +211,17 @@ public class DaoTesis implements InterfaceTesis{
         }
         
         return band;
+    }
+
+    @Override
+    public List<PalabrasClave> getTodasPC() throws Exception {
+     this.sesion= null;
+        this.tx= null;
+        iniciaOperacion();
+        String hql="from PalabrasClave pc\n" +
+                "inner join pc.proyecto";
+        Query query = sesion.createQuery(hql);
+        List<PalabrasClave> lsttesis=(List<PalabrasClave>) query.list();
+        return lsttesis;   
     }
 }

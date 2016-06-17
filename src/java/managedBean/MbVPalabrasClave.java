@@ -39,26 +39,41 @@ public class MbVPalabrasClave implements Serializable{
     Titulacion ttitulacion;
     PalabrasClave tpalabrasclave;
     
+    private List<PalabrasClave> lstpclaves = new ArrayList<>();
+    
     ClsPalabrasClave clspalabrasclaves;
     private List<ClsPalabrasClave> lstpalabrasclaves;
     
     ClsTablaTesis clsproyecto;
-    private List<ClsTablaTesis> lstproyecto;
+    private List<ClsTablaTesis> lstproyecto = new ArrayList<>();
+    
+    private List<Proyecto> lproyecto = new ArrayList<>();
 
     /**
      * Creates a new instance of MbVPalabrasClave
      */
     public MbVPalabrasClave() {
         llenarCboProyecto();
+        llenarPC();
         tpalabrasclave= new PalabrasClave(); tusuario= new Usuario();
         tproyecto= new Proyecto();ttitulacion = new Titulacion();
     }
     private void vaciarCajas(){
         tproyecto= new Proyecto();
         tpalabrasclave = new PalabrasClave();
-        palabra1="";
+        palabra1="";palabra2="";palabra3="";palabra4="";palabra5="";
     }
 
+    public List<PalabrasClave> getLstpclaves() {
+        return lstpclaves;
+    }
+
+    public void setLstpclaves(List<PalabrasClave> lstpclaves) {
+        this.lstpclaves = lstpclaves;
+    }
+
+   
+    
     public String getPalabra1() {
         return palabra1;
     }
@@ -103,10 +118,11 @@ public class MbVPalabrasClave implements Serializable{
     }
 
     public void llenarCboProyecto(){
-         this.lstproyecto = new ArrayList<ClsTablaTesis>();
-         try {
+        this.lstproyecto = new ArrayList<ClsTablaTesis>();
+         try {            
             DaoTesis daoTmaestria = new DaoTesis();
-            
+            lproyecto = daoTmaestria.getTodasProyectoxEstado("E"); 
+             
             List<Proyecto> lstMaestria = daoTmaestria.getTodasProyectoxEstado("E");
             this.lstproyecto.clear();
             this.lstproyecto.add(new ClsTablaTesis(-1,"(Seleccione)"));
@@ -166,7 +182,7 @@ public class MbVPalabrasClave implements Serializable{
         
             if(msg){
                 vaciarCajas();
-                llenarCboProyecto();
+                llenarCboProyecto();llenarPC();
                 mensajesOk("Datos procesados bien");  
             
             }
@@ -175,7 +191,15 @@ public class MbVPalabrasClave implements Serializable{
         
     }
     
-     private void mensajesOk(String msg){
+    public void llenarPC(){
+        DaoTesis daot = new DaoTesis();
+        try{
+            lstpclaves = daot.getTodasPC();
+        }catch(Exception e){}
+        
+        
+    }
+    private void mensajesOk(String msg){
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje de la Aplicacion", msg);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }

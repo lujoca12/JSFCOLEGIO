@@ -7,6 +7,7 @@ package Interface;
 
 import Pojo.DetallePermiso;
 import Pojo.Usuario;
+import Pojo.Persona;
 import java.util.List;
 
 /**
@@ -20,4 +21,6 @@ public interface InterfaceUsuario {
     public List<Usuario> getDocentes() throws Exception;
     public Usuario getUsuario(int idUsuario) throws Exception;
     public boolean update(Usuario tUsuario) throws Exception;
+    public boolean registrarPersona(Persona tPersona) throws Exception;
+    public List<Persona> getPersonas() throws Exception;
 }

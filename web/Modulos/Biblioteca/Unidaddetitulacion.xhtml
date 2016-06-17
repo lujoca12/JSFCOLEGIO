@@ -86,14 +86,32 @@
                 </p:tab>
                 <br></br>
                 <div>resultados</div>
-                <p:panel id="tabla" style="height: 40%">
-                    <p:dataTable class="tblDatos" id="tbltesis" var="lstTbl" value="#{mbVtitulacion.lsttitulacion}"
+                <p:panel id="tabla" style="height: 60%">
+                    <p:dataTable class="tblDatos" id="tbltesis" var="lstTbl" value="#{mbVtitulacion.lsttitulacin}"
                                  editable="true" scrollable="true"
                                  rows="10" paginator="true"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  rowsPerPageTemplate="5,10,20">
+                        <p:column headerText="Estado" style="width: 5%" >
+                            <h:outputText value="#{lstTbl.estado}" />
+                        </p:column>
+                        <p:column headerText="Nota" style="width: 5%" >
+                            <h:outputText value="#{lstTbl.nota}" />
+                        </p:column>
+                        <p:column headerText="fecha Inicio" style="width: 10%" >
+                            <h:outputText value="#{lstTbl.fechaInicio}" />
+                        </p:column>
+                        <p:column headerText="fecha Inicio" style="width: 10%" >
+                            <h:outputText value="#{lstTbl.fechaFin}" />
+                        </p:column>
+                        <p:column headerText="Estudiante" style="width: 10%" >
+                            <h:outputText value="#{lstTbl.matricula.solicitudInscripcion.estudiante.apellidos}" />
+                        </p:column>
                         <p:column headerText="Maestria" style="width: 10%" >
-                            <h:outputText value="#{lstTbl.maestria}" />
+                            <h:outputText value="#{lstTbl.matricula.solicitudInscripcion.promocion.maestria.descripcion}" />
+                        </p:column>
+                        <p:column headerText="Tipo" style="width: 5%" >
+                            <h:outputText value="#{lstTbl.tipoTitulacion.descripcion}" />
                         </p:column>
                     </p:dataTable>
                 </p:panel>

@@ -5,6 +5,7 @@
  */
 package Interface;
 
+
 import Pojo.Proyecto;
 import Pojo.PalabrasClave;
 import java.util.List;
@@ -28,4 +29,5 @@ public interface InterfaceTesis {
     public List<Proyecto> getProyectoxFechaSust(Date fecha) throws Exception;
     public boolean registrarPalabrasClave(PalabrasClave tpalabrasclave) throws Exception;
    // public List<Proyecto> getProyectoxTitulo(String titulo) throws Exception;    
+    public List<PalabrasClave> getTodasPC() throws Exception;
 }

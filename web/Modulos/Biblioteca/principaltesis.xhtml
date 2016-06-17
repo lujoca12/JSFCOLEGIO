@@ -55,9 +55,10 @@
                             <p:button outcome="/Modulos/Biblioteca/RegistrarTesis" value="Registrar"/>  
                             <p:button outcome="/Modulos/Biblioteca/GuardarTesis" value="Guardar"/>  
                             <p:button outcome="/Modulos/Biblioteca/AsignarPalabrasClaves" value="palabras claves"/>
-                            <p:button outcome="/Modulos/Biblioteca/GuardarTesis" value="Sustentacion"/>  
+                            <p:button outcome="/Modulos/Biblioteca/Sustentacion" value="Sustentacion"/>  
                             <p:button outcome="/Modulos/Biblioteca/RegistrarTribunal" value="Tribunal"/>  
                             <p:button outcome="/Modulos/Biblioteca/RegistrarCargos" value="Cargos"/>  
+                            <p:button outcome="/Modulos/Biblioteca/RegistroPersonaTribunal" value="Persona"/>  
                         </div>
                     </div>    
                     <div class="panel panel-danger">
@@ -113,44 +114,6 @@
                     </p:confirmDialog>
                 </p:panel>
                 </h:form>
-                
-<!--        <div class="md-2">
-            <h3>Otras opciones relacionadas</h3>
-            <div id="facets" class="facetsBox row panel">
-                <div id="facet-autor" class="facet col-md-4" style="width: 930px;">
-                    <span class="facetName">Autor</span>
-                    <ul class="list-group">
-                        <p:dataList value="#{dataListView.cars1}" var="car" type="ordered">
-                            <f:facet name="header">
-                                Autor
-                            </f:facet>
-                        </p:dataList>
-                    </ul>
-                </div>
-                
-                 <div id="facet-titulo" class="facet col-md-4" style="width: 930px;">
-                    <span class="facetName">Título</span>
-                    <ul class="list-group">
-                        <p:dataList value="#{dataListView.cars1}" var="car" type="ordered">
-                            <f:facet name="header">
-                                Título
-                            </f:facet>
-                        </p:dataList>
-                    </ul>
-                </div>
-                
-                <div id="facet-fecha" class="facet col-md-4" style="width: 930px;">
-                    <span class="facetName">Fecha Publicación</span>
-                    <ul class="list-group">
-                        <p:dataList value="#{dataListView.cars1}" var="car" type="ordered">
-                            <f:facet name="header">
-                                Fecha Publicación
-                            </f:facet>
-                        </p:dataList>
-                    </ul>
-                </div>
-            </div> 
-        </div>-->
             </ui:define>
         </ui:composition>
     </h:body>

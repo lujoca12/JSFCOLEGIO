@@ -77,10 +77,12 @@
                             <p:outputLabel for="txtFechaS" styleClass="labelDerecha" value="Fecha sustentación:" />
                             <p:calendar id="txtFechaS" value="#{mbVtesis.tTesis.fechaSustentacion}" 
                                         effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" /> 
+                            <!--
                             <p:outputLabel for="txtResumen" styleClass="labelDerecha" value="Resumen:" />
                             <p:inputText id="txtResumen" value="#{mbVtesis.tTesis.resumen}" maxlength="100" >
                                 <f:validateLength minimum="5" maximum="100" />
                             </p:inputText>
+                            -->
                             <h:outputText id="display" value="" />
                             <p:commandButton id="mostrar" value="Guardar"  
                                              update="@form"
@@ -92,10 +94,36 @@
                         </p:tab>
                      </div>
                     <div>
-                        
-                        
                     </div>
-                    
+                <p:panel id="panelTabla" style="height: 30%;">
+                    <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->   
+                    <p:dataTable class="tblDatos" id="tbltesis" var="lstTbl" value="#{mbVtesis.lstproyectos}"
+                                 editable="true" scrollable="true"
+                                 rows="10" paginator="true"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,20">      
+                        <p:column headerText="Autor" style="width: 10%" >
+                            <h:outputText value="#{lstTbl.autor}" />
+                        </p:column>
+                        <p:column headerText="Titulo" style="width: 10%" >
+                            <h:outputText value="#{lstTbl.titulo}" />
+                        </p:column>
+                        <p:column headerText="fecha Sutentación" style="width: 10%" >
+                            <h:outputText value="#{lstTbl.fechaSustentacion}" />
+                        </p:column>
+                        <p:column headerText="Tipo" style="width: 10%" >
+                            <h:outputText value="#{lstTbl.titulacion.tipoTitulacion.descripcion}" />
+                        </p:column>
+                        <p:column style="width:10%;">
+                            <p:commandLink value="" />
+                            <p:rowEditor />   
+                        </p:column>
+                    </p:dataTable>
+                    <p:confirmDialog global="true" styleClass="change-position">
+                        <p:commandButton value="Confirmar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                        <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                    </p:confirmDialog>
+                </p:panel>
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
             <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
                 <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />

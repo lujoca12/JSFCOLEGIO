@@ -154,7 +154,7 @@ public class MatriculaBean implements Serializable {
     @PostConstruct
     public void init() {
         MatriculaDao mD = new MatriculaDao();
-        lstSInscripcion = mD.obtenerTodasSolicitudes();
+        lstSInscripcion = mD.obtenerTodasSolicitudesSinMatriculas();
     }
 
     public void guardarMatricula() {
@@ -204,7 +204,7 @@ public class MatriculaBean implements Serializable {
                     rechazarMatricula();
                 }
                 lstSInscripcion.clear();
-                lstSInscripcion = mDao.obtenerTodasSolicitudes();
+                lstSInscripcion = mDao.obtenerTodasSolicitudesSinMatriculas();
 
             } else {
                 FacesMessage message = new FacesMessage("Error", "Selecciona una solicitud");
@@ -238,7 +238,7 @@ public class MatriculaBean implements Serializable {
                     mDao.rechazar(SelectedInscripcion);
                 }
                 lstSInscripcion.clear();
-                lstSInscripcion = mDao.obtenerTodasSolicitudes();
+                lstSInscripcion = mDao.obtenerTodasSolicitudesSinMatriculas();
                 if (existM) {
                     FacesMessage message = new FacesMessage("Succesful", "Matricula Rechazada ya existe esta persona matriculada");
                     FacesContext.getCurrentInstance().addMessage(null, message);

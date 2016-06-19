@@ -10,7 +10,7 @@
     <h:body>
        <div class="ui-fluid">
             <h:form id="form">
-                
+                <p:remoteCommand name="form" autoRun="true" action="#{reportesBean.load()}" />
                 <p:tab id="personal" title="ReporteIngresosAnual">
                     <p:panel header="Reporte Ingresos Anual">
                         <p:growl id="msgs" showDetail="true" />

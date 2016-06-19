@@ -90,7 +90,7 @@ public class InscripcionDao implements Serializable{
         iniciaOperacion();
        
         String hql="from SolicitudInscripcion si inner join fetch si.estudiante e inner join fetch si.promocion pr inner join fetch pr.maestria m"
-                + "  where si.fechaRevision=null and (si.estado='E' or si.estado='T') order by si.fechaRealizacion asc";
+                + "  where si.fechaRevision=null and (si.estado='E' or si.estado='T') order by si.fechaRealizacion desc ";
        
         Query query = sesion.createQuery(hql);
         //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);

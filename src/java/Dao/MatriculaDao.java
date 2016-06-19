@@ -129,14 +129,14 @@ public class MatriculaDao {
         return n;
     }
     
-     public List<SolicitudInscripcion> obtenerTodasSolicitudes() {
+     public List<SolicitudInscripcion> obtenerTodasSolicitudesSinMatriculas() {
         List<SolicitudInscripcion> lst = null;
         try {
             this.sesion = null;
             this.tx = null;
             iniciaOperacion();
-            String hql="from SolicitudInscripcion si inner join fetch si.estudiante e inner join fetch si.promocion pr inner join fetch pr.maestria m"
-                + "  order by si.fechaRealizacion asc";
+            String hql="from SolicitudInscripcion si left outer join si.matriculas as mt inner join fetch si.estudiante e inner join fetch si.promocion pr inner join fetch pr.maestria m"
+                + " where mt.id is null  order by si.fechaRealizacion desc";
             Query query = sesion.createQuery(hql);
             //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
             lst = (List<SolicitudInscripcion>) query.list();

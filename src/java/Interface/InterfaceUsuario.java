@@ -17,10 +17,11 @@ import java.util.List;
 public interface InterfaceUsuario {
     public boolean registrar(Usuario tUsuario) throws Exception;
     public boolean verificarUsuarioNick(String nick) throws Exception;
-    public List<Usuario> getTodosUsuarios() throws Exception;
-    public List<Usuario> getDocentes() throws Exception;
+    public List<Usuario> getTodosUsuarios(boolean mostrar) throws Exception;
+    public List<Usuario> getDocentes(boolean mostrar) throws Exception;
     public Usuario getUsuario(int idUsuario) throws Exception;
     public boolean update(Usuario tUsuario) throws Exception;
     public boolean registrarPersona(Persona tPersona) throws Exception;
     public List<Persona> getPersonas() throws Exception;
+    public Usuario getUsuarioEdicion(int idUsuario) throws Exception;
 }

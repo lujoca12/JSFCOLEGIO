@@ -43,6 +43,7 @@ public class MbVTablaPermisos implements Serializable{
     private int btnOcultarMostrar;
     private boolean disable;
     private String permisoDescripcion;
+    private boolean mostrarEliminados;
     
     public MbVTablaPermisos() {
         cargarTablaPermisos();
@@ -87,6 +88,14 @@ public class MbVTablaPermisos implements Serializable{
     public void setPermisoDescripcion(String permisoDescripcion) {
         this.permisoDescripcion = permisoDescripcion;
     }
+
+    public boolean isMostrarEliminados() {
+        return mostrarEliminados;
+    }
+
+    public void setMostrarEliminados(boolean mostrarEliminados) {
+        this.mostrarEliminados = mostrarEliminados;
+    }
     
 
     public void cargarTablaPermisos() {
@@ -114,27 +123,52 @@ public class MbVTablaPermisos implements Serializable{
         DaoTMenu daoTmenu = new DaoTMenu();
         lstTablaPermisos = new ArrayList<>();
         lstTablaPermisos.clear();
+        boolean bandera = false;
         try {
-            lstMenus = daoTmenu.getTodosPermisos();//("Files", 0, "Folder")
+            lstMenus = daoTmenu.getTodosPermisos(mostrarEliminados);//("Files", 0, "Folder")
         } catch (Exception ex) {
             Logger.getLogger(MbVTablaPermisos.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (lstMenus != null) {
             //root = new DefaultTreeNode(new ClsTablaPermisos(0,"File","0","0",0,"Folder",0), null);
             for (Permiso p : lstMenus) {
-                if (p.getPadre() == 0) {
-                    lstTablaPermisos.add(new ClsTablaPermisos(p.getId(), p.getDescripcion(), "", "", p.getOrden(), "Folder", p.getPadre()));
-                    //node0 = new DefaultTreeNode(new ClsTablaPermisos(p.getId(),p.getDescripcion(),"","",p.getOrden(), "Folder",p.getPadre()), root);
+                
+                if(mostrarEliminados){
+                    bandera = true;
+                    if (p.getPadre() == 0) {
+                        lstTablaPermisos.add(new ClsTablaPermisos(p.getId(), p.getDescripcion(), "", "", p.getOrden(), "Folder", p.getPadre()));
+                        //node0 = new DefaultTreeNode(new ClsTablaPermisos(p.getId(),p.getDescripcion(),"","",p.getOrden(), "Folder",p.getPadre()), root);
 
-                    for (Permiso p1 : lstMenus) {
-                        if (p.getId() == p1.getPadre()) {
-                            contenedor = p1.getForm().substring(17, 33);
-                            ruta = p1.getForm().substring(54, p1.getForm().length() - 2);
-                            lstTablaPermisos.add(new ClsTablaPermisos(p1.getId(), p1.getDescripcion(), contenedor, ruta, p1.getOrden(), "Folder", p1.getPadre()));
-                            //node00 = new DefaultTreeNode(new ClsTablaPermisos(p1.getId(),p1.getDescripcion(),contenedor,ruta,p1.getOrden(), "Folder",1), node0);
+                        for (Permiso p1 : lstMenus) {
+                            if (p.getId() == p1.getPadre() && p1.getEstado().equals('0')) {
+                                bandera = false;
+                                contenedor = p1.getForm().substring(17, 33);
+                                ruta = p1.getForm().substring(54, p1.getForm().length() - 2);
+                                lstTablaPermisos.add(new ClsTablaPermisos(p1.getId(), p1.getDescripcion(), contenedor, ruta, p1.getOrden(), "Folder", p1.getPadre()));
+                                //node00 = new DefaultTreeNode(new ClsTablaPermisos(p1.getId(),p1.getDescripcion(),contenedor,ruta,p1.getOrden(), "Folder",1), node0);
+                            }
+                        }
+                        if(bandera){
+                            if(p.getEstado().equals('1'))
+                                lstTablaPermisos.remove(lstTablaPermisos.size()-1);
+                        }
+                    }
+                }else{
+                    if (p.getPadre() == 0) {
+                        lstTablaPermisos.add(new ClsTablaPermisos(p.getId(), p.getDescripcion(), "", "", p.getOrden(), "Folder", p.getPadre()));
+                        //node0 = new DefaultTreeNode(new ClsTablaPermisos(p.getId(),p.getDescripcion(),"","",p.getOrden(), "Folder",p.getPadre()), root);
+
+                        for (Permiso p1 : lstMenus) {
+                            if (p.getId() == p1.getPadre()) {
+                                contenedor = p1.getForm().substring(17, 33);
+                                ruta = p1.getForm().substring(54, p1.getForm().length() - 2);
+                                lstTablaPermisos.add(new ClsTablaPermisos(p1.getId(), p1.getDescripcion(), contenedor, ruta, p1.getOrden(), "Folder", p1.getPadre()));
+                                //node00 = new DefaultTreeNode(new ClsTablaPermisos(p1.getId(),p1.getDescripcion(),contenedor,ruta,p1.getOrden(), "Folder",1), node0);
+                            }
                         }
                     }
                 }
+                
             }
 
         } else {
@@ -275,7 +309,53 @@ public class MbVTablaPermisos implements Serializable{
         
     }
     
-   
+    public void onRecuperar(ClsTablaPermisos clsTablaPermisos){
+        DaoTMenu daotMenu = new DaoTMenu();
+        tPermiso = new Permiso();
+        String ruta = "";
+        ruta += "CargarPaginaURL('"+clsTablaPermisos.getContenedor()+"','/JSFSISFIAC/faces/"+clsTablaPermisos.getRuta()+"')";
+        
+        try {
+            tPermiso.setId(clsTablaPermisos.getId());
+            tPermiso.setDescripcion(clsTablaPermisos.getDescripcion());
+            if(clsTablaPermisos.getPadre() != 0)
+                tPermiso.setForm(ruta);
+            else
+                tPermiso.setForm("");
+            
+            tPermiso.setPadre(clsTablaPermisos.getPadre());
+            tPermiso.setOrden(clsTablaPermisos.getOrden());
+            tPermiso.setEstado('1');
+            msg = daotMenu.update(tPermiso);
+            
+            if(clsTablaPermisos.getPadre() == 0){
+                for (int i = 0; i < lstTablaPermisos.size(); i++) {
+                    if(lstTablaPermisos.get(i).getPadre() == clsTablaPermisos.getId()){
+                        ruta = "";
+                        ruta += "CargarPaginaURL('"+lstTablaPermisos.get(i).getContenedor()+"','/JSFSISFIAC/faces/"+lstTablaPermisos.get(i).getRuta()+"')";
+                        tPermiso.setId(lstTablaPermisos.get(i).getId());
+                        tPermiso.setDescripcion(lstTablaPermisos.get(i).getDescripcion());
+                        tPermiso.setForm(ruta);
+                        tPermiso.setPadre(lstTablaPermisos.get(i).getPadre());
+                        tPermiso.setOrden(lstTablaPermisos.get(i).getOrden());
+                        tPermiso.setEstado('1');
+                        //lstTablaPermisos.remove(i);
+                        msg = daotMenu.update(tPermiso);
+                    }
+                }
+            }
+            permisoDescripcion = null;
+            cargarTablaPermisos();
+            
+        } catch (Exception ex) {
+            Logger.getLogger(MbVTablaPermisos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(msg)
+            mensajesOk("Permiso recuperado correctamente");
+        else
+            mensajesError("Error al recuperar permiso");
+    }
+    
     
     
     private void mensajesOk(String msg){

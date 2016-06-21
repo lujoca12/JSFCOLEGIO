@@ -16,8 +16,13 @@
                     <p:panel header="Edición Docente">
                         <p:growl id="msgs" showDetail="true" />
                         <p:focus context="panel"/>
-                        <p:panelGrid id="panel" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
-
+                        <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
+                            
+                            <h:outputText value=" Mostrar Eliminados:" styleClass="labelDerecha" />
+                            <p:selectBooleanCheckbox value="#{mbVUsuario.mostrarEliminados}" >
+                                <p:ajax update="frmModDocente" listener="#{mbVUsuario.llenarCboDocentes}" />
+                            </p:selectBooleanCheckbox>
+                            
                             <p:outputLabel for="frmModDocente" value="Docente:" styleClass="labelDerecha"  />
                             <p:selectOneMenu id="txtDocente" value="#{mbVUsuario.theme}" converter="themeConverter"
                                              effect="fade" var="t" filter="true" filterMatchMode="contains">
@@ -31,7 +36,7 @@
                                     <h:outputText value="#{t.displayName}" />
                                 </p:column>
                             </p:selectOneMenu>
-                            <p:message for="txtDocente" />
+                           
                         </p:panelGrid>
                     </p:panel>
                 </p:tab>
@@ -43,23 +48,23 @@
                     <p:panelGrid id="panelDocente" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
 
                         <p:outputLabel for="txtApellidos" styleClass="labelDerecha" value="Apellidos:" />
-                        <p:inputText id="txtApellidos" value="#{mbVUsuario.tUsuario.apellidos}" required="true" maxlength="30"/>
+                        <p:inputText id="txtApellidos" readonly="#{mbVUsuario.mostrarEliminados eq 'false'? false:true}" value="#{mbVUsuario.tUsuario.apellidos}" required="true" maxlength="30"/>
 
 
                         <p:outputLabel for="txtNombres" styleClass="labelDerecha" value="Nombres:" />
-                        <p:inputText id="txtNombres" value="#{mbVUsuario.tUsuario.nombres}" required="true" maxlength="30"/>
+                        <p:inputText id="txtNombres" readonly="#{mbVUsuario.mostrarEliminados eq 'false'? false:true}" value="#{mbVUsuario.tUsuario.nombres}" required="true" maxlength="30"/>
 
 
-                        <p:outputLabel for="txtCedula" styleClass="labelDerecha" value="Cédula:" />
-                        <p:inputMask id="txtCedula" class="validarCedula" onblur="validarCedulaUsuarios();" value="#{mbVUsuario.tUsuario.cedPasaporte}" required="true" mask="9999999999"/>
+                        <p:outputLabel for="txtCedula" styleClass="labelDerecha" value="Cédula/Pas:" />
+                        <p:inputText id="txtCedula" class="validarCedula" readonly="true" value="#{mbVUsuario.tUsuario.cedPasaporte}" required="true" />
 
 
                         <p:outputLabel for="txtDireccion" styleClass="labelDerecha" value="Dirección:" />
-                        <p:inputText id="txtDireccion" value="#{mbVUsuario.tUsuario.direccion}" required="true" />
+                        <p:inputText id="txtDireccion" readonly="#{mbVUsuario.mostrarEliminados eq 'false'? false:true}" value="#{mbVUsuario.tUsuario.direccion}" required="true" />
 
 
                         <p:outputLabel for="email" styleClass="labelDerecha" value="Correo:" />
-                        <p:inputText id="email" required="true" label="email" size="40"
+                        <p:inputText id="email" readonly="#{mbVUsuario.mostrarEliminados eq 'false'? false:true}" required="true" label="email" size="40"
                                      requiredMessage="Por favor ingrese email."
                                      validatorMessage="Invalid email format"
                                      value="#{mbVUsuario.tUsuario.email}">
@@ -71,19 +76,19 @@
 
 
                         <p:outputLabel for="txtFecha" styleClass="labelDerecha" value="Fecha nacimiento:" />
-                        <p:calendar id="txtFecha" value="#{mbVUsuario.tUsuario.fechaNac}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" />
+                        <p:calendar id="txtFecha" readonly="#{mbVUsuario.mostrarEliminados eq 'false'? false:true}" value="#{mbVUsuario.tUsuario.fechaNac}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" />
 
 
                         <p:outputLabel for="txtTelefono" styleClass="labelDerecha" value="Teléfono:" />
-                        <p:inputMask id="txtTelefono" value="#{mbVUsuario.tUsuario.telefono}" mask="(999)-999-999"/>
+                        <p:inputMask id="txtTelefono" readonly="#{mbVUsuario.mostrarEliminados eq 'false'? false:true}" value="#{mbVUsuario.tUsuario.telefono}" mask="(999)-999-999"/>
 
 
                         <p:outputLabel for="txtCelular" styleClass="labelDerecha" value="Celular:" />
-                        <p:inputMask id="txtCelular" value="#{mbVUsuario.tUsuario.celular}" required="true" mask="(999)-999-9999" size="10"/>
+                        <p:inputMask id="txtCelular" readonly="#{mbVUsuario.mostrarEliminados eq 'false'? false:true}" value="#{mbVUsuario.tUsuario.celular}" required="true" mask="(999)-999-9999" size="10"/>
 
 
                         <p:outputLabel for="cboEstadoCivil" value="Estado civil:" styleClass="labelDerecha"/>
-                        <p:selectOneMenu id="cboEstadoCivil" required="true" value="#{mbVUsuario.tUsuario.estadoCivil}">
+                        <p:selectOneMenu id="cboEstadoCivil" disabled="#{mbVUsuario.mostrarEliminados eq 'false'? false:true}" required="true" value="#{mbVUsuario.tUsuario.estadoCivil}">
                             <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
                             <f:selectItem itemLabel="Soltero" itemValue="S" />
                             <f:selectItem itemLabel="Casado" itemValue="C" />
@@ -94,7 +99,7 @@
 
 
                         <p:outputLabel for="cboSexo" value="Sexo:" styleClass="labelDerecha"/>
-                        <p:selectOneMenu id="cboSexo" required="true" value="#{mbVUsuario.tUsuario.sexo}">
+                        <p:selectOneMenu id="cboSexo" disabled="#{mbVUsuario.mostrarEliminados eq 'false'? false:true}" required="true" value="#{mbVUsuario.tUsuario.sexo}">
                             <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
                             <f:selectItem itemLabel="Masculino" itemValue="M" />
                             <f:selectItem itemLabel="Femenino" itemValue="F" />
@@ -106,11 +111,16 @@
                     </p:panelGrid>
                     <center>
                         <div>
+                            <p:commandButton value="Recuperar" update="@form" styleClass="anchoBotones" icon="ui-icon-disk"
+                                             actionListener="#{mbVUsuario.recuperar()}" style="margin-right: 20px;" 
+                                             rendered="#{mbVUsuario.mostrarEliminados eq 'false'? false:true}"/>
+                            
                             <p:commandButton value="Actualizar" update="@form" styleClass="anchoBotones" icon="ui-icon-disk"
-                                             actionListener="#{mbVUsuario.actualizarDatos()}" style="margin-right: 20px;" />
+                                             actionListener="#{mbVUsuario.actualizarDatos()}" style="margin-right: 20px;" 
+                                             rendered="#{!mbVUsuario.mostrarEliminados}"/>
 
                             <p:commandButton value="Eliminar" update="@form" styleClass="anchoBotones" icon="ui-icon-disk"
-                                             actionListener="#{mbVUsuario.eliminarDatos()}" >
+                                             actionListener="#{mbVUsuario.eliminarDatos()}" rendered="#{!mbVUsuario.mostrarEliminados}">
                                 <p:confirm header="Eliminación de Docente" message="Presiona confirmar para realizar acción" icon="ui-icon-alert" />
                             </p:commandButton>
                         </div>

@@ -18,7 +18,7 @@
 
 
                     <p:dataTable class="tblDatos fuenteTamanio" id="tablaPermisos" var="menu" value="#{mbVTablaPermisos.lstTablaPermisos}" editable="true"
-                                 scrollable="true" emptyMessage="No hay Datos" scrollHeight="60%" rowStyleClass="#{menu.padre le 0 ? 'colored' : 'colored1'}">
+                                 scrollable="true" emptyMessage="No hay Datos" scrollHeight="400" rowStyleClass="#{menu.padre le 0 ? 'colored' : 'colored1'}">
 
 
                         <p:ajax event="rowEdit" listener="#{mbVTablaPermisos.onRowEdit}" update=":form:msgs" />
@@ -32,6 +32,11 @@
                                 <p:inputText id="globalFilter" value="#{mbVTablaPermisos.permisoDescripcion}" style="width:250px" placeholder="Enter keyword"/>
                                 <p:commandButton value="Buscar" update="form" styleClass="anchoBotones" icon="ui-icon-search"
                                          actionListener="#{mbVTablaPermisos.cargarTablaPermisos()}" />
+                                
+                                <h:outputText value=" Mostrar Eliminados" styleClass="labelDerecha" />
+                                <p:selectBooleanCheckbox value="#{mbVTablaPermisos.mostrarEliminados}" styleClass="labelDerecha" >
+                                    <p:ajax update="form" listener="#{mbVTablaPermisos.cargarTablaPermisos}" />
+                                </p:selectBooleanCheckbox>
                             </p:outputPanel>
                         </f:facet>
 
@@ -64,7 +69,7 @@
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column style="width:7%;">
+                        <p:column style="width:7%;" rendered="#{!mbVTablaPermisos.mostrarEliminados}">
 
                             <p:rowEditor />   
 
@@ -72,14 +77,24 @@
 
 
                         </p:column>
-                        <p:column style="width:8%;">
-                            <p:commandButton id="btnEliminar"
+                        <p:column style="width:8%;" rendered="#{!mbVTablaPermisos.mostrarEliminados}">
+                            <p:commandButton id="btnEliminar" 
                                              action="#{mbVTablaPermisos.onDelete(menu)}"
                                              update="form,tablaPermisos"
                                              icon="ui-icon-trash"
                                              style="#{menu.padre == 0 ?  'border-style: hidden;background-color: #F0F3F0;': 'border-style: hidden;background-color: transparent;'}"
                                              >
                                 <p:confirm header="Eliminación de Permiso" message="Presiona confirmar para realizar acción" icon="ui-icon-alert" />
+                            </p:commandButton>
+                        </p:column>
+                        <p:column style="width:5%;" rendered="#{mbVTablaPermisos.mostrarEliminados}">
+                            <p:commandButton id="btnRestaurar"
+                                             action="#{mbVTablaPermisos.onRecuperar(menu)}"
+                                             update="form,tablaPermisos"
+                                             icon="ui-icon-disk"
+                                             style="border-style: hidden;background-color: transparent;"
+                                             >
+                                <p:confirm header="Recuperación de Permiso" message="Presiona confirmar para realizar acción" icon="ui-icon-alert" />
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>

@@ -93,15 +93,15 @@
                                 <f:validateLongRange minimum="1"/>
                             </p:inputText>
                             
-                            <h:outputLabel for="precioMatricula" value="Precio de la Matrícula: " styleClass="labelDerecha" />
-                            <p:inputText id="precioMatricula" onkeypress="return validarNum(event, true)" required="true" value="#{mbVMaestrias.precioMatricula}">
-                                <f:validateDoubleRange minimum="0"  />
-                            </p:inputText> 
-
-                            <h:outputLabel for="precioColegiatura" value="P. Colegiatura: " styleClass="labelDerecha" />
-                            <p:inputText id="precioColegiatura" onkeypress="return validarNum(event, true)" required="true" value="#{mbVMaestrias.precioColegiatura}">
-                                <f:validateDoubleRange minimum="0"  />
-                            </p:inputText> 
+                            <p:outputLabel for="txtprecioMatricula" styleClass="labelDerecha" value="Precio Matrícula:" />
+                            <p:inputText id="txtprecioMatricula" value="#{mbVMaestrias.precioMatricula}" required="true" onkeypress="return validarNum(event, true)">
+                                <f:validateDoubleRange minimum="1"  />
+                            </p:inputText>
+                            
+                            <p:outputLabel for="txtprecioColegiatura" styleClass="labelDerecha" value="P. Colegiatura:" />
+                            <p:inputText id="txtprecioColegiatura" value="#{mbVMaestrias.precioColegiatura}" required="true" onkeypress="return validarNum(event, true)">
+                                <f:validateDoubleRange minimum="1"  />
+                            </p:inputText>
                             
                         </p:panelGrid>
                         

@@ -73,7 +73,7 @@ public class MbVMenu implements Serializable {
             
             DaoTMenu daoTMenu = new DaoTMenu();
             
-            lstMenus = daoTMenu.getTodosPermisos();
+            lstMenus = daoTMenu.getTodosPermisos(false);
         } catch (Exception ex) {
             addMessage("Success", ex.toString());
            // Logger.getLogger(MbVMenu.class.getName()).log(Level.SEVERE, null, ex);

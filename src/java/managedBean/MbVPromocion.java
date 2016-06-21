@@ -75,7 +75,7 @@ public class MbVPromocion implements Serializable{
         try {
             DaoTUsuario daoTusuario = new DaoTUsuario();
             
-            List<Usuario> lstUsuario = daoTusuario.getDocentes();
+            List<Usuario> lstUsuario = daoTusuario.getDocentes(false);
             lstDocente.clear();
             for(Usuario user: lstUsuario){
                 SelectItem usuarioItem = new SelectItem(user.getId(),user.getApellidos() +" "+user.getNombres());

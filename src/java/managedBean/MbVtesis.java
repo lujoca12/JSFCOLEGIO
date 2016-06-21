@@ -367,7 +367,7 @@ public class MbVtesis implements Serializable{
         try {
             DaoTUsuario daoTusuario = new DaoTUsuario();
 
-            List<Usuario> lstUsuario = daoTusuario.getDocentes();
+            List<Usuario> lstUsuario = daoTusuario.getDocentes(false);
             this.lstTheme.clear();
             this.lstTheme.add(new ClsProfesor(-1, "Ninguno", "Ninguno"));
             for (Usuario user : lstUsuario) {

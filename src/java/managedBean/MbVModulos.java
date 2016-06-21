@@ -287,7 +287,7 @@ public class MbVModulos implements Serializable {
         try {
             DaoTUsuario daoTusuario = new DaoTUsuario();
 
-            List<Usuario> lstUsuario = daoTusuario.getDocentes();
+            List<Usuario> lstUsuario = daoTusuario.getDocentes(mostrarEliminados);
             this.lstTheme.clear();
             this.lstTheme.add(new ClsProfesor(-1, "Escoja un Docente", "Escoja un Docente"));
             for (Usuario user : lstUsuario) {

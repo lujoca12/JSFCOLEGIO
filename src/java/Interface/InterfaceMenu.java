@@ -17,7 +17,7 @@ import java.util.List;
 public interface InterfaceMenu {
     public boolean registrar(Permiso tPermiso) throws Exception;
     public List<Permiso> getPadres() throws Exception;
-    public List<Permiso> getTodosPermisos() throws Exception;
+    public List<Permiso> getTodosPermisos(boolean mostrar) throws Exception;
     public List<Permiso> getMenuNavxUsuarios(Usuario usuario) throws Exception;
     public Permiso getPermiso(String idUsuario) throws Exception;
     public boolean update(Permiso tPermiso) throws Exception;

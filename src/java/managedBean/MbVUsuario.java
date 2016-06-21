@@ -81,6 +81,8 @@ public class MbVUsuario implements Serializable {
     
     private int estado;
     private boolean estadoCorreo;
+    private boolean cedOpasap;
+    private boolean mostrarEliminados;
 
     public MbVUsuario() {
         tUsuario = new Usuario();
@@ -205,13 +207,30 @@ public class MbVUsuario implements Serializable {
         return lstThemeUsuarios;
     }
 
+    public boolean isCedOpasap() {
+        return cedOpasap;
+    }
+
+    public void setCedOpasap(boolean cedOpasap) {
+        this.cedOpasap = cedOpasap;
+    }
+
+    public boolean isMostrarEliminados() {
+        return mostrarEliminados;
+    }
+
+    public void setMostrarEliminados(boolean mostrarEliminados) {
+        this.mostrarEliminados = mostrarEliminados;
+    }
+    
     
     public void llenarCboDocentes() {
+        estado =0;
         this.lstTheme = new ArrayList<ClsProfesor>();
         try {
             DaoTUsuario daoTusuario = new DaoTUsuario();
 
-            List<Usuario> lstUsuario = daoTusuario.getDocentes();
+            List<Usuario> lstUsuario = daoTusuario.getDocentes(mostrarEliminados);
             if(this.lstTheme.size() > 0)
                 this.lstTheme.clear();
             
@@ -224,14 +243,16 @@ public class MbVUsuario implements Serializable {
         } catch (Exception ex) {
 
         }
+        
     }
     
     public void llenarCboUsuarios() {
+        estado =0;
         this.lstThemeUsuarios = new ArrayList<ClsProfesor>();
         try {
             DaoTUsuario daoTusuario = new DaoTUsuario();
 
-            List<Usuario> lstUsuario = daoTusuario.getTodosUsuarios();
+            List<Usuario> lstUsuario = daoTusuario.getTodosUsuarios(mostrarEliminados);
             if(this.lstThemeUsuarios.size() > 0)
                 this.lstThemeUsuarios.clear();
             
@@ -269,7 +290,7 @@ public class MbVUsuario implements Serializable {
         this.lstUsuario = new ArrayList<SelectItem>();
         DaoTUsuario daoTUsuario = new DaoTUsuario();
 
-        List<Usuario> lstUser = daoTUsuario.getTodosUsuarios();
+        List<Usuario> lstUser = daoTUsuario.getTodosUsuarios(mostrarEliminados);
         if(lstUsuario.size() > 0)
             lstUsuario.clear();
         
@@ -295,7 +316,7 @@ public class MbVUsuario implements Serializable {
             } else {
                 this.estado = 1;
                 DaoTMenu daoTmenu = new DaoTMenu();
-                lstMenus = daoTmenu.getTodosPermisos();
+                lstMenus = daoTmenu.getTodosPermisos(false);
                 if (lstMenus != null) {
                     root = new DefaultTreeNode(new Document("Files", 0, "Folder"), null);
                     for (Permiso p : lstMenus) {
@@ -360,6 +381,7 @@ public class MbVUsuario implements Serializable {
         clave = "";
         telefono = "";
         celular = "";
+        cedOpasap = false;
     }
 
     public void registrarDocente() {
@@ -414,15 +436,16 @@ public class MbVUsuario implements Serializable {
             tUsuario.setTelefono(tUsuario.getTelefono().replaceAll("[()-]", ""));
             tUsuario.setCelular(tUsuario.getCelular().replaceAll("[()-]", ""));
             
-            String usuarioGenerado = ClsGenerarUserClaves.getUsuarioAleatorio(10);
-            String claveGenerada = ClsGenerarUserClaves.getPassword(ClsGenerarUserClaves.MINUSCULAS.concat(ClsGenerarUserClaves.MAYUSCULAS).concat(ClsGenerarUserClaves.ESPECIALES),10);
-            tUsuario.setClave(Class_Encript.getStringMessageDigest(claveGenerada, Class_Encript.SHA256));
-            tUsuario.setNick(usuarioGenerado);
+//            String usuarioGenerado = ClsGenerarUserClaves.getUsuarioAleatorio(10);
+//            String claveGenerada = ClsGenerarUserClaves.getPassword(ClsGenerarUserClaves.MINUSCULAS.concat(ClsGenerarUserClaves.MAYUSCULAS).concat(ClsGenerarUserClaves.ESPECIALES),10);
+//            tUsuario.setClave(Class_Encript.getStringMessageDigest(claveGenerada, Class_Encript.SHA256));
+//            tUsuario.setNick(usuarioGenerado);
             
-             enviarEmail(claveGenerada);
-                    if(estadoCorreo){
+            
+//             enviarEmail(claveGenerada);
+//                    if(estadoCorreo){
                         band = daoTusuario.update(tUsuario);
-                    }
+//                    }
             
         } catch (Exception ex) {
             Logger.getLogger(MbVUsuario.class.getName()).log(Level.SEVERE, null, ex);
@@ -436,6 +459,41 @@ public class MbVUsuario implements Serializable {
         } else {
             this.estado = 1;
             mensajesError("Error al actualizar datos");
+        }
+    }
+    
+    public void recuperar(){
+        DaoTUsuario daoTusuario = new DaoTUsuario();
+        try {
+            TipoUsuario tipoUser = new TipoUsuario();
+            tipoUser.setId(Integer.parseInt(this.theme.getName()));
+            tUsuario.setTipoUsuario(tipoUser);
+            tUsuario.setTelefono(tUsuario.getTelefono().replaceAll("[()-]", ""));
+            tUsuario.setCelular(tUsuario.getCelular().replaceAll("[()-]", ""));
+            
+            String usuarioGenerado = ClsGenerarUserClaves.getUsuarioAleatorio(10);
+            String claveGenerada = ClsGenerarUserClaves.getPassword(ClsGenerarUserClaves.MINUSCULAS.concat(ClsGenerarUserClaves.MAYUSCULAS).concat(ClsGenerarUserClaves.ESPECIALES),10);
+            tUsuario.setClave(Class_Encript.getStringMessageDigest(claveGenerada, Class_Encript.SHA256));
+            tUsuario.setNick(usuarioGenerado);
+            tUsuario.setEstado('1');
+            
+             enviarEmail(claveGenerada);
+                    if(estadoCorreo){
+                        band = daoTusuario.update(tUsuario);
+                    }
+            
+        } catch (Exception ex) {
+            Logger.getLogger(MbVUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if (band) {
+            this.estado = 0;
+            mensajesOk("Usuario recuperado correctamente");
+            llenarCboDocentes();
+            llenarCboUsuarios();
+        } else {
+            this.estado = 1;
+            mensajesError("Error al recuperar usuario");
         }
     }
     
@@ -628,7 +686,7 @@ public class MbVUsuario implements Serializable {
                 this.estado = 0;
             else{
                 this.estado = 1;
-                this.tUsuario = daoTusuario.getUsuario(this.theme.getId());
+                this.tUsuario = daoTusuario.getUsuarioEdicion(this.theme.getId());
             }
             
             

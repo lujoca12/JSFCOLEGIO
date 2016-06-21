@@ -54,11 +54,16 @@ public class DaoTUsuario implements InterfaceUsuario{
     }
 
     @Override
-    public List<Usuario> getTodosUsuarios() throws Exception {
+    public List<Usuario> getTodosUsuarios(boolean mostrar) throws Exception {
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        String hql = "FROM Usuario user inner join fetch user.tipoUsuario tuser where user.estado='1' order by user.apellidos asc";
+        String estado = "";
+        if(mostrar)
+            estado = "0";
+        else
+            estado = "1";
+        String hql = "FROM Usuario user inner join fetch user.tipoUsuario tuser where user.estado='"+estado+"' order by user.apellidos asc";
         Query query = sesion.createQuery(hql);
         List<Usuario> lstUsuarios=(List<Usuario>) query.list();
         sesion.close();
@@ -71,6 +76,18 @@ public class DaoTUsuario implements InterfaceUsuario{
         this.tx = null;
         iniciaOperacion();
         String hql = "FROM Usuario user where user.id="+idUsuario+" and user.estado='1'";
+        Query query = sesion.createQuery(hql);
+        Usuario usuario=(Usuario) query.uniqueResult();
+        sesion.close();
+        return usuario;
+    }
+    
+    @Override
+    public Usuario getUsuarioEdicion(int idUsuario) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String hql = "FROM Usuario user where user.id="+idUsuario+"";
         Query query = sesion.createQuery(hql);
         Usuario usuario=(Usuario) query.uniqueResult();
         sesion.close();
@@ -96,11 +113,17 @@ public class DaoTUsuario implements InterfaceUsuario{
     }
 
     @Override
-    public List<Usuario> getDocentes() throws Exception {
+    public List<Usuario> getDocentes(boolean mostrar) throws Exception {
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        String hql = "from Usuario as u inner join fetch u.tipoUsuario as tu where tu.descripcion like '%Prof%' and u.estado='1' order by u.apellidos asc";
+        String estado = "";
+        if(mostrar)
+            estado = "0";
+        else
+            estado = "1";
+        String hql = "from Usuario as u inner join fetch u.tipoUsuario as tu where tu.descripcion like '%Prof%' and "
+                + "u.estado='"+estado+"' order by u.apellidos asc";
         Query query = sesion.createQuery(hql);
         List<Usuario> lstUsuarios=(List<Usuario>) query.list();
         sesion.close();

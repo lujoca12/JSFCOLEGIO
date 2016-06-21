@@ -62,12 +62,20 @@ public class DaoTMenu implements InterfaceMenu{
     }
 
     @Override
-    public List<Permiso> getTodosPermisos() throws Exception {
+    public List<Permiso> getTodosPermisos(boolean mostrar) throws Exception {
         //Metodo para obtener el menu de usuariosActualizado
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        String hql="from Permiso as p where p.estado = '1' order by p.orden, p.descripcion asc";
+        
+        String consulta = "";
+        String estado = "";
+        if(mostrar)
+            estado = "";
+        else
+            estado = "where p.estado = '1'";
+        
+        String hql="from Permiso as p "+estado+" order by p.orden, p.descripcion asc";
         Query query = sesion.createQuery(hql);
         List<Permiso> lstPermiso=(List<Permiso>) query.list();
         sesion.close();

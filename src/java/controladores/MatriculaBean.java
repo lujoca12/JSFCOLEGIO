@@ -7,7 +7,9 @@ package controladores;
 
 import Clases.ClsArchivos;
 import Dao.InscripcionDao;
+import Dao.MatriculaDao;
 import Pojo.Archivos;
+import Pojo.Matricula;
 import Pojo.SolicitudInscripcion;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -16,6 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import org.primefaces.model.DefaultStreamedContent;
@@ -32,10 +37,9 @@ public class MatriculaBean implements Serializable {
     /**
      * Creates a new instance of MatriculaBean
      */
-    
-    private List<SolicitudInscripcion> lstSInscripcion;
+    private List<Matricula> lstMatriculas;
     private List<Archivos> lstArchivos;
-    private SolicitudInscripcion SelectedInscripcion;
+    private Matricula SelectedMatricula;
     private String observacion;
 
     private StreamedContent file;
@@ -43,12 +47,12 @@ public class MatriculaBean implements Serializable {
     private List<SolicitudInscripcion> lstSInscripcionFiltrada;
     private InscripcionDao d;
 
-    public List<SolicitudInscripcion> getLstSInscripcion() {
-        return lstSInscripcion;
+    public List<Matricula> getLstMatriculas() {
+        return lstMatriculas;
     }
 
-    public void setLstSInscripcion(List<SolicitudInscripcion> lstSInscripcion) {
-        this.lstSInscripcion = lstSInscripcion;
+    public void setLstMatriculas(List<Matricula> lstMatriculas) {
+        this.lstMatriculas = lstMatriculas;
     }
 
     public List<Archivos> getLstArchivos() {
@@ -59,12 +63,12 @@ public class MatriculaBean implements Serializable {
         this.lstArchivos = lstArchivos;
     }
 
-    public SolicitudInscripcion getSelectedInscripcion() {
-        return SelectedInscripcion;
+    public Matricula getSelectedMatricula() {
+        return SelectedMatricula;
     }
 
-    public void setSelectedInscripcion(SolicitudInscripcion SelectedInscripcion) {
-        this.SelectedInscripcion = SelectedInscripcion;
+    public void setSelectedMatricula(Matricula SelectedMatricula) {
+        this.SelectedMatricula = SelectedMatricula;
     }
 
     public String getObservacion() {
@@ -106,22 +110,43 @@ public class MatriculaBean implements Serializable {
     public void setD(InscripcionDao d) {
         this.d = d;
     }
-    
-    
+
     public MatriculaBean() {
     }
-    
-    public void aprobarMatricula(){
-        
+
+    @PostConstruct
+    public void init() {
+        MatriculaDao mD = new MatriculaDao();
+        lstMatriculas = mD.obtenerTodasMatriculas();
     }
+
+    public void aprobarMatricula() {
+        if (SelectedMatricula.getEstado() == '0') {
+            MatriculaDao mD = new MatriculaDao();
+        } else {
+            FacesMessage message = new FacesMessage("Error", "Ya está aprobada esta maestría");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+
+    }
+
+    public void rechazarMatricula() {
+        if (SelectedMatricula.getEstado() == '1') {
+            MatriculaDao mD = new MatriculaDao();
+        } else {
+            FacesMessage message = new FacesMessage("Error", "Ya está rechazada esta maestría");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
+
     public void obtenerRequisitos() {
 
         try {
             archivos = new ArrayList<>();
             lstArchivos = new ArrayList<>();
-            if (SelectedInscripcion != null) {
+            if (SelectedMatricula != null) {
                 d = new InscripcionDao();
-                lstArchivos = d.getArchivosInscripciones(String.valueOf(SelectedInscripcion.getId()));
+                lstArchivos = d.getArchivosInscripciones(String.valueOf(SelectedMatricula.getSolicitudInscripcion().getId()));
 
                 for (Archivos a : lstArchivos) {
                     InputStream input = new FileInputStream(a.getRuta());
@@ -133,6 +158,8 @@ public class MatriculaBean implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(AsignarEntrevistaBean.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println(ex.toString());
+            FacesMessage message = new FacesMessage("Error", "No se ha podido cargar los requisitos");
+            FacesContext.getCurrentInstance().addMessage(null, message);
         }
 
     }

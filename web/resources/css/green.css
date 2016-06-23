@@ -691,8 +691,12 @@ th {
     background-color: white;
 }
 .ui-growl {
-    position:absolute !important;
+    /*position:absolute !important;*/
     z-index:9999 !important;
+    position: fixed;
+    top: 1em;
+    right: 1em;
+    /* agregado q siempre este en la esquina superior el mensaje */
 }
 
 /*.arbol-permisos{

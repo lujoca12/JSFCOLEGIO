@@ -15,40 +15,39 @@
             <h:form id="form">  
                 <h:outputStylesheet name="matricula.css" library="css"/>
                 <p:growl id="msgs" showDetail="true"/>
-                <p:dataTable style="margin-bottom: 25px;" id="solicitudes" var="s" value="#{SolicitudBean.lstSInscripcion}"  rows="10" 
-                             selectionMode="single" selection="#{SolicitudBean.selectedInscripcion}" rowKey="#{s.estudiante.id}"
+                <p:dataTable style="margin-bottom: 25px;" id="solicitudes" var="s" value="#{matriculaBean.lstMatriculas}"  rows="10" 
+                             selectionMode="single" selection="#{matriculaBean.selectedMatricula}" rowKey="#{s.solicitudInscripcion.estudiante.id}"
                              paginator="true" widgetVar="tablaInscripcion"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                             rowsPerPageTemplate="5,10,15" emptyMessage="No hay datos con el criterio dado" filteredValue="#{SolicitudBean.lstSInscripcionFiltrada}">
+                             rowsPerPageTemplate="5,10,15" emptyMessage="No hay datos con el criterio dado" filteredValue="#{matriculaBean.lstSInscripcionFiltrada}">
                     <f:facet name="header">
                         Listas de Matrículas 
                     </f:facet>                      
-                    <p:column headerText="Apellidos" sortBy="#{s.estudiante.apellidos}">
-                        <h:outputText value="#{s.estudiante.apellidos}" />
+                    <p:column headerText="Apellidos" sortBy="#{s.solicitudInscripcion.estudiante.apellidos}">
+                        <h:outputText value="#{s.solicitudInscripcion.estudiante.apellidos}" />
                     </p:column>
-                    <p:column headerText="Nombres" sortBy="#{s.estudiante.nombres}">
-                        <h:outputText value="#{s.estudiante.nombres}" />
-                    </p:column>
-
-                    <p:column headerText="Maestria" sortBy="#{s.promocion.maestria.descripcion}">
-                        <h:outputText value="#{s.promocion.maestria.descripcion}" />
+                    <p:column headerText="Nombres" sortBy="#{s.solicitudInscripcion.estudiante.nombres}">
+                        <h:outputText value="#{s.solicitudInscripcion.estudiante.nombres}" />
                     </p:column>
 
-                    <p:column headerText="Promocion" sortBy="#{s.promocion.descripcion}">
-                        <h:outputText value="#{s.promocion.descripcion}" />
+                    <p:column headerText="Maestria" sortBy="#{s.solicitudInscripcion.promocion.maestria.descripcion}">
+                        <h:outputText value="#{s.solicitudInscripcion.promocion.maestria.descripcion}" />
                     </p:column>
 
-                    <p:column headerText="Fecha de Realizacion" sortBy="#{s.fechaRealizacion}">
-                        <h:outputText value="#{s.fechaRealizacion}" />
+                    <p:column headerText="Promocion" sortBy="#{s.solicitudInscripcion.promocion.descripcion}">
+                        <h:outputText value="#{s.solicitudInscripcion.promocion.descripcion}" />
+                    </p:column>
+
+                    <p:column headerText="Fecha de Realizacion" sortBy="#{s.solicitudInscripcion.fechaRealizacion}">
+                        <h:outputText value="#{s.solicitudInscripcion.fechaRealizacion}" />
                     </p:column>
 
                     <p:column headerText="Estado" filterBy="#{s.estado}" filterMatchMode="exact">
                         <f:facet name="filter">
                             <p:selectOneMenu onchange="PF('tablaInscripcion').filter()" >
-                                <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
-                                <f:selectItem itemLabel="En Espera" itemValue="E" />
-                                <f:selectItem itemLabel="Aceptado" itemValue="A" />
-                                <f:selectItem itemLabel="Rechazado" itemValue="R" />
+                                <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />                                
+                                <f:selectItem itemLabel="Aceptado" itemValue="1" />
+                                <f:selectItem itemLabel="Rechazado" itemValue="0" />
                             </p:selectOneMenu>
                         </f:facet>
                         <h:outputText value="#{s.estado}" />
@@ -56,12 +55,12 @@
 
 
                     <f:facet name="footer">
-                        <p:commandButton process="solicitudes" action="#{SolicitudBean.obtenerRequisitos()}" update="form:requisitos form:carDetail" icon="ui-icon-search" value="Cargar Requisitos"  />
+                        <p:commandButton process="solicitudes" action="#{matriculaBean.obtenerRequisitos()}" update="form:requisitos form:carDetail form:msgs" icon="ui-icon-search" value="Cargar Requisitos"  />
                     </f:facet>
 
                 </p:dataTable>
 
-                <p:dataTable style="margin-bottom: 25px;" id="requisitos" value="#{SolicitudBean.archivos}" var="a">
+                <p:dataTable style="margin-bottom: 25px;" id="requisitos" value="#{matriculaBean.archivos}" var="a">
                     <f:facet name="header">
                         Listas de Requisitos por Matrícula
                     </f:facet>
@@ -69,7 +68,7 @@
                         <h:outputText value="#{a.descripcion}" />
                     </p:column>
                     <p:column headerText="Archivos">
-                        <p:commandButton action="#{SolicitudBean.obtenerRequisitos()}"  value="Download" ajax="false"  icon="ui-icon-arrowthick-1-s">
+                        <p:commandButton action="#{matriculaBean.obtenerRequisitos()}"  value="Download" ajax="false"  icon="ui-icon-arrowthick-1-s">
                             <p:fileDownload value="#{a.file}" />
                         </p:commandButton>
                     </p:column>                    
@@ -78,15 +77,15 @@
 
 
                 <p:outputPanel id="carDetail" styleClass="panel-cont">
-                    <p:panelGrid  styleClass="datos-ob" columns="2" rendered="#{not empty SolicitudBean.selectedInscripcion}" >
+                    <p:panelGrid  styleClass="datos-ob" columns="2" rendered="#{not empty matriculaBean.selectedMatricula}" >
                        
                         <h:outputLabel value="Observacion: "/>
-                        <p:inputTextarea rows="5" cols="30"  counter="display" maxlength="255" value="#{SolicitudBean.observacion}" counterTemplate="{0} characters remaining." autoResize="false" />
+                        <p:inputTextarea rows="5" cols="30"  counter="display" maxlength="255" value="#{matriculaBean.observacion}" counterTemplate="{0} characters remaining." autoResize="false" />
                         <h:inputHidden/>
                         <h:outputText id="display" />
                     </p:panelGrid>
-                    <p:commandButton  style="height: 50px;"  actionListener="#{SolicitudBean.guardarMatricula()}" value="Aprobar" update="solicitudes requisitos carDetail msgs" validateClient="true" />
-                    <p:commandButton style="height: 50px;"  value="Rechazar" actionListener="#{SolicitudBean.rechazarMatricula()}" update="solicitudes requisitos carDetail msgs" validateClient="true" />
+                    <p:commandButton  style="height: 50px;"  actionListener="#{matriculaBean.aprobarMatricula()}" value="Aprobar" update="solicitudes requisitos carDetail msgs" validateClient="true" />
+                    <p:commandButton style="height: 50px;"  value="Rechazar" actionListener="#{matriculaBean.rechazarMatricula()}" update="solicitudes requisitos carDetail msgs" validateClient="true" />
                 </p:outputPanel>
 
 

@@ -231,8 +231,7 @@ public class MbVUsuario implements Serializable {
             DaoTUsuario daoTusuario = new DaoTUsuario();
 
             List<Usuario> lstUsuario = daoTusuario.getDocentes(mostrarEliminados);
-            if(this.lstTheme.size() > 0)
-                this.lstTheme.clear();
+            
             
             this.lstTheme.add(new ClsProfesor(-1, "Ninguno", "Ninguno"));
             for (Usuario user : lstUsuario) {

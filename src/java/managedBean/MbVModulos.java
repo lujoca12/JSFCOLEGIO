@@ -74,11 +74,13 @@ public class MbVModulos implements Serializable {
     
 
     public MbVModulos() {
-        cargarTablaModulos();
+        
         tModulo = new Modulo();
         llenarCboDocente();
-        llenarCboMaestria();
         llenarCboDocenteConfig();
+        cargarTablaModulos();
+        llenarCboMaestria();
+        
         //getTblModuloRegistrados();
     }
 
@@ -246,7 +248,7 @@ public class MbVModulos implements Serializable {
     public void cargarTablaModulos() {
         lstTblModulosReg = new ArrayList<>();
         try {
-            lstTblModulosReg.clear();
+            
             DaoTModulo daoTmodulo = new DaoTModulo();
             if(moduloDescripcion == null){
                 lstModulo = daoTmodulo.getTblModulos("", mostrarEliminados);
@@ -364,11 +366,11 @@ public class MbVModulos implements Serializable {
             DaoTMaestrias daoTmaestria = new DaoTMaestrias();
             
             List<Maestria> lstMaestria = daoTmaestria.getMaestriasD("",mostrarEliminados);
-            this.lstThemeMaestria.clear();
+            
             this.lstThemeMaestria.add(new ClsMaestria(-1,"Seleccione....","Seleccione....",0,0,0,null, null));
             
              this.lstThemePromociones = new ArrayList<ClsMaestria>();
-             lstThemePromociones.clear();
+             
              this.lstThemePromociones.add(new ClsMaestria(-1, "Seleccione..", "Seleccione..", 0, 0, 0, null, null));
             
             for(Maestria maestria: lstMaestria){
@@ -395,7 +397,7 @@ public class MbVModulos implements Serializable {
 
             List<Promocion> lstPromocion = daoTpromocion.getPromocionesMaestrias(themeMaestria.getId());
             
-            lstThemePromociones.clear();
+            
             this.lstThemePromociones.add(new ClsMaestria(-1,"Seleccione..","Seleccione..",0,0,0,null, null));
             for (Promocion promocion : lstPromocion) {
                 
@@ -732,6 +734,7 @@ public class MbVModulos implements Serializable {
                             } else {
                                 List<Modulo> lstPermiso = daoTmodulo.getProyectoTesisRegistrado(tModulo.getPromocion().getId(), tModulo.getModulo());
                                 if (lstPermiso.size() <= 0) {
+                                    tModulo.setEstado('1');
                                     msg = daoTmodulo.registrar(tModulo);
                                     cargarTablaModulos();
                                 } else {

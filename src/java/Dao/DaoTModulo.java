@@ -94,9 +94,9 @@ public class DaoTModulo implements InterfaceModulos{
         
         String estado = "";
         if(mostrar)
-            estado = "0";
+            estado = "mod.estado = '0'";
         else
-            estado = "1";
+            estado = "mod.estado <> '0'";
         
         //Presento los modulos registrados x años 
         if(moduloDescripcion.isEmpty())
@@ -109,7 +109,7 @@ public class DaoTModulo implements InterfaceModulos{
                 + "inner join fetch p.maestria m where m.estado='1' and "
                 + "(year(current_date) >= year(p.fechaInicio) "
                 + "and year(current_date)<= year(p.fechaFin)) "
-                + ""+consulta+" and p.estado = '1' and mod.estado = '"+estado+"' order by mod.id desc";
+                + ""+consulta+" and p.estado = '1' and "+estado+" order by mod.id desc";
         Query query = sesion.createQuery(hql);
         List<Modulo> lstPermiso=(List<Modulo>) query.list();
         sesion.close();
@@ -157,7 +157,7 @@ public class DaoTModulo implements InterfaceModulos{
                 + "where pr.id = "+idMaestria+" and\n"
                 + "(year(current_date) >= year(pr.fechaInicio) and year(current_date)<= year(pr.fechaFin))\n"
                 + "and (tuser.descripcion like '%Prof%' or tuser.descripcion like '%prof%' or tuser.descripcion like '%Docen%' or tuser.descripcion like '%docent%') \n"
-                + " and pr.estado = '1' and modul.estado = '1' order by modul.descripcion asc";
+                + " and pr.estado = '1' and modul.estado <> '0' order by modul.descripcion asc";
         Query query = sesion.createQuery(hql);
         List<Modulo> lstPermiso=(List<Modulo>) query.list();
         sesion.close();
@@ -181,7 +181,7 @@ public class DaoTModulo implements InterfaceModulos{
         }
         else{
             consulta = "user.id="+usuario_id+" and";
-            fecha="and (current_date >= modul.fechaInicioExamen and current_date <= modul.fechaFinExamen) ";
+            fecha="or (current_date >= modul.fechaInicioExamen and current_date <= modul.fechaFinExamen) or modul.estado <> '0' ";
         }
 
         String hql="from Modulo modul inner join fetch modul.usuario user inner join fetch  user.tipoUsuario tuser inner join fetch modul.promocion pr inner join fetch pr.maestria maest \n" +
@@ -204,7 +204,7 @@ public class DaoTModulo implements InterfaceModulos{
 //        //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
 //        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");  
         String consulta = "";
-        String fecha = " (current_date >= modul.fechaInicio and current_date <= modul.fechaInicioExamen) ";
+        String fecha = "or (current_date >= modul.fechaInicioExamen and current_date <= modul.fechaFinExamen) or modul.estado <> '0'  ";
        
 //        if(usuario_id == 0){
 //            consulta = "";
@@ -220,10 +220,10 @@ public class DaoTModulo implements InterfaceModulos{
                 + "inner join fetch modul.promocion pr \n"
                 + "inner join fetch pr.maestria maest \n"
                 + "where "+consulta+" and\n"
-                + "(year(current_date) >= year(pr.fechaInicio) and year(current_date)<= year(pr.fechaFin)) and \n"
+                + "(year(current_date) >= year(pr.fechaInicio) and year(current_date)<= year(pr.fechaFin)) \n"
                 + ""+fecha+"\n"
                 + "and (tuser.descripcion like '%Prof%' or tuser.descripcion like '%prof%' or tuser.descripcion like '%Docen%' or tuser.descripcion like '%docent%') \n"
-                + " and modul.estado = '1' order by modul.descripcion asc";
+                + " order by modul.descripcion asc";
         Query query = sesion.createQuery(hql);
         List<Modulo> lstPermiso=(List<Modulo>) query.list();
         sesion.close();

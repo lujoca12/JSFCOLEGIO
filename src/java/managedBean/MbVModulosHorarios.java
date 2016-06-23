@@ -260,7 +260,7 @@ public class MbVModulosHorarios implements Serializable{
         try {
             
             lstCboModulos = new ArrayList<>();
-            lstCboModulos.clear();
+            
             this.lstCboModulos.add(new ClsTablaModulosRegistrados(-1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)","(Escoja un Módulo)",-1,"(Escoja un Módulo)",null,null,null,null,"",null,null,0,'1'));
             DaoTModulo daoTmodulo = new DaoTModulo();
             List<Modulo> lstModulo = null;
@@ -268,7 +268,7 @@ public class MbVModulosHorarios implements Serializable{
             if(themePromociones != null)
                 lstModulo = daoTmodulo.getTblModulosMaestria(themePromociones.getIdPromocion());
             else{
-                lstCboModulos.clear();
+                //lstCboModulos.clear();
                 estado = false;
             }
                 

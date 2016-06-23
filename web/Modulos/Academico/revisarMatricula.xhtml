@@ -74,20 +74,20 @@
                     </p:column>                    
                 </p:dataTable>
 
-
-
                 <p:outputPanel id="carDetail" styleClass="panel-cont">
                     <p:panelGrid  styleClass="datos-ob" columns="2" rendered="#{not empty matriculaBean.selectedMatricula}" >
-                       
+                       <h:outputLabel  value="Ayuda Económica(Porcentaje): "/>
+                       <p:inputText value="#{matriculaBean.selectedMatricula.dscColegiatura}" >
+                           <f:validateDoubleRange minimum="0" maximum="100" />
+                       </p:inputText>
                         <h:outputLabel value="Observacion: "/>
-                        <p:inputTextarea rows="5" cols="30"  counter="display" maxlength="255" value="#{matriculaBean.observacion}" counterTemplate="{0} characters remaining." autoResize="false" />
+                        <p:inputTextarea rows="5" cols="30"  counter="display" maxlength="255" value="#{matriculaBean.selectedMatricula.solicitudInscripcion.observacion}" counterTemplate="{0} letras faltantes." autoResize="false" />
                         <h:inputHidden/>
                         <h:outputText id="display" />
                     </p:panelGrid>
                     <p:commandButton  style="height: 50px;"  actionListener="#{matriculaBean.aprobarMatricula()}" value="Aprobar" update="solicitudes requisitos carDetail msgs" validateClient="true" />
                     <p:commandButton style="height: 50px;"  value="Rechazar" actionListener="#{matriculaBean.rechazarMatricula()}" update="solicitudes requisitos carDetail msgs" validateClient="true" />
                 </p:outputPanel>
-
 
             </h:form>
             <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"  />

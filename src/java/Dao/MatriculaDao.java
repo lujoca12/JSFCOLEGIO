@@ -54,6 +54,21 @@ public class MatriculaDao {
 
         return band;
     }
+    public boolean insertar(Matricula tMatricula) throws Exception {
+        boolean band = false;
+        try {
+            iniciaOperacion();
+            sesion.update(tMatricula);            
+            tx.commit();
+            sesion.close();
+            band = true;
+        } catch (Exception e) {
+            tx.rollback();
+            band = false;
+        }
+
+        return band;
+    }
 
     public boolean rechazar(SolicitudInscripcion SInscripcion) throws Exception {
         boolean band = false;

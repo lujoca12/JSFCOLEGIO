@@ -127,7 +127,7 @@ public class MatriculaBean implements Serializable {
                 SelectedMatricula.setEstado('1');
                 SelectedMatricula.getSolicitudInscripcion().setEstado('A');
                 
-                if (mD.insertar(SelectedMatricula)) {
+                if (mD.insertar(SelectedMatricula,SelectedMatricula.getSolicitudInscripcion())) {
                     FacesMessage message = new FacesMessage("Succesful", "Datos actualizados");
                     FacesContext.getCurrentInstance().addMessage(null, message);
                     lstMatriculas.clear();
@@ -156,7 +156,7 @@ public class MatriculaBean implements Serializable {
                 SelectedMatricula.setEstado('0');
                 SelectedMatricula.getSolicitudInscripcion().setEstado('R');
                 
-                if (mD.insertar(SelectedMatricula)) {
+                if (mD.insertar(SelectedMatricula,SelectedMatricula.getSolicitudInscripcion())) {
                     FacesMessage message = new FacesMessage("Succesful", "Datos actualizados");
                     FacesContext.getCurrentInstance().addMessage(null, message);
                     lstMatriculas.clear();

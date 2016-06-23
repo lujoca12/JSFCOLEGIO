@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+
+    </h:head>
+    <h:body>
+
+        <div class="ui-fluid">
+            <h:form id="frmBusquedaEstudiante">
+                <p:tab id="personal" title="RegistrarUsuarios">
+                    <p:panel header="Perfil de Usuario">
+                        <p:growl id="msgsDocente" showDetail="true" />
+                        <p:focus context="panel"/>
+                        <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
+
+                            <p:outputLabel for="txtCedula" styleClass="labelDerecha" value="Cédula:" />
+                            <p:outputLabel id="txtCedula" value="#{perfilUsuarioBean.usuario.cedPasaporte}" />   
+                            
+                            <p:outputLabel for="txtNick" styleClass="labelDerecha" value="Nick: " />
+                            <p:inputText id="txtNick"  value="#{perfilUsuarioBean.usuario.nick}" required="true" maxlength="10"/>
+                            
+                            <p:outputLabel for="txtPass" styleClass="labelDerecha" value="Clave:" />
+                            <p:password id="txtPass" match="txtPass2" maxlength="15" value="#{perfilUsuarioBean.nuevaClave}" required="true"/>
+                            
+                            <p:outputLabel for="txtPass2" styleClass="labelDerecha" value="Confirmar Clave:" />
+                            <p:password id="txtPass2" maxlength="15"  value="#{perfilUsuarioBean.nuevaClave}"  required="true"/>
+                            
+                            <p:outputLabel for="txtApellidos" styleClass="labelDerecha" value="Apellidos:" />
+                            <p:inputText id="txtApellidos" value="#{perfilUsuarioBean.usuario.apellidos}" required="true" maxlength="30"/>
+
+                            <p:outputLabel for="txtNombres" styleClass="labelDerecha" value="Nombres:" />
+                            <p:inputText id="txtNombres" value="#{perfilUsuarioBean.usuario.nombres}" required="true" maxlength="30"/>
+
+                            <p:outputLabel for="txtDireccion" styleClass="labelDerecha" value="Dirección:" />
+                            <p:inputText id="txtDireccion" value="#{perfilUsuarioBean.usuario.direccion}" required="true" />
+
+
+                            <p:outputLabel for="email" styleClass="labelDerecha" value="Correo:" />
+                            <p:inputText id="email" required="true" label="email" size="40"
+                                         requiredMessage="Por favor ingrese email."
+                                         validatorMessage="Invalid email format"
+                                         value="#{perfilUsuarioBean.usuario.email}">
+
+                                <f:validateRegex
+                                    pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+
+                            </p:inputText>
+
+
+                            <p:outputLabel for="txtFecha" styleClass="labelDerecha" value="Fecha nacimiento:" />
+                            <p:calendar id="txtFecha" value="#{perfilUsuarioBean.usuario.fechaNac}" effect="fold" required="true" pattern="dd-MM-yyyy" mask="true" />
+
+
+                            <p:outputLabel for="txtTelefono" styleClass="labelDerecha" value="Teléfono:" />
+                            <p:inputMask id="txtTelefono" value="#{perfilUsuarioBean.usuario.telefono}" mask="(999)-999-999"/>
+
+
+                            <p:outputLabel for="txtCelular" styleClass="labelDerecha" value="Celular:" />
+                            <p:inputMask id="txtCelular" value="#{perfilUsuarioBean.usuario.celular}" required="true" mask="(999)-999-9999" size="10"/>
+
+
+                            <p:outputLabel for="cboEstadoCivil" value="Estado civil:" styleClass="labelDerecha"/>
+                            <p:selectOneMenu id="cboEstadoCivil" required="true" value="#{perfilUsuarioBean.usuario.estadoCivil}">
+                                <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                                <f:selectItem itemLabel="Soltero" itemValue="S" />
+                                <f:selectItem itemLabel="Casado" itemValue="C" />
+                                <f:selectItem itemLabel="Viudo" itemValue="V" />
+                                <f:selectItem itemLabel="Divorciado" itemValue="D" />
+                                <f:selectItem itemLabel="Unión Libre" itemValue="U" />
+                            </p:selectOneMenu>                            
+
+
+                            <p:outputLabel for="cboSexo" value="Sexo:" styleClass="labelDerecha"/>
+                            <p:selectOneMenu id="cboSexo" required="true"  value="#{perfilUsuarioBean.usuario.sexo}">
+                                <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                                <f:selectItem itemLabel="Masculino" itemValue="M" />
+                                <f:selectItem itemLabel="Femenino" itemValue="F" />
+                            </p:selectOneMenu>
+
+
+                            <h:outputText id="display" value="" />
+                            <p:commandButton value="Guardar" update="@form" styleClass="anchoBotones" icon="ui-icon-disk"
+                                             actionListener="#{perfilUsuarioBean.guardar()}" />
+
+                        </p:panelGrid>
+                    </p:panel>
+                </p:tab>
+                <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                    <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+                </p:dialog>
+            </h:form>
+        </div>
+    </h:body>
+</html>
+

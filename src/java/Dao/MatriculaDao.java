@@ -58,7 +58,7 @@ public class MatriculaDao {
         boolean band = false;
         try {
             iniciaOperacion();
-            sesion.update(tMatricula);            
+            sesion.saveOrUpdate(tMatricula);            
             tx.commit();
             sesion.close();
             band = true;

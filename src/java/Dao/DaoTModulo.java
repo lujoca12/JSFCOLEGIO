@@ -236,7 +236,23 @@ public class DaoTModulo implements InterfaceModulos{
         this.tx = null;
         iniciaOperacion();
         //Presento los modulos registrados x años 
-        String hql="from Modulo mod where mod.promocion = "+idPromocion+" order by mod.descripcion asc";
+        String hql="from Modulo mod where mod.promocion = "+idPromocion+" and mod.estado <> '0' order by mod.descripcion asc";
+        Query query = sesion.createQuery(hql);
+        List<Modulo> lstModulos=(List<Modulo>) query.list();
+        sesion.close();
+        return lstModulos;
+    }
+    
+    @Override
+    public List<Modulo> getModulosConfid(int idPromocion, int usuarioId) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        //Presento los modulos registrados x años 
+        String hql="from Modulo mod inner join fetch mod.promocion pr "
+                + "inner join fetch mod.usuario user inner join fetch pr.maestria maest "
+                + "where pr.id = "+idPromocion+" and mod.estado <> '0' and "
+                + "user.id="+usuarioId+" order by mod.modulo asc";
         Query query = sesion.createQuery(hql);
         List<Modulo> lstModulos=(List<Modulo>) query.list();
         sesion.close();

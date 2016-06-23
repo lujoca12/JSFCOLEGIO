@@ -12,6 +12,7 @@ import Pojo.TipoPrecio;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -168,6 +169,25 @@ public class DaoTPromocion implements InterfacePromocion{
                 + "year(current_date)<= year(pr.fechaFin)) and "
                 + "m.id = "+idMaestria+" order by pr.id desc";
         Query query = sesion.createQuery(hql);
+        List<Promocion> lstPermiso=(List<Promocion>) query.list();
+        sesion.close();
+        return lstPermiso;
+    }
+    
+    @Override
+    public List<Promocion> getPromocionesMaestriasDocente(int idDocente) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        
+        
+        String hql="from Promocion pr inner join fetch pr.maestria m inner join fetch pr.modulos mod inner join fetch mod.usuario user \n"
+                + "where pr.estado = '1' and m.estado='1' and \n"
+                + "(year(current_date) >= year(pr.fechaInicio) and \n"
+                + "year(current_date)<= year(pr.fechaFin)) and \n"
+                + "user.id = "+idDocente+" and user.estado='1' order by pr.id desc";
+        Query query = sesion.createQuery(hql);
+        query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         List<Promocion> lstPermiso=(List<Promocion>) query.list();
         sesion.close();
         return lstPermiso;

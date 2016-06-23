@@ -4,6 +4,11 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
 	<parameter name="idMaestria" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
 	</parameter>
@@ -112,15 +117,15 @@ order by  mod.n_modulo asc]]>
 							<reportElement style="Crosstab Data Text" x="0" y="0" width="167" height="51" uuid="04d7ad17-fa11-4a34-ae7e-4254129ff309"/>
 						</rectangle>
 						<line>
-							<reportElement style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="167" height="50" uuid="87f3b575-c09e-4605-81da-89c3fdf75ed8"/>
+							<reportElement style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="167" height="49" uuid="87f3b575-c09e-4605-81da-89c3fdf75ed8"/>
 							<graphicElement>
 								<pen lineStyle="Solid"/>
 							</graphicElement>
 						</line>
 						<frame>
-							<reportElement style="Crosstab Data Text" x="0" y="12" width="167" height="12" uuid="192b1b49-16fe-4421-ba6f-439e52d69a50"/>
+							<reportElement style="Crosstab Data Text" x="47" y="0" width="120" height="13" uuid="192b1b49-16fe-4421-ba6f-439e52d69a50"/>
 							<staticText>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="167" height="12" uuid="4414cc46-7fe9-42f7-adf2-3864f1311137"/>
+								<reportElement style="Crosstab Data Text" x="17" y="0" width="95" height="12" uuid="4414cc46-7fe9-42f7-adf2-3864f1311137"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle">
 									<font size="9" isBold="true"/>
 								</textElement>
@@ -128,15 +133,22 @@ order by  mod.n_modulo asc]]>
 							</staticText>
 						</frame>
 						<frame>
-							<reportElement style="Crosstab Data Text" x="0" y="36" width="167" height="14" uuid="ea3bc271-dce3-4ae2-a242-42e3f00c7004"/>
+							<reportElement style="Crosstab Data Text" x="0" y="35" width="167" height="13" uuid="ea3bc271-dce3-4ae2-a242-42e3f00c7004"/>
 							<staticText>
-								<reportElement style="Crosstab Data Text" x="0" y="1" width="167" height="12" uuid="93046075-6100-4981-aa7f-7cc622a6d5a3"/>
+								<reportElement style="Crosstab Data Text" x="30" y="1" width="137" height="12" uuid="93046075-6100-4981-aa7f-7cc622a6d5a3"/>
 								<textElement>
 									<font size="9" isBold="true"/>
 								</textElement>
 								<text><![CDATA[NOMINA]]></text>
 							</staticText>
 						</frame>
+						<staticText>
+							<reportElement style="table" x="0" y="0" width="30" height="50" uuid="741e176f-1442-4925-8ce8-e8b176a6d00e"/>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font size="7"/>
+							</textElement>
+							<text><![CDATA[ORD]]></text>
+						</staticText>
 					</cellContents>
 				</crosstabHeaderCell>
 				<rowGroup name="nombres" width="167" totalPosition="End">
@@ -149,10 +161,7 @@ order by  mod.n_modulo asc]]>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="167" height="13" uuid="e117d61f-c6c7-460b-bd01-7db40b17fe12"/>
-								<textElement>
-									<font size="8"/>
-								</textElement>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="167" height="25" uuid="e117d61f-c6c7-460b-bd01-7db40b17fe12"/>
 								<textFieldExpression><![CDATA[$V{nombres}]]></textFieldExpression>
 							</textField>
 						</cellContents>

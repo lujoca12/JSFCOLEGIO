@@ -29,4 +29,5 @@ public interface InterfaceModulos {
     public List<Modulo> getNumeroModulo(int idPromocion) throws Exception;
     public List<Modulo> getProyectoTesisRegistrado(int idPromocion, String moduloDescripcion) throws Exception;
     public List<Modulo> getValidacionModulos(String moduloDescripcion, String nModulo) throws Exception;
+    public List<Modulo> getModulosConfid(int idPromocion, int usuarioId) throws Exception;
 }

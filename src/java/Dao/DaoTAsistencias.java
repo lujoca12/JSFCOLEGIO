@@ -127,7 +127,7 @@ public class DaoTAsistencias implements InterfaceAsistencia{
         this.tx = null;
         iniciaOperacion();
         String hql="select matr.id, ((sum(asist.horas_asistidas)/mod.totalHorasModulo)*100) from Asistencia asist inner join asist.modulo mod inner join asist.matricula matr\n" +
-                    " where mod.id = "+idModulo+" group by mod.totalHorasModulo, matr.id";
+                    " where mod.id = "+idModulo+" and mod.estado <> '0' group by mod.totalHorasModulo, matr.id";
         Query query = sesion.createQuery(hql);
         List<Asistencia> lstAsistencia=(List<Asistencia>) query.list();
         Object [] Obj = query.list().toArray();

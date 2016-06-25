@@ -5,6 +5,8 @@
  */
 package util;
 
+import Pojo.Usuario;
+import javax.faces.context.FacesContext;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -19,14 +21,13 @@ import org.hibernate.cfg.Configuration;
 public class HibernateUtil {
 
     private static final SessionFactory sessionFactory;
-    
+    private static final Configuration configuration;
     static {
         try {
             // Create the SessionFactory from standard (hibernate.cfg.xml) 
             // config file.
-             Configuration configuration = new Configuration().configure(); 
-             configuration.setProperty("hibernate.connection.username", "postgres");
-             configuration.setProperty("hibernate.connection.password", "123456");
+             configuration = new Configuration().configure(); 
+             
              StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder(). applySettings(configuration.getProperties()); 
              SessionFactory factory = configuration.buildSessionFactory(builder.build());
              sessionFactory = configuration.buildSessionFactory(builder.build());
@@ -39,6 +40,14 @@ public class HibernateUtil {
     }
     
     public static SessionFactory getSessionFactory() {
+        
+        //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
+        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        if(usuario != null){
+            configuration.setProperty("hibernate.connection.username", "postgres");
+            configuration.setProperty("hibernate.connection.password", "123456");
+        }
+        
         return sessionFactory;
     }
 }

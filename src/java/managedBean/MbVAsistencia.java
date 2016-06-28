@@ -253,7 +253,9 @@ public class MbVAsistencia implements Serializable {
                 if (lstHorario != null) {
                     if (lstHorario.size() > 0) {
                         for (int i = 0; i < lstHorario.size(); i++) {
-                            lstCboFecha.add(new ClsFechaHoras(lstHorario.get(i).getId(), lstHorario.get(i).getHora(), lstHorario.get(i).getFecha()));
+                            lstCboFecha.add(new ClsFechaHoras(lstHorario.get(i).getId(), lstHorario.get(i).getHora(), lstHorario.get(i).getFecha(),'1'));
+                            if((lstHorario.size()-1) == i)
+                                lstCboFecha.get(i).setEstado('P');
                         }
 //                    for (HorarioModulo horario : lstHorario) {
 //                        lstCboFecha.add(new ClsFechaHoras(horario.getId(), horario.getHora(),horario.getFecha()));
@@ -318,7 +320,8 @@ public class MbVAsistencia implements Serializable {
                                 asistencia.getObservacion(),
                                 this.clsFechaHora.getFecha(),
                                 asist, 0, "", "",this.clsFechaHora.getHoras().toString(),
-                                0.0));
+                                0.0,
+                                asistencia.getAsistencia_evaluacion()));
                     }
                 } else {
                     DaoTMatricula daoTmatricula = new DaoTMatricula();
@@ -349,7 +352,8 @@ public class MbVAsistencia implements Serializable {
                                     "",
                                     this.clsFechaHora.getFecha(),
                                     true, 0, "", "",this.clsFechaHora.getHoras().toString(),
-                                    0.0));
+                                    0.0,
+                                    ' '));
                         }
                     }
                     
@@ -420,7 +424,8 @@ public class MbVAsistencia implements Serializable {
                                 this.clsFechaHora.getFecha(),
                                 asist,
                                 asistencia.getId(), "", "", this.clsFechaHora.getHoras().toString(),
-                                0.0));
+                                0.0,
+                                asistencia.getAsistencia_evaluacion()));
                     }
                 } else {
                     this.estado = 0;
@@ -438,7 +443,7 @@ public class MbVAsistencia implements Serializable {
     public void registrar() {
         DaoTAsistencias daoTasistencia = new DaoTAsistencias();
         try {
-            msg = daoTasistencia.registrar(lstTblNotas, this.idModulo, this.clsFechaHora.getFecha());
+            msg = daoTasistencia.registrar(lstTblNotas, this.idModulo, this.clsFechaHora.getFecha(), this.clsFechaHora.getEstado());
         } catch (Exception ex) {
             Logger.getLogger(MbVNotas.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -461,6 +466,7 @@ public class MbVAsistencia implements Serializable {
         else
             tAsistencia.setEstado('0');
         
+        tAsistencia.setAsistencia_evaluacion(((ClsNotas) event.getObject()).getAsistenciaEvaluacion());
         tAsistencia.setFecha(((ClsNotas) event.getObject()).getFecha());
         Matricula matricula = new Matricula();
         matricula.setId(((ClsNotas) event.getObject()).getIdMatricula());
@@ -496,7 +502,7 @@ public class MbVAsistencia implements Serializable {
     public void onDelete() {
         DaoTAsistencias daoTasistencia = new DaoTAsistencias();
         try {
-            msg = daoTasistencia.delete(lstTblNotas, this.idModulo);
+            msg = daoTasistencia.delete(lstTblNotas, this.idModulo, this.clsFechaHora.getEstado());
         } catch (Exception ex) {
             Logger.getLogger(MbVNotas.class.getName()).log(Level.SEVERE, null, ex);
         }

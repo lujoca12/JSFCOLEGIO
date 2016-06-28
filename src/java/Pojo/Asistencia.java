@@ -19,6 +19,7 @@ public class Asistencia  implements java.io.Serializable {
      private Date fecha;
      private String usuario;
      private BigDecimal horas_asistidas;
+     private Character asistencia_evaluacion;
 
     public Asistencia() {
     }
@@ -29,7 +30,7 @@ public class Asistencia  implements java.io.Serializable {
         this.matricula = matricula;
         this.modulo = modulo;
     }
-    public Asistencia(int id, Matricula matricula, Modulo modulo, Character estado, String observacion, Date fecha, String usuario,BigDecimal horas_asistidas) {
+    public Asistencia(int id, Matricula matricula, Modulo modulo, Character estado, String observacion, Date fecha, String usuario,BigDecimal horas_asistidas, Character asistencia_evaluacion) {
        this.id = id;
        this.matricula = matricula;
        this.modulo = modulo;
@@ -38,6 +39,7 @@ public class Asistencia  implements java.io.Serializable {
        this.fecha = fecha;
        this.usuario = usuario;
        this.horas_asistidas = horas_asistidas;
+       this.asistencia_evaluacion = asistencia_evaluacion;
     }
    
     public int getId() {
@@ -97,6 +99,16 @@ public class Asistencia  implements java.io.Serializable {
     public void setHoras_asistidas(BigDecimal horas_asistidas) {
         this.horas_asistidas = horas_asistidas;
     }
+
+    public Character getAsistencia_evaluacion() {
+        return asistencia_evaluacion;
+    }
+
+    public void setAsistencia_evaluacion(Character asistencia_evaluacion) {
+        this.asistencia_evaluacion = asistencia_evaluacion;
+    }
+    
+    
 }
 
 

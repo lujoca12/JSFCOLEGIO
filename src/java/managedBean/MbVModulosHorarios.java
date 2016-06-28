@@ -337,7 +337,8 @@ public class MbVModulosHorarios implements Serializable{
                                 horario.getId(), 
                                 horario.getHoraInicio(),
                                 horario.getHoraFin(),
-                                horario.getFecha() == null ? null : horario.getFecha()));
+                                horario.getFecha() == null ? null : horario.getFecha(),
+                                horario.getEstado()));
                     }
                 }
             }
@@ -370,10 +371,10 @@ public class MbVModulosHorarios implements Serializable{
             if (lstModulo != null) {
                 if (lstModulo.size() > 0) {
                     for (Modulo modulo : lstModulo) {
-                        lstCboFecha.add(new ClsFechaHoras(1, modulo.getCreditos(),modulo.getFechaInicio()));
-                        lstCboFecha.add(new ClsFechaHoras(2, modulo.getCreditos(),modulo.getFechaFin()));
-                        lstCboFecha.add(new ClsFechaHoras(3, modulo.getCreditos(),modulo.getFechaInicioExamen()));
-                        lstCboFecha.add(new ClsFechaHoras(4, modulo.getCreditos(),modulo.getFechaFinExamen()));
+                        lstCboFecha.add(new ClsFechaHoras(1, modulo.getCreditos(),modulo.getFechaInicio(),'1'));
+                        lstCboFecha.add(new ClsFechaHoras(2, modulo.getCreditos(),modulo.getFechaFin(),'1'));
+                        lstCboFecha.add(new ClsFechaHoras(3, modulo.getCreditos(),modulo.getFechaInicioExamen(),'1'));
+                        lstCboFecha.add(new ClsFechaHoras(4, modulo.getCreditos(),modulo.getFechaFinExamen(),'E'));
                     }
                 }
             }
@@ -463,7 +464,11 @@ public class MbVModulosHorarios implements Serializable{
                     
                     if(hora > 0 && hora <= Double.parseDouble(horasxRegistrar)){
                         if(hora >= 3 && hora <= 6){
-                            
+                                if(clsFechaHora.getEstado().equals('E'))
+                                    tHorarioModulo.setEstado('E');
+                                else
+                                    tHorarioModulo.setEstado('1');
+                                
                                 msg = daoThorariomodulo.registrar(tHorarioModulo);
                             
                         }else{
@@ -549,7 +554,7 @@ public class MbVModulosHorarios implements Serializable{
                     edicMovimientoHoras(((ClsHorarioModulo) event.getObject()).getTotalHoras(), ((ClsHorarioModulo) event.getObject()).getIdModulo());
                     if (hora > 0 && hora <= Double.parseDouble(horasxRegistrar)) {
                        if(hora >= 3 && hora <= 6){
-                            
+                                horarioModulo.setEstado(((ClsHorarioModulo) event.getObject()).getEstadoHorario());
                                 msg = daoThorariomodulo.registrar(horarioModulo);
                             
                         }else{

@@ -78,7 +78,7 @@ public class DaoTModulo implements InterfaceModulos{
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        String hql="from Modulo m where m.id = "+idModulo+"";
+        String hql="from Modulo m where m.id = "+idModulo+" and m.estado <> '0'";
         Query query = sesion.createQuery(hql);
         List<Modulo> lstPermiso=(List<Modulo>) query.list();
         sesion.close();

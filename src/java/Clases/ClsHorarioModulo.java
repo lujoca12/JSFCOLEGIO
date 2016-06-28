@@ -31,8 +31,9 @@ public class ClsHorarioModulo implements Serializable {
     private Date horaInicio;
     private Date horaFin;
     private Date fechaHorario;
+    private Character estadoHorario;
 
-    public ClsHorarioModulo(int idMaestria, String Maestria, int idModulo, String moduloNombre, String creditos, Date fechaInicio, Date fechaFin, String nModulo, String totalHoras, int idHorario, Date horaInicio, Date horaFin, Date fechaHorario) {
+    public ClsHorarioModulo(int idMaestria, String Maestria, int idModulo, String moduloNombre, String creditos, Date fechaInicio, Date fechaFin, String nModulo, String totalHoras, int idHorario, Date horaInicio, Date horaFin, Date fechaHorario, Character estadoHorario) {
         this.idMaestria = idMaestria;
         this.Maestria = Maestria;
         this.idModulo = idModulo;
@@ -46,6 +47,7 @@ public class ClsHorarioModulo implements Serializable {
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
         this.fechaHorario = fechaHorario;
+        this.estadoHorario = estadoHorario;
     }
 
     public int getIdMaestria() {
@@ -151,7 +153,12 @@ public class ClsHorarioModulo implements Serializable {
     public void setFechaHorario(Date fechaHorario) {
         this.fechaHorario = fechaHorario;
     }
-    
-    
-    
+
+    public Character getEstadoHorario() {
+        return estadoHorario;
+    }
+
+    public void setEstadoHorario(Character estadoHorario) {
+        this.estadoHorario = estadoHorario;
+    }
 }

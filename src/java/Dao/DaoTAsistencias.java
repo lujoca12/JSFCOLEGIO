@@ -13,6 +13,7 @@ import Pojo.Modulo;
 import Pojo.Notas;
 import Pojo.Usuario;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -51,7 +52,7 @@ public class DaoTAsistencias implements InterfaceAsistencia{
     }
 
     @Override
-    public boolean registrar(List<ClsNotas> lstNotas, int idModulo, Date fecha) throws Exception {
+    public boolean registrar(List<ClsNotas> lstNotas, int idModulo, Date fecha, Character estado) throws Exception {
         boolean band = false;
         try {
             //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
@@ -73,6 +74,7 @@ public class DaoTAsistencias implements InterfaceAsistencia{
                 else
                     tAsistencia.setEstado('0');
                 
+                tAsistencia.setAsistencia_evaluacion(estado);
                 tAsistencia.setFecha(fecha);
                 matricula = new Matricula();
                 matricula.setId(lstNotas.get(i).getIdMatricula());
@@ -126,8 +128,8 @@ public class DaoTAsistencias implements InterfaceAsistencia{
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        String hql="select matr.id, ((sum(asist.horas_asistidas)/mod.totalHorasModulo)*100) from Asistencia asist inner join asist.modulo mod inner join asist.matricula matr\n" +
-                    " where mod.id = "+idModulo+" and mod.estado <> '0' group by mod.totalHorasModulo, matr.id";
+        String hql="select matr.id, ((sum(asist.horas_asistidas)/sum(horario.hora))*100) from Asistencia asist inner join asist.modulo mod inner join asist.matricula matr\n" +
+                    " inner join mod.horariomodulo horario where mod.id = "+idModulo+" and mod.estado <> '0' and horario.estado <> 'E' and asist.estado <> 'E' and asist.asistencia_evaluacion <> 'P'  group by horario.hora, matr.id";
         Query query = sesion.createQuery(hql);
         List<Asistencia> lstAsistencia=(List<Asistencia>) query.list();
         Object [] Obj = query.list().toArray();
@@ -159,7 +161,7 @@ public class DaoTAsistencias implements InterfaceAsistencia{
     }
     
     @Override
-    public boolean delete(List<ClsNotas> lstNotas, int idModulo) throws Exception {
+    public boolean delete(List<ClsNotas> lstNotas, int idModulo, Character estado) throws Exception {
         boolean band = false;
         try {
             //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
@@ -169,6 +171,7 @@ public class DaoTAsistencias implements InterfaceAsistencia{
             Asistencia tAsistencia = null;
             Matricula matricula = null;
             Modulo modulo = null;
+            BigDecimal bigDec;
             
             //Date fecha = new Date();
             for (int i = 0; i < lstNotas.size(); i++) {
@@ -176,7 +179,7 @@ public class DaoTAsistencias implements InterfaceAsistencia{
                 tAsistencia.setUsuario(usuario.getApellidos()+" "+usuario.getNombres());
                 
                 tAsistencia.setEstado('E');
-                
+                tAsistencia.setAsistencia_evaluacion(estado);
                 tAsistencia.setFecha(lstNotas.get(i).getFecha());
                 matricula = new Matricula();
                 matricula.setId(lstNotas.get(i).getIdMatricula());
@@ -186,6 +189,8 @@ public class DaoTAsistencias implements InterfaceAsistencia{
                 tAsistencia.setModulo(modulo);
                 tAsistencia.setObservacion(lstNotas.get(i).getObservacion());
                 tAsistencia.setId(lstNotas.get(i).getIdNota());
+                bigDec = new BigDecimal(lstNotas.get(i).getHorasAsistidas());
+                tAsistencia.setHoras_asistidas(bigDec);
                 sesion.update(tAsistencia);
             }
             tx.commit();
@@ -208,12 +213,17 @@ public class DaoTAsistencias implements InterfaceAsistencia{
 //      cal.add(Calendar.DATE,0);
 //      SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 //      String formatted = format1.format(cal.getTime());
-        
+        String consulta = "";
         //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
         Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         
+        if(usuario.getTipoUsuario().getDescripcion().equals("Profesor(a)"))
+            consulta = "and user.nombres='"+usuario.getNombres()+"' and user.apellidos='"+usuario.getApellidos()+"'";
+        else
+            consulta = "";
+        
         String hql="from Asistencia asist inner join fetch asist.matricula matr inner join fetch matr.solicitudInscripcion solin inner join fetch solin.estudiante est inner join fetch asist.modulo mod inner join fetch mod.promocion pr\n" +
-                   " inner join fetch mod.usuario user inner join fetch pr.maestria maest where mod.id="+idModulo+" and asist.fecha ='"+fecha+"' and asist.estado<>'E' and user.nombres='"+usuario.getNombres()+"' and user.apellidos='"+usuario.getApellidos()+"' order by est.apellidos asc";
+                   " inner join fetch mod.usuario user inner join fetch pr.maestria maest where mod.id="+idModulo+" and asist.fecha ='"+fecha+"' and asist.estado<>'E' "+consulta+"  order by est.apellidos asc";
         Query query = sesion.createQuery(hql);
         List<Asistencia> lstAsist=(List<Asistencia>) query.list();
         sesion.close();

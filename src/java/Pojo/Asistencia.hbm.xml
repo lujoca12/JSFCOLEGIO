@@ -29,5 +29,8 @@
         <property name="horas_asistidas" type="big_decimal">
             <column name="horas_asistidas" precision="4" />
         </property>
+        <property name="asistencia_evaluacion" type="java.lang.Character">
+            <column name="asistencia_evaluacion" length="1" />
+        </property>
     </class>
 </hibernate-mapping>

@@ -18,11 +18,13 @@ public class ClsFechaHoras implements Serializable {
     private int idHorario;
     private BigDecimal horas;
     private Date fecha;
+    private Character estado;
 
-    public ClsFechaHoras(int idHorario,BigDecimal horas, Date fecha) {
+    public ClsFechaHoras(int idHorario,BigDecimal horas, Date fecha, Character estado) {
         this.idHorario = idHorario;
         this.horas = horas;
         this.fecha = fecha;
+        this.estado = estado;
     }
 
     public int getIdHorario() {
@@ -47,6 +49,14 @@ public class ClsFechaHoras implements Serializable {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    public Character getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Character estado) {
+        this.estado = estado;
     }
     
     

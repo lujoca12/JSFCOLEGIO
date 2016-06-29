@@ -51,7 +51,12 @@ public class ClsGenerarUserClaves {
         int i = 0;
         while (i < longitud) {
             char c = (char) r.nextInt(255);
-            if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z')) {
+//            if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z')) {
+//                cadenaAleatoria += c;
+//                i++;
+//            }
+            
+            if ((c >= 'A' && c <= 'Z')) {
                 cadenaAleatoria += c;
                 i++;
             }

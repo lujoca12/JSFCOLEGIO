@@ -108,7 +108,6 @@ public class Asistencia  implements java.io.Serializable {
         this.asistencia_evaluacion = asistencia_evaluacion;
     }
     
-    
 }
 
 

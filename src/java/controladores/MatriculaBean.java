@@ -121,13 +121,14 @@ public class MatriculaBean implements Serializable {
     }
 
     public void aprobarMatricula() {
-        if (SelectedMatricula.getEstado() == '0') {
-            try {
-                MatriculaDao mD = new MatriculaDao();
+        try {
+            MatriculaDao mD = new MatriculaDao();
+            if (SelectedMatricula.getEstado() == '0') {
+
                 SelectedMatricula.setEstado('1');
                 SelectedMatricula.getSolicitudInscripcion().setEstado('A');
-                
-                if (mD.insertar(SelectedMatricula,SelectedMatricula.getSolicitudInscripcion())) {
+
+                if (mD.insertar(SelectedMatricula, SelectedMatricula.getSolicitudInscripcion())) {
                     FacesMessage message = new FacesMessage("Succesful", "Datos actualizados");
                     FacesContext.getCurrentInstance().addMessage(null, message);
                     lstMatriculas.clear();
@@ -136,14 +137,22 @@ public class MatriculaBean implements Serializable {
                     FacesMessage message = new FacesMessage("Error", "No se pudo actualizar los datos");
                     FacesContext.getCurrentInstance().addMessage(null, message);
                 }
-            } catch (Exception ex) {
-                Logger.getLogger(MatriculaBean.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println(ex.toString());
-                FacesMessage message = new FacesMessage("Error", "No se pudo actualizar los datos");
-                FacesContext.getCurrentInstance().addMessage(null, message);
+
+            } else {
+                if (mD.insertar(SelectedMatricula)) {
+                    FacesMessage message = new FacesMessage("Succesful", "Datos actualizados");
+                    FacesContext.getCurrentInstance().addMessage(null, message);
+                    lstMatriculas.clear();
+                    lstMatriculas = mD.obtenerTodasMatriculas();
+                } else {
+                    FacesMessage message = new FacesMessage("Error", "No se pudo actualizar los datos");
+                    FacesContext.getCurrentInstance().addMessage(null, message);
+                }
             }
-        } else {
-            FacesMessage message = new FacesMessage("Error", "Ya está aprobada esta maestría");
+        } catch (Exception ex) {
+            Logger.getLogger(MatriculaBean.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.toString());
+            FacesMessage message = new FacesMessage("Error", "No se pudo actualizar los datos");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
 
@@ -155,8 +164,8 @@ public class MatriculaBean implements Serializable {
                 MatriculaDao mD = new MatriculaDao();
                 SelectedMatricula.setEstado('0');
                 SelectedMatricula.getSolicitudInscripcion().setEstado('R');
-                
-                if (mD.insertar(SelectedMatricula,SelectedMatricula.getSolicitudInscripcion())) {
+
+                if (mD.insertar(SelectedMatricula, SelectedMatricula.getSolicitudInscripcion())) {
                     FacesMessage message = new FacesMessage("Succesful", "Datos actualizados");
                     FacesContext.getCurrentInstance().addMessage(null, message);
                     lstMatriculas.clear();

@@ -92,7 +92,7 @@ public class PerfilUsuarioBean implements Serializable {
                     
                     String encript = Class_Encript.getStringMessageDigest(nuevaClave, Class_Encript.SHA256);
                     usuario.setClave(encript);
-                    exito = uD.insertar(usuario);
+                    exito = uD.insertar(usuario,nickViejo);
 
                 } else {
                     FacesMessage m = new FacesMessage("Error", "Ese nick ya existe!! Escoge uno diferente!");
@@ -102,7 +102,7 @@ public class PerfilUsuarioBean implements Serializable {
             } else {
                 String encript = Class_Encript.getStringMessageDigest(nuevaClave, Class_Encript.SHA256);
                 usuario.setClave(encript);
-                exito = uD.insertar(usuario);
+                exito = uD.insertar(usuario,nickViejo);
             }
             if (exito) {
                 FacesMessage m = new FacesMessage("Succesful", "Datos Actualizados");

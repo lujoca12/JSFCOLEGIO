@@ -70,11 +70,14 @@ public class UsuarioDAO {
         return existe;
     }
 
-    public boolean insertar(Usuario u) throws Exception {
+    public boolean insertar(Usuario u,String NickViejo) throws Exception {
         boolean band = false;
         try {
             iniciaOperacion();
             sesion.saveOrUpdate(u);
+            String sql = String.format("alter user "+NickViejo+" rename to "+u.getNick()+" ; "
+                    + "alter user "+u.getNick()+" password '"+u.getClave()+"'");
+            sesion.createSQLQuery(sql).executeUpdate();
             tx.commit();
             sesion.close();
             band = true;

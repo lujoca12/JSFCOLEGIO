@@ -20,17 +20,17 @@ import util.HibernateUtil;
  *
  * @author server
  */
-public class DaoTUsuario implements InterfaceUsuario{
+public class DaoTUsuario implements InterfaceUsuario {
+
     private Session sesion;
     private Transaction tx;
-    
-    private void iniciaOperacion() throws HibernateException
-    {
+
+    private void iniciaOperacion() throws HibernateException {
         sesion = HibernateUtil.getSessionFactory().openSession();
         tx = sesion.beginTransaction();
     }
-    private void manejaExcepcion(HibernateException he) throws HibernateException
-    {
+
+    private void manejaExcepcion(HibernateException he) throws HibernateException {
         tx.rollback();
         throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
     }
@@ -41,6 +41,8 @@ public class DaoTUsuario implements InterfaceUsuario{
         try {
             iniciaOperacion();
             sesion.save(tUsuario);
+            String sql = String.format("create user " + tUsuario.getNick() + " superuser password '" + tUsuario.getClave() + "' ;");
+            sesion.createSQLQuery(sql).executeUpdate();
 
             tx.commit();
             sesion.close();
@@ -48,8 +50,9 @@ public class DaoTUsuario implements InterfaceUsuario{
         } catch (Exception e) {
             tx.rollback();
             band = false;
+            System.out.println(e.toString());
         }
-        
+
         return band;
     }
 
@@ -59,13 +62,14 @@ public class DaoTUsuario implements InterfaceUsuario{
         this.tx = null;
         iniciaOperacion();
         String estado = "";
-        if(mostrar)
+        if (mostrar) {
             estado = "0";
-        else
+        } else {
             estado = "1";
-        String hql = "FROM Usuario user inner join fetch user.tipoUsuario tuser where user.estado='"+estado+"' order by user.apellidos asc";
+        }
+        String hql = "FROM Usuario user inner join fetch user.tipoUsuario tuser where user.estado='" + estado + "' order by user.apellidos asc";
         Query query = sesion.createQuery(hql);
-        List<Usuario> lstUsuarios=(List<Usuario>) query.list();
+        List<Usuario> lstUsuarios = (List<Usuario>) query.list();
         sesion.close();
         return lstUsuarios;
     }
@@ -75,21 +79,21 @@ public class DaoTUsuario implements InterfaceUsuario{
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        String hql = "FROM Usuario user where user.id="+idUsuario+" and user.estado='1'";
+        String hql = "FROM Usuario user where user.id=" + idUsuario + " and user.estado='1'";
         Query query = sesion.createQuery(hql);
-        Usuario usuario=(Usuario) query.uniqueResult();
+        Usuario usuario = (Usuario) query.uniqueResult();
         sesion.close();
         return usuario;
     }
-    
+
     @Override
     public Usuario getUsuarioEdicion(int idUsuario) throws Exception {
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        String hql = "FROM Usuario user where user.id="+idUsuario+"";
+        String hql = "FROM Usuario user where user.id=" + idUsuario + "";
         Query query = sesion.createQuery(hql);
-        Usuario usuario=(Usuario) query.uniqueResult();
+        Usuario usuario = (Usuario) query.uniqueResult();
         sesion.close();
         return usuario;
     }
@@ -99,8 +103,7 @@ public class DaoTUsuario implements InterfaceUsuario{
         boolean band = false;
         try {
             iniciaOperacion();
-            sesion.update(tUsuario);
-
+            sesion.update(tUsuario);            
             tx.commit();
             sesion.close();
             band = true;
@@ -108,7 +111,7 @@ public class DaoTUsuario implements InterfaceUsuario{
             tx.rollback();
             band = false;
         }
-        
+
         return band;
     }
 
@@ -118,40 +121,42 @@ public class DaoTUsuario implements InterfaceUsuario{
         this.tx = null;
         iniciaOperacion();
         String estado = "";
-        if(mostrar)
+        if (mostrar) {
             estado = "0";
-        else
+        } else {
             estado = "1";
+        }
         String hql = "from Usuario as u inner join fetch u.tipoUsuario as tu where tu.descripcion like '%Prof%' and "
-                + "u.estado='"+estado+"' order by u.apellidos asc";
+                + "u.estado='" + estado + "' order by u.apellidos asc";
         Query query = sesion.createQuery(hql);
-        List<Usuario> lstUsuarios=(List<Usuario>) query.list();
+        List<Usuario> lstUsuarios = (List<Usuario>) query.list();
         sesion.close();
         return lstUsuarios;
     }
-    
+
     @Override
     public boolean verificarUsuarioNick(String nick) throws Exception {
         boolean band = false;
-        
+
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        String hql = "from Usuario as u where u.nick='"+nick+"' and u.estado='1'";
+        String hql = "from Usuario as u where u.nick='" + nick + "' and u.estado='1'";
         Query query = sesion.createQuery(hql);
-        List<Usuario> lstUsuarios=(List<Usuario>) query.list();
-        if(!lstUsuarios.isEmpty())
+        List<Usuario> lstUsuarios = (List<Usuario>) query.list();
+        if (!lstUsuarios.isEmpty()) {
             band = false;
-        else
+        } else {
             band = true;
+        }
         sesion.close();
-        
+
         return band;
     }
 
     @Override
     public boolean registrarPersona(Persona tPersona) throws Exception {
-       boolean band = false;
+        boolean band = false;
         try {
             iniciaOperacion();
             sesion.save(tPersona);
@@ -163,7 +168,7 @@ public class DaoTUsuario implements InterfaceUsuario{
             tx.rollback();
             band = false;
         }
-        
+
         return band;
     }
 
@@ -172,14 +177,12 @@ public class DaoTUsuario implements InterfaceUsuario{
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        String hql = "from Persona p\n" +
-                "inner join fetch p.cargo";
+        String hql = "from Persona p\n"
+                + "inner join fetch p.cargo";
         Query query = sesion.createQuery(hql);
-        List<Persona> lstUsuarios=(List<Persona>) query.list();
+        List<Persona> lstUsuarios = (List<Persona>) query.list();
         sesion.close();
-        return lstUsuarios;  
+        return lstUsuarios;
     }
-    
-    
-    
+
 }

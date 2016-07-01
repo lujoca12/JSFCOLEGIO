@@ -24,6 +24,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
+import Pojo.HorarioModulo;
 
 /**
  *
@@ -128,14 +129,17 @@ public class DaoTAsistencias implements InterfaceAsistencia{
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        String hql="select matr.id, ((sum(asist.horas_asistidas)/sum(horario.hora))*100) from Asistencia asist inner join asist.modulo mod inner join asist.matricula matr\n" +
-                    " inner join mod.horariomodulo horario where mod.id = "+idModulo+" and mod.estado <> '0' and horario.estado <> 'E' and asist.estado <> 'E' and asist.asistencia_evaluacion <> 'P'  group by horario.hora, matr.id";
+//        String hql="select matr.id, ((sum(asist.horas_asistidas)/sum(horario.hora))*100) from Asistencia asist inner join asist.modulo mod inner join asist.matricula matr\n" +
+//                    " inner join mod.horariomodulo horario where mod.id = "+idModulo+" and mod.estado <> '0' and horario.estado <> 'E' and asist.estado <> 'E' and asist.asistencia_evaluacion <> 'P'  group by horario.hora, matr.id";
+        String hql="select matr.id, sum(asist.horas_asistidas) from Asistencia asist inner join asist.modulo mod inner join asist.matricula matr\n" +
+                    " where mod.id = "+idModulo+" and mod.estado <> '0' and asist.estado <> 'E' and asist.estado <> '0' and asist.asistencia_evaluacion <> 'P'  group by asist.horas_asistidas, matr.id";
         Query query = sesion.createQuery(hql);
         List<Asistencia> lstAsistencia=(List<Asistencia>) query.list();
-        Object [] Obj = query.list().toArray();
+        
         sesion.close();
         return lstAsistencia;
     }
+    
 
     @Override
     public Asistencia getAsistencias(String idMaestria) throws Exception {

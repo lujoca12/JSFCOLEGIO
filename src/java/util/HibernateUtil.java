@@ -45,6 +45,9 @@ public class HibernateUtil {
         //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
         Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
         if(usuario != null){
+            configuration.setProperty("hibernate.connection.username", ""+usuario.getNick().toLowerCase()+"");
+            configuration.setProperty("hibernate.connection.password", ""+usuario.getClave()+"");
+        }else{
             configuration.setProperty("hibernate.connection.username", "postgres");
             configuration.setProperty("hibernate.connection.password", "123456");
         }

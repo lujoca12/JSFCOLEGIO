@@ -746,6 +746,7 @@ public class MbVModulos implements Serializable {
                         }else {
                             List<Modulo> lstPermiso = daoTmodulo.getProyectoTesisRegistrado(tModulo.getPromocion().getId(), tModulo.getModulo());
                             if (lstPermiso.size() <= 0) {
+                                tModulo.setEstado('1');
                                 msg = daoTmodulo.registrar(tModulo);
                                 cargarTablaModulos();
                             } else {
@@ -784,6 +785,7 @@ public class MbVModulos implements Serializable {
 //                                cargarTablaModulos();
 //                            }
 //                        }else{
+                            tModulo.setEstado('1');
                             msg = daoTmodulo.update(tModulo);
                             cargarTablaModulos();
 //                        }

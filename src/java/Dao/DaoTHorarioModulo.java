@@ -196,4 +196,19 @@ String hql="from HorarioModulo horario inner join fetch horario.modulo mod where
         return band;
     }
     
+    @Override
+    public List<HorarioModulo> getTotalHorasHorario(int idModulo) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        
+        String hql="select sum(horario.hora) from HorarioModulo as horario where horario.modulo = "+idModulo+" and horario.estado <> 'E' group by horario.hora";
+        
+        Query query = sesion.createQuery(hql);
+        List<HorarioModulo> lstAsistencia=(List<HorarioModulo>) query.list();
+       
+        sesion.close();
+        return lstAsistencia;
+    }
+    
 }

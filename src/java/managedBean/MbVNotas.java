@@ -11,6 +11,7 @@ import Clases.ClsTblNotas;
 import Clases.ClsTblPagos;
 import Dao.DaoTAsistencias;
 import Dao.DaoTEstudiante;
+import Dao.DaoTHorarioModulo;
 import Dao.DaoTMatricula;
 import Dao.DaoTModulo;
 import Dao.DaoTNotas;
@@ -18,6 +19,7 @@ import Dao.InscripcionDao;
 import Dao.PagosDao;
 import Pojo.Asistencia;
 import Pojo.Estudiante;
+import Pojo.HorarioModulo;
 import Pojo.Matricula;
 import Pojo.Modulo;
 import Pojo.Notas;
@@ -622,21 +624,34 @@ public class MbVNotas implements Serializable {
 
     private void perdidosxAsistencia(List<ClsNotas> lstTblNotases) throws Exception {
         DaoTAsistencias daoTasistencia = new DaoTAsistencias();
+        DaoTHorarioModulo daoHorario = new DaoTHorarioModulo();
         List<Asistencia> lstAsist = null;
+        List<HorarioModulo> lstHorario = null;
         Object[] obj = null;
-        BigDecimal bgd = null;
+        Object objHorario = null;
+        Double sumaAsistencia = null;
+        Double sumaHorario = null;
+        BigDecimal porcentaje = null;
         if (this.clsTblModulosReg != null) {
             lstAsist = daoTasistencia.getPerdidosxAsistencia(this.clsTblModulosReg.getIdModulo());
+            lstHorario = daoHorario.getTotalHorasHorario(this.clsTblModulosReg.getIdModulo());
         } else {
             lstAsist = daoTasistencia.getPerdidosxAsistencia(0);
+            lstHorario = daoHorario.getTotalHorasHorario(0);
         }
+        if(lstHorario.size() > 0){
+            objHorario = (Object) lstHorario.get(0);
+            sumaHorario = ((BigDecimal) objHorario).doubleValue();
+        }
+        
         if (lstAsist.size() > 0) {
             for (int i = 0; i < lstTblNotases.size(); i++) {
                 for (int j = 0; j < lstAsist.size(); j++) {
                     obj = (Object[]) (Object) lstAsist.get(j);
                     if (obj[0].equals(lstTblNotases.get(i).getIdMatricula())) {
-                        bgd = (BigDecimal) obj[1];
-                        lstTblNotases.get(i).setTotalAsistencia(bgd.doubleValue());
+                        sumaAsistencia = ((BigDecimal) obj[1]).doubleValue();
+                        porcentaje = new BigDecimal((sumaAsistencia/sumaHorario)*100);
+                        lstTblNotases.get(i).setTotalAsistencia(porcentaje.doubleValue());
                     }
                 }
             }

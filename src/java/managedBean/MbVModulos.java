@@ -756,40 +756,9 @@ public class MbVModulos implements Serializable {
                         }
                         
                     }else if(estado == 1){
-//                        List<Modulo> lstPermiso = daoTmodulo.getNumeroModulo(tModulo.getPromocion().getId());
-//
-//                        if (lstPermiso.size() == 1) {
-//                            fechaUltimaModulo = lstPermiso.get(0).getFechaFinExamen();
-//                        }else if(lstPermiso.size() > 1) {
-//                            fechaUltimaModulo = lstPermiso.get(1).getFechaFinExamen();
-//                        }
-//                        if(fechaUltimaModulo != null){
-//                            if (fechaUltimaModulo.after(tModulo.getFechaInicio()) || fechaUltimaModulo.equals(tModulo.getFechaInicio())) {
-//                                mensajesError("La fecha de encuadre no puede ser menor o igual a " + fechaUltimaModulo + "");
-//                                tModulo.setFechaInicio(null);
-//                                return;
-//                            }else if (fechaUltimaModulo.after(tModulo.getFechaFin()) || fechaUltimaModulo.equals(tModulo.getFechaFin())) {
-//                                mensajesError("La 1ra sesión no puede ser menor o igual a " + fechaUltimaModulo + "");
-//                                tModulo.setFechaFin(null);
-//                                return;
-//                            } else if (fechaUltimaModulo.after(tModulo.getFechaInicioExamen()) || fechaUltimaModulo.equals(tModulo.getFechaInicioExamen())) {
-//                                mensajesError("La 2da sesión no puede ser menor o igual a " + fechaUltimaModulo + "");
-//                                tModulo.setFechaInicioExamen(null);
-//                                return;
-//                            } else if (fechaUltimaModulo.after(tModulo.getFechaFinExamen()) || fechaUltimaModulo.equals(tModulo.getFechaFinExamen())) {
-//                                mensajesError("La fecha evaluación no puede ser menor o igual a " + fechaUltimaModulo + "");
-//                                tModulo.setFechaFinExamen(null);
-//                                return;
-//                            }else{
-//                                msg = daoTmodulo.update(tModulo);
-//                                cargarTablaModulos();
-//                            }
-//                        }else{
                             tModulo.setEstado('1');
                             msg = daoTmodulo.update(tModulo);
                             cargarTablaModulos();
-//                        }
-                        
                     }
                     
                 } catch (Exception ex) {
@@ -815,6 +784,8 @@ public class MbVModulos implements Serializable {
         }
         //cargarTablaModulos();
     }
+    
+    
     
     private void asignarModuloProyecto(){
         String[] modulos = {
@@ -914,6 +885,7 @@ public class MbVModulos implements Serializable {
             this.fechaFin = ((ClsTablaModulosRegistrados) event.getObject()).getFechaFinMaestria();
             
             validacionFechas(daoTmodulo,1);
+            
 //            msg = daoTmodulo.update(tModulo);
 //            cargarTablaModulos();
 

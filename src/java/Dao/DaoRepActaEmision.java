@@ -63,7 +63,7 @@ public class DaoRepActaEmision {
         throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
     }
     
-    public StreamedContent reporte(int idMaestria){
+    public StreamedContent reporte(int idPromocion, int idMaestria){
         //boolean band = false;
         StreamedContent media = null;
         ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance()
@@ -76,6 +76,7 @@ public class DaoRepActaEmision {
         param.put(JRHibernateQueryExecuterFactory.PARAMETER_HIBERNATE_SESSION, sesion);
         param.put("logoUteq",realPath+"logoUTEQoriginal1.jpg");
         param.put("logoPostgrado",realPath+"logoPostgrado.jpg");
+        param.put("idPromocion",idPromocion);
         param.put("idMaestria",idMaestria);
         
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

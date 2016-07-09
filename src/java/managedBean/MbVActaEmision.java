@@ -42,6 +42,9 @@ public class MbVActaEmision implements Serializable {
     
     private StreamedContent media;
     
+    private ClsMaestria themePromociones;
+    private List<ClsMaestria> lstThemePromociones;
+    
     
     @PostConstruct
     public void load() {
@@ -89,45 +92,89 @@ public class MbVActaEmision implements Serializable {
     public void setEstado(int estado) {
         this.estado = estado;
     }
-    
+
+    public ClsMaestria getThemePromociones() {
+        return themePromociones;
+    }
+
+    public void setThemePromociones(ClsMaestria themePromociones) {
+        this.themePromociones = themePromociones;
+    }
+
+    public List<ClsMaestria> getLstThemePromociones() {
+        return lstThemePromociones;
+    }
+
     public void llenarCboMaestria(){
         this.lstThemeMaestria = new ArrayList<ClsMaestria>();
          try {
-            DaoTPromocion daoTpromocion = new DaoTPromocion();
+            DaoTMaestrias daoTmaestria = new DaoTMaestrias();
             
-            Calendar calendar = Calendar.getInstance();
-        
+            List<Maestria> lstMaestria = daoTmaestria.getMaestriasD("",false);
+            
+            this.lstThemeMaestria.add(new ClsMaestria(-1,"Seleccione....","Seleccione....",0,0,0,null, null));
+            
+//            this.lstThemePromociones = new ArrayList<ClsMaestria>();
+//             
+//             this.lstThemePromociones.add(new ClsMaestria(-1, "Seleccione..", "Seleccione..", 0, 0, 0, null, null));
+            
+            for(Maestria maestria: lstMaestria){
+                this.lstThemeMaestria.add(new ClsMaestria(maestria.getId(),
+                        maestria.getDescripcion(),
+                        maestria.getDescripcion(),
+                        maestria.getId(),
+                        0,
+                        0, 
+                        null,
+                        null));
+            }
+        } catch (Exception ex) {
+            
+        }
+    }
+    
+    public void onMaestriaChange() throws Exception {
+            
+            this.lstThemePromociones = new ArrayList<ClsMaestria>();
+        try {
+            
+            DaoTPromocion daoTpromocion = new DaoTPromocion();
 
-            List<Promocion> lstPromocion = daoTpromocion.getPromocionesMaestrias("", false);
-            this.lstThemeMaestria.clear();
-            this.lstThemeMaestria.add(new ClsMaestria(-1, "Ninguno", "Ninguno", 0, 0,0, null, null));
-
+            List<Promocion> lstPromocion = daoTpromocion.getPromocionesMaestrias(themeMaestria.getId());
+            
+            Calendar anioInicioC = Calendar.getInstance();
+            Calendar anioFinC = Calendar.getInstance();
+            int anioInicio = 0;
+            int anioFin = 0;
+            
+            this.lstThemePromociones.add(new ClsMaestria(-1,"Seleccione..","Seleccione..",0,0,0,null, null));
             for (Promocion promocion : lstPromocion) {
-                calendar.setTime(promocion.getFechaInicio());
-                int anioInicio = calendar.get(Calendar.YEAR);
-
-                calendar.setTime(promocion.getFechaFin());
-                int anioFin = calendar.get(Calendar.YEAR);
                 
-                this.lstThemeMaestria.add(new ClsMaestria(promocion.getMaestria().getId(),
-                        "Maestría en "+promocion.getMaestria().getDescripcion() + " (" + anioInicio +"-"+ anioFin + ")",
-                        promocion.getMaestria().getDescripcion(), 
-                        promocion.getMaestria().getId(),
-                        anioInicio, 
-                        anioFin,
+                anioInicioC.setTime(promocion.getFechaInicio());
+                anioInicio = anioInicioC.get(Calendar.YEAR);
+
+                anioFinC.setTime(promocion.getFechaFin());
+                anioFin = anioFinC.get(Calendar.YEAR);
+                
+                this.lstThemePromociones.add(new ClsMaestria(promocion.getId(),
+                        promocion.getDescripcion() + " (" + String.valueOf(anioInicio) +" - "+ String.valueOf(anioFin)+")" + ")",
+                        promocion.getUsuario(), 
+                        promocion.getId(),
+                        0, 0,
                         promocion.getFechaInicio(),
                         promocion.getFechaFin()));
             }
         } catch (Exception ex) {
-            Logger.getLogger(MbVModulos.class.getName()).log(Level.SEVERE, null, ex);
+
         }
+
     }
     
     public void cargarReporte(){
         media = null;
         DaoRepActaEmision daoReport = new DaoRepActaEmision();
-        if(themeMaestria != null)
-           media = daoReport.reporte(this.themeMaestria.getId());
+        if(themePromociones != null && themeMaestria != null)
+           media = daoReport.reporte(this.themePromociones.getId(), themeMaestria.getId());
     }
     public void cargarReporteNominaGraduados(){
         media = null;

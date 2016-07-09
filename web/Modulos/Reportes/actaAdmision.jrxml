@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2201f372-e150-4f8c-8381-608800651f5e">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="364"/>
+	<property name="ireport.y" value="624"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -346,16 +346,23 @@
 	</subDataset>
 	<parameter name="logoUteq" class="java.lang.String"/>
 	<parameter name="logoPostgrado" class="java.lang.String"/>
+	<parameter name="idPromocion" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
 	<parameter name="idMaestria" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
 	</parameter>
 	<queryString language="hql">
-		<![CDATA[select est.cedPasaporte as cedula, est.apellidos as apellidos, est.nombres as nombres, maest.descripcion as maestria, pr.fechaInicio as fechaInicio, pr.fechaFin as fechaFin, pr.descripcion as n_promoc, matr.NMatricula as n_matricula, pr.fechaResolucion as fechaResolucion, pr.resolucion as n_resolucion  from Estudiante est  
+		<![CDATA[select est.cedPasaporte as cedula, est.apellidos as apellidos, est.nombres as nombres, maest.descripcion as maestria, pr.fechaInicio as fechaInicio, pr.fechaFin as fechaFin, pr.descripcion as n_promoc, matr.NMatricula as n_matricula, pr.fechaResolucion as fechaResolucion, pr.resolucion as n_resolucion from Estudiante est  
 inner join est.solicitudInscripcions solinscr 
 inner join solinscr.matriculas matr 
 inner join solinscr.promocion pr 
 inner join pr.maestria maest 
-where maest.id = $P{idMaestria}  and maest.estado = '1' and  matr.estado = '1']]>
+where maest.id = $P{idMaestria} and 
+pr.id = $P{idPromocion} 
+and pr.estado <> '0' 
+and maest.estado = '1' and  matr.estado = '1'
+]]>
 	</queryString>
 	<field name="cedula" class="java.lang.String"/>
 	<field name="apellidos" class="java.lang.String"/>
@@ -371,7 +378,12 @@ where maest.id = $P{idMaestria}  and maest.estado = '1' and  matr.estado = '1']]
 		<variableExpression><![CDATA[$F{cedula}]]></variableExpression>
 	</variable>
 	<background>
-		<band splitType="Stretch"/>
+		<band height="800" splitType="Stretch">
+			<image hAlign="Center">
+				<reportElement mode="Transparent" x="11" y="92" width="527" height="561" uuid="3359bdf6-1654-4188-8d96-ccc7069b1044"/>
+				<imageExpression><![CDATA["C:\\Users\\server\\Documents\\NetBeansProjects\\JSFSISFIAC\\web\\Modulos\\Reportes\\logoUTEQoriginalGrandeTransp1.jpg"]]></imageExpression>
+			</image>
+		</band>
 	</background>
 	<title>
 		<band height="82" splitType="Stretch">
@@ -476,28 +488,28 @@ where maest.id = $P{idMaestria}  and maest.estado = '1' and  matr.estado = '1']]
 	<columnHeader>
 		<band height="18" splitType="Stretch">
 			<staticText>
-				<reportElement style="table_TH" x="11" y="0" width="73" height="18" backcolor="#FFFFFF" uuid="10874dee-9535-459d-a715-ae4009d7d536"/>
+				<reportElement style="table" mode="Transparent" x="11" y="0" width="73" height="18" backcolor="#FFFFFF" uuid="10874dee-9535-459d-a715-ae4009d7d536"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CÉDULA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="table_TH" x="84" y="0" width="181" height="18" backcolor="#FFFFFF" uuid="4ffff755-4cb5-443f-bc86-d0d26c4536a7"/>
+				<reportElement style="table" mode="Transparent" x="84" y="0" width="181" height="18" backcolor="#FFFFFF" uuid="4ffff755-4cb5-443f-bc86-d0d26c4536a7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[APELLIDOS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="table_TH" x="265" y="0" width="169" height="18" backcolor="#FFFFFF" uuid="112ce93c-874a-43b6-95e4-06dd3b15ef28"/>
+				<reportElement style="table" mode="Transparent" x="265" y="0" width="169" height="18" backcolor="#FFFFFF" uuid="112ce93c-874a-43b6-95e4-06dd3b15ef28"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOMBRES]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="table_TH" x="434" y="0" width="104" height="18" backcolor="#FFFFFF" uuid="1b594159-bcc0-4438-9418-362ad280f318"/>
+				<reportElement style="table" mode="Transparent" x="434" y="0" width="104" height="18" backcolor="#FFFFFF" uuid="1b594159-bcc0-4438-9418-362ad280f318"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
@@ -508,28 +520,28 @@ where maest.id = $P{idMaestria}  and maest.estado = '1' and  matr.estado = '1']]
 	<detail>
 		<band height="15" splitType="Stretch">
 			<textField>
-				<reportElement style="table_CH" x="11" y="0" width="73" height="15" backcolor="#FFFFFF" uuid="a1ba7198-b572-4aa3-b0b2-f8b31b194baa"/>
+				<reportElement style="table" mode="Transparent" x="11" y="0" width="73" height="15" backcolor="#FFFFFF" uuid="a1ba7198-b572-4aa3-b0b2-f8b31b194baa"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="table_CH" x="84" y="0" width="181" height="15" backcolor="#FFFFFF" uuid="012005ac-2e00-4b3a-a6d0-118d53002a61"/>
+				<reportElement style="table" mode="Transparent" x="84" y="0" width="181" height="15" backcolor="#FFFFFF" uuid="012005ac-2e00-4b3a-a6d0-118d53002a61"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[' '.concat($F{apellidos}.toUpperCase())]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="table_CH" x="265" y="0" width="169" height="15" backcolor="#FFFFFF" uuid="c7552a07-28ec-4c3f-b4cd-94c2524815bb"/>
+				<reportElement style="table" mode="Transparent" x="265" y="0" width="169" height="15" backcolor="#FFFFFF" uuid="c7552a07-28ec-4c3f-b4cd-94c2524815bb"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[' '.concat($F{nombres}.toUpperCase())]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="table_CH" x="434" y="0" width="104" height="15" backcolor="#FFFFFF" uuid="5395a983-4b6d-44ee-a0ca-53bc36592000"/>
+				<reportElement style="table" mode="Transparent" x="434" y="0" width="104" height="15" backcolor="#FFFFFF" uuid="5395a983-4b6d-44ee-a0ca-53bc36592000"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>

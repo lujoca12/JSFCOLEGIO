@@ -24,4 +24,5 @@ public interface InterfaceMaestrias {
     public List<Maestria> getMaestriasD(String maestriaDescripcion, boolean mostrar) throws Exception;
     public boolean update(Maestria tMaestria) throws Exception;
     public boolean delete(Maestria tMaestria) throws Exception;
+    public List<Maestria> getMaestriaEstudiante(int idEstudiante) throws Exception;
 }

@@ -352,6 +352,7 @@
 	<parameter name="idMaestria" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
 	</parameter>
+	<parameter name="logoFondo" class="java.lang.String"/>
 	<queryString language="hql">
 		<![CDATA[select est.cedPasaporte as cedula, est.apellidos as apellidos, est.nombres as nombres, maest.descripcion as maestria, pr.fechaInicio as fechaInicio, pr.fechaFin as fechaFin, pr.descripcion as n_promoc, matr.NMatricula as n_matricula, pr.fechaResolucion as fechaResolucion, pr.resolucion as n_resolucion from Estudiante est  
 inner join est.solicitudInscripcions solinscr 
@@ -361,8 +362,7 @@ inner join pr.maestria maest
 where maest.id = $P{idMaestria} and 
 pr.id = $P{idPromocion} 
 and pr.estado <> '0' 
-and maest.estado = '1' and  matr.estado = '1'
-]]>
+and maest.estado = '1' and  matr.estado = '1']]>
 	</queryString>
 	<field name="cedula" class="java.lang.String"/>
 	<field name="apellidos" class="java.lang.String"/>
@@ -381,7 +381,7 @@ and maest.estado = '1' and  matr.estado = '1'
 		<band height="800" splitType="Stretch">
 			<image hAlign="Center">
 				<reportElement mode="Transparent" x="11" y="92" width="527" height="561" uuid="3359bdf6-1654-4188-8d96-ccc7069b1044"/>
-				<imageExpression><![CDATA["C:\\Users\\server\\Documents\\NetBeansProjects\\JSFSISFIAC\\web\\Modulos\\Reportes\\logoUTEQoriginalGrandeTransp1.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[new File($P{logoFondo})]]></imageExpression>
 			</image>
 		</band>
 	</background>

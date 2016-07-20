@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="72a97996-a07d-4a3f-a0f6-a2fe27384592">
 	<property name="ireport.zoom" value="1.4641000000000006"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="229"/>
+	<property name="ireport.y" value="23"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -24,9 +24,16 @@
 		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA[' ']]></defaultValueExpression>
 	</parameter>
+	<parameter name="logoFondo" class="java.lang.String"/>
+	<parameter name="idMaestria" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idPromocion" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
 	<queryString language="hql">
 		<![CDATA[select maest.descripcion as maestria, estud.apellidos as apellidos, estud.nombres as nombres, nota.nota as nota, 
-nota.notaTexto as notaTexto, mod.descripcion as modulo, mod.creditos as creditos, mod.n_modulo as n_modulo, 
+nota.notaTexto as notaTexto, mod.descripcion as modulo, mod.creditos as creditos, mod.modulo as n_modulo, 
 pr.descripcion as n_promocion  
 from Notas nota 
 inner join nota.modulo mod 
@@ -35,8 +42,10 @@ inner join matr.solicitudInscripcion solic
 inner join solic.estudiante estud 
 inner join solic.promocion pr 
 inner join pr.maestria maest 
-where estud.cedPasaporte = $P{cedulaEstudiante} 
-order by  mod.n_modulo asc]]>
+where estud.cedPasaporte = $P{cedulaEstudiante} and 
+maest.id = $P{idMaestria} and 
+pr.id = $P{idPromocion} 
+order by  mod.modulo asc]]>
 	</queryString>
 	<field name="maestria" class="java.lang.String"/>
 	<field name="apellidos" class="java.lang.String"/>
@@ -48,7 +57,12 @@ order by  mod.n_modulo asc]]>
 	<field name="n_modulo" class="java.lang.String"/>
 	<field name="n_promocion" class="java.lang.Integer"/>
 	<background>
-		<band splitType="Stretch"/>
+		<band height="800" splitType="Stretch">
+			<image hAlign="Center">
+				<reportElement mode="Transparent" x="21" y="102" width="527" height="561" uuid="1e25efdc-2b71-4268-a0f0-fc3c33ebe8c2"/>
+				<imageExpression><![CDATA[new File($P{logoFondo})]]></imageExpression>
+			</image>
+		</band>
 	</background>
 	<title>
 		<band height="84" splitType="Stretch">

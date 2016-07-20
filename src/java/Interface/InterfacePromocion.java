@@ -28,4 +28,5 @@ public interface InterfacePromocion {
     public List<Precio> getPromocionesPrecios(int idPromocion) throws Exception;
     public List<Promocion> getValidacionPromocionesMaestrias(String maestriaDescripcion, int promocion) throws Exception;
     public List<Promocion> getPromocionesMaestriasDocente(int idDocente) throws Exception;
+public List<Promocion> getPromocionesMaestriasEstudiantes(int idMaestria, int idEstudiante) throws Exception;
 }

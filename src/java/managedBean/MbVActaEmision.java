@@ -50,6 +50,8 @@ public class MbVActaEmision implements Serializable {
     public void load() {
         media = null;
         llenarCboMaestria();
+        this.lstThemePromociones = new ArrayList<ClsMaestria>();
+        this.lstThemePromociones.add(new ClsMaestria(-1, "Seleccione..", "Seleccione..", 0, 0, 0, null, null));
     }
 
     public ClsMaestria getThemeMaestria() {
@@ -107,13 +109,18 @@ public class MbVActaEmision implements Serializable {
 
     public void llenarCboMaestria(){
         this.lstThemeMaestria = new ArrayList<ClsMaestria>();
+        
          try {
             DaoTMaestrias daoTmaestria = new DaoTMaestrias();
             
             List<Maestria> lstMaestria = daoTmaestria.getMaestriasD("",false);
             
             this.lstThemeMaestria.add(new ClsMaestria(-1,"Seleccione....","Seleccione....",0,0,0,null, null));
-            
+//            
+//            if(lstThemePromociones == null){
+//                
+//            }
+//            
 //            this.lstThemePromociones = new ArrayList<ClsMaestria>();
 //             
 //             this.lstThemePromociones.add(new ClsMaestria(-1, "Seleccione..", "Seleccione..", 0, 0, 0, null, null));
@@ -157,7 +164,7 @@ public class MbVActaEmision implements Serializable {
                 anioFin = anioFinC.get(Calendar.YEAR);
                 
                 this.lstThemePromociones.add(new ClsMaestria(promocion.getId(),
-                        promocion.getDescripcion() + " (" + String.valueOf(anioInicio) +" - "+ String.valueOf(anioFin)+")" + ")",
+                        "Promoción "+promocion.getDescripcion() + " año (" + String.valueOf(anioInicio) +" - "+ String.valueOf(anioFin)+")" ,
                         promocion.getUsuario(), 
                         promocion.getId(),
                         0, 0,

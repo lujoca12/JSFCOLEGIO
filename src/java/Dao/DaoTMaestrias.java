@@ -124,6 +124,25 @@ public class DaoTMaestrias implements InterfaceMaestrias{
     }
     
     @Override
+    public List<Maestria> getMaestriaEstudiante(int idEstudiante) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        
+        //String hql="from Maestria m where m.estado = '1' "+consulta+" order by m.id desc";
+        String hql = "from Maestria maestria inner join fetch maestria.promocions pr \n"
+                + "inner join fetch pr.solicitudInscripcions sol \n"
+                + "inner join fetch sol.matriculas matr \n"
+                + "inner join fetch sol.estudiante estud \n"
+                + "where estud.id = "+idEstudiante+" order by maestria.descripcion asc";
+        Query query = sesion.createQuery(hql);
+
+        List<Maestria> lstMaestrias=(List<Maestria>) query.list();
+        sesion.close();
+        return lstMaestrias;
+    }
+    
+    @Override
     public List<Maestria> getMaestriaPromocion() throws Exception {
         this.sesion = null;
         this.tx = null;

@@ -78,6 +78,7 @@ public class DaoRepActaEmision {
         param.put("logoPostgrado",realPath+"logoPostgrado.jpg");
         param.put("idPromocion",idPromocion);
         param.put("idMaestria",idMaestria);
+        param.put("logoFondo",realPath+"logoUTEQoriginalGrandeTransp1.jpg");
         
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         
@@ -197,7 +198,7 @@ public class DaoRepActaEmision {
     }
     
     //Certificado de Maestria en proceso por estudiante
-    public StreamedContent reporteMaestriaProceso(String cedula){
+    public StreamedContent reporteMaestriaProceso(String cedula, int idMaestria, int idPromocion){
         //boolean band = false;
         StreamedContent media = null;
         ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance()
@@ -211,6 +212,9 @@ public class DaoRepActaEmision {
         param.put("logoUteq",realPath+"logoUTEQoriginal1.jpg");
         param.put("logoPostgrado",realPath+"logoPostgrado.jpg");
         param.put("cedulaEstudiante",cedula);
+        param.put("logoFondo",realPath+"logoUTEQoriginalGrandeTransp1.jpg");
+        param.put("idMaestria",idMaestria);
+        param.put("idPromocion",idPromocion);
         
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         
@@ -238,7 +242,7 @@ public class DaoRepActaEmision {
     }
     
     //Certificado de Maestria en proceso por estudiante
-    public StreamedContent reporteMaestriaEstudiante(String cedula){
+    public StreamedContent reporteMaestriaEstudiante(String cedula, int idMaestria, int idPromocion){
         //boolean band = false;
         StreamedContent media = null;
         ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance()
@@ -252,6 +256,9 @@ public class DaoRepActaEmision {
         param.put("logoUteq",realPath+"logoUTEQoriginal1.jpg");
         param.put("logoPostgrado",realPath+"logoPostgrado.jpg");
         param.put("cedulaEstudiante",cedula);
+        param.put("logoFondo",realPath+"logoUTEQoriginalGrandeTransp1.jpg");
+        param.put("idMaestria",idMaestria);
+        param.put("idPromocion",idPromocion);
         
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         

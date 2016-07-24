@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f80e08a2-d5d7-43af-8a66-f9ab0f5bb882">
 	<property name="ireport.zoom" value="1.1"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="340"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<style name="table">
 		<box>
@@ -17,7 +17,7 @@
 	<queryString language="hql">
 		<![CDATA[select maest.descripcion as maestria, 
 CONCAT(estud.apellidos, estud.nombres) as nombres,  nota.nota as nota, 
-nota.notaTexto as notaTexto, mod.descripcion as modulo,  mod.creditos as creditos, mod.n_modulo as n_modulo, 
+nota.notaTexto as notaTexto, mod.descripcion as modulo,  mod.creditos as creditos, mod.modulo as n_modulo, 
 pr.descripcion as n_promocion  
 from Notas nota 
 inner join nota.modulo mod 
@@ -27,7 +27,7 @@ inner join solic.estudiante estud
 inner join solic.promocion pr 
 inner join pr.maestria maest 
 where maest.id = $P{idMaestria} 
-order by  mod.n_modulo asc]]>
+order by  mod.modulo asc]]>
 	</queryString>
 	<field name="maestria" class="java.lang.String"/>
 	<field name="nombres" class="java.lang.String"/>
@@ -38,7 +38,12 @@ order by  mod.n_modulo asc]]>
 	<field name="n_modulo" class="java.lang.String"/>
 	<field name="n_promocion" class="java.lang.Integer"/>
 	<background>
-		<band splitType="Stretch"/>
+		<band height="500" splitType="Stretch">
+			<image hAlign="Center">
+				<reportElement x="22" y="58" width="765" height="429" uuid="f24ecea2-8b96-43a2-9f73-863db4a0c28c"/>
+				<imageExpression><![CDATA["C:\\Users\\server\\Documents\\NetBeansProjects\\JSFSISFIAC\\web\\Modulos\\Reportes\\logoUTEQoriginalGrandeTransp1.jpg"]]></imageExpression>
+			</image>
+		</band>
 	</background>
 	<title>
 		<band height="83" splitType="Stretch">
@@ -114,16 +119,16 @@ order by  mod.n_modulo asc]]>
 				<crosstabHeaderCell>
 					<cellContents>
 						<rectangle>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="167" height="51" uuid="04d7ad17-fa11-4a34-ae7e-4254129ff309"/>
+							<reportElement style="Crosstab Data Text" x="1" y="0" width="165" height="51" uuid="04d7ad17-fa11-4a34-ae7e-4254129ff309"/>
 						</rectangle>
 						<line>
-							<reportElement style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="167" height="49" uuid="87f3b575-c09e-4605-81da-89c3fdf75ed8"/>
+							<reportElement style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="166" height="49" uuid="87f3b575-c09e-4605-81da-89c3fdf75ed8"/>
 							<graphicElement>
 								<pen lineStyle="Solid"/>
 							</graphicElement>
 						</line>
 						<frame>
-							<reportElement style="Crosstab Data Text" x="47" y="0" width="120" height="13" uuid="192b1b49-16fe-4421-ba6f-439e52d69a50"/>
+							<reportElement style="Crosstab Data Text" x="45" y="1" width="120" height="13" uuid="192b1b49-16fe-4421-ba6f-439e52d69a50"/>
 							<staticText>
 								<reportElement style="Crosstab Data Text" x="17" y="0" width="95" height="12" uuid="4414cc46-7fe9-42f7-adf2-3864f1311137"/>
 								<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -133,9 +138,9 @@ order by  mod.n_modulo asc]]>
 							</staticText>
 						</frame>
 						<frame>
-							<reportElement style="Crosstab Data Text" x="0" y="35" width="167" height="13" uuid="ea3bc271-dce3-4ae2-a242-42e3f00c7004"/>
+							<reportElement style="Crosstab Data Text" x="1" y="35" width="164" height="13" uuid="ea3bc271-dce3-4ae2-a242-42e3f00c7004"/>
 							<staticText>
-								<reportElement style="Crosstab Data Text" x="30" y="1" width="137" height="12" uuid="93046075-6100-4981-aa7f-7cc622a6d5a3"/>
+								<reportElement style="Crosstab Data Text" x="43" y="1" width="120" height="12" uuid="93046075-6100-4981-aa7f-7cc622a6d5a3"/>
 								<textElement>
 									<font size="9" isBold="true"/>
 								</textElement>
@@ -143,7 +148,7 @@ order by  mod.n_modulo asc]]>
 							</staticText>
 						</frame>
 						<staticText>
-							<reportElement style="table" x="0" y="0" width="30" height="50" uuid="741e176f-1442-4925-8ce8-e8b176a6d00e"/>
+							<reportElement style="table" x="1" y="0" width="29" height="51" uuid="741e176f-1442-4925-8ce8-e8b176a6d00e"/>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font size="7"/>
 							</textElement>
@@ -151,7 +156,7 @@ order by  mod.n_modulo asc]]>
 						</staticText>
 					</cellContents>
 				</crosstabHeaderCell>
-				<rowGroup name="nombres" width="167" totalPosition="End">
+				<rowGroup name="nombres" width="166">
 					<bucket class="java.lang.String">
 						<bucketExpression><![CDATA[$F{nombres}]]></bucketExpression>
 					</bucket>
@@ -161,7 +166,17 @@ order by  mod.n_modulo asc]]>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="167" height="25" uuid="e117d61f-c6c7-460b-bd01-7db40b17fe12"/>
+								<reportElement style="table" x="1" y="0" width="29" height="12" uuid="5a20494f-50a9-49a5-adf4-e2d573c7b2ec"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{ROW_COUNT}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="30" y="0" width="136" height="12" uuid="e117d61f-c6c7-460b-bd01-7db40b17fe12"/>
+								<textElement textAlignment="Left">
+									<font size="8"/>
+								</textElement>
 								<textFieldExpression><![CDATA[$V{nombres}]]></textFieldExpression>
 							</textField>
 						</cellContents>
@@ -210,13 +225,13 @@ order by  mod.n_modulo asc]]>
 				<measure name="notaMeasure" class="java.math.BigDecimal" calculation="Average">
 					<measureExpression><![CDATA[$F{nota}]]></measureExpression>
 				</measure>
-				<crosstabCell width="23" height="25">
+				<crosstabCell width="23" height="12">
 					<cellContents>
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="23" height="25" uuid="12198880-70f5-4f53-b1c7-bb1bed54e557"/>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="23" height="12" uuid="12198880-70f5-4f53-b1c7-bb1bed54e557"/>
 							<textElement verticalAlignment="Middle">
 								<font size="8"/>
 							</textElement>
@@ -231,13 +246,13 @@ order by  mod.n_modulo asc]]>
 						</box>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="26" columnTotalGroup="n_modulo">
+				<crosstabCell width="26" height="12" columnTotalGroup="n_modulo">
 					<cellContents backcolor="#BFE1FF" mode="Opaque">
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="26" height="25" uuid="e17314ec-b060-4f6a-b33d-f0aa4b4b455a"/>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="26" height="12" uuid="e17314ec-b060-4f6a-b33d-f0aa4b4b455a"/>
 							<textElement verticalAlignment="Middle">
 								<font size="8"/>
 							</textElement>

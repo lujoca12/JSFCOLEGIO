@@ -74,7 +74,7 @@
                                                      or (mbVNotas.estado eq 'B' and mbVNotas.tipo_user eq 0)
                                                      or (mbVNotas.estado eq ' ' and mbVNotas.tipo_user eq 0)
                                                      or (notas.totalAsistencia gt 90 ? false:true)}"
-                                value="#{(notas.totalAsistencia gt 90 ? null:'Perdido por Asistencia')}" 
+                                         value="#{(notas.totalAsistencia gt 90 ? notas.observacion:'Perdido por Asistencia')}" 
                                 style="width:100%; #{notas.totalAsistencia gt 90 ? null:'color: red;'}"/>
                         </p:column>
                     </p:dataTable>

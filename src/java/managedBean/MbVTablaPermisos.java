@@ -221,7 +221,7 @@ public class MbVTablaPermisos implements Serializable{
         DaoTMenu daotMenu = new DaoTMenu();
         tPermiso = new Permiso();
         String ruta = "";
-        ruta += "CargarPaginaURL('"+((ClsTablaPermisos) event.getObject()).getContenedor()+"','/JSFSISFIAC/faces/"+((ClsTablaPermisos) event.getObject()).getRuta()+"')";
+        ruta += "CargarPaginaURL('"+((ClsTablaPermisos) event.getObject()).getContenedor()+"','/JSFCOLEGIO/faces/"+((ClsTablaPermisos) event.getObject()).getRuta()+"')";
         
         try {
             tPermiso.setId(((ClsTablaPermisos) event.getObject()).getId());
@@ -265,7 +265,7 @@ public class MbVTablaPermisos implements Serializable{
         DaoTMenu daotMenu = new DaoTMenu();
         tPermiso = new Permiso();
         String ruta = "";
-        ruta += "CargarPaginaURL('"+clsTablaPermisos.getContenedor()+"','/JSFSISFIAC/faces/"+clsTablaPermisos.getRuta()+"')";
+        ruta += "CargarPaginaURL('"+clsTablaPermisos.getContenedor()+"','/JSFCOLEGIO/faces/"+clsTablaPermisos.getRuta()+"')";
         
         try {
             tPermiso.setId(clsTablaPermisos.getId());
@@ -284,7 +284,7 @@ public class MbVTablaPermisos implements Serializable{
                 for (int i = 0; i < lstTablaPermisos.size(); i++) {
                     if(lstTablaPermisos.get(i).getPadre() == clsTablaPermisos.getId()){
                         ruta = "";
-                        ruta += "CargarPaginaURL('"+lstTablaPermisos.get(i).getContenedor()+"','/JSFSISFIAC/faces/"+lstTablaPermisos.get(i).getRuta()+"')";
+                        ruta += "CargarPaginaURL('"+lstTablaPermisos.get(i).getContenedor()+"','/JSFCOLEGIO/faces/"+lstTablaPermisos.get(i).getRuta()+"')";
                         tPermiso.setId(lstTablaPermisos.get(i).getId());
                         tPermiso.setDescripcion(lstTablaPermisos.get(i).getDescripcion());
                         tPermiso.setForm(ruta);
@@ -313,7 +313,7 @@ public class MbVTablaPermisos implements Serializable{
         DaoTMenu daotMenu = new DaoTMenu();
         tPermiso = new Permiso();
         String ruta = "";
-        ruta += "CargarPaginaURL('"+clsTablaPermisos.getContenedor()+"','/JSFSISFIAC/faces/"+clsTablaPermisos.getRuta()+"')";
+        ruta += "CargarPaginaURL('"+clsTablaPermisos.getContenedor()+"','/JSFCOLEGIO/faces/"+clsTablaPermisos.getRuta()+"')";
         
         try {
             tPermiso.setId(clsTablaPermisos.getId());
@@ -332,7 +332,7 @@ public class MbVTablaPermisos implements Serializable{
                 for (int i = 0; i < lstTablaPermisos.size(); i++) {
                     if(lstTablaPermisos.get(i).getPadre() == clsTablaPermisos.getId()){
                         ruta = "";
-                        ruta += "CargarPaginaURL('"+lstTablaPermisos.get(i).getContenedor()+"','/JSFSISFIAC/faces/"+lstTablaPermisos.get(i).getRuta()+"')";
+                        ruta += "CargarPaginaURL('"+lstTablaPermisos.get(i).getContenedor()+"','/JSFCOLEGIO/faces/"+lstTablaPermisos.get(i).getRuta()+"')";
                         tPermiso.setId(lstTablaPermisos.get(i).getId());
                         tPermiso.setDescripcion(lstTablaPermisos.get(i).getDescripcion());
                         tPermiso.setForm(ruta);

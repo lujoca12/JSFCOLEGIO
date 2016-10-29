@@ -293,10 +293,10 @@ public class MbVAsistencia implements Serializable {
                     this.habilitar = 1;
                     mensajesOk("Asistencia ya registrada");
                     for (Asistencia asistencia : lstAsistencia) {
-                        calendar.setTime(asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getFechaInicio());
+                        //calendar.setTime(asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getFechaInicio());
                         añoInicio = calendar.get(Calendar.YEAR);
                         cont++;
-                        calendar.setTime(asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getFechaFin());
+                        //calendar.setTime(asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getFechaFin());
                         añoFin = calendar.get(Calendar.YEAR);
                         estudiante = asistencia.getMatricula().getSolicitudInscripcion().getEstudiante().getApellidos() + " " + asistencia.getMatricula().getSolicitudInscripcion().getEstudiante().getNombres();
                         if (asistencia.getEstado().equals('1')) {
@@ -310,11 +310,15 @@ public class MbVAsistencia implements Serializable {
                                 asistencia.getMatricula().getId(),
                                 asistencia.getMatricula().getNMatricula(),
                                 asistencia.getMatricula().getFechaMatricula(),
-                                asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getId(),
+                                //asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getId(),
+                                0,
                                 añoInicio + "-" + añoFin,
-                                asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getFechaResolucion(),
-                                asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getId(),
-                                asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
+                                null,
+                                0,
+                                "",
+                                //asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getFechaResolucion(),
+                                //asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getId(),
+                                //asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
                                 cont,
                                 "",
                                 asistencia.getObservacion(),
@@ -330,10 +334,10 @@ public class MbVAsistencia implements Serializable {
                         this.estado = 1;
                         this.habilitar = 0;
                         for (Matricula matricula : lstMatricula) {
-                            calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaInicio());
+                            //calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaInicio());
                             añoInicio = calendar.get(Calendar.YEAR);
                             cont++;
-                            calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaFin());
+                            //calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaFin());
                             añoFin = calendar.get(Calendar.YEAR);
                             estudiante = matricula.getSolicitudInscripcion().getEstudiante().getApellidos() + " " + matricula.getSolicitudInscripcion().getEstudiante().getNombres();
 
@@ -342,11 +346,15 @@ public class MbVAsistencia implements Serializable {
                                     matricula.getId(),
                                     matricula.getNMatricula(),
                                     matricula.getFechaMatricula(),
-                                    matricula.getSolicitudInscripcion().getPromocion().getId(),
+//                                    matricula.getSolicitudInscripcion().getPromocion().getId(),
+                                    0,
                                     añoInicio + "-" + añoFin,
-                                    matricula.getSolicitudInscripcion().getPromocion().getFechaResolucion(),
-                                    matricula.getSolicitudInscripcion().getPromocion().getMaestria().getId(),
-                                    matricula.getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
+                                    null,
+                                    0,
+                                    "",
+                                    //matricula.getSolicitudInscripcion().getPromocion().getFechaResolucion(),
+                                    //matricula.getSolicitudInscripcion().getPromocion().getMaestria().getId(),
+                                    //matricula.getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
                                     cont,
                                     "",
                                     "",
@@ -396,10 +404,10 @@ public class MbVAsistencia implements Serializable {
                     this.habilitar = 0;
 
                     for (Asistencia asistencia : lstAsistencia) {
-                        calendar.setTime(asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getFechaInicio());
+                        //calendar.setTime(asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getFechaInicio());
                         añoInicio = calendar.get(Calendar.YEAR);
                         cont++;
-                        calendar.setTime(asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getFechaFin());
+                        //calendar.setTime(asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getFechaFin());
                         añoFin = calendar.get(Calendar.YEAR);
                         estudiante = asistencia.getMatricula().getSolicitudInscripcion().getEstudiante().getApellidos() + " " + asistencia.getMatricula().getSolicitudInscripcion().getEstudiante().getNombres();
                         if (asistencia.getEstado().equals('1')) {
@@ -413,11 +421,15 @@ public class MbVAsistencia implements Serializable {
                                 asistencia.getMatricula().getId(),
                                 asistencia.getMatricula().getNMatricula(),
                                 asistencia.getMatricula().getFechaMatricula(),
-                                asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getId(),
+                                //asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getId(),
+                                0,
                                 añoInicio + "-" + añoFin,
-                                asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getFechaResolucion(),
-                                asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getId(),
-                                asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
+                                null,
+                                0,
+                                "",
+                                //asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getFechaResolucion(),
+                                //asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getId(),
+                                //asistencia.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
                                 cont,
                                 "",
                                 asistencia.getObservacion(),

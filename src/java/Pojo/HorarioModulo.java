@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 16-may-2016 9:34:07 by Hibernate Tools 4.3.1
+// Generated 28-oct-2016 20:56:56 by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -12,32 +12,31 @@ public class HorarioModulo  implements java.io.Serializable {
 
 
      private int id;
+     private Modulo modulo;
      private Date horaInicio;
      private Date horaFin;
      private Date fecha;
      private Integer mes;
      private Character dia;
      private BigDecimal hora;
-     private Modulo modulo;
      private Character estado;
 
     public HorarioModulo() {
     }
 
 	
-    public HorarioModulo(int id, Modulo modulo) {
+    public HorarioModulo(int id) {
         this.id = id;
-        this.modulo = modulo;
     }
-    public HorarioModulo(int id, Date horaInicio, Date horaFin, Date fecha, Integer mes, Character dia, BigDecimal hora, Modulo modulo, Character estado) {
+    public HorarioModulo(int id, Modulo modulo, Date horaInicio, Date horaFin, Date fecha, Integer mes, Character dia, BigDecimal hora, Character estado) {
        this.id = id;
+       this.modulo = modulo;
        this.horaInicio = horaInicio;
        this.horaFin = horaFin;
        this.fecha = fecha;
        this.mes = mes;
        this.dia = dia;
        this.hora = hora;
-       this.modulo = modulo;
        this.estado = estado;
     }
    
@@ -47,6 +46,13 @@ public class HorarioModulo  implements java.io.Serializable {
     
     public void setId(int id) {
         this.id = id;
+    }
+    public Modulo getModulo() {
+        return this.modulo;
+    }
+    
+    public void setModulo(Modulo modulo) {
+        this.modulo = modulo;
     }
     public Date getHoraInicio() {
         return this.horaInicio;
@@ -90,23 +96,17 @@ public class HorarioModulo  implements java.io.Serializable {
     public void setHora(BigDecimal hora) {
         this.hora = hora;
     }
-
-    public Modulo getModulo() {
-        return modulo;
-    }
-
-    public void setModulo(Modulo modulo) {
-        this.modulo = modulo;
-    }
-
     public Character getEstado() {
-        return estado;
+        return this.estado;
     }
-
+    
     public void setEstado(Character estado) {
         this.estado = estado;
     }
-    
+
+
+
+
 }
 
 

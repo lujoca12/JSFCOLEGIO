@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 16-may-2016 9:34:07 by Hibernate Tools 4.3.1
+// Generated 28-oct-2016 20:56:56 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -29,6 +29,7 @@ public class Usuario  implements java.io.Serializable {
      private String clave;
      private String usuarioBd;
      private String claveBd;
+     private Set proyectos = new HashSet(0);
      private Set detallePermisos = new HashSet(0);
      private Set modulos = new HashSet(0);
 
@@ -41,7 +42,7 @@ public class Usuario  implements java.io.Serializable {
         this.tipoUsuario = tipoUsuario;
         this.cedPasaporte = cedPasaporte;
     }
-    public Usuario(int id, TipoUsuario tipoUsuario, String cedPasaporte, String nombres, String apellidos, String direccion, String telefono, String email, Character estadoCivil, Character sexo, Date fechaNac, String celular, Character estado, String nick, String clave, String usuarioBd, String claveBd, Set detallePermisos, Set modulos) {
+    public Usuario(int id, TipoUsuario tipoUsuario, String cedPasaporte, String nombres, String apellidos, String direccion, String telefono, String email, Character estadoCivil, Character sexo, Date fechaNac, String celular, Character estado, String nick, String clave, String usuarioBd, String claveBd, Set proyectos, Set detallePermisos, Set modulos) {
        this.id = id;
        this.tipoUsuario = tipoUsuario;
        this.cedPasaporte = cedPasaporte;
@@ -59,6 +60,7 @@ public class Usuario  implements java.io.Serializable {
        this.clave = clave;
        this.usuarioBd = usuarioBd;
        this.claveBd = claveBd;
+       this.proyectos = proyectos;
        this.detallePermisos = detallePermisos;
        this.modulos = modulos;
     }
@@ -181,6 +183,13 @@ public class Usuario  implements java.io.Serializable {
     
     public void setClaveBd(String claveBd) {
         this.claveBd = claveBd;
+    }
+    public Set getProyectos() {
+        return this.proyectos;
+    }
+    
+    public void setProyectos(Set proyectos) {
+        this.proyectos = proyectos;
     }
     public Set getDetallePermisos() {
         return this.detallePermisos;

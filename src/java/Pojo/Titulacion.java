@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 16-may-2016 9:34:07 by Hibernate Tools 4.3.1
+// Generated 28-oct-2016 20:56:56 by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -29,25 +29,15 @@ public class Titulacion  implements java.io.Serializable {
     public Titulacion(int id) {
         this.id = id;
     }
-    
-
     public Titulacion(int id, Matricula matricula, TipoTitulacion tipoTitulacion, BigDecimal nota, Date fechaInicio, Date fechaFin, Character estado, Set proyectos) {
-        this.id = id;
-        this.matricula = matricula;
-        this.tipoTitulacion = tipoTitulacion;
-        this.nota = nota;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
-        this.estado = estado;
+       this.id = id;
+       this.matricula = matricula;
+       this.tipoTitulacion = tipoTitulacion;
+       this.nota = nota;
+       this.fechaInicio = fechaInicio;
+       this.fechaFin = fechaFin;
+       this.estado = estado;
        this.proyectos = proyectos;
-    }
-    
-    public Character getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Character estado) {
-        this.estado = estado;
     }
    
     public int getId() {
@@ -91,6 +81,13 @@ public class Titulacion  implements java.io.Serializable {
     
     public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
+    }
+    public Character getEstado() {
+        return this.estado;
+    }
+    
+    public void setEstado(Character estado) {
+        this.estado = estado;
     }
     public Set getProyectos() {
         return this.proyectos;

@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 16-may-2016 9:34:07 by Hibernate Tools 4.3.1
+// Generated 28-oct-2016 20:56:56 by Hibernate Tools 4.3.1
 
 
 
@@ -12,7 +12,7 @@ public class Postgrado  implements java.io.Serializable {
      private int id;
      private String email;
      private String claveEmail;
-     private int numMatricula;
+     private Integer numMatricula;
 
     public Postgrado() {
     }
@@ -21,11 +21,11 @@ public class Postgrado  implements java.io.Serializable {
     public Postgrado(int id) {
         this.id = id;
     }
-    public Postgrado(int id, String email, String claveEmail,int numMatricula) {
+    public Postgrado(int id, String email, String claveEmail, Integer numMatricula) {
        this.id = id;
        this.email = email;
        this.claveEmail = claveEmail;
-       this.numMatricula=numMatricula;
+       this.numMatricula = numMatricula;
     }
    
     public int getId() {
@@ -49,12 +49,11 @@ public class Postgrado  implements java.io.Serializable {
     public void setClaveEmail(String claveEmail) {
         this.claveEmail = claveEmail;
     }
-
-    public int getNumMatricula() {
-        return numMatricula;
+    public Integer getNumMatricula() {
+        return this.numMatricula;
     }
-
-    public void setNumMatricula(int numMatricula) {
+    
+    public void setNumMatricula(Integer numMatricula) {
         this.numMatricula = numMatricula;
     }
 

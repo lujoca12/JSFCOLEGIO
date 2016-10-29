@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 16-may-2016 9:34:07 by Hibernate Tools 4.3.1
+// Generated 28-oct-2016 20:56:56 by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -14,6 +14,8 @@ public class Modulo  implements java.io.Serializable {
 
 
      private int id;
+     private Curso curso;
+     private Materias materias;
      private Promocion promocion;
      private Usuario usuario;
      private BigDecimal creditos;
@@ -21,25 +23,29 @@ public class Modulo  implements java.io.Serializable {
      private Date fechaInicio;
      private Date fechaFin;
      private String modulo;
-     private Set asistencias = new HashSet(0);
-     private Set notases = new HashSet(0);
-     private Set horariomodulo = new HashSet(0);
      private Date fechaInicioExamen;
      private Date fechaFinExamen;
      private BigDecimal totalHorasModulo;
      private Character estado;
+     private Set horarioModulos = new HashSet(0);
+     private Set asistencias = new HashSet(0);
+     private Set notases = new HashSet(0);
 
     public Modulo() {
     }
 
 	
-    public Modulo(int id, Promocion promocion, Usuario usuario) {
+    public Modulo(int id, Curso curso, Materias materias, Promocion promocion, Usuario usuario) {
         this.id = id;
+        this.curso = curso;
+        this.materias = materias;
         this.promocion = promocion;
         this.usuario = usuario;
     }
-    public Modulo(int id, Promocion promocion, Usuario usuario, BigDecimal creditos, String descripcion, Date fechaInicio, Date fechaFin, String modulo, Set asistencias, Set notases, Set horariomodulo, Date fechaInicioExamen, Date fechaFinExamen, BigDecimal totalHorasModulo, Character estado) {
+    public Modulo(int id, Curso curso, Materias materias, Promocion promocion, Usuario usuario, BigDecimal creditos, String descripcion, Date fechaInicio, Date fechaFin, String modulo, Date fechaInicioExamen, Date fechaFinExamen, BigDecimal totalHorasModulo, Character estado, Set horarioModulos, Set asistencias, Set notases) {
        this.id = id;
+       this.curso = curso;
+       this.materias = materias;
        this.promocion = promocion;
        this.usuario = usuario;
        this.creditos = creditos;
@@ -47,13 +53,13 @@ public class Modulo  implements java.io.Serializable {
        this.fechaInicio = fechaInicio;
        this.fechaFin = fechaFin;
        this.modulo = modulo;
-       this.asistencias = asistencias;
-       this.notases = notases;
-       this.horariomodulo = horariomodulo;
        this.fechaInicioExamen = fechaInicioExamen;
        this.fechaFinExamen = fechaFinExamen;
        this.totalHorasModulo = totalHorasModulo;
        this.estado = estado;
+       this.horarioModulos = horarioModulos;
+       this.asistencias = asistencias;
+       this.notases = notases;
     }
    
     public int getId() {
@@ -62,6 +68,20 @@ public class Modulo  implements java.io.Serializable {
     
     public void setId(int id) {
         this.id = id;
+    }
+    public Curso getCurso() {
+        return this.curso;
+    }
+    
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+    }
+    public Materias getMaterias() {
+        return this.materias;
+    }
+    
+    public void setMaterias(Materias materias) {
+        this.materias = materias;
     }
     public Promocion getPromocion() {
         return this.promocion;
@@ -112,6 +132,41 @@ public class Modulo  implements java.io.Serializable {
     public void setModulo(String modulo) {
         this.modulo = modulo;
     }
+    public Date getFechaInicioExamen() {
+        return this.fechaInicioExamen;
+    }
+    
+    public void setFechaInicioExamen(Date fechaInicioExamen) {
+        this.fechaInicioExamen = fechaInicioExamen;
+    }
+    public Date getFechaFinExamen() {
+        return this.fechaFinExamen;
+    }
+    
+    public void setFechaFinExamen(Date fechaFinExamen) {
+        this.fechaFinExamen = fechaFinExamen;
+    }
+    public BigDecimal getTotalHorasModulo() {
+        return this.totalHorasModulo;
+    }
+    
+    public void setTotalHorasModulo(BigDecimal totalHorasModulo) {
+        this.totalHorasModulo = totalHorasModulo;
+    }
+    public Character getEstado() {
+        return this.estado;
+    }
+    
+    public void setEstado(Character estado) {
+        this.estado = estado;
+    }
+    public Set getHorarioModulos() {
+        return this.horarioModulos;
+    }
+    
+    public void setHorarioModulos(Set horarioModulos) {
+        this.horarioModulos = horarioModulos;
+    }
     public Set getAsistencias() {
         return this.asistencias;
     }
@@ -127,46 +182,9 @@ public class Modulo  implements java.io.Serializable {
         this.notases = notases;
     }
 
-    public Set getHorariomodulo() {
-        return horariomodulo;
-    }
 
-    public void setHorariomodulo(Set horariomodulo) {
-        this.horariomodulo = horariomodulo;
-    }
-    
-    public Date getFechaInicioExamen() {
-        return fechaInicioExamen;
-    }
 
-    public void setFechaInicioExamen(Date fechaInicioExamen) {
-        this.fechaInicioExamen = fechaInicioExamen;
-    }
 
-    public Date getFechaFinExamen() {
-        return fechaFinExamen;
-    }
-
-    public void setFechaFinExamen(Date fechaFinExamen) {
-        this.fechaFinExamen = fechaFinExamen;
-    }
-
-    public BigDecimal getTotalHorasModulo() {
-        return totalHorasModulo;
-    }
-
-    public void setTotalHorasModulo(BigDecimal totalHorasModulo) {
-        this.totalHorasModulo = totalHorasModulo;
-    }
-
-    public Character getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Character estado) {
-        this.estado = estado;
-    }
-    
 }
 
 

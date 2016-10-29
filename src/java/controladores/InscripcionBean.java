@@ -956,7 +956,8 @@ public class InscripcionBean implements Serializable {
                 sInscripcion.setFechaRealizacion(dateobj);
                 sInscripcion.setEstudiante(estudiante);
                 PromocionDao pDao = new PromocionDao();
-                sInscripcion.setPromocion(pDao.getPromocion(idPromo));
+                //falta el curso ojo
+                //sInscripcion.setPromocion(pDao.getPromocion(idPromo));
                 InscripcionDao iDao = new InscripcionDao();
                 if (iDao.insertar(estudiante, datosNac, datosDom, datosLab, sInscripcion, titulo, universidad)) {
                     guardarArchivos();

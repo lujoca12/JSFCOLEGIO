@@ -243,9 +243,10 @@ public class AsignarEntrevistaBean implements Serializable {
             fecha2 = dateFormat.format(fecha) + " " + hora + ":" + minuto + ":00";
             
             SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            String msj = "Saludos Sr(a). \n Le damos a conocer que la entrevista para la aprobacion de la matricula de la "+
-                    SelectedInscripcion.getPromocion().getMaestria().getDescripcion() +" se llevará a cabo el día "+fecha2+ 
-                    " en el/la "+lugar+" \n Postgrado UTEQ.";
+            //falta el curso ojo
+            //String msj = "Saludos Sr(a). \n Le damos a conocer que la entrevista para la aprobacion de la matricula de la "+
+                    //SelectedInscripcion.getPromocion().getMaestria().getDescripcion() +" se llevará a cabo el día "+fecha2+ 
+                    //" en el/la "+lugar+" \n Postgrado UTEQ.";
 
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(username));
@@ -253,7 +254,7 @@ public class AsignarEntrevistaBean implements Serializable {
                     InternetAddress.parse(SelectedInscripcion.getEstudiante().getEmail()));
             message.setSubject("Entrevista Maestria");
             //message.setText("La entrevista tendrá lugar en " + lugar + " el " + dateFormat.format(fecha));
-            message.setText(msj);
+            //message.setText(msj);
             Transport.send(message);
             FacesMessage m = new FacesMessage("Succesful", "Correo enviado");
             FacesContext.getCurrentInstance().addMessage(null, m);

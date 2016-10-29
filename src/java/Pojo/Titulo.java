@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 16-may-2016 9:34:07 by Hibernate Tools 4.3.1
+// Generated 28-oct-2016 20:56:56 by Hibernate Tools 4.3.1
 
 
 
@@ -10,33 +10,26 @@ public class Titulo  implements java.io.Serializable {
 
 
      private int id;
+     private Estudiante estudiante;
      private Universidad universidad;
      private String descripcion;
      private String NSenecyt;
-     private Estudiante estudiante;
 
     public Titulo() {
     }
 
 	
-    public Titulo(int id, Universidad universidad) {
+    public Titulo(int id, Estudiante estudiante, Universidad universidad) {
         this.id = id;
+        this.estudiante = estudiante;
         this.universidad = universidad;
     }
-    public Titulo(int id, Universidad universidad, String descripcion, String NSenecyt,Estudiante estudiante) {
+    public Titulo(int id, Estudiante estudiante, Universidad universidad, String descripcion, String NSenecyt) {
        this.id = id;
+       this.estudiante = estudiante;
        this.universidad = universidad;
        this.descripcion = descripcion;
        this.NSenecyt = NSenecyt;
-       this.estudiante=estudiante;
-    }
-
-    public Estudiante getEstudiante() {
-        return estudiante;
-    }
-
-    public void setEstudiante(Estudiante estudiante) {
-        this.estudiante = estudiante;
     }
    
     public int getId() {
@@ -45,6 +38,13 @@ public class Titulo  implements java.io.Serializable {
     
     public void setId(int id) {
         this.id = id;
+    }
+    public Estudiante getEstudiante() {
+        return this.estudiante;
+    }
+    
+    public void setEstudiante(Estudiante estudiante) {
+        this.estudiante = estudiante;
     }
     public Universidad getUniversidad() {
         return this.universidad;

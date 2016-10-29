@@ -1,14 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 16-may-2016 9:34:21 by Hibernate Tools 4.3.1 -->
+<!-- Generated 28-oct-2016 20:57:08 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Pojo.Estudiante" table="estudiante" schema="public" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
-            <generator class="sequence" >
-                <param name="sequence">estudiante_id_seq</param>
-            </generator>
+            <generator class="assigned" />
         </id>
         <property name="cedPasaporte" type="string">
             <column name="ced_pasaporte" length="20" not-null="true" />
@@ -34,14 +32,26 @@
         <property name="estadoCivil" type="java.lang.Character">
             <column name="estado_civil" length="1" />
         </property>
-        <property name="etnia" type="java.lang.Character">
-            <column name="etnia_id" length="1" />
-        </property>
         <property name="paisOrigen" type="string">
             <column name="pais_origen" length="25" />
         </property>
         <property name="dscColegiatura" type="java.lang.Integer">
             <column name="dsc_colegiatura" />
+        </property>
+        <property name="etniaId" type="java.lang.Character">
+            <column name="etnia_id" length="1" />
+        </property>
+        <property name="primerNombre" type="string">
+            <column name="primer_nombre" length="25" />
+        </property>
+        <property name="segundoNombre" type="string">
+            <column name="segundo_nombre" length="25" />
+        </property>
+        <property name="primerApellido" type="string">
+            <column name="primer_apellido" length="25" />
+        </property>
+        <property name="segundoApellido" type="string">
+            <column name="segundo_apellido" length="25" />
         </property>
         <set name="datosDoms" table="datos_dom" inverse="true" lazy="true" fetch="select">
             <key>
@@ -55,6 +65,12 @@
             </key>
             <one-to-many class="Pojo.DatosNac" />
         </set>
+        <set name="titulos" table="titulo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_estudiante" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Titulo" />
+        </set>
         <set name="datosLabs" table="datos_lab" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="id_estudiante" />
@@ -66,24 +82,6 @@
                 <column name="id_estudiante" not-null="true" />
             </key>
             <one-to-many class="Pojo.SolicitudInscripcion" />
-        </set>
-         <property name="primerNombre" type="string">
-            <column name="primer_nombre" length="25" />
-        </property>
-         <property name="segundoNombre" type="string">
-            <column name="segundo_nombre" length="25" />
-        </property>
-         <property name="primerApellido" type="string">
-            <column name="primer_apellido" length="25" />
-        </property>
-         <property name="segundoApellido" type="string">
-            <column name="segundo_apellido" length="25" />
-        </property>
-        <set name="titulos" table="titulo" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="id_estudiante" not-null="true" />
-            </key>
-            <one-to-many class="Pojo.Titulo" />
         </set>
     </class>
 </hibernate-mapping>

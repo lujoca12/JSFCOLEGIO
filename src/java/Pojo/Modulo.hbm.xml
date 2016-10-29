@@ -1,13 +1,19 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 16-may-2016 9:34:21 by Hibernate Tools 4.3.1 -->
+<!-- Generated 28-oct-2016 20:57:08 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Pojo.Modulo" table="modulo" schema="public" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
-            <generator class="increment" />
+            <generator class="assigned" />
         </id>
+        <many-to-one name="curso" class="Pojo.Curso" fetch="select">
+            <column name="id_curso" not-null="true" />
+        </many-to-one>
+        <many-to-one name="materias" class="Pojo.Materias" fetch="select">
+            <column name="id_materia" not-null="true" />
+        </many-to-one>
         <many-to-one name="promocion" class="Pojo.Promocion" fetch="select">
             <column name="id_promocion" not-null="true" />
         </many-to-one>
@@ -29,24 +35,6 @@
         <property name="modulo" type="string">
             <column name="modulo" length="20" />
         </property>
-        <set name="asistencias" table="asistencia" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="id_modulo" not-null="true" />
-            </key>
-            <one-to-many class="Pojo.Asistencia" />
-        </set>
-        <set name="notases" table="notas" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="id_modulo" not-null="true" />
-            </key>
-            <one-to-many class="Pojo.Notas" />
-        </set>
-        <set name="horariomodulo" table="horario_modulo" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="id_modulo" not-null="true" />
-            </key>
-            <one-to-many class="Pojo.HorarioModulo" />
-        </set>
         <property name="fechaInicioExamen" type="date">
             <column name="fecha_inicio_examen" length="13" />
         </property>
@@ -59,5 +47,23 @@
         <property name="estado" type="java.lang.Character">
             <column name="estado" length="1" />
         </property>
+        <set name="horarioModulos" table="horario_modulo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_modulo" />
+            </key>
+            <one-to-many class="Pojo.HorarioModulo" />
+        </set>
+        <set name="asistencias" table="asistencia" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_modulo" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Asistencia" />
+        </set>
+        <set name="notases" table="notas" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_modulo" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Notas" />
+        </set>
     </class>
 </hibernate-mapping>

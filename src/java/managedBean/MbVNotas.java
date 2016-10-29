@@ -314,10 +314,10 @@ public class MbVNotas implements Serializable {
 
             if (lstMatricula.size() > 0) {
                 for (Matricula matricula : lstMatricula) {
-                    calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaInicio());
+//                    calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaInicio());
                     añoInicio = calendar.get(Calendar.YEAR);
                     cont++;
-                    calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaFin());
+  //                  calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaFin());
                     añoFin = calendar.get(Calendar.YEAR);
                     estudiante = matricula.getSolicitudInscripcion().getEstudiante().getApellidos() + " " + matricula.getSolicitudInscripcion().getEstudiante().getNombres();
 
@@ -326,11 +326,15 @@ public class MbVNotas implements Serializable {
                             matricula.getId(),
                             matricula.getNMatricula(),
                             matricula.getFechaMatricula(),
-                            matricula.getSolicitudInscripcion().getPromocion().getId(),
+                            //matricula.getSolicitudInscripcion().getPromocion().getId(),
+                            0,
                             añoInicio + "-" + añoFin,
-                            matricula.getSolicitudInscripcion().getPromocion().getFechaResolucion(),
-                            matricula.getSolicitudInscripcion().getPromocion().getMaestria().getId(),
-                            matricula.getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
+                            null,
+                            0,
+                            "",
+                            //matricula.getSolicitudInscripcion().getPromocion().getFechaResolucion(),
+                            //matricula.getSolicitudInscripcion().getPromocion().getMaestria().getId(),
+                            //matricula.getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
                             cont,
                             "",
                             "",
@@ -540,10 +544,10 @@ public class MbVNotas implements Serializable {
                                 estado = notas.getEstado();
                                 docente = notas.getModulo().getUsuario().getApellidos() + " " + notas.getModulo().getUsuario().getNombres();
                                 bandera = false;
-                                calendar.setTime(notas.getMatricula().getSolicitudInscripcion().getPromocion().getFechaInicio());
+                                //calendar.setTime(notas.getMatricula().getSolicitudInscripcion().getPromocion().getFechaInicio());
                                 añoInicio = calendar.get(Calendar.YEAR);
 
-                                calendar.setTime(notas.getMatricula().getSolicitudInscripcion().getPromocion().getFechaFin());
+                                //calendar.setTime(notas.getMatricula().getSolicitudInscripcion().getPromocion().getFechaFin());
                                 añoFin = calendar.get(Calendar.YEAR);
 
                                 estudiante = notas.getMatricula().getSolicitudInscripcion().getEstudiante().getApellidos() + " " + notas.getMatricula().getSolicitudInscripcion().getEstudiante().getNombres();
@@ -553,11 +557,15 @@ public class MbVNotas implements Serializable {
                                         notas.getMatricula().getId(),
                                         notas.getMatricula().getNMatricula(),
                                         notas.getMatricula().getFechaMatricula(),
-                                        notas.getMatricula().getSolicitudInscripcion().getPromocion().getId(),
+                                        //notas.getMatricula().getSolicitudInscripcion().getPromocion().getId(),
+                                        0,
                                         añoInicio + "-" + añoFin,
-                                        notas.getMatricula().getSolicitudInscripcion().getPromocion().getFechaResolucion(),
-                                        notas.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getId(),
-                                        notas.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
+                                        null,
+                                        0,
+                                        "",
+                                        //notas.getMatricula().getSolicitudInscripcion().getPromocion().getFechaResolucion(),
+                                        //notas.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getId(),
+                                        //notas.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
                                         cont,
                                         notas.getNota().toString(),
                                         notas.getObservacion(),
@@ -573,10 +581,10 @@ public class MbVNotas implements Serializable {
                     }
 
                     if (bandera) {
-                        calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaInicio());
+//                        calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaInicio());
                         añoInicio = calendar.get(Calendar.YEAR);
 
-                        calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaFin());
+  //                      calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaFin());
                         añoFin = calendar.get(Calendar.YEAR);
                         estudiante = matricula.getSolicitudInscripcion().getEstudiante().getApellidos() + " " + matricula.getSolicitudInscripcion().getEstudiante().getNombres();
                         cont++;
@@ -585,11 +593,15 @@ public class MbVNotas implements Serializable {
                                 matricula.getId(),
                                 matricula.getNMatricula(),
                                 matricula.getFechaMatricula(),
-                                matricula.getSolicitudInscripcion().getPromocion().getId(),
+                               // matricula.getSolicitudInscripcion().getPromocion().getId(),
+                                0,
                                 añoInicio + "-" + añoFin,
-                                matricula.getSolicitudInscripcion().getPromocion().getFechaResolucion(),
-                                matricula.getSolicitudInscripcion().getPromocion().getMaestria().getId(),
-                                matricula.getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
+                                null,
+                                0,
+                                "",
+                                //matricula.getSolicitudInscripcion().getPromocion().getFechaResolucion(),
+                                //matricula.getSolicitudInscripcion().getPromocion().getMaestria().getId(),
+                                //matricula.getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
                                 cont,
                                 "0",
                                 "",
@@ -703,10 +715,10 @@ public class MbVNotas implements Serializable {
                     estado = notas.getEstado();
                     docente = notas.getModulo().getUsuario().getApellidos() + " " + notas.getModulo().getUsuario().getNombres();
                     bandera = false;
-                    calendar.setTime(notas.getMatricula().getSolicitudInscripcion().getPromocion().getFechaInicio());
+//                    calendar.setTime(notas.getMatricula().getSolicitudInscripcion().getPromocion().getFechaInicio());
                     añoInicio = calendar.get(Calendar.YEAR);
 
-                    calendar.setTime(notas.getMatricula().getSolicitudInscripcion().getPromocion().getFechaFin());
+  //                  calendar.setTime(notas.getMatricula().getSolicitudInscripcion().getPromocion().getFechaFin());
                     añoFin = calendar.get(Calendar.YEAR);
 
                     estudiante = notas.getMatricula().getSolicitudInscripcion().getEstudiante().getApellidos() + " " + notas.getMatricula().getSolicitudInscripcion().getEstudiante().getNombres();
@@ -716,11 +728,15 @@ public class MbVNotas implements Serializable {
                             notas.getMatricula().getId(),
                             notas.getMatricula().getNMatricula(),
                             notas.getMatricula().getFechaMatricula(),
-                            notas.getMatricula().getSolicitudInscripcion().getPromocion().getId(),
+                            //notas.getMatricula().getSolicitudInscripcion().getPromocion().getId(),
+                            0,
                             añoInicio + "-" + añoFin,
-                            notas.getMatricula().getSolicitudInscripcion().getPromocion().getFechaResolucion(),
-                            notas.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getId(),
-                            notas.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
+                            null,
+                            0,
+                            "",
+                            //notas.getMatricula().getSolicitudInscripcion().getPromocion().getFechaResolucion(),
+                            //notas.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getId(),
+                            //notas.getMatricula().getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
                             cont,
                             notas.getNota().toString(),
                             notas.getObservacion(),

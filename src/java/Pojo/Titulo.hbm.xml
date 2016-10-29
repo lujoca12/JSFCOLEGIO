@@ -1,15 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 16-may-2016 9:34:21 by Hibernate Tools 4.3.1 -->
+<!-- Generated 28-oct-2016 20:57:08 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Pojo.Titulo" table="titulo" schema="public" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
-            <generator class="sequence" >
-                <param name="sequence">titulo_id_seq</param>
-            </generator>
+            <generator class="assigned" />
         </id>
+        <many-to-one name="estudiante" class="Pojo.Estudiante" fetch="select">
+            <column name="id_estudiante" not-null="true" />
+        </many-to-one>
         <many-to-one name="universidad" class="Pojo.Universidad" fetch="select">
             <column name="id_universidad" not-null="true" />
         </many-to-one>
@@ -19,8 +20,5 @@
         <property name="NSenecyt" type="string">
             <column name="n_senecyt" length="20" />
         </property>
-        <many-to-one name="estudiante" class="Pojo.Estudiante" fetch="select">
-            <column name="id_estudiante" not-null="true" />
-        </many-to-one>
     </class>
 </hibernate-mapping>

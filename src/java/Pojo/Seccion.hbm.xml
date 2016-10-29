@@ -3,22 +3,19 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 28-oct-2016 20:57:08 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="Pojo.TipoPrecio" table="tipo_precio" schema="public" optimistic-lock="version">
+    <class name="Pojo.Seccion" table="seccion" schema="public" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
             <generator class="assigned" />
         </id>
         <property name="descripcion" type="string">
-            <column name="descripcion" length="50" />
+            <column name="descripcion" length="20" />
         </property>
-        <property name="estado" type="java.lang.Character">
-            <column name="estado" length="1" />
-        </property>
-        <set name="precios" table="precio" inverse="true" lazy="true" fetch="select">
+        <set name="cursos" table="curso" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="id_tipo_precio" not-null="true" />
+                <column name="id_seccion" not-null="true" />
             </key>
-            <one-to-many class="Pojo.Precio" />
+            <one-to-many class="Pojo.Curso" />
         </set>
     </class>
 </hibernate-mapping>

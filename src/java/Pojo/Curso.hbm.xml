@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28-oct-2016 20:57:08 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Pojo.Curso" table="curso" schema="public" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="seccion" class="Pojo.Seccion" fetch="select">
+            <column name="id_seccion" not-null="true" />
+        </many-to-one>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="60" />
+        </property>
+        <property name="paralelo" type="string">
+            <column name="paralelo" length="2" />
+        </property>
+        <set name="modulos" table="modulo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_curso" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Modulo" />
+        </set>
+        <set name="solicitudInscripcions" table="solicitud_inscripcion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_curso" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.SolicitudInscripcion" />
+        </set>
+    </class>
+</hibernate-mapping>

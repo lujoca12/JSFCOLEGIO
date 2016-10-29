@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 16-may-2016 9:34:07 by Hibernate Tools 4.3.1
+// Generated 28-oct-2016 20:56:56 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -21,18 +21,18 @@ public class Estudiante  implements java.io.Serializable {
      private Date fechaNac;
      private Character sexo;
      private Character estadoCivil;
-     private Character etnia;
      private String paisOrigen;
      private Integer dscColegiatura;
-     private Set datosDoms = new HashSet(0);
-     private Set datosNacs = new HashSet(0);
-     private Set datosLabs = new HashSet(0);
-     private Set solicitudInscripcions = new HashSet(0);
+     private Character etniaId;
      private String primerNombre;
      private String segundoNombre;
      private String primerApellido;
      private String segundoApellido;
+     private Set datosDoms = new HashSet(0);
+     private Set datosNacs = new HashSet(0);
      private Set titulos = new HashSet(0);
+     private Set datosLabs = new HashSet(0);
+     private Set solicitudInscripcions = new HashSet(0);
 
     public Estudiante() {
     }
@@ -42,7 +42,7 @@ public class Estudiante  implements java.io.Serializable {
         this.id = id;
         this.cedPasaporte = cedPasaporte;
     }
-    public Estudiante(int id, String cedPasaporte, String nombres, String apellidos, String email, String celular, Date fechaNac, Character sexo, Character estadoCivil, String paisOrigen, Integer dscColegiatura, Set datosDoms, Set datosNacs, Set datosLabs, Set solicitudInscripcions,Character etnia,String primerNombre,String segundoNombre,String primerApellido,String segundoApellido,Set titulos) {
+    public Estudiante(int id, String cedPasaporte, String nombres, String apellidos, String email, String celular, Date fechaNac, Character sexo, Character estadoCivil, String paisOrigen, Integer dscColegiatura, Character etniaId, String primerNombre, String segundoNombre, String primerApellido, String segundoApellido, Set datosDoms, Set datosNacs, Set titulos, Set datosLabs, Set solicitudInscripcions) {
        this.id = id;
        this.cedPasaporte = cedPasaporte;
        this.nombres = nombres;
@@ -54,66 +54,18 @@ public class Estudiante  implements java.io.Serializable {
        this.estadoCivil = estadoCivil;
        this.paisOrigen = paisOrigen;
        this.dscColegiatura = dscColegiatura;
+       this.etniaId = etniaId;
+       this.primerNombre = primerNombre;
+       this.segundoNombre = segundoNombre;
+       this.primerApellido = primerApellido;
+       this.segundoApellido = segundoApellido;
        this.datosDoms = datosDoms;
        this.datosNacs = datosNacs;
+       this.titulos = titulos;
        this.datosLabs = datosLabs;
        this.solicitudInscripcions = solicitudInscripcions;
-       this.etnia = etnia;
-       this.primerNombre=primerNombre;
-       this.segundoNombre=segundoNombre;
-       this.primerApellido=primerApellido;
-       this.segundoApellido=segundoApellido;
-       this.titulos=titulos;
     }
-
-    public Set getTitulos() {
-        return titulos;
-    }
-
-    public void setTitulos(Set titulos) {
-        this.titulos = titulos;
-    }
-
-    public String getPrimerNombre() {
-        return primerNombre;
-    }
-
-    public void setPrimerNombre(String primerNombre) {
-        this.primerNombre = primerNombre;
-    }
-
-    public String getSegundoNombre() {
-        return segundoNombre;
-    }
-
-    public void setSegundoNombre(String segundoNombre) {
-        this.segundoNombre = segundoNombre;
-    }
-
-    public String getPrimerApellido() {
-        return primerApellido;
-    }
-
-    public void setPrimerApellido(String primerApellido) {
-        this.primerApellido = primerApellido;
-    }
-
-    public String getSegundoApellido() {
-        return segundoApellido;
-    }
-
-    public void setSegundoApellido(String segundoApellido) {
-        this.segundoApellido = segundoApellido;
-    }    
-
-    public Character getEtnia() {
-        return etnia;
-    }
-
-    public void setEtnia(Character etnia) {
-        this.etnia = etnia;
-    }    
-       
+   
     public int getId() {
         return this.id;
     }
@@ -191,6 +143,41 @@ public class Estudiante  implements java.io.Serializable {
     public void setDscColegiatura(Integer dscColegiatura) {
         this.dscColegiatura = dscColegiatura;
     }
+    public Character getEtniaId() {
+        return this.etniaId;
+    }
+    
+    public void setEtniaId(Character etniaId) {
+        this.etniaId = etniaId;
+    }
+    public String getPrimerNombre() {
+        return this.primerNombre;
+    }
+    
+    public void setPrimerNombre(String primerNombre) {
+        this.primerNombre = primerNombre;
+    }
+    public String getSegundoNombre() {
+        return this.segundoNombre;
+    }
+    
+    public void setSegundoNombre(String segundoNombre) {
+        this.segundoNombre = segundoNombre;
+    }
+    public String getPrimerApellido() {
+        return this.primerApellido;
+    }
+    
+    public void setPrimerApellido(String primerApellido) {
+        this.primerApellido = primerApellido;
+    }
+    public String getSegundoApellido() {
+        return this.segundoApellido;
+    }
+    
+    public void setSegundoApellido(String segundoApellido) {
+        this.segundoApellido = segundoApellido;
+    }
     public Set getDatosDoms() {
         return this.datosDoms;
     }
@@ -204,6 +191,13 @@ public class Estudiante  implements java.io.Serializable {
     
     public void setDatosNacs(Set datosNacs) {
         this.datosNacs = datosNacs;
+    }
+    public Set getTitulos() {
+        return this.titulos;
+    }
+    
+    public void setTitulos(Set titulos) {
+        this.titulos = titulos;
     }
     public Set getDatosLabs() {
         return this.datosLabs;

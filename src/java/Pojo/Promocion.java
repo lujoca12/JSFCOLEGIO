@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 16-may-2016 9:34:07 by Hibernate Tools 4.3.1
+// Generated 28-oct-2016 20:56:56 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -27,7 +27,6 @@ public class Promocion  implements java.io.Serializable {
      private Set requisitosPromos = new HashSet(0);
      private Set precios = new HashSet(0);
      private Set modulos = new HashSet(0);
-     private Set solicitudInscripcions = new HashSet(0);
 
     public Promocion() {
     }
@@ -38,7 +37,7 @@ public class Promocion  implements java.io.Serializable {
         this.maestria = maestria;
         this.idUsuario = idUsuario;
     }
-    public Promocion(int id, Maestria maestria, Integer descripcion, Date fechaResolucion, Date fechaInicio, Date fechaFin, Integer cupo, Integer NCuotas, int idUsuario, String usuario, String resolucion, Character estado, Set requisitosPromos, Set precios, Set modulos, Set solicitudInscripcions) {
+    public Promocion(int id, Maestria maestria, Integer descripcion, Date fechaResolucion, Date fechaInicio, Date fechaFin, Integer cupo, Integer NCuotas, int idUsuario, String usuario, String resolucion, Character estado, Set requisitosPromos, Set precios, Set modulos) {
        this.id = id;
        this.maestria = maestria;
        this.descripcion = descripcion;
@@ -54,7 +53,6 @@ public class Promocion  implements java.io.Serializable {
        this.requisitosPromos = requisitosPromos;
        this.precios = precios;
        this.modulos = modulos;
-       this.solicitudInscripcions = solicitudInscripcions;
     }
    
     public int getId() {
@@ -161,13 +159,6 @@ public class Promocion  implements java.io.Serializable {
     
     public void setModulos(Set modulos) {
         this.modulos = modulos;
-    }
-    public Set getSolicitudInscripcions() {
-        return this.solicitudInscripcions;
-    }
-    
-    public void setSolicitudInscripcions(Set solicitudInscripcions) {
-        this.solicitudInscripcions = solicitudInscripcions;
     }
 
 

@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 16-may-2016 9:34:07 by Hibernate Tools 4.3.1
+// Generated 28-oct-2016 20:56:56 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -13,8 +13,8 @@ public class SolicitudInscripcion  implements java.io.Serializable {
 
 
      private int id;
+     private Curso curso;
      private Estudiante estudiante;
-     private Promocion promocion;
      private Date fechaRealizacion;
      private Date fechaRevision;
      private Character estado;
@@ -29,15 +29,15 @@ public class SolicitudInscripcion  implements java.io.Serializable {
     }
 
 	
-    public SolicitudInscripcion(int id, Estudiante estudiante, Promocion promocion) {
+    public SolicitudInscripcion(int id, Curso curso, Estudiante estudiante) {
         this.id = id;
+        this.curso = curso;
         this.estudiante = estudiante;
-        this.promocion = promocion;
     }
-    public SolicitudInscripcion(int id, Estudiante estudiante, Promocion promocion, Date fechaRealizacion, Date fechaRevision, Character estado, Integer idUsuario, String lugarEntrevista, String observacion, Date fechaEntrevista, Set matriculas, Set archivoses) {
+    public SolicitudInscripcion(int id, Curso curso, Estudiante estudiante, Date fechaRealizacion, Date fechaRevision, Character estado, Integer idUsuario, String lugarEntrevista, String observacion, Date fechaEntrevista, Set matriculas, Set archivoses) {
        this.id = id;
+       this.curso = curso;
        this.estudiante = estudiante;
-       this.promocion = promocion;
        this.fechaRealizacion = fechaRealizacion;
        this.fechaRevision = fechaRevision;
        this.estado = estado;
@@ -56,19 +56,19 @@ public class SolicitudInscripcion  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
+    public Curso getCurso() {
+        return this.curso;
+    }
+    
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+    }
     public Estudiante getEstudiante() {
         return this.estudiante;
     }
     
     public void setEstudiante(Estudiante estudiante) {
         this.estudiante = estudiante;
-    }
-    public Promocion getPromocion() {
-        return this.promocion;
-    }
-    
-    public void setPromocion(Promocion promocion) {
-        this.promocion = promocion;
     }
     public Date getFechaRealizacion() {
         return this.fechaRealizacion;

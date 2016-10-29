@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 16-may-2016 9:34:07 by Hibernate Tools 4.3.1
+// Generated 28-oct-2016 20:56:56 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -12,7 +12,6 @@ public class Acta  implements java.io.Serializable {
 
 
      private int id;
-     private String descripcion;
      private Maestria maestria;
      private TipoActa tipoActa;
      private String numeracion;
@@ -25,23 +24,13 @@ public class Acta  implements java.io.Serializable {
     public Acta(int id) {
         this.id = id;
     }
-    public Acta(int id, Maestria maestria, TipoActa tipoActa,String descripcion, String numeracion, Set sustentacions) {
+    public Acta(int id, Maestria maestria, TipoActa tipoActa, String numeracion, Set sustentacions) {
        this.id = id;
        this.maestria = maestria;
        this.tipoActa = tipoActa;
        this.numeracion = numeracion;
        this.sustentacions = sustentacions;
-       this.descripcion = descripcion;
     }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-    
    
     public int getId() {
         return this.id;

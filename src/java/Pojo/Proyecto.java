@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 16-may-2016 9:34:07 by Hibernate Tools 4.3.1
+// Generated 28-oct-2016 20:56:56 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -14,6 +14,7 @@ public class Proyecto  implements java.io.Serializable {
 
      private int id;
      private Titulacion titulacion;
+     private Usuario usuario;
      private String titulo;
      private String autor;
      private Date fechaSustentacion;
@@ -21,12 +22,10 @@ public class Proyecto  implements java.io.Serializable {
      private String resumen;
      private Date fechaSubida;
      private String maestria;
-     private Set palabrasClaves = new HashSet(0);
-     private Set sustentacions = new HashSet(0);
-     
-     private Usuario usuario;
      private String tutor;
      private Character estado;
+     private Set palabrasClaves = new HashSet(0);
+     private Set sustentacions = new HashSet(0);
 
     public Proyecto() {
     }
@@ -35,50 +34,23 @@ public class Proyecto  implements java.io.Serializable {
     public Proyecto(int id) {
         this.id = id;
     }
-        
-    public Proyecto(int id, Titulacion titulacion, String titulo, String autor, Date fechaSustentacion, String ruta, String resumen, Date fechaSubida, String maestria, Usuario usuario, String tutor, Character estado,Set palabrasClaves, Set sustentacions) {
-        this.id = id;
-        this.titulacion = titulacion;
-        this.titulo = titulo;
-        this.autor = autor;
-        this.fechaSustentacion = fechaSustentacion;
-        this.ruta = ruta;
-        this.resumen = resumen;
-        this.fechaSubida = fechaSubida;
-        this.maestria = maestria;
-        this.usuario = usuario;
-        this.tutor = tutor;
-        this.estado = estado;
-        this.sustentacions=sustentacions;
-        this.palabrasClaves=palabrasClaves;
+    public Proyecto(int id, Titulacion titulacion, Usuario usuario, String titulo, String autor, Date fechaSustentacion, String ruta, String resumen, Date fechaSubida, String maestria, String tutor, Character estado, Set palabrasClaves, Set sustentacions) {
+       this.id = id;
+       this.titulacion = titulacion;
+       this.usuario = usuario;
+       this.titulo = titulo;
+       this.autor = autor;
+       this.fechaSustentacion = fechaSustentacion;
+       this.ruta = ruta;
+       this.resumen = resumen;
+       this.fechaSubida = fechaSubida;
+       this.maestria = maestria;
+       this.tutor = tutor;
+       this.estado = estado;
+       this.palabrasClaves = palabrasClaves;
+       this.sustentacions = sustentacions;
     }
    
-   
-    
-    
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public String getTutor() {
-        return tutor;
-    }
-
-    public void setTutor(String tutor) {
-        this.tutor = tutor;
-    }
-
-    public Character getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Character estado) {
-        this.estado = estado;
-    }
     public int getId() {
         return this.id;
     }
@@ -92,6 +64,13 @@ public class Proyecto  implements java.io.Serializable {
     
     public void setTitulacion(Titulacion titulacion) {
         this.titulacion = titulacion;
+    }
+    public Usuario getUsuario() {
+        return this.usuario;
+    }
+    
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
     public String getTitulo() {
         return this.titulo;
@@ -141,6 +120,20 @@ public class Proyecto  implements java.io.Serializable {
     
     public void setMaestria(String maestria) {
         this.maestria = maestria;
+    }
+    public String getTutor() {
+        return this.tutor;
+    }
+    
+    public void setTutor(String tutor) {
+        this.tutor = tutor;
+    }
+    public Character getEstado() {
+        return this.estado;
+    }
+    
+    public void setEstado(Character estado) {
+        this.estado = estado;
     }
     public Set getPalabrasClaves() {
         return this.palabrasClaves;

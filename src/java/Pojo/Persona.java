@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 16-may-2016 9:34:07 by Hibernate Tools 4.3.1
+// Generated 28-oct-2016 20:56:56 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -12,31 +12,31 @@ public class Persona  implements java.io.Serializable {
 
 
      private int id;
+     private Cargo cargo;
      private String cedula;
      private String nombres;
      private String apellidos;
      private String titulo;
-     private Cargo cargo;
      private Set tribunals = new HashSet(0);
 
     public Persona() {
     }
 
 	
-    public Persona(int id) {
+    public Persona(int id, Cargo cargo) {
         this.id = id;
-    }
-
-    public Persona(int id, String cedula, String nombres, String apellidos, String titulo, Cargo cargo,Set tribunals) {
-        this.id = id;
-        this.cedula = cedula;
-        this.nombres = nombres;
-        this.apellidos = apellidos;
-        this.titulo = titulo;
         this.cargo = cargo;
-        this.tribunals = tribunals;
     }
-       
+    public Persona(int id, Cargo cargo, String cedula, String nombres, String apellidos, String titulo, Set tribunals) {
+       this.id = id;
+       this.cargo = cargo;
+       this.cedula = cedula;
+       this.nombres = nombres;
+       this.apellidos = apellidos;
+       this.titulo = titulo;
+       this.tribunals = tribunals;
+    }
+   
     public int getId() {
         return this.id;
     }
@@ -44,7 +44,20 @@ public class Persona  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
+    public Cargo getCargo() {
+        return this.cargo;
+    }
     
+    public void setCargo(Cargo cargo) {
+        this.cargo = cargo;
+    }
+    public String getCedula() {
+        return this.cedula;
+    }
+    
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
     public String getNombres() {
         return this.nombres;
     }
@@ -52,7 +65,20 @@ public class Persona  implements java.io.Serializable {
     public void setNombres(String nombres) {
         this.nombres = nombres;
     }
-        
+    public String getApellidos() {
+        return this.apellidos;
+    }
+    
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+    public String getTitulo() {
+        return this.titulo;
+    }
+    
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
     public Set getTribunals() {
         return this.tribunals;
     }
@@ -61,39 +87,8 @@ public class Persona  implements java.io.Serializable {
         this.tribunals = tribunals;
     }
 
-    public String getCedula() {
-        return cedula;
-    }
 
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
-    }
 
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public Cargo getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(Cargo cargo) {
-        this.cargo = cargo;
-    }
-    
-    
 
 }
 

@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 16-may-2016 9:34:07 by Hibernate Tools 4.3.1
+// Generated 28-oct-2016 20:56:56 by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -38,14 +38,6 @@ public class Pago  implements java.io.Serializable {
        this.idComprobante = idComprobante;
        this.rutaComprobante = rutaComprobante;
        this.estado = estado;
-    }
-
-    public Character getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Character estado) {
-        this.estado = estado;
     }
    
     public int getId() {
@@ -96,6 +88,13 @@ public class Pago  implements java.io.Serializable {
     
     public void setRutaComprobante(String rutaComprobante) {
         this.rutaComprobante = rutaComprobante;
+    }
+    public Character getEstado() {
+        return this.estado;
+    }
+    
+    public void setEstado(Character estado) {
+        this.estado = estado;
     }
 
 

@@ -8,7 +8,7 @@
             <column name="id" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="asistencia" class="Pojo.Asistencia" fetch="select">
+        <many-to-one name="ponderaciones" class="Pojo.Asistencia" fetch="select">
             <column name="id_ponderaciones" not-null="true" />
         </many-to-one>
         <many-to-one name="matricula" class="Pojo.Matricula" fetch="select">
@@ -35,11 +35,5 @@
         <property name="asistencia_evaluacion" type="java.lang.Character">
             <column name="asistencia_evaluacion" length="1" />
         </property>
-        <set name="asistencias" table="asistencia" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="id_ponderaciones" not-null="true" />
-            </key>
-            <one-to-many class="Pojo.Asistencia" />
-        </set>
     </class>
 </hibernate-mapping>

@@ -17,36 +17,37 @@ public class Asistencia  implements java.io.Serializable {
      private Asistencia asistencia;
      private Matricula matricula;
      private Modulo modulo;
+     private Ponderaciones ponderaciones;
      private Character estado;
      private String observacion;
      private Date fecha;
      private String usuario;
      private BigDecimal horas_asistidas;
      private Character asistencia_evaluacion;
-     private Set asistencias = new HashSet(0);
 
     public Asistencia() {
     }
 
 	
-    public Asistencia(int id, Asistencia asistencia, Matricula matricula, Modulo modulo) {
+    public Asistencia(int id, Asistencia asistencia, Matricula matricula, Modulo modulo, Ponderaciones ponderaciones) {
         this.id = id;
         this.asistencia = asistencia;
         this.matricula = matricula;
         this.modulo = modulo;
+        this.ponderaciones = ponderaciones;
     }
-    public Asistencia(int id, Asistencia asistencia, Matricula matricula, Modulo modulo, Character estado, String observacion, Date fecha, String usuario, BigDecimal horas_asistidas, Character asistencia_evaluacion, Set asistencias) {
+    public Asistencia(int id, Asistencia asistencia, Matricula matricula, Modulo modulo,Ponderaciones ponderaciones, Character estado, String observacion, Date fecha, String usuario, BigDecimal horas_asistidas, Character asistencia_evaluacion) {
        this.id = id;
        this.asistencia = asistencia;
        this.matricula = matricula;
        this.modulo = modulo;
+       this.ponderaciones = ponderaciones;
        this.estado = estado;
        this.observacion = observacion;
        this.fecha = fecha;
        this.usuario = usuario;
        this.horas_asistidas = horas_asistidas;
        this.asistencia_evaluacion = asistencia_evaluacion;
-       this.asistencias = asistencias;
     }
    
     public int getId() {
@@ -121,18 +122,15 @@ public class Asistencia  implements java.io.Serializable {
     public void setAsistencia_evaluacion(Character asistencia_evaluacion) {
         this.asistencia_evaluacion = asistencia_evaluacion;
     }
-    
-    public Set getAsistencias() {
-        return this.asistencias;
-    }
-    
-    public void setAsistencias(Set asistencias) {
-        this.asistencias = asistencias;
+
+    public Ponderaciones getPonderaciones() {
+        return ponderaciones;
     }
 
-
-
-
+    public void setPonderaciones(Ponderaciones ponderaciones) {
+        this.ponderaciones = ponderaciones;
+    }
+    
 }
 
 

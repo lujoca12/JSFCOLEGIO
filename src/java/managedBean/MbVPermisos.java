@@ -143,7 +143,7 @@ public class MbVPermisos implements Serializable{
             }else{
                 tPermiso.setPadre(padre);
                 String ruta = "";
-                ruta += "CargarPaginaURL('"+contenedor+"','/JSFSISFIAC/faces/"+tuDirectorioPagina+"')";
+                ruta += "CargarPaginaURL('"+contenedor+"','/JSFCOLEGIO/faces/"+tuDirectorioPagina+"')";
                 tPermiso.setForm(ruta);
             }
             tPermiso.setOrden(orden);

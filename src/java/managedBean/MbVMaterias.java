@@ -7,6 +7,7 @@ package managedBean;
 
 import Dao.DaoTMaestrias;
 import Pojo.Materias;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
@@ -21,7 +22,7 @@ import org.primefaces.event.RowEditEvent;
  */
 @Named(value = "mbVMaterias")
 @ViewScoped
-public class MbVMaterias {
+public class MbVMaterias implements Serializable{
 
     /**
      * Creates a new instance of MbVMaterias
@@ -49,6 +50,9 @@ public class MbVMaterias {
     private void mensajesError(String msg){
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje de la Aplicacion", msg);
         FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+    public void registrar(){
+        
     }
     public void onRowEdit(RowEditEvent event) {
         boolean repetida = false;

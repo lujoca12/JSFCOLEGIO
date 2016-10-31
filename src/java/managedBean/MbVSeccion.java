@@ -8,6 +8,7 @@ package managedBean;
 import Dao.DaoTMaestrias;
 import Pojo.Modalidad;
 import Pojo.Seccion;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
@@ -23,7 +24,7 @@ import org.primefaces.event.RowEditEvent;
 
 @Named(value = "mbVSeccion")
 @ViewScoped
-public class MbVSeccion {
+public class MbVSeccion implements Serializable{
 
     /**
      * Creates a new instance of MbVSeccion

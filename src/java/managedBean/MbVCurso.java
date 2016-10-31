@@ -7,6 +7,7 @@ package managedBean;
 
 import Pojo.Curso;
 import Pojo.Seccion;
+import java.io.Serializable;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import java.util.logging.Level;
@@ -23,7 +24,7 @@ import org.primefaces.event.RowEditEvent;
  */
 @Named(value = "mbVCurso")
 @ViewScoped
-public class MbVCurso {
+public class MbVCurso implements Serializable{
 
     /**
      * Creates a new instance of MbVCurso

@@ -13,6 +13,7 @@ import Pojo.Maestria;
 import Pojo.Modalidad;
 import Pojo.Precio;
 import Pojo.Promocion;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -29,7 +30,7 @@ import org.primefaces.event.RowEditEvent;
  */
 @Named(value = "mbVModalidad")
 @ViewScoped
-public class MbVModalidad {
+public class MbVModalidad implements Serializable{
 
     /**
      * Creates a new instance of MbVModalidad

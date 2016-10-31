@@ -13,7 +13,7 @@
         <div class="ui-fluid">
             <h:form id="form">
                 <p:tab id="personal" title="RegistrarMaestrias">
-                    <p:panel header="Registrar Maestrias">
+                    <p:panel header="Registrar Especialidad">
                         <p:growl id="msgs" showDetail="true" />
                         <p:focus context="panel"/>
                         <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
@@ -43,7 +43,7 @@
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="Maestria" style="width: 50%;">
+                        <p:column headerText="Especialidad" style="width: 50%;">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.descripcionM}" /></f:facet>
                                 <f:facet name="input">

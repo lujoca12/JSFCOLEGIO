@@ -13,7 +13,7 @@
         <div class="ui-fluid">
             <h:form id="form">
                 <p:tab id="personal" title="RegistrarMaestriaPromocion">
-                    <p:panel header="Registrar Maestria Promociòn">
+                    <p:panel header="Registrar Especialidad Promociòn Materia">
                         <p:growl id="msgs" showDetail="true" />
                         <p:focus context="panel"/>
                         <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
@@ -26,7 +26,7 @@
                                 </h5>
                             </p:outputLabel>
                             
-                            <p:outputLabel for="cboMaestria" value="Maestria:" styleClass="labelDerecha"  />
+                            <p:outputLabel for="cboMaestria" value="Especialidad:" styleClass="labelDerecha"  />
                             <p:selectOneMenu id="cboMaestria" value="#{mbVMaestrias.themeMaestria}" 
                                              converter="themeConverterMaestria" required="true"
                                              effect="fade" var="tProfesor" filter="true" filterMatchMode="contains">
@@ -122,7 +122,7 @@
                         <p:ajax event="rowEditCancel" listener="#{mbVMaestrias.onRowCancel}" update=":form:msgs" />
                         
 
-                        <p:column headerText="Maestria" style="width: 15%;">
+                        <p:column headerText="Espec." style="width: 15%;">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.descripcionM}" /></f:facet>
                                 <f:facet name="input">

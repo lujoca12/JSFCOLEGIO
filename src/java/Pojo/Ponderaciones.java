@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 28-oct-2016 20:56:56 by Hibernate Tools 4.3.1
+// Generated 30-oct-2016 21:58:04 by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -18,6 +18,7 @@ public class Ponderaciones  implements java.io.Serializable {
      private BigDecimal ponderacion;
      private Character estado;
      private Set notases = new HashSet(0);
+     private Set asistencias = new HashSet(0);
 
     public Ponderaciones() {
     }
@@ -26,13 +27,14 @@ public class Ponderaciones  implements java.io.Serializable {
     public Ponderaciones(int id) {
         this.id = id;
     }
-    public Ponderaciones(int id, String descripcion, Character clave, BigDecimal ponderacion, Character estado, Set notases) {
+    public Ponderaciones(int id, String descripcion, Character clave, BigDecimal ponderacion, Character estado, Set notases, Set asistencias) {
        this.id = id;
        this.descripcion = descripcion;
        this.clave = clave;
        this.ponderacion = ponderacion;
        this.estado = estado;
        this.notases = notases;
+       this.asistencias = asistencias;
     }
    
     public int getId() {
@@ -76,6 +78,13 @@ public class Ponderaciones  implements java.io.Serializable {
     
     public void setNotases(Set notases) {
         this.notases = notases;
+    }
+    public Set getAsistencias() {
+        return this.asistencias;
+    }
+    
+    public void setAsistencias(Set asistencias) {
+        this.asistencias = asistencias;
     }
 
 

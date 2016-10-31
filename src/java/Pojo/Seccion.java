@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 28-oct-2016 20:56:56 by Hibernate Tools 4.3.1
+// Generated 30-oct-2016 21:58:04 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -12,6 +12,7 @@ public class Seccion  implements java.io.Serializable {
 
 
      private int id;
+     private Modalidad modalidad;
      private String descripcion;
      private Set cursos = new HashSet(0);
 
@@ -19,11 +20,13 @@ public class Seccion  implements java.io.Serializable {
     }
 
 	
-    public Seccion(int id) {
+    public Seccion(int id, Modalidad modalidad) {
         this.id = id;
+        this.modalidad = modalidad;
     }
-    public Seccion(int id, String descripcion, Set cursos) {
+    public Seccion(int id, Modalidad modalidad, String descripcion, Set cursos) {
        this.id = id;
+       this.modalidad = modalidad;
        this.descripcion = descripcion;
        this.cursos = cursos;
     }
@@ -34,6 +37,13 @@ public class Seccion  implements java.io.Serializable {
     
     public void setId(int id) {
         this.id = id;
+    }
+    public Modalidad getModalidad() {
+        return this.modalidad;
+    }
+    
+    public void setModalidad(Modalidad modalidad) {
+        this.modalidad = modalidad;
     }
     public String getDescripcion() {
         return this.descripcion;

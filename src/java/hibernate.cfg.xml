@@ -46,6 +46,7 @@
     <mapping resource="Pojo/Universidad.hbm.xml"/>
     <mapping resource="Pojo/Acta.hbm.xml"/>
     <mapping resource="Pojo/Matricula.hbm.xml"/>
+    <mapping resource="Pojo/Modalidad.hbm.xml"/>
     <mapping resource="Pojo/Notas.hbm.xml"/>
     <mapping resource="Pojo/Pais.hbm.xml"/>
     <mapping resource="Pojo/TipoTitulacion.hbm.xml"/>

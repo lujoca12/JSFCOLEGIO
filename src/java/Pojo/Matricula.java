@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 28-oct-2016 20:56:56 by Hibernate Tools 4.3.1
+// Generated 30-oct-2016 21:58:04 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -19,6 +19,7 @@ public class Matricula  implements java.io.Serializable {
      private Character estado;
      private String NMatricula;
      private Date fechaGraduacion;
+     private Character estadoCurso;
      private Set asistencias = new HashSet(0);
      private Set titulacions = new HashSet(0);
      private Set pagos = new HashSet(0);
@@ -32,7 +33,7 @@ public class Matricula  implements java.io.Serializable {
         this.id = id;
         this.solicitudInscripcion = solicitudInscripcion;
     }
-    public Matricula(int id, SolicitudInscripcion solicitudInscripcion, Date fechaMatricula, Integer dscColegiatura, Character estado, String NMatricula, Date fechaGraduacion, Set asistencias, Set titulacions, Set pagos, Set notases) {
+    public Matricula(int id, SolicitudInscripcion solicitudInscripcion, Date fechaMatricula, Integer dscColegiatura, Character estado, String NMatricula, Date fechaGraduacion, Character estadoCurso, Set asistencias, Set titulacions, Set pagos, Set notases) {
        this.id = id;
        this.solicitudInscripcion = solicitudInscripcion;
        this.fechaMatricula = fechaMatricula;
@@ -40,6 +41,7 @@ public class Matricula  implements java.io.Serializable {
        this.estado = estado;
        this.NMatricula = NMatricula;
        this.fechaGraduacion = fechaGraduacion;
+       this.estadoCurso = estadoCurso;
        this.asistencias = asistencias;
        this.titulacions = titulacions;
        this.pagos = pagos;
@@ -94,6 +96,13 @@ public class Matricula  implements java.io.Serializable {
     
     public void setFechaGraduacion(Date fechaGraduacion) {
         this.fechaGraduacion = fechaGraduacion;
+    }
+    public Character getEstadoCurso() {
+        return this.estadoCurso;
+    }
+    
+    public void setEstadoCurso(Character estadoCurso) {
+        this.estadoCurso = estadoCurso;
     }
     public Set getAsistencias() {
         return this.asistencias;

@@ -6,9 +6,11 @@
 package Dao;
 
 import Interface.InterfaceSeccion;
+import Pojo.Modalidad;
 import Pojo.Seccion;
 import java.util.List;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
@@ -41,7 +43,14 @@ public class DaoTSeccion implements InterfaceSeccion{
     
     @Override
     public List<Seccion> getTodasSeccions() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String hql="from Seccion secc inner join fetch secc.modalidad modal where secc.estado = '1' order by secc.id desc";
+        Query query = sesion.createQuery(hql);
+        List<Seccion> lstseccion=(List<Seccion>) query.list();
+        sesion.close();
+        return lstseccion;
     }
 
     @Override
@@ -49,7 +58,7 @@ public class DaoTSeccion implements InterfaceSeccion{
         boolean band = false;
         try {
             iniciaOperacion();
-            sesion.save(tSeccion);
+            sesion.saveOrUpdate(tSeccion);
 
             tx.commit();
             sesion.close();
@@ -61,7 +70,23 @@ public class DaoTSeccion implements InterfaceSeccion{
         
         return band;
     }
-
+    @Override
+    public boolean existe(Seccion tSeccion) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        boolean band = false;
+        iniciaOperacion();
+        String hql="from Seccion secc where secc.descripcion='"+tSeccion.getDescripcion()+"' and secc.estado = '1'";
+        Query query = sesion.createQuery(hql);
+        List<Seccion> seccion=(List<Seccion>) query.list();
+        if(seccion.size() > 0)
+            band = true;
+        else
+            band = false;
+        
+        sesion.close();
+        return band;
+    }
     @Override
     public List<Seccion> getSeccionsxDescripcion(String descripcion) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

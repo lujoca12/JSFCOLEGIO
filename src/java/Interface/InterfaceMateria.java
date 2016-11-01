@@ -26,4 +26,5 @@ public interface InterfaceMateria {
     public Materias getMaterias(String idMaterias) throws Exception;
 
     public List<Materias> getMaterias() throws Exception;
+    public boolean existe(Materias tMaterias) throws Exception;
 }

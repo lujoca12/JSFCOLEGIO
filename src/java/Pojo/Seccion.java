@@ -14,6 +14,7 @@ public class Seccion  implements java.io.Serializable {
      private int id;
      private Modalidad modalidad;
      private String descripcion;
+     private Character estado;
      private Set cursos = new HashSet(0);
 
     public Seccion() {
@@ -24,10 +25,11 @@ public class Seccion  implements java.io.Serializable {
         this.id = id;
         this.modalidad = modalidad;
     }
-    public Seccion(int id, Modalidad modalidad, String descripcion, Set cursos) {
+    public Seccion(int id, Modalidad modalidad, String descripcion, Character estado, Set cursos) {
        this.id = id;
        this.modalidad = modalidad;
        this.descripcion = descripcion;
+       this.estado = estado;
        this.cursos = cursos;
     }
    
@@ -60,6 +62,14 @@ public class Seccion  implements java.io.Serializable {
         this.cursos = cursos;
     }
 
+    public Character getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Character estado) {
+        this.estado = estado;
+    }
+    
 
 
 

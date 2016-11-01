@@ -25,4 +25,5 @@ public interface InterfaceSeccion {
     public Seccion getSeccions(String idSeccion) throws Exception;
 
     public List<Seccion> getSeccion() throws Exception;
+    public boolean existe(Seccion tSeccion) throws Exception;
 }

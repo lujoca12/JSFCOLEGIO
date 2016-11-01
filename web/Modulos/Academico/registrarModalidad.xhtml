@@ -12,35 +12,27 @@
     <h:body>
         <div class="ui-fluid">
             <h:form id="form">
-                <p:tab id="personal" title="RegistrarSeccion">
-                    <p:panel header="Registrar Sección">
+                <p:tab id="personal" title="RegistrarModalidad">
+                    <p:panel header="Registrar Modalidad">
                         <p:growl id="msgs" showDetail="true" />
                         <p:focus context="panel"/>
                         <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
-                            
-                            <p:outputLabel for="cboModalidad" value="Modalidad:" styleClass="labelDerecha"  />
-                            <h:selectOneMenu required="true" id="cboModalidad" class="form-control" value="#{mbVSeccion.tModalidad.id}">
-                                <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{mbVSeccion.cboSeccion}"  />  
-                            </h:selectOneMenu>
-                            
-                            
-                            <p:outputLabel for="txtDescripcionSeccion" styleClass="labelDerecha" value="Descripción:" />
-                            <p:inputText id="txtDescripcionSeccion" value="#{mbVSeccion.tSeccion.descripcion}" required="true" maxlength="20"/>
+                            <p:outputLabel for="txtDescripcionModalidad" styleClass="labelDerecha" value="Descripción:" />
+                            <p:inputText id="txtDescripcionModalidad" value="#{mbVModalidad.tModalidad.descripcion}" required="true" maxlength="40"/>
 
                             <h:outputText id="display" value="" />
                             <p:commandButton value="Guardar" update="form,msgs" styleClass="anchoBotones" icon="ui-icon-disk"
-                                             actionListener="#{mbVSeccion.registrar()}" />
+                                             actionListener="#{mbVModalidad.registrar()}" />
                         </p:panelGrid>
                     </p:panel>
                 </p:tab>
                 <br></br>
                 <p:panel id="panelTabla" style="height: 30%;">
                     <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->   
-                    <p:dataTable class="tblDatos fuenteTamanio" id="tblSeccion" var="lstTbl" value="#{mbVSeccion.lstSeccion}"
+                    <p:dataTable class="tblDatos fuenteTamanio" id="tblModalidad" var="lstTbl" value="#{mbVModalidad.lstMaterias}"
                                  editable="true" scrollable="true" scrollHeight="150">
-                        <p:ajax event="rowEdit" listener="#{mbVSeccion.onRowEdit}" update=":form:tblSeccion :form:msgs" />
-                        <p:ajax event="rowEditCancel" listener="#{mbVSeccion.onRowCancel}" update=":form:msgs" />
+                        <p:ajax event="rowEdit" listener="#{mbVModalidad.onRowEdit}" update=":form:tblModalidad :form:msgs" />
+                        <p:ajax event="rowEditCancel" listener="#{mbVModalidad.onRowCancel}" update=":form:msgs" />
                         
                         <p:column headerText="Codigo" style="width: 10%;">
                             <p:cellEditor>
@@ -51,20 +43,11 @@
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="Sección" style="width: 50%;">
+                        <p:column headerText="Modalidades" style="width: 50%;">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.descripcion}" /></f:facet>
                                 <f:facet name="input">
-                                    <p:inputText value="#{lstTbl.descripcion}" required="true" maxlength="20" style="width:100%"/>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-                        
-                        <p:column headerText="Modalidad" style="width: 50%;">
-                            <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{lstTbl.modalidad.descripcion}" /></f:facet>
-                                <f:facet name="input">
-                                    <p:inputText value="#{lstTbl.modalidad.descripcion}" disabled="true" maxlength="40" style="width:100%"/>
+                                    <p:inputText value="#{lstTbl.descripcion}" required="true" maxlength="40" style="width:100%"/>
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>

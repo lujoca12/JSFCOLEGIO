@@ -11,11 +11,15 @@
         <property name="descripcion" type="string">
             <column name="descripcion" length="40" />
         </property>
+        <property name="estado" type="java.lang.Character">
+            <column name="estado" length="1" />
+        </property>
         <set name="seccions" table="seccion" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="id_modalidad" not-null="true" />
             </key>
             <one-to-many class="Pojo.Seccion" />
         </set>
+        
     </class>
 </hibernate-mapping>

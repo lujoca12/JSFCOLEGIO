@@ -13,6 +13,7 @@ public class Modalidad  implements java.io.Serializable {
 
      private int id;
      private String descripcion;
+     private Character estado;
      private Set seccions = new HashSet(0);
 
     public Modalidad() {
@@ -22,9 +23,10 @@ public class Modalidad  implements java.io.Serializable {
     public Modalidad(int id) {
         this.id = id;
     }
-    public Modalidad(int id, String descripcion, Set seccions) {
+    public Modalidad(int id, String descripcion, Character estado, Set seccions) {
        this.id = id;
        this.descripcion = descripcion;
+       this.estado = estado;
        this.seccions = seccions;
     }
    
@@ -50,6 +52,14 @@ public class Modalidad  implements java.io.Serializable {
         this.seccions = seccions;
     }
 
+    public Character getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Character estado) {
+        this.estado = estado;
+    }
+    
 
 
 

@@ -29,25 +29,25 @@
                 <br></br>
                 <p:panel id="panelTabla" style="height: 30%;">
                     <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->   
-                    <p:dataTable class="tblDatos fuenteTamanio" id="tblMaestria" var="lstTbl" value="#{mbVMaterias.lstTablamaestria}"
+                    <p:dataTable class="tblDatos fuenteTamanio" id="tblMaterias" var="lstTbl" value="#{mbVMaterias.lstMaterias}"
                                  editable="true" scrollable="true" scrollHeight="150">
-                        <p:ajax event="rowEdit" listener="#{mbVMaterias.onRowEdit}" update=":form:tblMaestria :form:msgs" />
+                        <p:ajax event="rowEdit" listener="#{mbVMaterias.onRowEdit}" update=":form:tblMaterias :form:msgs" />
                         <p:ajax event="rowEditCancel" listener="#{mbVMaterias.onRowCancel}" update=":form:msgs" />
                         
                         <p:column headerText="Codigo" style="width: 10%;">
                             <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{lstTbl.idMaestria}" /></f:facet>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.id}" /></f:facet>
                                 <f:facet name="input">
-                                    <p:inputText id="txtDescripcionMaestria" disabled="true" value="#{lstTbl.idMaestria}" />
+                                    <p:inputText id="txtDescripcionMaestria" disabled="true" value="#{lstTbl.id}" />
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="Especialidad" style="width: 50%;">
+                        <p:column headerText="Materias" style="width: 50%;">
                             <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{lstTbl.descripcionM}" /></f:facet>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.descripcion}" /></f:facet>
                                 <f:facet name="input">
-                                    <p:inputText value="#{lstTbl.descripcionM}" required="true" maxlength="150" style="width:100%"/>
+                                    <p:inputText value="#{lstTbl.descripcion}" required="true" maxlength="150" style="width:100%"/>
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>

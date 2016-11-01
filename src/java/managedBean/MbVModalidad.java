@@ -8,6 +8,8 @@ package managedBean;
 import Clases.ClsTablaMaestria;
 import Clases.ClsTablaMaestriaPromocion;
 import Dao.DaoTMaestrias;
+import Dao.DaoTMaterias;
+import Dao.DaoTModalidad;
 import Dao.DaoTPromocion;
 import Pojo.Maestria;
 import Pojo.Modalidad;
@@ -38,6 +40,7 @@ public class MbVModalidad implements Serializable{
     private Modalidad tModalidad;
     private boolean msg = false;
     private boolean mostrarEliminados;
+    private List<Modalidad> lstModalidad;
     public MbVModalidad() {
         tModalidad = new Modalidad();
         cargarTablaModalidad();
@@ -45,7 +48,9 @@ public class MbVModalidad implements Serializable{
     public void cargarTablaModalidad(){
         
         try {
-            
+            lstModalidad = new ArrayList<>();
+            DaoTModalidad daoModalidad = new DaoTModalidad();
+            lstModalidad = daoModalidad.getTodasModalidades();
             
         } catch (Exception ex) {
             Logger.getLogger(MbVModalidad.class.getName()).log(Level.SEVERE, null, ex);
@@ -59,14 +64,64 @@ public class MbVModalidad implements Serializable{
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje de la Aplicacion", msg);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
+    public void registrar(){
+        DaoTModalidad daoModalidad = new DaoTModalidad();
+        boolean repetida = false;
+        boolean band = false;
+        try {
+            tModalidad.setEstado('1');
+            repetida = daoModalidad.existe(tModalidad);
+            if (!repetida) {
+                msg = daoModalidad.registrar(tModalidad);
+            }else{
+                mensajesError("Registro repetido");
+                cargarTablaModalidad();
+                return;
+            }
+            
+            if (msg) {
+                mensajesOk("Datos procesados correctamente");
+                vaciarCajas();
+                cargarTablaModalidad();    
+            } else {
+                mensajesError("Error al procesar datos");
+            }
+        
+
+        } catch (Exception e) {
+            vaciarCajas();
+        }
+        
+    }
+    private void vaciarCajas(){
+        tModalidad = new Modalidad();
+    }
     public void onRowEdit(RowEditEvent event) {
         boolean repetida = false;
-        DaoTMaestrias daoTmaestrias = new DaoTMaestrias();
+        DaoTModalidad daoModalidad = new DaoTModalidad();
+        Modalidad modalidad = new Modalidad();
         
         try {
+            modalidad = (Modalidad) event.getObject();
             
+            repetida = daoModalidad.existe(modalidad);
+            if (!repetida) {
+                 msg = daoModalidad.registrar(modalidad);
+            }else{
+                mensajesError("Registro repetido");
+                //cargarTablaMaterias();
+                return;
+            }
+            if (msg) {
+                mensajesOk("Datos procesados correctamente");
+                   
+            } else {
+                mensajesError("Error al procesar datos");
+            }
+            cargarTablaModalidad(); 
         } catch (Exception ex) {
-            Logger.getLogger(MbVMaestrias.class.getName()).log(Level.SEVERE, null, ex);
+            cargarTablaModalidad(); 
+            Logger.getLogger(MbVMaterias.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
@@ -91,5 +146,15 @@ public class MbVModalidad implements Serializable{
     public void setMostrarEliminados(boolean mostrarEliminados) {
         this.mostrarEliminados = mostrarEliminados;
     }
+
+    public List<Modalidad> getLstModalidad() {
+        return lstModalidad;
+    }
+
+    public void setLstModalidad(List<Modalidad> lstModalidad) {
+        this.lstModalidad = lstModalidad;
+    }
+
+    
     
 }

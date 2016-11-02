@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 30-oct-2016 21:58:15 by Hibernate Tools 4.3.1 -->
+<!-- Generated 02-nov-2016 10:39:49 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Pojo.Curso" table="curso" schema="public" optimistic-lock="version">
         <id name="id" type="int">
@@ -20,23 +20,26 @@
         <property name="estado" type="java.lang.Character">
             <column name="estado" length="1" />
         </property>
+        <property name="cupo" type="java.lang.Integer">
+            <column name="cupo" />
+        </property>
         <set name="modulos" table="modulo" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="id_curso" not-null="true" />
             </key>
             <one-to-many class="Pojo.Modulo" />
         </set>
-        <set name="solicitudInscripcions" table="solicitud_inscripcion" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="id_curso" not-null="true" />
-            </key>
-            <one-to-many class="Pojo.SolicitudInscripcion" />
-        </set>
         <set name="precios" table="precio" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="id_promocion" not-null="true" />
             </key>
             <one-to-many class="Pojo.Precio" />
+        </set>
+        <set name="solicitudInscripcions" table="solicitud_inscripcion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_curso" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.SolicitudInscripcion" />
         </set>
     </class>
 </hibernate-mapping>

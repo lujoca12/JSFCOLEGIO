@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 30-oct-2016 21:58:04 by Hibernate Tools 4.3.1
+// Generated 02-nov-2016 10:39:37 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -25,7 +25,6 @@ public class Promocion  implements java.io.Serializable {
      private String resolucion;
      private Character estado;
      private Set requisitosPromos = new HashSet(0);
-     
      private Set modulos = new HashSet(0);
 
     public Promocion() {
@@ -51,7 +50,6 @@ public class Promocion  implements java.io.Serializable {
        this.resolucion = resolucion;
        this.estado = estado;
        this.requisitosPromos = requisitosPromos;
-       
        this.modulos = modulos;
     }
    
@@ -146,7 +144,6 @@ public class Promocion  implements java.io.Serializable {
     public void setRequisitosPromos(Set requisitosPromos) {
         this.requisitosPromos = requisitosPromos;
     }
-    
     public Set getModulos() {
         return this.modulos;
     }

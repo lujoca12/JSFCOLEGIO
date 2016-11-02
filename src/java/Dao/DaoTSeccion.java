@@ -109,7 +109,14 @@ public class DaoTSeccion implements InterfaceSeccion{
 
     @Override
     public List<Seccion> getSeccion() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String hql="from Seccion secc inner join fetch secc.modalidad m where secc.estado = '1' and m.estado = '1' order by secc.descripcion asc";
+        Query query = sesion.createQuery(hql);
+        List<Seccion> lstseccion=(List<Seccion>) query.list();
+        sesion.close();
+        return lstseccion;
     }
     
 }

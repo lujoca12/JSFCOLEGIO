@@ -7,13 +7,17 @@ package Dao;
 
 import Interface.InterfaceCurso;
 import Pojo.Curso;
+import Pojo.Precio;
 import Pojo.Promocion;
+import Pojo.Seccion;
+import Pojo.TipoPrecio;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
+import java.math.BigDecimal;
 
 /**
  *
@@ -45,12 +49,8 @@ public class DaoTCurso implements InterfaceCurso{
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        //Consulta para que me aparezcan solo las maestrias registradas en el anio actual
-        String hql="from Curso m inner join fetch m.promocions pr where m.estado='1' and (year(current_date) >= year(pr.fechaInicio) and year(current_date)<= year(pr.fechaFin)) order by m.descripcion asc";
-        //Consulta hasta Usuarios
-        //String hql="from Curso m inner join fetch m.promocions pr inner join fetch pr.modulos mod inner join fetch mod.usuario user where m.estado='1' and year(pr.fechaInicio) = year(current_date) and pr.idUsuario=user.id order by m.descripcion asc";
+        String hql="from Curso c where c.estado = '1' order by c.descripcion asc";
         Query query = sesion.createQuery(hql);
-        //query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         List<Curso> lstCursos=(List<Curso>) query.list();
         sesion.close();
         return lstCursos;
@@ -62,7 +62,7 @@ public class DaoTCurso implements InterfaceCurso{
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
-        String hql="from Curso m inner join fetch m.promocions pr where m.estado = '1' order by m.descripcion asc";
+        String hql="from Curso c inner join fetch c.seccion secc where c.estado = '1' and secc.estado = '1' order by c.descripcion, c.paralelo asc";
         Query query = sesion.createQuery(hql);
 
         List<Curso> lstCursos=(List<Curso>) query.list();
@@ -126,13 +126,33 @@ public class DaoTCurso implements InterfaceCurso{
     }
 
     @Override
-    public boolean registrar(Curso tCurso) throws Exception {
+    public boolean registrarCursoPrecio(Curso tCurso, BigDecimal precioMatricula, BigDecimal precioColegiatura) throws Exception {
         boolean band = false;
         try {
             iniciaOperacion();
-            sesion.save(tCurso);
-
+            sesion.saveOrUpdate(tCurso);
             tx.commit();
+            sesion.close();
+            
+            iniciaOperacion();
+            TipoPrecio tipo_Precio = null;
+            Precio precio = null;
+            for (int i = 1; i < 3; i++) {
+                tipo_Precio = new TipoPrecio();
+                tipo_Precio.setId(i);
+                precio = new Precio();
+                precio.setTipoPrecio(tipo_Precio);
+                precio.setCurso(tCurso);
+                if(i == 1)
+                    precio.setValor(precioMatricula);
+                else
+                    precio.setValor(precioColegiatura);
+                
+                sesion.saveOrUpdate(precio);
+            }
+            
+            tx.commit();
+            
             sesion.close();
             band = true;
         } catch (Exception e) {
@@ -141,5 +161,27 @@ public class DaoTCurso implements InterfaceCurso{
         }
         
         return band;
+    }
+    @Override
+    public boolean existe(Curso tCurso) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        boolean band = false;
+        iniciaOperacion();
+        String hql="from Curso c where c.descripcion='"+tCurso.getDescripcion()+"' and c.estado = '1'";
+        Query query = sesion.createQuery(hql);
+        List<Seccion> seccion=(List<Seccion>) query.list();
+        if(seccion.size() > 0)
+            band = true;
+        else
+            band = false;
+        
+        sesion.close();
+        return band;
+    }
+
+    @Override
+    public boolean registrar(Curso tCurso) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

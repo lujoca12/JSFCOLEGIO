@@ -12,31 +12,54 @@
     <h:body>
         <div class="ui-fluid">
             <h:form id="form">
-                <p:tab id="personal" title="RegistrarModalidad">
-                    <p:panel header="Registrar Modalidad">
+                <p:tab id="personal" title="RegistrarCursos">
+                    <p:panel header="Registrar Cursos">
                         <p:growl id="msgs" showDetail="true" />
                         <p:focus context="panel"/>
                         <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
-                            <p:outputLabel for="txtDescripcionModalidad" styleClass="labelDerecha" value="Descripción:" />
-                            <p:inputText id="txtDescripcionModalidad" value="#{mbVModalidad.tModalidad.descripcion}" required="true" maxlength="40"/>
-
-                            <h:outputText id="display" value="" />
-                            <p:commandButton value="Guardar" update="form,msgs" styleClass="anchoBotones" icon="ui-icon-disk"
-                                             actionListener="#{mbVModalidad.registrar()}" />
-                        </p:panelGrid>
-                        
-                        <p:panelGrid id="panel1a" columns="4" columnClasses="ui-grid-col-3,ui-grid-col-2, ui-grid-col-2, ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank">
-
+                            <p:outputLabel for="txtDescripcionCurso" styleClass="labelDerecha" value="Descripción:" />
+                            <p:inputText id="txtDescripcionCurso" value="#{mbVCurso.tCurso.descripcion}" required="true" maxlength="60"/>
+                            
+                            <p:outputLabel for="cboParalelo" value="Paralelo:" styleClass="labelDerecha"  />
+                            <h:selectOneMenu required="true" id="cboParalelo" class="form-control" value="#{mbVCurso.tCurso.paralelo}">
+                                <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{mbVCurso.lstTodosParalelos}"  />  
+                            </h:selectOneMenu>
+                            
+                            <p:outputLabel for="cboSeccion" value="Sección:" styleClass="labelDerecha"  />
+                            <h:selectOneMenu required="true" id="cboSeccion" class="form-control" value="#{mbVCurso.tSeccion.id}">
+                                <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{mbVCurso.cboSeccion}"  />  
+                            </h:selectOneMenu>
+                            
+                            <p:outputLabel for="txtCupos" styleClass="labelDerecha" value="Cupos:" />
+                            <p:inputText id="txtCupos" value="#{mbVCurso.tCurso.cupo}" required="true" onkeypress="return isNumberKey(event)">
+                                <f:validateLongRange minimum="1"/>
+                            </p:inputText>
+                            
                             <p:outputLabel for="txtprecioMatricula" styleClass="labelDerecha" value="Precio Matrícula:" />
-                            <p:inputText id="txtprecioMatricula" value="#{mbVMaestrias.precioMatricula}" required="true" onkeypress="return validarNum(event, true)">
+                            <p:inputText id="txtprecioMatricula" value="#{mbVCurso.precioMatricula}" required="true" onkeypress="return validarNum(event, true)">
                                 <f:validateDoubleRange minimum="1"  />
                             </p:inputText>
                             
                             <p:outputLabel for="txtprecioColegiatura" styleClass="labelDerecha" value="P. Mensual:" />
-                            <p:inputText id="txtprecioColegiatura" value="#{mbVMaestrias.precioColegiatura}" required="true" onkeypress="return validarNum(event, true)">
+                            <p:inputText id="txtprecioColegiatura" value="#{mbVCurso.precioColegiatura}" required="true" onkeypress="return validarNum(event, true)">
                                 <f:validateDoubleRange minimum="1"  />
                             </p:inputText>
                             
+                        </p:panelGrid>
+                        
+                        <p:panelGrid id="panel1a" columns="4" columnClasses="ui-grid-col-3,ui-grid-col-2, ui-grid-col-2, ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank">
+                            
+                            
+                            
+                            
+                            
+                        </p:panelGrid>
+                        <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
+                            <h:outputText id="display" value="" />
+                            <p:commandButton value="Guardar" update="form,msgs" styleClass="anchoBotones" icon="ui-icon-disk"
+                                             actionListener="#{mbVCurso.registrar()}" />
                         </p:panelGrid>
                         
                     </p:panel>
@@ -44,10 +67,10 @@
                 <br></br>
                 <p:panel id="panelTabla" style="height: 30%;">
                     <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->   
-                    <p:dataTable class="tblDatos fuenteTamanio" id="tblModalidad" var="lstTbl" value="#{mbVModalidad.lstModalidad}"
+                    <p:dataTable class="tblDatos fuenteTamanio" id="tblModalidad" var="lstTbl" value="#{mbVCurso.lstCurso}"
                                  editable="true" scrollable="true" scrollHeight="150">
-                        <p:ajax event="rowEdit" listener="#{mbVModalidad.onRowEdit}" update=":form:tblModalidad :form:msgs" />
-                        <p:ajax event="rowEditCancel" listener="#{mbVModalidad.onRowCancel}" update=":form:msgs" />
+                        <p:ajax event="rowEdit" listener="#{mbVCurso.onRowEdit}" update=":form:tblModalidad :form:msgs" />
+                        <p:ajax event="rowEditCancel" listener="#{mbVCurso.onRowCancel}" update=":form:msgs" />
                         
                         <p:column headerText="Codigo" style="width: 10%;">
                             <p:cellEditor>
@@ -58,11 +81,11 @@
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="Modalidades" style="width: 50%;">
+                        <p:column headerText="Cursos" style="width: 50%;">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.descripcion}" /></f:facet>
                                 <f:facet name="input">
-                                    <p:inputText value="#{lstTbl.descripcion}" required="true" maxlength="40" style="width:100%"/>
+                                    <p:inputText value="#{lstTbl.descripcion}" required="true" maxlength="60" style="width:100%"/>
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>

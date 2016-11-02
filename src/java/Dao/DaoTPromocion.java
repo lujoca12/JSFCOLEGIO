@@ -222,7 +222,7 @@ public class DaoTPromocion implements InterfacePromocion{
         sesion.close();
         return promocion;
     }
-
+//ojo
     @Override
     public boolean update(Promocion tPromocion, BigDecimal precioMatricula, BigDecimal precioColegiatura) throws Exception {
         boolean band = false;
@@ -260,7 +260,7 @@ public class DaoTPromocion implements InterfacePromocion{
                     tipo_Precio.setId(i);
                     precio = new Precio();
                     precio.setTipoPrecio(tipo_Precio);
-                    precio.setPromocion(tPromocion);
+//                    precio.setPromocion(tPromocion);
                     if (i == 1) {
                         precio.setValor(precioMatricula);
                     } else {

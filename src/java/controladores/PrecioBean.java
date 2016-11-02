@@ -195,7 +195,7 @@ public class PrecioBean implements Serializable {
             Precio precio = new Precio();
             PromocionDao promoD = new PromocionDao();
             PagoDao pagoD = new PagoDao();
-            precio.setPromocion(promoD.getPromocion(idPromo));
+           // precio.setPromocion(promoD.getPromocion(idPromo));
             precio.setTipoPrecio(pagoD.getTipoPrecio("1"));
             precio.setValor(precioMatricula);
             pagoD.insertarPrecio(precio);

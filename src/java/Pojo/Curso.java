@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 30-oct-2016 21:58:04 by Hibernate Tools 4.3.1
+// Generated 02-nov-2016 10:39:37 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -16,9 +16,10 @@ public class Curso  implements java.io.Serializable {
      private String descripcion;
      private String paralelo;
      private Character estado;
+     private Integer cupo;
      private Set modulos = new HashSet(0);
-     private Set solicitudInscripcions = new HashSet(0);
      private Set precios = new HashSet(0);
+     private Set solicitudInscripcions = new HashSet(0);
 
     public Curso() {
     }
@@ -28,15 +29,16 @@ public class Curso  implements java.io.Serializable {
         this.id = id;
         this.seccion = seccion;
     }
-    public Curso(int id, Seccion seccion, String descripcion, String paralelo, Character estado, Set modulos, Set solicitudInscripcions, Set precios) {
+    public Curso(int id, Seccion seccion, String descripcion, String paralelo, Character estado, Integer cupo, Set modulos, Set precios, Set solicitudInscripcions) {
        this.id = id;
        this.seccion = seccion;
        this.descripcion = descripcion;
        this.paralelo = paralelo;
        this.estado = estado;
+       this.cupo = cupo;
        this.modulos = modulos;
-       this.solicitudInscripcions = solicitudInscripcions;
        this.precios = precios;
+       this.solicitudInscripcions = solicitudInscripcions;
     }
    
     public int getId() {
@@ -67,12 +69,33 @@ public class Curso  implements java.io.Serializable {
     public void setParalelo(String paralelo) {
         this.paralelo = paralelo;
     }
+    public Character getEstado() {
+        return this.estado;
+    }
+    
+    public void setEstado(Character estado) {
+        this.estado = estado;
+    }
+    public Integer getCupo() {
+        return this.cupo;
+    }
+    
+    public void setCupo(Integer cupo) {
+        this.cupo = cupo;
+    }
     public Set getModulos() {
         return this.modulos;
     }
     
     public void setModulos(Set modulos) {
         this.modulos = modulos;
+    }
+    public Set getPrecios() {
+        return this.precios;
+    }
+    
+    public void setPrecios(Set precios) {
+        this.precios = precios;
     }
     public Set getSolicitudInscripcions() {
         return this.solicitudInscripcions;
@@ -82,20 +105,6 @@ public class Curso  implements java.io.Serializable {
         this.solicitudInscripcions = solicitudInscripcions;
     }
 
-    public Character getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Character estado) {
-        this.estado = estado;
-    }
-    public Set getPrecios() {
-        return this.precios;
-    }
-    
-    public void setPrecios(Set precios) {
-        this.precios = precios;
-    }
 
 
 

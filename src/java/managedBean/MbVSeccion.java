@@ -39,7 +39,7 @@ public class MbVSeccion implements Serializable{
     private boolean msg = false;
     private boolean mostrarEliminados;
     private List<Seccion> lstSeccion;
-    private List<SelectItem> cboSeccion;
+    private List<SelectItem> cboModalidad;
     
     public MbVSeccion() {
         tSeccion = new Seccion();
@@ -61,12 +61,12 @@ public class MbVSeccion implements Serializable{
     public void cargarCboModalidad() {
         try {
             
-            cboSeccion = new ArrayList<>();
+            cboModalidad = new ArrayList<>();
             DaoTModalidad daoModalidad = new DaoTModalidad();
             List<Modalidad> modalidad = daoModalidad.getModalidad();
             for (Modalidad m : modalidad) {
                 SelectItem item = new SelectItem(m.getId(), m.getDescripcion());
-                cboSeccion.add(item);
+                cboModalidad.add(item);
             }
         } catch (Exception ex) {
             
@@ -182,13 +182,11 @@ public class MbVSeccion implements Serializable{
         this.lstSeccion = lstSeccion;
     }
 
-    public List<SelectItem> getCboSeccion() {
-        return cboSeccion;
+    public List<SelectItem> getCboModalidad() {
+        return cboModalidad;
     }
 
-    public void setCboSeccion(List<SelectItem> cboSeccion) {
-        this.cboSeccion = cboSeccion;
+    public void setCboModalidad(List<SelectItem> cboModalidad) {
+        this.cboModalidad = cboModalidad;
     }
-    
-    
 }

@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 30-oct-2016 21:58:04 by Hibernate Tools 4.3.1
+// Generated 02-nov-2016 10:39:37 by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -12,7 +12,7 @@ public class Precio  implements java.io.Serializable {
 
 
      private int id;
-     private Promocion promocion;
+     private Curso curso;
      private TipoPrecio tipoPrecio;
      private BigDecimal valor;
      private Date fechaInicio;
@@ -22,14 +22,14 @@ public class Precio  implements java.io.Serializable {
     }
 
 	
-    public Precio(int id, Promocion promocion, TipoPrecio tipoPrecio) {
+    public Precio(int id, Curso curso, TipoPrecio tipoPrecio) {
         this.id = id;
-        this.promocion = promocion;
+        this.curso = curso;
         this.tipoPrecio = tipoPrecio;
     }
-    public Precio(int id, Promocion promocion, TipoPrecio tipoPrecio, BigDecimal valor, Date fechaInicio, Date fechaFin) {
+    public Precio(int id, Curso curso, TipoPrecio tipoPrecio, BigDecimal valor, Date fechaInicio, Date fechaFin) {
        this.id = id;
-       this.promocion = promocion;
+       this.curso = curso;
        this.tipoPrecio = tipoPrecio;
        this.valor = valor;
        this.fechaInicio = fechaInicio;
@@ -43,12 +43,12 @@ public class Precio  implements java.io.Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    public Promocion getPromocion() {
-        return this.promocion;
+    public Curso getCurso() {
+        return this.curso;
     }
     
-    public void setPromocion(Promocion promocion) {
-        this.promocion = promocion;
+    public void setCurso(Curso curso) {
+        this.curso = curso;
     }
     public TipoPrecio getTipoPrecio() {
         return this.tipoPrecio;

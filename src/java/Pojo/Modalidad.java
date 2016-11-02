@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 30-oct-2016 21:58:04 by Hibernate Tools 4.3.1
+// Generated 02-nov-2016 10:39:37 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -44,6 +44,13 @@ public class Modalidad  implements java.io.Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+    public Character getEstado() {
+        return this.estado;
+    }
+    
+    public void setEstado(Character estado) {
+        this.estado = estado;
+    }
     public Set getSeccions() {
         return this.seccions;
     }
@@ -52,14 +59,6 @@ public class Modalidad  implements java.io.Serializable {
         this.seccions = seccions;
     }
 
-    public Character getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Character estado) {
-        this.estado = estado;
-    }
-    
 
 
 

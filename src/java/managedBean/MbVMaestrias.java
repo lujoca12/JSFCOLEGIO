@@ -355,8 +355,8 @@ public class MbVMaestrias implements Serializable{
 
         try {
             //Aqui obtnego el id del usuario que seleccione
-            tPromocion.setIdUsuario(this.theme.getId());
-            tPromocion.setUsuario(this.theme.getName());
+//            tPromocion.setIdUsuario(this.theme.getId());
+//            tPromocion.setUsuario(this.theme.getName());
             tPromocion.setEstado('1');
             //Establesco en 1 para habilitarlo
             tMaestria.setEstado('1');

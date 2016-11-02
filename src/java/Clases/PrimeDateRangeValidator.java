@@ -53,7 +53,7 @@ public class PrimeDateRangeValidator implements Validator{
         calendar.setTime(endDate);
         int anioFin = calendar.get(Calendar.YEAR);
         
-        if (endDate.before(startDate) || endDate.equals(startDate) || (anioFin - anioInicio) < 2 ) {
+        if (endDate.before(startDate) || endDate.equals(startDate) || (anioFin - anioInicio) < 1 ) {
              FacesMessage message = new FacesMessage("La fecha Final no puede ser igual o menor que la inicial.");
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ValidatorException(message);

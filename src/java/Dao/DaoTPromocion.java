@@ -54,26 +54,26 @@ public class DaoTPromocion implements InterfacePromocion{
             tx.commit();
             sesion.close();
             
-            iniciaOperacion();
-            TipoPrecio tipo_Precio = null;
-            Precio precio = null;
-            for (int i = 1; i < 3; i++) {
-                tipo_Precio = new TipoPrecio();
-                tipo_Precio.setId(i);
-                precio = new Precio();
-                precio.setTipoPrecio(tipo_Precio);
-                precio.setPromocion(tPromocion);
-                if(i == 1)
-                    precio.setValor(precioMatricula);
-                else
-                    precio.setValor(precioColegiatura);
-                
-                sesion.save(precio);
-            }
-            
-            tx.commit();
-            
-            sesion.close();
+//            iniciaOperacion();
+//            TipoPrecio tipo_Precio = null;
+//            Precio precio = null;
+//            for (int i = 1; i < 3; i++) {
+//                tipo_Precio = new TipoPrecio();
+//                tipo_Precio.setId(i);
+//                precio = new Precio();
+//                precio.setTipoPrecio(tipo_Precio);
+//                precio.setPromocion(tPromocion);
+//                if(i == 1)
+//                    precio.setValor(precioMatricula);
+//                else
+//                    precio.setValor(precioColegiatura);
+//                
+//                sesion.save(precio);
+//            }
+//            
+//            tx.commit();
+//            
+//            sesion.close();
             band = true;
         } catch (Exception e) {
             tx.rollback();

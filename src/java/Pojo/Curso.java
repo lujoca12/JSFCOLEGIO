@@ -18,6 +18,7 @@ public class Curso  implements java.io.Serializable {
      private Character estado;
      private Set modulos = new HashSet(0);
      private Set solicitudInscripcions = new HashSet(0);
+     private Set precios = new HashSet(0);
 
     public Curso() {
     }
@@ -27,7 +28,7 @@ public class Curso  implements java.io.Serializable {
         this.id = id;
         this.seccion = seccion;
     }
-    public Curso(int id, Seccion seccion, String descripcion, String paralelo, Character estado, Set modulos, Set solicitudInscripcions) {
+    public Curso(int id, Seccion seccion, String descripcion, String paralelo, Character estado, Set modulos, Set solicitudInscripcions, Set precios) {
        this.id = id;
        this.seccion = seccion;
        this.descripcion = descripcion;
@@ -35,6 +36,7 @@ public class Curso  implements java.io.Serializable {
        this.estado = estado;
        this.modulos = modulos;
        this.solicitudInscripcions = solicitudInscripcions;
+       this.precios = precios;
     }
    
     public int getId() {
@@ -87,7 +89,13 @@ public class Curso  implements java.io.Serializable {
     public void setEstado(Character estado) {
         this.estado = estado;
     }
+    public Set getPrecios() {
+        return this.precios;
+    }
     
+    public void setPrecios(Set precios) {
+        this.precios = precios;
+    }
 
 
 

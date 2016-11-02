@@ -32,5 +32,11 @@
             </key>
             <one-to-many class="Pojo.SolicitudInscripcion" />
         </set>
+        <set name="precios" table="precio" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_promocion" not-null="true" />
+            </key>
+            <one-to-many class="Pojo.Precio" />
+        </set>
     </class>
 </hibernate-mapping>

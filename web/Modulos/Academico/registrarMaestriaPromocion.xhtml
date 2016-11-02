@@ -13,7 +13,7 @@
         <div class="ui-fluid">
             <h:form id="form">
                 <p:tab id="personal" title="RegistrarMaestriaPromocion">
-                    <p:panel header="Registrar Especialidad Promociòn Materia">
+                    <p:panel header="Registrar Especialidad Promociòn">
                         <p:growl id="msgs" showDetail="true" />
                         <p:focus context="panel"/>
                         <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
@@ -42,21 +42,6 @@
                                 <p:ajax update="form" />
                             </p:selectOneMenu>
                             
-                            <p:outputLabel for="txtDirector" value="Coordinador:" styleClass="labelDerecha"  />
-                            <p:selectOneMenu id="txtDirector" value="#{mbVMaestrias.theme}" 
-                                             converter="themeConverter" required="true"
-                                             effect="fade" var="t" filter="true" filterMatchMode="contains">
-                                <f:selectItems value="#{mbVMaestrias.lstTheme}" var="theme" 
-                                               itemLabel="#{theme.displayName}" itemValue="#{theme}" />
-                                <p:column style="width:10%">
-                                    <h:outputText styleClass="ui-theme ui-theme-#{t.name}" />
-                                </p:column>
-
-                                <p:column>
-                                    <h:outputText value="#{t.displayName}" />
-                                </p:column>
-                            </p:selectOneMenu>
-                            
                             <p:outputLabel for="txtFechaInicio" value="Fecha inicio:" styleClass="labelDerecha" />
                             <p:calendar id="txtFechaInicio" 
                                         onkeypress="return permite(event, 'none')" 
@@ -82,25 +67,10 @@
                         </p:panelGrid>
                         
                         <p:panelGrid id="panel1a" columns="4" columnClasses="ui-grid-col-3,ui-grid-col-2, ui-grid-col-2, ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank">
-                            <p:outputLabel for="txtCupos" styleClass="labelDerecha" value="Cupos:" />
-                            <p:inputText id="txtCupos" value="#{mbVMaestrias.tPromocion.cupo}" required="true" onkeypress="return isNumberKey(event)">
-                                <f:validateLongRange minimum="1"/>
-                            </p:inputText>
-
 
                             <p:outputLabel for="txtNCuotas" styleClass="labelDerecha" value="# Cuotas" />
                             <p:inputText id="txtNCuotas" value="#{mbVMaestrias.tPromocion.NCuotas}" required="true" onkeypress="return isNumberKey(event)">
                                 <f:validateLongRange minimum="1"/>
-                            </p:inputText>
-                            
-                            <p:outputLabel for="txtprecioMatricula" styleClass="labelDerecha" value="Precio Matrícula:" />
-                            <p:inputText id="txtprecioMatricula" value="#{mbVMaestrias.precioMatricula}" required="true" onkeypress="return validarNum(event, true)">
-                                <f:validateDoubleRange minimum="1"  />
-                            </p:inputText>
-                            
-                            <p:outputLabel for="txtprecioColegiatura" styleClass="labelDerecha" value="P. Colegiatura:" />
-                            <p:inputText id="txtprecioColegiatura" value="#{mbVMaestrias.precioColegiatura}" required="true" onkeypress="return validarNum(event, true)">
-                                <f:validateDoubleRange minimum="1"  />
                             </p:inputText>
                             
                         </p:panelGrid>

@@ -47,12 +47,6 @@
             </key>
             <one-to-many class="Pojo.RequisitosPromo" />
         </set>
-        <set name="precios" table="precio" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="id_promocion" not-null="true" />
-            </key>
-            <one-to-many class="Pojo.Precio" />
-        </set>
         <set name="modulos" table="modulo" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="id_promocion" not-null="true" />

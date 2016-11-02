@@ -168,7 +168,8 @@ public class DaoTCurso implements InterfaceCurso{
         this.tx = null;
         boolean band = false;
         iniciaOperacion();
-        String hql="from Curso c where c.descripcion='"+tCurso.getDescripcion()+"' and c.estado = '1'";
+        String hql="from Curso c inner join fetch c.seccion secc where c.descripcion='"+tCurso.getDescripcion()+"' and c.paralelo='"+tCurso.getParalelo()+"' "
+                + "and secc.descripcion='"+tCurso.getSeccion().getDescripcion()+"' and c.estado = '1' and secc.estado = '1'";
         Query query = sesion.createQuery(hql);
         List<Seccion> seccion=(List<Seccion>) query.list();
         if(seccion.size() > 0)

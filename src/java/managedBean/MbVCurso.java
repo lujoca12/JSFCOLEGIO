@@ -51,14 +51,14 @@ public class MbVCurso implements Serializable{
         tSeccion = new Seccion();
         cargarParalelos();
         cargarCboSeccion();
-        cargarTablaSeccion();
+        cargarTablaCursos();
     }
-    public void cargarTablaSeccion(){
+    public void cargarTablaCursos(){
         
         try {
             lstCurso = new ArrayList<>();
             DaoTCurso daoCurso = new DaoTCurso();
-            lstCurso = daoCurso.getTodosCursos();
+            lstCurso = daoCurso.getCursoSeccion();
         } catch (Exception ex) {
             Logger.getLogger(MbVCurso.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -70,7 +70,7 @@ public class MbVCurso implements Serializable{
             DaoTSeccion daoSeccion = new DaoTSeccion();
             List<Seccion> seccion = daoSeccion.getSeccion();
             for (Seccion s : seccion) {
-                SelectItem item = new SelectItem(s.getId(), s.getDescripcion());
+                SelectItem item = new SelectItem(s.getId(), s.getDescripcion()+" - "+s.getModalidad().getDescripcion());
                 cboSeccion.add(item);
             }
         } catch (Exception ex) {
@@ -119,14 +119,14 @@ public class MbVCurso implements Serializable{
                 msg = daoCurso.registrarCursoPrecio(tCurso, precioMatricula, precioColegiatura);
             }else{
                 mensajesError("Registro repetido");
-                cargarTablaSeccion();
+                cargarTablaCursos();
                 return;
             }
             
             if (msg) {
                 mensajesOk("Datos procesados correctamente");
                 vaciarCajas();
-                cargarTablaSeccion();    
+                cargarTablaCursos();    
             } else {
                 mensajesError("Error al procesar datos");
             }
@@ -167,9 +167,9 @@ public class MbVCurso implements Serializable{
             } else {
                 mensajesError("Error al procesar datos");
             }
-            cargarTablaSeccion(); 
+            cargarTablaCursos(); 
         } catch (Exception ex) {
-            cargarTablaSeccion(); 
+            cargarTablaCursos(); 
             
         }
         

@@ -49,14 +49,7 @@
                             
                         </p:panelGrid>
                         
-                        <p:panelGrid id="panel1a" columns="4" columnClasses="ui-grid-col-3,ui-grid-col-2, ui-grid-col-2, ui-grid-col-2" layout="grid" styleClass="ui-panelgrid-blank">
-                            
-                            
-                            
-                            
-                            
-                        </p:panelGrid>
-                        <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
+                        <p:panelGrid id="panel1a" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-5" layout="grid" styleClass="ui-panelgrid-blank">
                             <h:outputText id="display" value="" />
                             <p:commandButton value="Guardar" update="form,msgs" styleClass="anchoBotones" icon="ui-icon-disk"
                                              actionListener="#{mbVCurso.registrar()}" />
@@ -86,6 +79,39 @@
                                 <f:facet name="output"><h:outputText value="#{lstTbl.descripcion}" /></f:facet>
                                 <f:facet name="input">
                                     <p:inputText value="#{lstTbl.descripcion}" required="true" maxlength="60" style="width:100%"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="Paralelo" style="width: 50%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.paralelo}" /></f:facet>
+                                <f:facet name="input">
+                                    <h:selectOneMenu required="true" id="cboParalelo1" class="form-control" value="#{lstTbl.paralelo}">
+                                        <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{mbVCurso.lstTodosParalelos}"  />  
+                                    </h:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="Sección" style="width: 50%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.seccion.descripcion}" /></f:facet>
+                                <f:facet name="input">
+                                    <h:selectOneMenu required="true" id="cboSeccion1" class="form-control" value="#{lstTbl.seccion.id}">
+                                        <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{mbVCurso.cboSeccion}"  />  
+                                    </h:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="Cupos" style="width: 10%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.cupo}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="txtCupos1" value="#{lstTbl.cupo}" required="true" onkeypress="return isNumberKey(event)" />
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>

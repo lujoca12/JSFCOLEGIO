@@ -102,76 +102,6 @@
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="Coordinador" style="width: 20%;">
-                            <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{lstTbl.nombresUsuarios}" /></f:facet>
-                                <f:facet name="input">
-                                    <p:selectOneMenu value="#{mbVMaestrias.theme}" converter="themeConverter"
-                                                     effect="fade" var="t" filter="true" filterMatchMode="contains">
-                                        <f:selectItem itemLabel="#{lstTbl.nombresUsuarios}"/>
-                                        <f:selectItems value="#{mbVMaestrias.lstTheme}" var="theme" noSelectionValue="#{lstTbl.nombresUsuarios}" itemLabel="#{theme.displayName}" itemValue="#{theme}" />
-                                        <p:column style="width:10%">
-                                            <h:outputText styleClass="ui-theme ui-theme-#{t.name}" />
-                                        </p:column>
-
-                                        <p:column>
-                                            <h:outputText value="#{t.displayName}" />
-                                        </p:column>
-                                    </p:selectOneMenu>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-                        
-                        <p:column headerText="Promoc." style="width: 10%;">
-                            <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{lstTbl.descripcionP}" /></f:facet>
-                                <f:facet name="input">
-                                    <p:autoComplete readonly="true" style="width:100%" required="true" maxlength="150" value="#{lstTbl.descripcionP}" />
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-                        
-                        <p:column headerText="P. Matr." style="width: 10%;">
-                            <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{lstTbl.precioMatricula}" /></f:facet>
-                                <f:facet name="input">
-                                    <p:inputText id="precioMatricula" onkeypress="return validarNum(event, true)" required="true" value="#{lstTbl.precioMatricula}">
-                                        <f:validateDoubleRange minimum="0"  />
-                                    </p:inputText>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-                        
-                        <p:column headerText="P. Col." style="width: 10%;">
-                            <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{lstTbl.precioColegiatura}" /></f:facet>
-                                <f:facet name="input">
-                                    <p:inputText id="precioColegiatura" onkeypress="return validarNum(event, true)" required="true" value="#{lstTbl.precioColegiatura}">
-                                        <f:validateDoubleRange minimum="0"  />
-                                    </p:inputText> 
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-
-                        <p:column headerText="F. Resol." style="width: 15%;">
-                            <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{lstTbl.fechaResolucion}" /></f:facet>
-                                <f:facet name="input">
-                                    <p:calendar id="txtFechaResol" locale="es" value="#{lstTbl.fechaResolucion}" effect="fold" pattern="dd-MM-yyyy" mask="true" >
-                                    </p:calendar>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-                        
-                        <p:column headerText="Resol." style="width: 13%;">
-                            <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{lstTbl.n_resolucion}" /></f:facet>
-                                <f:facet name="input">
-                                    <p:inputText value="#{lstTbl.n_resolucion}" maxlength="25" style="width:100%" label="text"/>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-
                         <p:column headerText="F. Inicio" style="width: 13%;">
                             <p:cellEditor>
                                 <f:facet name="output">
@@ -196,17 +126,6 @@
                                         <f:attribute name="txtFechaInicio" value="#{lstTbl.fechaInicio}"/>
                                         <f:validator validatorId="primeDateRangeValidator" />
                                     </p:calendar>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-
-                        <p:column headerText="Cupos" style="width: 7%;">
-                            <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{lstTbl.cupo}" /></f:facet>
-                                <f:facet name="input">
-                                    <p:inputText value="#{lstTbl.cupo}" onkeypress="return isNumberKey(event)" style="width:100%" label="text">
-                                        <f:validateLongRange minimum="1"/>
-                                    </p:inputText>
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>

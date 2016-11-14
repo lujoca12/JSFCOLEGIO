@@ -108,7 +108,15 @@ public class DaoTMaterias implements InterfaceMateria{
 
     @Override
     public List<Materias> getMaterias() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.sesion = null;
+        this.tx = null;
+        boolean band = false;
+        iniciaOperacion();
+        String hql="from Materias mater where mater.estado = '1' order by mater.descripcion asc";
+        Query query = sesion.createQuery(hql);
+        List<Materias> materias=(List<Materias>) query.list();
+        sesion.close();
+        return materias;
     }
     
 }

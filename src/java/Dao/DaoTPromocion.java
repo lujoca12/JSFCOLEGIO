@@ -162,12 +162,11 @@ public class DaoTPromocion implements InterfacePromocion{
         this.tx = null;
         iniciaOperacion();
         
+        //String consulta = "(year(current_date) >= year(pr.fechaInicio) and year(current_date)<= year(pr.fechaFin)) and ";
         
         String hql="from Promocion pr inner join fetch pr.maestria m "
                 + "where pr.estado = '1' and m.estado='1' and "
-                + "(year(current_date) >= year(pr.fechaInicio) and "
-                + "year(current_date)<= year(pr.fechaFin)) and "
-                + "m.id = "+idMaestria+" order by pr.id desc";
+                + "m.id = "+idMaestria+" order by pr.id, year(pr.fechaInicio) desc";
         Query query = sesion.createQuery(hql);
         List<Promocion> lstPermiso=(List<Promocion>) query.list();
         sesion.close();

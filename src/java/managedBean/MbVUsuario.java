@@ -590,14 +590,14 @@ public class MbVUsuario implements Serializable {
         try {
             
             
-            String msj = "Saludos Sr(a). "+tUsuario.getNombres()+" "+tUsuario.getApellidos()+" \n Bienvenido a la Unidad de Postgrado \n usuario: "+tUsuario.getNick()+" \n clave:"+claveGen+"";
+            String msj = "Saludos Sr(a). "+tUsuario.getNombres()+" "+tUsuario.getApellidos()+" \n Bienvenido a la Unidad Educativa Libertador \n usuario: "+tUsuario.getNick()+" \n clave:"+claveGen+"";
                     
 
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(username));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(tUsuario.getEmail()));
-            message.setSubject("POSTGRADO UTEQ");
+            message.setSubject("Unidad Educativa Libertador");
             //message.setText("La entrevista tendrá lugar en " + lugar + " el " + dateFormat.format(fecha));
             message.setText(msj);
             Transport.send(message);

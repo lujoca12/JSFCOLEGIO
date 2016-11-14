@@ -282,7 +282,7 @@ public class MbVMaestrias implements Serializable{
                                 promocion.getFechaResolucion(),
                                 promocion.getFechaInicio(),
                                 promocion.getFechaFin(),
-                                promocion.getCupo(),
+                                promocion.getCupo() == null ? 0 :promocion.getCupo(),
                                 promocion.getNCuotas(),
                                 promocion.getIdUsuario(),
                                 promocion.getUsuario(),

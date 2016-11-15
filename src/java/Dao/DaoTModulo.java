@@ -106,10 +106,11 @@ public class DaoTModulo implements InterfaceModulos{
         
         String hql="from Modulo mod inner join fetch mod.promocion p "
                 + "inner join fetch mod.usuario user "
+                + "inner join fetch mod.materias mater "
                 + "inner join fetch p.maestria m where m.estado='1' and "
                 + "(year(current_date) >= year(p.fechaInicio) "
                 + "and year(current_date)<= year(p.fechaFin)) "
-                + ""+consulta+" and p.estado = '1' and "+estado+" order by mod.id desc";
+                + ""+consulta+" and p.estado = '1' and "+estado+" and mater.estado = '1' order by mod.id desc";
         Query query = sesion.createQuery(hql);
         List<Modulo> lstPermiso=(List<Modulo>) query.list();
         sesion.close();

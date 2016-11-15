@@ -660,6 +660,7 @@ public class MbVModulos implements Serializable {
                 tModulo.setUsuario(usuario);
                 
                 tModulo.setCurso(tCurso);
+                tModulo.setEstado('1');
 
                 repetida = daoTmodulo.existe(tModulo);
                 if (!repetida) {

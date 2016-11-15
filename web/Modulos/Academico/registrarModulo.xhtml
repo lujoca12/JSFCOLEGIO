@@ -152,11 +152,11 @@
 
                         <p:column headerText="Docente">
                             <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{lstTbl.usuario}" /></f:facet>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.usuario.apellidos}" /></f:facet>
                                 <f:facet name="input">
                                     <p:selectOneMenu value="#{mbVModulos.theme}" converter="themeConverter"
                                                      effect="fade" var="t" filter="true" filterMatchMode="contains">
-                                        <f:selectItem itemLabel="#{lstTbl.usuario}"/>
+                                        <f:selectItem itemLabel="#{lstTbl.usuario.apellidos}"/>
                                         <f:selectItems value="#{mbVModulos.lstTheme}" var="theme"  itemLabel="#{theme.displayName}" itemValue="#{theme}" />
                                         <p:column style="width:10%">
                                             <h:outputText styleClass="ui-theme ui-theme-#{t.name}" />

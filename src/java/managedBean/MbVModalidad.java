@@ -41,6 +41,7 @@ public class MbVModalidad implements Serializable{
     private boolean msg = false;
     private boolean mostrarEliminados;
     private List<Modalidad> lstModalidad;
+    private String modalidadDescripcion;
     public MbVModalidad() {
         tModalidad = new Modalidad();
         cargarTablaModalidad();
@@ -48,9 +49,16 @@ public class MbVModalidad implements Serializable{
     public void cargarTablaModalidad(){
         
         try {
+            
             lstModalidad = new ArrayList<>();
             DaoTModalidad daoModalidad = new DaoTModalidad();
-            lstModalidad = daoModalidad.getTodasModalidades();
+            if(modalidadDescripcion == null){
+                lstModalidad = daoModalidad.getModalidadD("", mostrarEliminados);
+            }else{
+                lstModalidad = daoModalidad.getModalidadD(modalidadDescripcion, mostrarEliminados);
+            }
+            
+            
             
         } catch (Exception ex) {
             Logger.getLogger(MbVModalidad.class.getName()).log(Level.SEVERE, null, ex);
@@ -130,7 +138,62 @@ public class MbVModalidad implements Serializable{
         
         
     }
+    
+    public void onDeleteModalidad(Modalidad tModalidades){
+        DaoTModalidad daoModalidad = new DaoTModalidad();
+        tModalidades.setEstado('0');
+        try {
+            msg = daoModalidad.registrar(tModalidades);
+            cargarTablaModalidad();
+        } catch (Exception ex) {
+            Logger.getLogger(MbVMaestrias.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if (msg) {
+            mensajesOk("Dato eliminado correctamente");
+        } else {
+            mensajesError("Error al eliminar datos");
+        }
+    }
+    public void onRecuperar(Modalidad tModalidades){
+        boolean repetida = false;
+        DaoTModalidad daoModalidad = new DaoTModalidad();
+        
+        tModalidades.setEstado('1');
+        
+        try {
+//            repetida = daoModalidad.existe(tModalidad);
+//            if(lstMaestria.size() > 0){
+//                repetida = true;
+//            }
+//            else{
+                msg = daoModalidad.registrar(tModalidades);
+                cargarTablaModalidad();
+//            }
+            
+        } catch (Exception ex) {
+            Logger.getLogger(MbVMaestrias.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(repetida){
+            mensajesError("Registro repetido");
+        } else{
+            if (msg) {
+                mensajesOk("Dato Restaurado correctamente");
+            } else {
+                mensajesError("No se pudo recuperar el dato");
+            }
+        }
+        
+    }
 
+    public String getModalidadDescripcion() {
+        return modalidadDescripcion;
+    }
+
+    public void setModalidadDescripcion(String modalidadDescripcion) {
+        this.modalidadDescripcion = modalidadDescripcion;
+    }
+    
     public Modalidad gettModalidad() {
         return tModalidad;
     }

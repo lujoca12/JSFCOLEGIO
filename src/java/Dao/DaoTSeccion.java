@@ -52,7 +52,32 @@ public class DaoTSeccion implements InterfaceSeccion{
         sesion.close();
         return lstseccion;
     }
+    @Override
+    public List<Seccion> getSeccionD(String seccionDescripcion, boolean mostrar) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        
+        String consulta = "";
+        String estado = "";
+        if(mostrar)
+            estado = "0";
+        else
+            estado = "1";
+        
+        if(seccionDescripcion.isEmpty())
+            consulta = "";
+        else
+            consulta = "and secc.descripcion like '%"+seccionDescripcion+"%'";
+        
+        //String hql="from Maestria m where m.estado = '1' "+consulta+" order by m.id desc";
+        String hql="from Seccion secc inner join fetch secc.modalidad modal where secc.estado = '"+estado+"' "+consulta+" order by secc.id desc";
+        Query query = sesion.createQuery(hql);
 
+        List<Seccion> lstseccion=(List<Seccion>) query.list();
+        sesion.close();
+        return lstseccion;
+    }
     @Override
     public boolean registrar(Seccion tSeccion) throws Exception {
         boolean band = false;

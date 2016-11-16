@@ -27,4 +27,5 @@ public interface InterfaceModalidad {
 
     public List<Modalidad> getModalidad() throws Exception;
     public boolean existe(Modalidad tModalidad) throws Exception;
+    public List<Modalidad> getModalidadD(String modalidadDescripcion, boolean mostrar) throws Exception;
 }

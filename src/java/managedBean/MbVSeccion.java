@@ -40,6 +40,7 @@ public class MbVSeccion implements Serializable{
     private boolean mostrarEliminados;
     private List<Seccion> lstSeccion;
     private List<SelectItem> cboModalidad;
+    private String seccionDescripcion;
     
     public MbVSeccion() {
         tSeccion = new Seccion();
@@ -52,7 +53,12 @@ public class MbVSeccion implements Serializable{
         try {
             lstSeccion = new ArrayList<>();
             DaoTSeccion daoSeccion = new DaoTSeccion();
-            lstSeccion = daoSeccion.getTodasSeccions();
+            if(seccionDescripcion == null){
+                lstSeccion = daoSeccion.getSeccionD("", mostrarEliminados);
+            }else{
+                lstSeccion = daoSeccion.getSeccionD(seccionDescripcion, mostrarEliminados);
+            }
+            
             
         } catch (Exception ex) {
             Logger.getLogger(MbVSeccion.class.getName()).log(Level.SEVERE, null, ex);
@@ -149,7 +155,62 @@ public class MbVSeccion implements Serializable{
         
         
     }
+    
+    public void onDeleteModalidad(Seccion tSecciones){
+        DaoTSeccion daoSeccion = new DaoTSeccion();
+        tSecciones.setEstado('0');
+        try {
+            msg = daoSeccion.registrar(tSecciones);
+            cargarTablaSeccion();
+        } catch (Exception ex) {
+            Logger.getLogger(MbVMaestrias.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if (msg) {
+            mensajesOk("Dato eliminado correctamente");
+        } else {
+            mensajesError("Error al eliminar datos");
+        }
+    }
+    public void onRecuperar(Seccion tSecciones){
+        boolean repetida = false;
+        DaoTSeccion daoSeccion = new DaoTSeccion();
+        
+        tSecciones.setEstado('1');
+        
+        try {
+//            repetida = daoModalidad.existe(tModalidad);
+//            if(lstMaestria.size() > 0){
+//                repetida = true;
+//            }
+//            else{
+                msg = daoSeccion.registrar(tSecciones);
+                cargarTablaSeccion();
+//            }
+            
+        } catch (Exception ex) {
+            Logger.getLogger(MbVMaestrias.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(repetida){
+            mensajesError("Registro repetido");
+        } else{
+            if (msg) {
+                mensajesOk("Dato Restaurado correctamente");
+            } else {
+                mensajesError("No se pudo recuperar el dato");
+            }
+        }
+        
+    }
 
+    public String getSeccionDescripcion() {
+        return seccionDescripcion;
+    }
+
+    public void setSeccionDescripcion(String seccionDescripcion) {
+        this.seccionDescripcion = seccionDescripcion;
+    }
+    
     public Seccion gettSeccion() {
         return tSeccion;
     }

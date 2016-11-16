@@ -11,26 +11,26 @@
     </h:head>
     <h:body>
         <div class="ui-fluid" >
-            <h4 style="text-align: center">Edición Sección</h4>
+            <h4 style="text-align: center">Edición Modalidad</h4>
             <h:form id="form">
                 <p:growl id="msgs" showDetail="true"/>
                 <p:panel id="panelTabla" style="height: 80%;">
                     <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->
-                    <p:dataTable class="tblDatos fuenteTamanio" id="tblSeccion" var="lstTbl" value="#{mbVSeccion.lstSeccion}"
+                    <p:dataTable class="tblDatos fuenteTamanio" id="tblModalidad" var="lstTbl" value="#{mbVModalidad.lstModalidad}"
                                  editable="true" scrollable="true" scrollHeight="400" sortMode="multiple">
-                        <p:ajax event="rowEdit" listener="#{mbVSeccion.onRowEdit}" update=":form:tblSeccion :form:msgs" />
-                        <p:ajax event="rowEditCancel" listener="#{mbVSeccion.onRowCancel}" update=":form:msgs" />
+                        <p:ajax event="rowEdit" listener="#{mbVModalidad.onRowEdit}" update=":form:tblModalidad :form:msgs" />
+                        <p:ajax event="rowEditCancel" listener="#{mbVModalidad.onRowCancel}" update=":form:msgs" />
                         
                         <f:facet name="header">
                             <p:outputPanel>
-                                <h:outputText value="Buscar Sección: " />
-                                <p:inputText id="globalFilter" value="#{mbVSeccion.seccionDescripcion}" style="width:250px" placeholder="Enter keyword"/>
+                                <h:outputText value="Buscar Modalidad: " />
+                                <p:inputText id="globalFilter" value="#{mbVModalidad.modalidadDescripcion}" style="width:250px" placeholder="Enter keyword"/>
                                 <p:commandButton value="Buscar" update="form" styleClass="anchoBotones" icon="ui-icon-search"
-                                                 actionListener="#{mbVSeccion.cargarTablaSeccion()}" />
+                                         actionListener="#{mbVModalidad.cargarTablaMaestria()}" />
                                 
                                 <h:outputText value=" Mostrar Eliminados" styleClass="labelDerecha" />
-                                <p:selectBooleanCheckbox value="#{mbVSeccion.mostrarEliminados}" styleClass="labelDerecha" >
-                                    <p:ajax update="form" listener="#{mbVSeccion.cargarTablaSeccion()}" />
+                                <p:selectBooleanCheckbox value="#{mbVModalidad.mostrarEliminados}" styleClass="labelDerecha" >
+                                    <p:ajax update="form" listener="#{mbVModalidad.cargarTablaModalidad()}" />
                                 </p:selectBooleanCheckbox>
                             </p:outputPanel>
                         </f:facet>
@@ -44,46 +44,37 @@
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column headerText="Sección" style="width: 50%;">
+                        <p:column headerText="Modalidades" style="width: 50%;">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{lstTbl.descripcion}" /></f:facet>
                                 <f:facet name="input">
-                                    <p:inputText value="#{lstTbl.descripcion}" required="true" maxlength="20" style="width:100%"/>
-                                </f:facet>
-                            </p:cellEditor>
-                        </p:column>
-                        
-                        <p:column headerText="Modalidad" style="width: 50%;">
-                            <p:cellEditor>
-                                <f:facet name="output"><h:outputText value="#{lstTbl.modalidad.descripcion}" /></f:facet>
-                                <f:facet name="input">
-                                    <p:inputText value="#{lstTbl.modalidad.descripcion}" disabled="true" maxlength="40" style="width:100%"/>
+                                    <p:inputText value="#{lstTbl.descripcion}" required="true" maxlength="40" style="width:100%"/>
                                 </f:facet>
                             </p:cellEditor>
                         </p:column>
 
-                        <p:column style="width:10%;" rendered="#{!mbVSeccion.mostrarEliminados}">
+                        <p:column style="width:10%;" rendered="#{!mbVModalidad.mostrarEliminados}">
                             <p:rowEditor/>   
                         </p:column>
-                        <p:column style="width:5%;" rendered="#{!mbVSeccion.mostrarEliminados}">
+                        <p:column style="width:5%;" rendered="#{!mbVModalidad.mostrarEliminados}">
                             <p:commandButton id="btnEliminar"
-                                             action="#{mbVSeccion.onDeleteModalidad(lstTbl)}"
-                                             update="form,tblSeccion"
+                                             action="#{mbVModalidad.onDeleteModalidad(lstTbl)}"
+                                             update="form,tblModalidad"
                                              icon="ui-icon-trash"
                                              style="border-style: hidden;background-color: transparent;"
                                              >
-                                <p:confirm header="Eliminación de Sección" message="Presiona confirmar para realizar acción" icon="ui-icon-alert" />
+                                <p:confirm header="Eliminación de Modalidad" message="Presiona confirmar para realizar acción" icon="ui-icon-alert" />
                             </p:commandButton>
                         </p:column>
                         
-                        <p:column style="width:5%;" rendered="#{mbVSeccion.mostrarEliminados}">
+                        <p:column style="width:5%;" rendered="#{mbVModalidad.mostrarEliminados}">
                             <p:commandButton id="btnRestaurar"
-                                             action="#{mbVSeccion.onRecuperar(lstTbl)}"
-                                             update="form,tblSeccion"
+                                             action="#{mbVModalidad.onRecuperar(lstTbl)}"
+                                             update="form,tblModalidad"
                                              icon="ui-icon-disk"
                                              style="border-style: hidden;background-color: transparent;"
                                              >
-                                <p:confirm header="Recuperación de Sección" message="Presiona confirmar para realizar acción" icon="ui-icon-alert" />
+                                <p:confirm header="Recuperación de Modalidad" message="Presiona confirmar para realizar acción" icon="ui-icon-alert" />
                             </p:commandButton>
                         </p:column>
                         

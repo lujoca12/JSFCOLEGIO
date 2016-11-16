@@ -52,6 +52,32 @@ public class DaoTModalidad implements InterfaceModalidad{
         sesion.close();
         return lstModalidad;
     }
+    @Override
+    public List<Modalidad> getModalidadD(String modalidadDescripcion, boolean mostrar) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        
+        String consulta = "";
+        String estado = "";
+        if(mostrar)
+            estado = "0";
+        else
+            estado = "1";
+        
+        if(modalidadDescripcion.isEmpty())
+            consulta = "";
+        else
+            consulta = "and modal.descripcion like '%"+modalidadDescripcion+"%'";
+        
+        //String hql="from Maestria m where m.estado = '1' "+consulta+" order by m.id desc";
+        String hql="from Modalidad modal where modal.estado = '"+estado+"' "+consulta+" order by modal.id desc";
+        Query query = sesion.createQuery(hql);
+
+        List<Modalidad> lstModalidad=(List<Modalidad>) query.list();
+        sesion.close();
+        return lstModalidad;
+    }
 
     @Override
     public boolean registrar(Modalidad tModalidad) throws Exception {

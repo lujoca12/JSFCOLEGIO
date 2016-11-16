@@ -310,10 +310,9 @@ public class DaoTModulo implements InterfaceModulos{
         
         iniciaOperacion();
         //or  m.descripcion<>'"+tModulo.getDescripcion()+"'
-        String hql="from Modulo m where (m.descripcion='"+tModulo.getDescripcion()+"')and "
-                + "m.promocion="+tModulo.getPromocion().getId()+" and "
-                + "m.usuario="+tModulo.getUsuario().getId()+" and m.modulo = '"+tModulo.getModulo()+"' and "
-                + "m.estado <> '0'";
+        String hql = "from Modulo m inner join fetch m.promocion p where p.id="+tModulo.getPromocion().getId()+" and m.usuario="+tModulo.getUsuario().getId()+" and \n"
+                + "m.estado <> '0' and (year(current_date) >= year(p.fechaInicio) and year(current_date)<= year(p.fechaFin)) and \n"
+                + "m.curso = "+tModulo.getCurso().getId()+" and m.materias = "+tModulo.getMaterias().getId()+" and p.estado = '1'";
         Query query = sesion.createQuery(hql);
         List<Modulo> modulo=(List<Modulo>) query.list();
         if(modulo.size() > 0)

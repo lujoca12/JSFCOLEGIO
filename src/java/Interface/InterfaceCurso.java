@@ -6,6 +6,7 @@
 package Interface;
 
 import Pojo.Curso;
+import Pojo.Precio;
 import java.math.BigDecimal;
 import java.util.List;
 /**
@@ -30,5 +31,10 @@ public interface InterfaceCurso {
     public boolean existe(Curso tCurso) throws Exception;
     
     public boolean registrarCursoPrecio(Curso tCurso, BigDecimal precioMatricula, BigDecimal precioColegiatura) throws Exception;
-
+    
+    public List<Curso> getCursoD(String cursoDescripcion, boolean mostrar) throws Exception;
+    
+    public List<Precio> getPreciosCursoD(String cursoDescripcion, boolean mostrar) throws Exception;
+    
+    public boolean updatePrecio(Precio tPrecio) throws Exception;
 }

@@ -1,12 +1,129 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
+        <h:outputScript library="js" name="calendar_es.js" />
+        <h:outputScript library="js" name="ajax.js" />
     </h:head>
     <h:body>
-        Hello from Facelets
+        <div class="ui-fluid" >
+            <h4 style="text-align: center">Edición Cursos</h4>
+            <h:form id="form">
+                <p:growl id="msgs" showDetail="true"/>
+                <p:panel id="panelTabla" style="height: 80%;">
+                    <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->
+                    <p:dataTable class="tblDatos fuenteTamanio" id="tblCursos" var="lstTbl" value="#{mbVCurso.lstCurso}"
+                                 editable="true" scrollable="true" scrollHeight="400" sortMode="multiple">
+                        <p:ajax event="rowEdit" listener="#{mbVCurso.onRowEdit}" update=":form:tblCursos :form:msgs" />
+                        <p:ajax event="rowEditCancel" listener="#{mbVCurso.onRowCancel}" update=":form:msgs" />
+                        
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="Buscar Cursos: " />
+                                <p:inputText id="globalFilter" value="#{mbVCurso.cursoDescripcion}" style="width:250px" placeholder="Enter keyword"/>
+                                <p:commandButton value="Buscar" update="form" styleClass="anchoBotones" icon="ui-icon-search"
+                                                 actionListener="#{mbVCurso.cargarTablaCursos()}" />
+                                
+                                <h:outputText value=" Mostrar Eliminados" styleClass="labelDerecha" />
+                                <p:selectBooleanCheckbox value="#{mbVCurso.mostrarEliminados}" styleClass="labelDerecha" >
+                                    <p:ajax update="form" listener="#{mbVCurso.cargarTablaCursos()}" />
+                                </p:selectBooleanCheckbox>
+                            </p:outputPanel>
+                        </f:facet>
+                        
+                        <p:column headerText="Codigo" style="width: 10%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.id}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="txtid" disabled="true" value="#{lstTbl.id}" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Cursos" style="width: 50%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.descripcion}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{lstTbl.descripcion}" required="true" maxlength="60" style="width:100%"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="Paralelo" style="width: 50%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.paralelo}" /></f:facet>
+                                <f:facet name="input">
+                                    <h:selectOneMenu required="true" id="cboParalelo1" class="form-control" value="#{lstTbl.paralelo}">
+                                        <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{mbVCurso.lstTodosParalelos}"  />  
+                                    </h:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="Sección" style="width: 50%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.seccion.descripcion}" /></f:facet>
+                                <f:facet name="input">
+                                    <h:selectOneMenu required="true" id="cboSeccion1" class="form-control" value="#{lstTbl.seccion.id}">
+                                        <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{mbVCurso.cboSeccion}"  />  
+                                    </h:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="Cupos" style="width: 10%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.cupo}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="txtCupos1" value="#{lstTbl.cupo}" required="true" onkeypress="return isNumberKey(event)" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column style="width:10%;" rendered="#{!mbVCurso.mostrarEliminados}">
+                            <p:rowEditor/>   
+                        </p:column>
+                        <p:column style="width:5%;" rendered="#{!mbVCurso.mostrarEliminados}">
+                            <p:commandButton id="btnEliminar"
+                                             action="#{mbVCurso.onDeleteCurso(lstTbl)}"
+                                             update="form,tblCursos"
+                                             icon="ui-icon-trash"
+                                             style="border-style: hidden;background-color: transparent;"
+                                             >
+                                <p:confirm header="Eliminación de Curso" message="Presiona confirmar para realizar acción" icon="ui-icon-alert" />
+                            </p:commandButton>
+                        </p:column>
+                        
+                        <p:column style="width:5%;" rendered="#{mbVCurso.mostrarEliminados}">
+                            <p:commandButton id="btnRestaurar"
+                                             action="#{mbVCurso.onRecuperar(lstTbl)}"
+                                             update="form,tblCursos"
+                                             icon="ui-icon-disk"
+                                             style="border-style: hidden;background-color: transparent;"
+                                             >
+                                <p:confirm header="Recuperación de Curso" message="Presiona confirmar para realizar acción" icon="ui-icon-alert" />
+                            </p:commandButton>
+                        </p:column>
+                        
+                    </p:dataTable>
+                    <p:confirmDialog global="true" styleClass="change-position">
+                        <p:commandButton value="Confirmar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                        <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                    </p:confirmDialog>
+                </p:panel>
+                <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                    <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+                </p:dialog>
+            </h:form>
+        </div>
     </h:body>
 </html>
 

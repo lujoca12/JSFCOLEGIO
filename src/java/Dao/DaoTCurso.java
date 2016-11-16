@@ -69,6 +69,61 @@ public class DaoTCurso implements InterfaceCurso{
         sesion.close();
         return lstCursos;
     }
+    
+    @Override
+    public List<Curso> getCursoD(String cursoDescripcion, boolean mostrar) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        
+        String consulta = "";
+        String estado = "";
+        if(mostrar)
+            estado = "0";
+        else
+            estado = "1";
+        
+        if(cursoDescripcion.isEmpty())
+            consulta = "";
+        else
+            consulta = "and c.descripcion like '%"+cursoDescripcion+"%'";
+        
+        //String hql="from Maestria m where m.estado = '1' "+consulta+" order by m.id desc";
+        String hql="from Curso c inner join fetch c.seccion secc where c.estado = '"+estado+"' "+consulta+" and secc.estado = '1' order by c.descripcion, c.paralelo asc";
+        Query query = sesion.createQuery(hql);
+
+        List<Curso> lstCursos=(List<Curso>) query.list();
+        sesion.close();
+        return lstCursos;
+    }
+    
+    @Override
+    public List<Precio> getPreciosCursoD(String cursoDescripcion, boolean mostrar) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        
+        String consulta = "";
+        String estado = "";
+        if(mostrar)
+            estado = "0";
+        else
+            estado = "1";
+        
+        if(cursoDescripcion.isEmpty())
+            consulta = "";
+        else
+            consulta = "and c.descripcion like '%"+cursoDescripcion+"%'";
+        
+        //String hql="from Maestria m where m.estado = '1' "+consulta+" order by m.id desc";
+        String hql="from Precio prec inner join fetch prec.tipoPrecio tprec inner join fetch prec.curso c inner join fetch c.seccion secc inner join fetch secc.modalidad modal "
+                + "where c.estado='"+estado+"' "+consulta+" and tprec.estado='1' order by c.descripcion, c.paralelo asc";
+        Query query = sesion.createQuery(hql);
+
+        List<Precio> lstPrecio=(List<Precio>) query.list();
+        sesion.close();
+        return lstPrecio;
+    }
 
     @Override
     public Curso getCursos(String idCurso) throws Exception {
@@ -83,6 +138,25 @@ public class DaoTCurso implements InterfaceCurso{
         iniciaOperacion();
         try {
             sesion.update(tCurso);
+            band = true;
+            tx.commit();
+            sesion.close();
+        } catch (Exception e) {
+            tx.rollback();
+            band = false;
+        }
+        
+        return band;
+    }
+    
+    @Override
+    public boolean updatePrecio(Precio tPrecio) throws Exception {
+        boolean band = false;
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        try {
+            sesion.update(tPrecio);
             band = true;
             tx.commit();
             sesion.close();
@@ -183,6 +257,19 @@ public class DaoTCurso implements InterfaceCurso{
 
     @Override
     public boolean registrar(Curso tCurso) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean band = false;
+        try {
+            iniciaOperacion();
+            sesion.saveOrUpdate(tCurso);
+
+            tx.commit();
+            sesion.close();
+            band = true;
+        } catch (Exception e) {
+            tx.rollback();
+            band = false;
+        }
+        
+        return band;
     }
 }

@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <h:outputScript library="js" name="calendar_es.js" />
+        <h:outputScript library="js" name="ajax.js" />
+    </h:head>
+    <h:body>
+        <div class="ui-fluid" >
+            <h4 style="text-align: center">Edición Curso Precios</h4>
+            <h:form id="form">
+                <p:growl id="msgs" showDetail="true"/>
+                <p:panel id="panelTabla" style="height: 80%;">
+                    <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->
+                    <p:dataTable class="tblDatos fuenteTamanio" id="tblCursoPrecios" var="lstTbl" value="#{mbVCurso.lstPrecio}"
+                                 editable="true" scrollable="true" scrollHeight="400" sortMode="multiple">
+                        <p:ajax event="rowEdit" listener="#{mbVCurso.onRowEditPrecios}" update=":form:tblCursoPrecios :form:msgs" />
+                        <p:ajax event="rowEditCancel" listener="#{mbVCurso.onRowCancel}" update=":form:msgs" />
+                        
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="Buscar Cursos: " />
+                                <p:inputText id="globalFilter" value="#{mbVCurso.cursoDescripcion}" style="width:250px" placeholder="Enter keyword"/>
+                                <p:commandButton value="Buscar" update="form" styleClass="anchoBotones" icon="ui-icon-search"
+                                                 actionListener="#{mbVCurso.cargarTablaPreciosCurso()}" />
+                                
+                                
+                            </p:outputPanel>
+                        </f:facet>
+                        
+                        <p:column headerText="Codigo" style="width: 10%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.curso.id}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="txtid" disabled="true" value="#{lstTbl.curso.id}" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Cursos">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.curso.descripcion}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{lstTbl.curso.descripcion}" required="true" maxlength="60" style="width:100%"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="Paralelo">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.curso.paralelo}" /></f:facet>
+                                <f:facet name="input">
+                                    <h:selectOneMenu required="true" id="cboParalelo1" class="form-control" value="#{lstTbl.curso.paralelo}">
+                                        <f:selectItem itemLabel="Ninguno" itemValue="" itemDescription="#{lstTbl.curso.paralelo}" />
+                                        <f:selectItems value="#{mbVCurso.lstTodosParalelos}"  />  
+                                    </h:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="Sección">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.curso.seccion.descripcion}" /></f:facet>
+                                <f:facet name="input">
+                                    <h:selectOneMenu required="true" id="cboSeccion1" class="form-control" value="#{lstTbl.curso.seccion.id}">
+                                        <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{mbVCurso.cboSeccion}"  />  
+                                    </h:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        
+                        <p:column headerText="P. Matricula">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.tipoPrecio.id eq 1?lstTbl.valor:null}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="txtMatricula1" value="#{lstTbl.tipoPrecio.id eq 1?lstTbl.valor:null}" 
+                                                 required="#{lstTbl.tipoPrecio.id eq 1?true:false}" 
+                                                 disabled="#{lstTbl.tipoPrecio.id eq 2?true:false}"
+                                                 onkeypress="return isNumberKey(event)" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="P. Mensualidad">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.tipoPrecio.id eq 2?lstTbl.valor:null}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="txtMensualidad1" value="#{lstTbl.tipoPrecio.id eq 2?lstTbl.valor:null}" 
+                                                 required="#{lstTbl.tipoPrecio.id eq 2?true:false}" 
+                                                 disabled="#{lstTbl.tipoPrecio.id eq 1?true:false}"
+                                                 onkeypress="return isNumberKey(event)" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column style="width:10%;">
+                            <p:rowEditor/>   
+                        </p:column>
+                        
+                        
+                    </p:dataTable>
+                    
+                </p:panel>
+                <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+                <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                    <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+                </p:dialog>
+            </h:form>
+        </div>
+    </h:body>
+</html>
+

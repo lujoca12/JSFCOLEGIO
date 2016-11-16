@@ -10,6 +10,7 @@ import Dao.DaoTModalidad;
 import Dao.DaoTSeccion;
 import Pojo.Curso;
 import Pojo.Modalidad;
+import Pojo.Precio;
 import Pojo.Seccion;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -42,23 +43,45 @@ public class MbVCurso implements Serializable{
     private boolean msg = false;
     private boolean mostrarEliminados;
     private List<Curso> lstCurso;
+    private List<Precio> lstPrecio;
     private List<SelectItem> cboSeccion;
     private BigDecimal precioMatricula;
     private BigDecimal precioColegiatura;
     private List<SelectItem> lstTodosParalelos;
+    private String cursoDescripcion;
+    
     public MbVCurso() {
         tCurso = new Curso();
         tSeccion = new Seccion();
         cargarParalelos();
         cargarCboSeccion();
         cargarTablaCursos();
+        cargarTablaPreciosCurso();
     }
     public void cargarTablaCursos(){
         
         try {
             lstCurso = new ArrayList<>();
             DaoTCurso daoCurso = new DaoTCurso();
-            lstCurso = daoCurso.getCursoSeccion();
+            if(cursoDescripcion == null){
+                lstCurso = daoCurso.getCursoD("", mostrarEliminados);
+            }else{
+                lstCurso = daoCurso.getCursoD(cursoDescripcion, mostrarEliminados);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(MbVCurso.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void cargarTablaPreciosCurso(){
+        
+        try {
+            lstPrecio = new ArrayList<>();
+            DaoTCurso daoCurso = new DaoTCurso();
+            if(cursoDescripcion == null){
+                lstPrecio = daoCurso.getPreciosCursoD("", mostrarEliminados);
+            }else{
+                lstPrecio = daoCurso.getPreciosCursoD(cursoDescripcion, mostrarEliminados);
+            }
         } catch (Exception ex) {
             Logger.getLogger(MbVCurso.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -175,11 +198,97 @@ public class MbVCurso implements Serializable{
         
     }
     
+    public void onRowEditPrecios(RowEditEvent event) {
+        boolean repetida = false;
+        DaoTCurso daoCurso = new DaoTCurso();
+        Precio precio = new Precio();
+        
+        try {
+            precio = (Precio) event.getObject();
+            
+            msg = daoCurso.updatePrecio(precio);
+            
+            if (msg) {
+                mensajesOk("Datos actualizados correctamente");
+                   
+            } else {
+                mensajesError("Error al procesar datos");
+            }
+            cargarTablaPreciosCurso(); 
+        } catch (Exception ex) {
+            cargarTablaPreciosCurso(); 
+            
+        }
+        
+    }
+    
     public void onRowCancel(RowEditEvent event) {
         
         
     }
+    public void onDeleteCurso(Curso tCurso){
+        DaoTCurso daoCurso = new DaoTCurso();
+        tCurso.setEstado('0');
+        try {
+            msg = daoCurso.registrar(tCurso);
+            cargarTablaCursos();
+        } catch (Exception ex) {
+            Logger.getLogger(MbVMaestrias.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if (msg) {
+            mensajesOk("Dato eliminado correctamente");
+        } else {
+            mensajesError("Error al eliminar datos");
+        }
+    }
+    public void onRecuperar(Curso tCurso){
+        boolean repetida = false;
+        DaoTCurso daoCurso = new DaoTCurso();
+        
+        tCurso.setEstado('1');
+        
+        try {
+//            repetida = daoModalidad.existe(tModalidad);
+//            if(lstMaestria.size() > 0){
+//                repetida = true;
+//            }
+//            else{
+                msg = daoCurso.registrar(tCurso);
+                cargarTablaCursos();
+//            }
+            
+        } catch (Exception ex) {
+            Logger.getLogger(MbVMaestrias.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(repetida){
+            mensajesError("Registro repetido");
+        } else{
+            if (msg) {
+                mensajesOk("Dato Restaurado correctamente");
+            } else {
+                mensajesError("No se pudo recuperar el dato");
+            }
+        }
+        
+    }
 
+    public List<Precio> getLstPrecio() {
+        return lstPrecio;
+    }
+
+    public void setLstPrecio(List<Precio> lstPrecio) {
+        this.lstPrecio = lstPrecio;
+    }
+    
+    public String getCursoDescripcion() {
+        return cursoDescripcion;
+    }
+
+    public void setCursoDescripcion(String cursoDescripcion) {
+        this.cursoDescripcion = cursoDescripcion;
+    }
+    
     public Curso gettCurso() {
         return tCurso;
     }

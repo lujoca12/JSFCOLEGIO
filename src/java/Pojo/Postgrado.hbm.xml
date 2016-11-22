@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 02-nov-2016 10:39:49 by Hibernate Tools 4.3.1 -->
+<!-- Generated 21-nov-2016 21:32:35 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Pojo.Postgrado" table="postgrado" schema="public" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
-            <generator class="increment" />
+            <generator class="assigned" />
         </id>
         <property name="email" type="string">
             <column name="email" />

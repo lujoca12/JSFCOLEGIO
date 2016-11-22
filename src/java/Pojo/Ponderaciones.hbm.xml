@@ -1,18 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 02-nov-2016 10:39:49 by Hibernate Tools 4.3.1 -->
+<!-- Generated 21-nov-2016 21:32:35 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Pojo.Ponderaciones" table="ponderaciones" schema="public" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
-            <generator class="increment" />
+            <generator class="assigned" />
         </id>
         <property name="descripcion" type="string">
             <column name="descripcion" length="60" />
-        </property>
-        <property name="clave" type="java.lang.Character">
-            <column name="clave" length="1" />
         </property>
         <property name="ponderacion" type="big_decimal">
             <column name="ponderacion" precision="4" />
@@ -20,17 +17,14 @@
         <property name="estado" type="java.lang.Character">
             <column name="estado" length="1" />
         </property>
-        <set name="notases" table="notas" inverse="true" lazy="true" fetch="select">
+        <property name="clave" type="java.lang.Integer">
+            <column name="clave" />
+        </property>
+        <set name="ponderacionFechas" table="ponderacion_fecha" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="id_ponderaciones" not-null="true" />
+                <column name="id_ponderacion" />
             </key>
-            <one-to-many class="Pojo.Notas" />
-        </set>
-        <set name="asistencias" table="asistencia" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="id_ponderaciones" not-null="true" />
-            </key>
-            <one-to-many class="Pojo.Asistencia" />
+            <one-to-many class="Pojo.PonderacionFecha" />
         </set>
     </class>
 </hibernate-mapping>

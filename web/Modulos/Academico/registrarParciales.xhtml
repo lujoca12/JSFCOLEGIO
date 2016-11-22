@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <div class="ui-fluid">
+        <h:form id="frmRegistrarUsuarios">
+            <p:tab id="personal" title="RegistrarParciales">
+                <p:panel header="Registrar Quimestres/Trimestres/Parciales" >
+            <p:panelGrid columns="3" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
+                
+                <p:outputLabel for="cboNivel" value="Nivel:" styleClass="labelDerecha"/>
+                <p:selectOneMenu id="cboNivel" value="#{mbVParciales.nivel}">
+                    
+                    <f:selectItems value="#{mbVParciales.lstNivel}" />
+                    <p:ajax update="contenedorComponente" />
+                </p:selectOneMenu>
+                <p:message for="cboNivel"/>
+                
+                
+                
+            </p:panelGrid>
+           
+            <!--Ajax del contenedor hijo-->
+            <p:panelGrid id="contenedorComponente" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
+                
+                <p:outputLabel for="txtDescripcionPadre" styleClass="labelDerecha" value="Descripción:" rendered="#{mbVParciales.nivel == 1 ? true:false}" />
+                <p:inputText id="txtDescripcionPadre" value="#{mbVParciales.tPonderaciones.descripcion}" rendered="#{mbVParciales.nivel == 1 ? true:false}">
+                    <f:validateLength minimum="5" maximum="50" />
+                </p:inputText>
+                <p:message for="txtDescripcionPadre" rendered="#{mbVParciales.nivel == 1 ? true:false}" />
+                
+                <p:outputLabel for="txtPorcentajePadre" styleClass="labelDerecha" value="Porcentaje:" rendered="#{mbVParciales.nivel == 1 ? true:false}" />
+                <p:inputText id="txtPorcentajePadre" value="#{mbVParciales.tPonderaciones.ponderacion}" 
+                             rendered="#{mbVParciales.nivel == 1 ? true:false}"
+                             onkeypress="return validarNum(event, true)">
+                    
+                </p:inputText>
+                <p:message for="txtPorcentajePadre" rendered="#{mbVParciales.nivel == 1 ? true:false}" />
+                
+                <p:outputLabel for="cboPadre" value="Padre:" styleClass="labelDerecha" rendered="#{mbVParciales.nivel == 2 ? true:false}"/>
+                <p:selectOneMenu id="cboPadre" value="#{mbVParciales.padre}" required="true" rendered="#{mbVParciales.nivel == 2 ? true:false}">
+                    <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                    <f:selectItems value="#{mbVParciales.lstPermiso}" />
+                </p:selectOneMenu>
+                <p:message for="cboPadre" id="msgDescrPadre" rendered="#{mbVParciales.nivel == 2 ? true:false}"/>
+                
+                <p:outputLabel for="txtDescripcionHijo" styleClass="labelDerecha" value="Descripción:" rendered="#{mbVParciales.nivel == 2 ? true:false}" />
+                <p:inputText id="txtDescripcionHijo" value="#{mbVParciales.tPonderaciones.descripcion}" rendered="#{mbVParciales.nivel == 2 ? true:false}">
+                    <f:validateLength minimum="5" maximum="50" />
+                </p:inputText>
+                <p:message for="txtDescripcionHijo" rendered="#{mbVParciales.nivel == 2 ? true:false}"/>
+                
+                <p:outputLabel for="txtPorcentajeHijo" styleClass="labelDerecha" value="Porcentaje:" rendered="#{mbVParciales.nivel == 2 ? true:false}" />
+                <p:inputText id="txtPorcentajeHijo" value="#{mbVParciales.tPonderaciones.ponderacion}" 
+                             rendered="#{mbVParciales.nivel == 2 ? true:false}"
+                             onkeypress="return validarNum(event, true)">
+                </p:inputText>
+                <p:message for="txtPorcentajeHijo" rendered="#{mbVParciales.nivel == 2 ? true:false}"/>
+                
+                
+
+                <p:message for="display"/>
+                <p:commandButton value="Guardar" update="@form" styleClass="anchoBotones" icon="ui-icon-disk"
+                                 actionListener="#{mbVParciales.registrar}" rendered="#{mbVParciales.nivel >= 1 ? true:false}" />
+                <h:outputText id="display" value="" />
+            </p:panelGrid>
+            <!--Fin del contenedor Ajax-->
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <p:graphicImage class="imgAjax" value="#{resource['img/ajax-loader.gif']}"  />
+            </p:dialog>
+                </p:panel>
+            </p:tab>
+ </h:form>
+            
+    
+    
+</div>
+    </h:body>
+</html>
+

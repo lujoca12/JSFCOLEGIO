@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 02-nov-2016 10:39:37 by Hibernate Tools 4.3.1
+// Generated 21-nov-2016 21:32:12 by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -14,7 +14,7 @@ public class Notas  implements java.io.Serializable {
      private int id;
      private Matricula matricula;
      private Modulo modulo;
-     private Ponderaciones ponderaciones;
+     private PonderacionFecha ponderacionFecha;
      private BigDecimal nota;
      private String observacion;
      private Character estado;
@@ -27,17 +27,17 @@ public class Notas  implements java.io.Serializable {
     }
 
 	
-    public Notas(int id, Matricula matricula, Modulo modulo, Ponderaciones ponderaciones) {
+    public Notas(int id, Matricula matricula, Modulo modulo, PonderacionFecha ponderacionFecha) {
         this.id = id;
         this.matricula = matricula;
         this.modulo = modulo;
-        this.ponderaciones = ponderaciones;
+        this.ponderacionFecha = ponderacionFecha;
     }
-    public Notas(int id, Matricula matricula, Modulo modulo, Ponderaciones ponderaciones, BigDecimal nota, String observacion, Character estado, String notaTexto, Date fecha, String usuario, String responsable) {
+    public Notas(int id, Matricula matricula, Modulo modulo, PonderacionFecha ponderacionFecha, BigDecimal nota, String observacion, Character estado, String notaTexto, Date fecha, String usuario, String responsable) {
        this.id = id;
        this.matricula = matricula;
        this.modulo = modulo;
-       this.ponderaciones = ponderaciones;
+       this.ponderacionFecha = ponderacionFecha;
        this.nota = nota;
        this.observacion = observacion;
        this.estado = estado;
@@ -68,12 +68,12 @@ public class Notas  implements java.io.Serializable {
     public void setModulo(Modulo modulo) {
         this.modulo = modulo;
     }
-    public Ponderaciones getPonderaciones() {
-        return this.ponderaciones;
+    public PonderacionFecha getPonderacionFecha() {
+        return this.ponderacionFecha;
     }
     
-    public void setPonderaciones(Ponderaciones ponderaciones) {
-        this.ponderaciones = ponderaciones;
+    public void setPonderacionFecha(PonderacionFecha ponderacionFecha) {
+        this.ponderacionFecha = ponderacionFecha;
     }
     public BigDecimal getNota() {
         return this.nota;

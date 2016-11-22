@@ -1,21 +1,21 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 28-oct-2016 20:57:08 by Hibernate Tools 4.3.1 -->
+<!-- Generated 21-nov-2016 21:32:35 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="Pojo.Asistencia" table="asistencia" schema="public" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
-            <generator class="increment" />
+            <generator class="assigned" />
         </id>
-        <many-to-one name="ponderaciones" class="Pojo.Asistencia" fetch="select">
-            <column name="id_ponderaciones" not-null="true" />
-        </many-to-one>
         <many-to-one name="matricula" class="Pojo.Matricula" fetch="select">
             <column name="id_matricula" not-null="true" />
         </many-to-one>
         <many-to-one name="modulo" class="Pojo.Modulo" fetch="select">
             <column name="id_modulo" not-null="true" />
+        </many-to-one>
+        <many-to-one name="ponderacionFecha" class="Pojo.PonderacionFecha" fetch="select">
+            <column name="id_ponderaciones" not-null="true" />
         </many-to-one>
         <property name="estado" type="java.lang.Character">
             <column name="estado" length="1" />

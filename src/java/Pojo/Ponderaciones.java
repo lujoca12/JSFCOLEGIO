@@ -1,5 +1,5 @@
 package Pojo;
-// Generated 02-nov-2016 10:39:37 by Hibernate Tools 4.3.1
+// Generated 21-nov-2016 21:32:12 by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -14,11 +14,10 @@ public class Ponderaciones  implements java.io.Serializable {
 
      private int id;
      private String descripcion;
-     private Character clave;
      private BigDecimal ponderacion;
      private Character estado;
-     private Set notases = new HashSet(0);
-     private Set asistencias = new HashSet(0);
+     private Integer clave;
+     private Set ponderacionFechas = new HashSet(0);
 
     public Ponderaciones() {
     }
@@ -27,14 +26,13 @@ public class Ponderaciones  implements java.io.Serializable {
     public Ponderaciones(int id) {
         this.id = id;
     }
-    public Ponderaciones(int id, String descripcion, Character clave, BigDecimal ponderacion, Character estado, Set notases, Set asistencias) {
+    public Ponderaciones(int id, String descripcion, BigDecimal ponderacion, Character estado, Integer clave, Set ponderacionFechas) {
        this.id = id;
        this.descripcion = descripcion;
-       this.clave = clave;
        this.ponderacion = ponderacion;
        this.estado = estado;
-       this.notases = notases;
-       this.asistencias = asistencias;
+       this.clave = clave;
+       this.ponderacionFechas = ponderacionFechas;
     }
    
     public int getId() {
@@ -51,13 +49,6 @@ public class Ponderaciones  implements java.io.Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    public Character getClave() {
-        return this.clave;
-    }
-    
-    public void setClave(Character clave) {
-        this.clave = clave;
-    }
     public BigDecimal getPonderacion() {
         return this.ponderacion;
     }
@@ -72,19 +63,19 @@ public class Ponderaciones  implements java.io.Serializable {
     public void setEstado(Character estado) {
         this.estado = estado;
     }
-    public Set getNotases() {
-        return this.notases;
+    public Integer getClave() {
+        return this.clave;
     }
     
-    public void setNotases(Set notases) {
-        this.notases = notases;
+    public void setClave(Integer clave) {
+        this.clave = clave;
     }
-    public Set getAsistencias() {
-        return this.asistencias;
+    public Set getPonderacionFechas() {
+        return this.ponderacionFechas;
     }
     
-    public void setAsistencias(Set asistencias) {
-        this.asistencias = asistencias;
+    public void setPonderacionFechas(Set ponderacionFechas) {
+        this.ponderacionFechas = ponderacionFechas;
     }
 
 

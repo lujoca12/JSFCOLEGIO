@@ -5,6 +5,7 @@
  */
 package Interface;
 
+import Pojo.PonderacionFecha;
 import Pojo.Ponderaciones;
 import Pojo.Usuario;
 import java.util.List;
@@ -20,4 +21,7 @@ public interface InterfacePonderacion {
     public Ponderaciones getPonderaciones(String idUsuario) throws Exception;
     public boolean update(Ponderaciones tPonderaciones) throws Exception;
     public boolean updatePadres(Ponderaciones tPonderaciones) throws Exception;
+    public List<Ponderaciones> getParciales() throws Exception;
+    public boolean registrarPondFecha(PonderacionFecha tPondFecha) throws Exception;
+    public List<PonderacionFecha> getTblPonderacionFecha(String ponderacionDescripcion, boolean mostrar) throws Exception;
 }

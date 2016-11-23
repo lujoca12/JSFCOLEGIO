@@ -6,7 +6,7 @@
     <class name="Pojo.Precio" table="precio" schema="public" optimistic-lock="version">
         <id name="id" type="int">
             <column name="id" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <many-to-one name="curso" class="Pojo.Curso" fetch="select">
             <column name="id_promocion" not-null="true" />

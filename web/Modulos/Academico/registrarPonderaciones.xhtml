@@ -6,24 +6,42 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
+        <h:outputScript library="js" name="calendar_es.js" />
     </h:head>
     <h:body>
         <div class="ui-fluid">
-        <h:form id="frmRegistrarPonderaciones">
+        <h:form id="form">
             <p:tab id="personal" title="RegistrarPonderaciones">
                 <p:panel header="Registrar Ponderaciones" >
+                    <p:growl id="msgs" showDetail="true" />
             <p:panelGrid columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
                 
-                <p:outputLabel for="cboPadre" value="Padre:" styleClass="labelDerecha" rendered="#{mbVParciales.nivel == 2 ? true:false}"/>
-                <p:selectOneMenu id="cboPadre" value="#{mbVParciales.padre}" required="true" rendered="#{mbVParciales.nivel == 2 ? true:false}">
+                <p:outputLabel for="cboParcial" value="Parcial:" styleClass="labelDerecha"/>
+                <p:selectOneMenu id="cboParcial" value="#{mbVParciales.tPonderaciones.id}" required="true">
                     <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
-                    <f:selectItems value="#{mbVParciales.lstPermiso}" />
+                    <f:selectItems value="#{mbVParciales.lstParciales}" />
                 </p:selectOneMenu>
                 
+                <p:outputLabel for="txtFechaInicio" value="Fecha inicio:" styleClass="labelDerecha"  />
+                <p:calendar id="txtFechaInicio" required="true"
+                            class="date_input" onkeypress="return permite(event, 'none')" 
+                            locale="es" value="#{mbVParciales.tPondFechas.fechaInicio}" effect="fold" 
+                            pattern="dd-MM-yyyy" mask="true" 
+                            placeholder="dd-mm-aaaa">
+                </p:calendar>
+
+
+                <p:outputLabel for="txtFechaFin" value="Fecha fin:" styleClass="labelDerecha"   />
+                <p:calendar id="txtFechaFin" required="true" locale="es" 
+                            value="#{mbVParciales.tPondFechas.fechaFin}"
+                            onkeypress="return permite(event, 'none')" 
+                            effect="fold" pattern="dd-MM-yyyy" mask="true" 
+                            placeholder="dd-mm-aaaa">
+                </p:calendar>
                 
-                <p:message for="display"/>
+                <h:outputText value="" />
                 <p:commandButton value="Guardar" update="@form" styleClass="anchoBotones" icon="ui-icon-disk"
-                                 actionListener="#{mbVParciales.registrar}" rendered="#{mbVParciales.nivel >= 1 ? true:false}" />
+                                 actionListener="#{mbVParciales.registrarPonderaciones}"  />
             </p:panelGrid>
            
             <!--Ajax del contenedor hijo-->
@@ -35,6 +53,69 @@
             </p:dialog>
                 </p:panel>
             </p:tab>
+            
+            <br></br>
+                <p:panel id="panelTabla" style="height: 30%;">
+                    <!--<h4 style="text-align: left">Solicitud de Inscripción</h4>-->   
+                    <p:dataTable class="tblDatos fuenteTamanio" id="tblPonderaciones" var="lstTbl" value="#{mbVParciales.lstTblPondFechas}"
+                                 editable="true" scrollable="true" scrollHeight="150">
+                        <p:ajax event="rowEdit" listener="#{mbVParciales.onRowEdit}" update=":form:tblPonderaciones :form:msgs" />
+                        <p:ajax event="rowEditCancel" listener="#{mbVParciales.onRowCancel}" update=":form:msgs" />
+                        
+                        <p:column headerText="Codigo" style="width: 10%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.id}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText id="txtid" disabled="true" value="#{lstTbl.id}" />
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Parcial/Quimestre" style="width: 50%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.ponderaciones.descripcion}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{lstTbl.ponderaciones.descripcion}" required="true" maxlength="60" style="width:100%"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="F. Inicio" style="width: 50%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.fechaInicio}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:calendar id="txtFechaInicio1" required="true"
+                                                class="date_input" onkeypress="return permite(event, 'none')" 
+                                                locale="es" value="#{lstTbl.fechaInicio}" effect="fold" 
+                                                pattern="dd-MM-yyyy" mask="true" >
+                                    </p:calendar>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column headerText="F. Fin" style="width: 50%;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{lstTbl.fechaFin}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:calendar id="txtFechaFin1" required="true"
+                                                class="date_input" onkeypress="return permite(event, 'none')" 
+                                                locale="es" value="#{lstTbl.fechaFin}" effect="fold" 
+                                                pattern="dd-MM-yyyy" mask="true" >
+                                    </p:calendar>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        
+                        <p:column style="width:10%;">
+                            <p:rowEditor />   
+                        </p:column>
+                    </p:dataTable>
+                    <p:confirmDialog global="true" styleClass="change-position">
+                        <p:commandButton value="Confirmar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                        <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                    </p:confirmDialog>
+                </p:panel>
+            
  </h:form>
             
     

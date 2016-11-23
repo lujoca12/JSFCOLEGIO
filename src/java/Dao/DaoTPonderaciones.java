@@ -7,6 +7,8 @@ package Dao;
 
 import Interface.InterfaceMenu;
 import Interface.InterfacePonderacion;
+import Pojo.Modulo;
+import Pojo.PonderacionFecha;
 import Pojo.Ponderaciones;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -58,6 +60,54 @@ public class DaoTPonderaciones implements InterfacePonderacion{
         
         return band;
     }
+    
+    @Override
+    public boolean registrarPondFecha(PonderacionFecha tPondFecha) throws Exception {
+        boolean band = false;
+        try {
+            iniciaOperacion();
+            sesion.saveOrUpdate(tPondFecha);
+
+            tx.commit();
+            sesion.close();
+            band = true;
+        } catch (Exception e) {
+            tx.rollback();
+            band = false;
+        }
+        
+        return band;
+    }
+    
+    @Override
+    public List<PonderacionFecha> getTblPonderacionFecha(String ponderacionDescripcion, boolean mostrar) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String consulta = "";
+        
+        String estado = "";
+        if(mostrar)
+            estado = "pond.estado = '0'";
+        else
+            estado = "pond.estado <> '0'";
+        
+        //Presento los modulos registrados x años 
+        if(ponderacionDescripcion.isEmpty())
+            consulta = "";
+        else
+            consulta = "and p.descripcion like '%"+ponderacionDescripcion+"%'";
+        
+        String hql="from PonderacionFecha pond inner join fetch pond.ponderaciones p "
+                + "where p.estado='1' and "
+                + "(year(current_date) >= year(pond.fechaInicio) "
+                + "and year(current_date)<= year(pond.fechaFin)) "
+                + ""+consulta+" and "+estado+" order by pond.id desc";
+        Query query = sesion.createQuery(hql);
+        List<PonderacionFecha> lstPonderacion=(List<PonderacionFecha>) query.list();
+        sesion.close();
+        return lstPonderacion;
+    }
 
     @Override
     public List<Ponderaciones> getPadres() throws Exception {
@@ -65,6 +115,18 @@ public class DaoTPonderaciones implements InterfacePonderacion{
         this.tx = null;
         iniciaOperacion();
         String hql="from Ponderaciones as p where p.clave =0 and p.estado='1' order by p.descripcion ASC";
+        Query query = sesion.createQuery(hql);
+        List<Ponderaciones> lstPonderaciones=(List<Ponderaciones>) query.list();
+        sesion.close();
+        return lstPonderaciones;
+    }
+    
+    @Override
+    public List<Ponderaciones> getParciales() throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String hql="from Ponderaciones as p where p.estado='1'";
         Query query = sesion.createQuery(hql);
         List<Ponderaciones> lstPonderaciones=(List<Ponderaciones>) query.list();
         sesion.close();

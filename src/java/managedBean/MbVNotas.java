@@ -418,7 +418,7 @@ public class MbVNotas implements Serializable {
         try {
             lstCboModulos.clear();
 
-            this.lstCboModulos.add(new ClsTablaModulosRegistrados(-1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)", -1, "(Escoja un Módulo)", "(Escoja un Módulo)", -1, "(Escoja un Módulo)", null, null, null, null, "", null, null, 0,'1'));
+            this.lstCboModulos.add(new ClsTablaModulosRegistrados(-1, "(Escoja una Materia)", -1, "(Escoja una Materia)", -1, "(Escoja una Materia)", "(Escoja una Materia)", -1, "(Escoja una Materia)", null, null, null, null, "", null, null, 0,'1'));
             if (usuario.getTipoUsuario().getDescripcion().equals("Profesor(a)") || usuario.getTipoUsuario().getDescripcion().equals("Docente") || usuario.getTipoUsuario().getDescripcion().equals("PROFESOR(A)") || usuario.getTipoUsuario().getDescripcion().equals("DOCENTE")) {
                 DaoTModulo daoTmodulo = new DaoTModulo();
                 List<Modulo> lstModulo = daoTmodulo.getCboModulosNotas(usuario.getId());
@@ -427,9 +427,9 @@ public class MbVNotas implements Serializable {
                     if (lstModulo.size() > 0) {
                         for (Modulo modulo : lstModulo) {
                             lstCboModulos.add(new ClsTablaModulosRegistrados(modulo.getPromocion().getMaestria().getId(),
-                                    modulo.getPromocion().getMaestria().getDescripcion() + " (Dir.(a)" + modulo.getPromocion().getUsuario() + ")",
+                                    modulo.getMaterias().getDescripcion() + " (Dir.(a)" + modulo.getPromocion().getUsuario() + ")",
                                     modulo.getPromocion().getId(),
-                                    modulo.getModulo() + ": " + modulo.getDescripcion() + " (" + modulo.getPromocion().getMaestria().getDescripcion() + ")",
+                                    modulo.getMaterias().getDescripcion() + " (" + modulo.getPromocion().getMaestria().getDescripcion() + ")",
                                     modulo.getUsuario().getId(),
                                     modulo.getUsuario().getApellidos() + " " + modulo.getUsuario().getNombres(),
                                     modulo.getCreditos().toString(),
@@ -458,7 +458,7 @@ public class MbVNotas implements Serializable {
                             lstCboModulos.add(new ClsTablaModulosRegistrados(modulo.getPromocion().getMaestria().getId(),
                                     modulo.getPromocion().getMaestria().getDescripcion() + " (Dir.(a)" + modulo.getPromocion().getUsuario() + ")",
                                     modulo.getPromocion().getId(),
-                                    modulo.getDescripcion() + " (" + modulo.getUsuario().getApellidos() + " " + modulo.getUsuario().getNombres() + ")",
+                                    modulo.getMaterias().getDescripcion() + " (" + modulo.getUsuario().getApellidos() + " " + modulo.getUsuario().getNombres() + ")",
                                     modulo.getUsuario().getId(),
                                     modulo.getUsuario().getApellidos() + " " + modulo.getUsuario().getNombres(),
                                     modulo.getCreditos().toString(),

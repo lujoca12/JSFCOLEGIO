@@ -17,7 +17,7 @@
                         <p:growl id="msgsNotas" showDetail="true" />
                         <p:focus context="panel"/>
                         <p:panelGrid id="panel" columns="3" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
-                            <p:outputLabel for="cboModulo" value="Módulos:" styleClass="labelDerecha"/>
+                            <p:outputLabel for="cboModulo" value="Materias:" styleClass="labelDerecha"/>
                                 <p:selectOneMenu id="cboModulo" value="#{mbVNotas.clsTblModulosReg}" converter="themeConverterModulos"
                                                  effect="fade" var="tModulo" filter="true" filterMatchMode="contains">
                                     <f:selectItems value="#{mbVNotas.lstCboModulos}" var="modulos" itemLabel="#{modulos.modulo}" itemValue="#{modulos}" />
@@ -25,7 +25,7 @@
                                         <h:outputText styleClass="ui-theme ui-theme-#{tModulo.idModulo}" />
                                     </p:column>
 
-                                    <p:column>
+                                    <p:column style="width:50%">
                                         <h:outputText value="#{tModulo.modulo}" />
                                     </p:column>
                                     <p:ajax update="frmRegistrarNotas,msgsNotas" listener="#{mbVNotas.cargarTablaRegNotas}" />
@@ -58,9 +58,9 @@
                                                      or (mbVNotas.tipo_user eq 0 and mbVNotas.estado eq 'G')
                                                      or (mbVNotas.estado eq 'B' and mbVNotas.tipo_user eq 0)
                                                      or (mbVNotas.estado eq ' ' and mbVNotas.tipo_user eq 0)
-                                                     or (notas.totalAsistencia gt 90 ? false:true)}" 
+                                                     }" 
                                          onkeypress="return validarNum(event, true)" 
-                                         style="width:100%; text-align: center; #{(notas.totalAsistencia lt 90 and notas.totalAsistencia gt 0 ? 'color: red;':null)}">
+                                         style="width:100%; text-align: center;">
                                 <f:validateDoubleRange maximum="10"/>
                             </p:inputText>
 
@@ -73,9 +73,9 @@
                                                      or (mbVNotas.tipo_user eq 0 and mbVNotas.estado eq 'G')
                                                      or (mbVNotas.estado eq 'B' and mbVNotas.tipo_user eq 0)
                                                      or (mbVNotas.estado eq ' ' and mbVNotas.tipo_user eq 0)
-                                                     or (notas.totalAsistencia gt 90 ? false:true)}"
-                                         value="#{(notas.totalAsistencia gt 90 ? notas.observacion:'Perdido por Asistencia')}" 
-                                style="width:100%; #{notas.totalAsistencia gt 90 ? null:'color: red;'}"/>
+                                                     }"
+                                         value="#{notas.observacion}" 
+                                style="width:100%; "/>
                         </p:column>
                     </p:dataTable>
                     <br></br>

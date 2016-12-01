@@ -32,12 +32,12 @@ public class DaoTDetallePermiso implements InterfaceDetallePermiso{
     private Document selectedDocHijo;
     
     private DetallePermiso dtp;
-    private Permiso permiso = null;
-    private Usuario user = null;
-    private int idDetPermHijo=0;
-    private int idDetPermPadre=0;
-    private int idPadre=0;
-    private List<DetallePermiso> lstDetalleP= null;
+    private Permiso permiso;
+    private Usuario user;
+    private int idDetPermHijo;
+    private int idDetPermPadre;
+    private int idPadre;
+    private List<DetallePermiso> lstDetalleP;
     
     private void iniciaOperacion()
     {
@@ -49,6 +49,62 @@ public class DaoTDetallePermiso implements InterfaceDetallePermiso{
         }
     }
 
+    public DetallePermiso getDtp() {
+        return dtp;
+    }
+
+    public void setDtp(DetallePermiso dtp) {
+        this.dtp = dtp;
+    }
+
+    public Permiso getPermiso() {
+        return permiso;
+    }
+
+    public void setPermiso(Permiso permiso) {
+        this.permiso = permiso;
+    }
+
+    public Usuario getUser() {
+        return user;
+    }
+
+    public void setUser(Usuario user) {
+        this.user = user;
+    }
+
+    public int getIdDetPermHijo() {
+        return idDetPermHijo;
+    }
+
+    public void setIdDetPermHijo(int idDetPermHijo) {
+        this.idDetPermHijo = idDetPermHijo;
+    }
+
+    public int getIdDetPermPadre() {
+        return idDetPermPadre;
+    }
+
+    public void setIdDetPermPadre(int idDetPermPadre) {
+        this.idDetPermPadre = idDetPermPadre;
+    }
+
+    public int getIdPadre() {
+        return idPadre;
+    }
+
+    public void setIdPadre(int idPadre) {
+        this.idPadre = idPadre;
+    }
+
+    public List<DetallePermiso> getLstDetalleP() {
+        return lstDetalleP;
+    }
+
+    public void setLstDetalleP(List<DetallePermiso> lstDetalleP) {
+        this.lstDetalleP = lstDetalleP;
+    }
+    
     public Document getSelectedDocPadre() {
         return selectedDocPadre;
     }
@@ -74,6 +130,9 @@ public class DaoTDetallePermiso implements InterfaceDetallePermiso{
     public String registrar(List<TreeNode> node, int idUsuario){
         
      //   tx.commit();
+        permiso = new Permiso();
+        user = new Usuario();
+        
         char estado = ' ';
         String msg="";
         boolean band = false;
@@ -134,8 +193,6 @@ public class DaoTDetallePermiso implements InterfaceDetallePermiso{
         //iniciaOperacion();
         permiso = new Permiso();
         dtp = new DetallePermiso();
-        user = new Usuario();
-
         permiso.setId(selectedDocument.getId());
         user.setId(idUsuario);
         //dtp.setId(null);
@@ -147,6 +204,8 @@ public class DaoTDetallePermiso implements InterfaceDetallePermiso{
         dtp.setUsuario(user);
         sesion.saveOrUpdate(dtp);
         
+        
+       
         //sesion.close();
     }
     

@@ -99,7 +99,6 @@ public class MbVCurso implements Serializable{
         } catch (Exception ex) {
             
         }
-
     }
     public void cargarParalelos() {
         this.lstTodosParalelos = new ArrayList<SelectItem>();

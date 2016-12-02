@@ -24,4 +24,5 @@ public interface InterfacePonderacion {
     public List<Ponderaciones> getParciales() throws Exception;
     public boolean registrarPondFecha(PonderacionFecha tPondFecha) throws Exception;
     public List<PonderacionFecha> getTblPonderacionFecha(String ponderacionDescripcion, boolean mostrar) throws Exception;
+    public List<PonderacionFecha> getPonderacionFecha(boolean mostrar) throws Exception;
 }

@@ -311,16 +311,16 @@ public class MbVUsuario implements Serializable {
         try {
             if(this.theme == null){
                 this.estado = 0; 
-                root = new DefaultTreeNode(new Document("Files", 0, "Folder"), null);
+                root = new DefaultTreeNode(new Document(0,"Files", 0, "Folder",0,'0'), null);
             } else {
                 this.estado = 1;
                 DaoTMenu daoTmenu = new DaoTMenu();
                 lstMenus = daoTmenu.getTodosPermisos(false);
                 if (lstMenus != null) {
-                    root = new DefaultTreeNode(new Document("Files", 0, "Folder"), null);
+                    root = new DefaultTreeNode(new Document(0,"Files", 0, "Folder",0,'0'), null);
                     for (Permiso p : lstMenus) {
                         if (p.getPadre() == 0) {
-                            node0 = new DefaultTreeNode(new Document(p.getDescripcion(), p.getId(), "Folder"), root);
+                            node0 = new DefaultTreeNode(new Document(p.getId(),p.getDescripcion(),p.getPadre(),p.getForm(),p.getOrden(),p.getEstado()), root);
 
                             lstMenusDetalle = daoTmenu.getEstadoPermisoUsuario(this.theme.getId(), p.getId());
                             if (!lstMenusDetalle.isEmpty()) {
@@ -333,7 +333,7 @@ public class MbVUsuario implements Serializable {
 
                             for (Permiso p1 : lstMenus) {
                                 if (p.getId() == p1.getPadre()) {
-                                    node00 = new DefaultTreeNode(new Document(p1.getDescripcion(), p1.getId(), "Folder"), node0);
+                                    node00 = new DefaultTreeNode(new Document(p1.getId(),p1.getDescripcion(),p1.getPadre(),p1.getForm(),p1.getOrden(),p1.getEstado()), node0);
                                     node00.setRowKey(String.valueOf(p1.getId()));
 
                                     daoTmenu = new DaoTMenu();
@@ -351,7 +351,7 @@ public class MbVUsuario implements Serializable {
                     }
 
                 } else {
-                    root = new DefaultTreeNode(new Document("Files", 0, "Folder"), null);
+                    root = new DefaultTreeNode(new Document(0,"Files", 0, "Folder",0,'0'), null);
                 }
             }
         } catch (Exception ex) {

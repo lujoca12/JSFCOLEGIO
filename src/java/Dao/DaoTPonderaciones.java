@@ -108,6 +108,36 @@ public class DaoTPonderaciones implements InterfacePonderacion{
         sesion.close();
         return lstPonderacion;
     }
+    
+    @Override
+    public List<PonderacionFecha> getPonderacionFecha(boolean mostrar) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String consulta = "";
+        
+        String estado = "";
+        if(mostrar)
+            estado = "pond.estado = '0'";
+        else
+            estado = "pond.estado <> '0'";
+        
+        //Presento los modulos registrados x años 
+        //if(ponderacionDescripcion.isEmpty())
+            consulta = "";
+        //else
+          //  consulta = "and p.descripcion like '%"+ponderacionDescripcion+"%'";
+        
+        String hql="from PonderacionFecha pond inner join fetch pond.ponderaciones p "
+                + "where p.estado='1' and "
+                + "(year(current_date) >= year(pond.fechaInicio) "
+                + "and year(current_date)<= year(pond.fechaFin)) "
+                + ""+consulta+" and "+estado+" order by pond.fechaInicio asc";
+        Query query = sesion.createQuery(hql);
+        List<PonderacionFecha> lstPonderacion=(List<PonderacionFecha>) query.list();
+        sesion.close();
+        return lstPonderacion;
+    }
 
     @Override
     public List<Ponderaciones> getPadres() throws Exception {

@@ -130,7 +130,7 @@ public class DaoTDetallePermiso implements InterfaceDetallePermiso{
     public String registrar(List<TreeNode> node, int idUsuario){
         
      //   tx.commit();
-        permiso = new Permiso();
+        
         user = new Usuario();
         
         char estado = ' ';
@@ -203,6 +203,7 @@ public class DaoTDetallePermiso implements InterfaceDetallePermiso{
         dtp.setPermiso(permiso);
         dtp.setUsuario(user);
         sesion.saveOrUpdate(dtp);
+        
         
         
        

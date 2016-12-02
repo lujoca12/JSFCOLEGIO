@@ -15,6 +15,7 @@ import Dao.DaoTHorarioModulo;
 import Dao.DaoTMatricula;
 import Dao.DaoTModulo;
 import Dao.DaoTNotas;
+import Dao.DaoTPonderaciones;
 import Dao.InscripcionDao;
 import Dao.PagosDao;
 import Pojo.Asistencia;
@@ -24,6 +25,8 @@ import Pojo.Matricula;
 import Pojo.Modulo;
 import Pojo.Notas;
 import Pojo.Pago;
+import Pojo.PonderacionFecha;
+import Pojo.Ponderaciones;
 import Pojo.SolicitudInscripcion;
 import Pojo.TipoPago;
 import Pojo.Usuario;
@@ -48,6 +51,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import org.apache.commons.io.FilenameUtils;
 import org.primefaces.model.UploadedFile;
 
@@ -89,6 +93,24 @@ public class MbVNotas implements Serializable {
     private int idTipoPago = 1;
     private List<SolicitudInscripcion> lstSolicitudes;
     private SolicitudInscripcion selectedPago;
+    private List<SelectItem> cboParciales;
+    private PonderacionFecha pondFecha;
+
+    public List<SelectItem> getCboParciales() {
+        return cboParciales;
+    }
+
+    public void setCboParciales(List<SelectItem> cboParciales) {
+        this.cboParciales = cboParciales;
+    }
+
+    public PonderacionFecha getPondFecha() {
+        return pondFecha;
+    }
+
+    public void setPondFecha(PonderacionFecha pondFecha) {
+        this.pondFecha = pondFecha;
+    }
 
     public SolicitudInscripcion getSelectedPago() {
         return selectedPago;
@@ -187,10 +209,7 @@ public class MbVNotas implements Serializable {
         this.msg = msg;
     }
 
-    public MbVNotas() {
-        tNotas = new Notas();
-        cargarCboModulos();
-    }
+    
 
     public Notas gettNotas() {
         return tNotas;
@@ -299,7 +318,26 @@ public class MbVNotas implements Serializable {
     public void setDocente(String docente) {
         this.docente = docente;
     }
-
+    public MbVNotas() {
+        tNotas = new Notas();
+        pondFecha = new PonderacionFecha();
+        cargarCboModulos();
+        cargarCboParciales();
+    }
+    public void cargarCboParciales() {
+        try {
+            
+            cboParciales = new ArrayList<>();
+            DaoTPonderaciones daoPonderacion = new DaoTPonderaciones();
+            List<PonderacionFecha> ponderacion = daoPonderacion.getPonderacionFecha(false);
+            for (PonderacionFecha s : ponderacion) {
+                SelectItem item = new SelectItem(s.getId(), s.getPonderaciones().getDescripcion());
+                cboParciales.add(item);
+            }
+        } catch (Exception ex) {
+            
+        }
+    }
     private void cargarTblMatriculaPromocion() {
         this.idProm = 0;
         lstTblNotas = new ArrayList<>();
@@ -427,7 +465,7 @@ public class MbVNotas implements Serializable {
                     if (lstModulo.size() > 0) {
                         for (Modulo modulo : lstModulo) {
                             lstCboModulos.add(new ClsTablaModulosRegistrados(modulo.getPromocion().getMaestria().getId(),
-                                    modulo.getMaterias().getDescripcion() + " (Dir.(a)" + modulo.getPromocion().getUsuario() + ")",
+                                    modulo.getMaterias().getDescripcion() + " -->" + modulo.getCurso().getDescripcion() + "",
                                     modulo.getPromocion().getId(),
                                     modulo.getMaterias().getDescripcion() + " (" + modulo.getPromocion().getMaestria().getDescripcion() + ")",
                                     modulo.getUsuario().getId(),
@@ -456,7 +494,7 @@ public class MbVNotas implements Serializable {
                     if (lstModulo.size() > 0) {
                         for (Modulo modulo : lstModulo) {
                             lstCboModulos.add(new ClsTablaModulosRegistrados(modulo.getPromocion().getMaestria().getId(),
-                                    modulo.getPromocion().getMaestria().getDescripcion() + " (Dir.(a)" + modulo.getPromocion().getUsuario() + ")",
+                                    modulo.getMaterias().getDescripcion() + " -->" + modulo.getCurso().getDescripcion() + "",
                                     modulo.getPromocion().getId(),
                                     modulo.getMaterias().getDescripcion() + " (" + modulo.getUsuario().getApellidos() + " " + modulo.getUsuario().getNombres() + ")",
                                     modulo.getUsuario().getId(),

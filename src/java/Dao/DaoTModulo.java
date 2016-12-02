@@ -187,7 +187,7 @@ public class DaoTModulo implements InterfaceModulos{
         }
 
         String hql="from Modulo modul inner join fetch modul.usuario user inner join fetch  user.tipoUsuario tuser inner join fetch "
-                + "modul.promocion pr inner join fetch pr.maestria maest inner join fetch modul.materias mater \n" +
+                + "modul.promocion pr inner join fetch pr.maestria maest inner join fetch modul.materias mater inner join fetch modul.curso curso  \n" +
                     "where "+consulta+" \n" +
                     "(year(current_date) >= year(pr.fechaInicio) and year(current_date)<= year(pr.fechaFin))\n" +
                     ""+fecha+" "

@@ -10,6 +10,7 @@ import Interface.InterfaceNotas;
 import Pojo.Matricula;
 import Pojo.Modulo;
 import Pojo.Notas;
+import Pojo.PonderacionFecha;
 import Pojo.Usuario;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -48,7 +49,7 @@ public class DaoTNotas implements InterfaceNotas{
     }
 
     @Override
-    public boolean registrar(List<ClsNotas> lstNotas, int idModulo, Character accion, String docente) throws Exception {
+    public boolean registrar(List<ClsNotas> lstNotas, int idModulo, Character accion, String docente, int idPonderFecha) throws Exception {
         boolean band = false;
         try {
             //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion
@@ -58,6 +59,7 @@ public class DaoTNotas implements InterfaceNotas{
             Notas tNotas = null;
             Matricula matricula = null;
             Modulo modulo = null;
+            PonderacionFecha pondFecha;
             BigDecimal bigdec;
             Date fecha = new Date();
             for (int i = 0; i < lstNotas.size(); i++) {
@@ -68,7 +70,8 @@ public class DaoTNotas implements InterfaceNotas{
                 }else{
                     tNotas.setUsuario(usuario.getApellidos()+" "+usuario.getNombres());
                 }
-                
+                pondFecha = new PonderacionFecha();
+                pondFecha.setId(idPonderFecha);
                 bigdec = new BigDecimal(Double.parseDouble(lstNotas.get(i).getNota()));
                 tNotas.setNota(bigdec);
                 tNotas.setEstado(accion);
@@ -81,6 +84,7 @@ public class DaoTNotas implements InterfaceNotas{
                 tNotas.setModulo(modulo);
                 tNotas.setObservacion(lstNotas.get(i).getObservacion());
                 tNotas.setId(lstNotas.get(i).getIdNota());
+                tNotas.setPonderacionFecha(pondFecha);
                 
                 if(lstNotas.get(i).getTotalAsistencia()>= 90){
                     sesion.saveOrUpdate(tNotas);

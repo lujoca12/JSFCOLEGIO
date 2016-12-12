@@ -37,4 +37,6 @@ public interface InterfaceCurso {
     public List<Precio> getPreciosCursoD(String cursoDescripcion, boolean mostrar) throws Exception;
     
     public boolean updatePrecio(Precio tPrecio) throws Exception;
+    
+    public List<Curso> getCursosModulos(boolean estado) throws Exception;
 }

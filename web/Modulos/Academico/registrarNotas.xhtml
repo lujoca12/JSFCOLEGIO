@@ -17,25 +17,36 @@
                         <p:growl id="msgsNotas" showDetail="true" />
                         <p:focus context="panel"/>
                         <p:panelGrid id="panel" columns="2" columnClasses="ui-grid-col-3,ui-grid-col-6" layout="grid" styleClass="ui-panelgrid-blank">
+                            
+                            <p:outputLabel for="cboParcial" value="Parcial/Quim.:" styleClass="labelDerecha"  />
+                            <h:selectOneMenu required="true" id="cboParcial" class="form-control" value="#{mbVNotas.pondFecha.id}">
+                                <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{mbVNotas.cboParciales}"  />  
+                                <p:ajax ignoreAutoUpdate="true" />
+                            </h:selectOneMenu>
+                            
+                            <p:outputLabel for="cboCurso" value="Curso:" styleClass="labelDerecha"  />
+                            <h:selectOneMenu required="true" id="cboCurso" class="form-control" value="#{mbVNotas.tCurso.id}">
+                                <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{mbVNotas.cboCurso}"  />  
+                                <p:ajax update="cboModulo" listener="#{mbVNotas.cargarCboModulos}" />
+                            </h:selectOneMenu>
+                            
                             <p:outputLabel for="cboModulo" value="Materias:" styleClass="labelDerecha"/>
-                                <p:selectOneMenu id="cboModulo" value="#{mbVNotas.clsTblModulosReg}" converter="themeConverterModulos"
+                                <p:selectOneMenu required="true" id="cboModulo" value="#{mbVNotas.clsTblModulosReg}" converter="themeConverterModulos"
                                                  effect="fade" var="tModulo" filter="true" filterMatchMode="contains">
                                     <f:selectItems value="#{mbVNotas.lstCboModulos}" var="modulos" itemLabel="#{modulos.modulo}" itemValue="#{modulos}" />
-                                    <p:column style="width:10%">
+                                    <p:column>
                                         <h:outputText styleClass="ui-theme ui-theme-#{tModulo.idModulo}" />
                                     </p:column>
 
-                                    <p:column style="width:50%">
+                                    <p:column>
                                         <h:outputText value="#{tModulo.modulo}" />
                                     </p:column>
                                     <p:ajax update="frmRegistrarNotas,msgsNotas" listener="#{mbVNotas.cargarTablaRegNotas}" />
                                 </p:selectOneMenu>
                                 
-                            <p:outputLabel for="cboParcial" value="Parcial/Quim.:" styleClass="labelDerecha"  />
-                            <h:selectOneMenu required="true" id="cboParcial" class="form-control" value="#{mbVNotas.pondFecha.id}">
-                                <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{mbVNotas.cboParciales}"  />  
-                            </h:selectOneMenu>
+                            
                         </p:panelGrid>
                     </p:panel>
                 </p:tab>

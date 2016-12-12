@@ -11,6 +11,7 @@ import Pojo.Precio;
 import Pojo.Promocion;
 import Pojo.Seccion;
 import Pojo.TipoPrecio;
+import Pojo.Usuario;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -18,6 +19,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
 import java.math.BigDecimal;
+import javax.faces.context.FacesContext;
+import org.hibernate.Criteria;
 
 /**
  *
@@ -51,6 +54,32 @@ public class DaoTCurso implements InterfaceCurso{
         iniciaOperacion();
         String hql="from Curso c where c.estado = '1' order by c.descripcion asc";
         Query query = sesion.createQuery(hql);
+        List<Curso> lstCursos=(List<Curso>) query.list();
+        sesion.close();
+        return lstCursos;
+    }
+    
+    @Override
+    public List<Curso> getCursosModulos(boolean estado) throws Exception {
+        this.sesion = null;
+        this.tx = null;
+        iniciaOperacion();
+        String consulta = "";
+        Usuario usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        
+        if (usuario.getTipoUsuario().getDescripcion().equals("Profesor(a)") || usuario.getTipoUsuario().getDescripcion().equals("Docente") || usuario.getTipoUsuario().getDescripcion().equals("PROFESOR(A)") || usuario.getTipoUsuario().getDescripcion().equals("DOCENTE")) {
+            consulta = "and user.id = "+usuario.getId()+"";
+        }else{
+            consulta = "";
+        }
+        
+        String hql="from Curso c inner join fetch c.modulos modul inner join fetch modul.usuario user "
+                + "inner join fetch modul.promocion pr where c.estado = '1' "
+                + "and (year(current_date) >= year(pr.fechaInicio) and year(current_date)<= year(pr.fechaFin)) "
+                + ""+consulta+" "
+                + "order by c.descripcion asc";
+        Query query = sesion.createQuery(hql);
+        query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         List<Curso> lstCursos=(List<Curso>) query.list();
         sesion.close();
         return lstCursos;

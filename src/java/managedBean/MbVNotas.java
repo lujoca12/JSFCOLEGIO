@@ -10,6 +10,7 @@ import Clases.ClsTablaModulosRegistrados;
 import Clases.ClsTblNotas;
 import Clases.ClsTblPagos;
 import Dao.DaoTAsistencias;
+import Dao.DaoTCurso;
 import Dao.DaoTEstudiante;
 import Dao.DaoTHorarioModulo;
 import Dao.DaoTMatricula;
@@ -19,6 +20,7 @@ import Dao.DaoTPonderaciones;
 import Dao.InscripcionDao;
 import Dao.PagosDao;
 import Pojo.Asistencia;
+import Pojo.Curso;
 import Pojo.Estudiante;
 import Pojo.HorarioModulo;
 import Pojo.Matricula;
@@ -95,7 +97,18 @@ public class MbVNotas implements Serializable {
     private SolicitudInscripcion selectedPago;
     private List<SelectItem> cboParciales;
     private PonderacionFecha pondFecha;
+    private List<SelectItem> cboCurso;
+    private Curso tCurso;
 
+    public List<SelectItem> getCboCurso() {
+        return cboCurso;
+    }
+
+    public void setCboCurso(List<SelectItem> cboCurso) {
+        this.cboCurso = cboCurso;
+    }
+
+    
     public List<SelectItem> getCboParciales() {
         return cboParciales;
     }
@@ -318,22 +331,68 @@ public class MbVNotas implements Serializable {
     public void setDocente(String docente) {
         this.docente = docente;
     }
+
+    public Curso gettCurso() {
+        return tCurso;
+    }
+
+    public void settCurso(Curso tCurso) {
+        this.tCurso = tCurso;
+    }
+    
     public MbVNotas() {
         tNotas = new Notas();
         pondFecha = new PonderacionFecha();
-        cargarCboModulos();
+        tCurso = new Curso();
+        //cargarCboModulos();
         cargarCboParciales();
+        llenarCboCurso();
+    }
+    public void llenarCboCurso() {
+        try {
+            lstCboModulos = new ArrayList<>();
+            if(lstCboModulos.size() > 0)
+                lstCboModulos.clear();
+
+            this.lstCboModulos.add(new ClsTablaModulosRegistrados(-1, "(Ninguna)", -1, "(Ninguna)", -1, "(Ninguna)", "(Ninguna)", -1, "(Ninguna)", null, null, null, null, "", null, null, 0,'1'));
+            
+            cboCurso = new ArrayList<>();
+            DaoTCurso daoCurso = new DaoTCurso();
+            List<Curso> cursos = daoCurso.getCursosModulos(true);
+            for (Curso m : cursos) {
+                SelectItem item = new SelectItem(m.getId(), m.getDescripcion()+" "+m.getParalelo());
+                cboCurso.add(item);
+            }
+        } catch (Exception ex) {
+            
+        }
+
     }
     public void cargarCboParciales() {
         try {
             
             cboParciales = new ArrayList<>();
             DaoTPonderaciones daoPonderacion = new DaoTPonderaciones();
+            DaoTPonderaciones daoTponderaciones = new DaoTPonderaciones();
+            List<Ponderaciones> lstPer = daoTponderaciones.getParciales();
             List<PonderacionFecha> ponderacion = daoPonderacion.getPonderacionFecha(false);
+            SelectItem item = null;
             for (PonderacionFecha s : ponderacion) {
-                SelectItem item = new SelectItem(s.getId(), s.getPonderaciones().getDescripcion());
-                cboParciales.add(item);
+                for (int i = 0; i < lstPer.size(); i++) {
+                    if(lstPer.get(i).getId() == s.getPonderaciones().getClave() && s.getPonderaciones().getClave() > 0){
+                        item = new SelectItem(s.getId(), s.getPonderaciones().getDescripcion()+"->"+lstPer.get(i).getDescripcion());
+                        cboParciales.add(item);
+                    }
+                        
+                    
+                }
+                if(s.getPonderaciones().getClave() == 0){
+                        item = new SelectItem(s.getId(), s.getPonderaciones().getDescripcion());
+                        cboParciales.add(item);
+                    }
+                
             }
+            
         } catch (Exception ex) {
             
         }
@@ -459,7 +518,7 @@ public class MbVNotas implements Serializable {
             this.lstCboModulos.add(new ClsTablaModulosRegistrados(-1, "(Escoja una Materia)", -1, "(Escoja una Materia)", -1, "(Escoja una Materia)", "(Escoja una Materia)", -1, "(Escoja una Materia)", null, null, null, null, "", null, null, 0,'1'));
             if (usuario.getTipoUsuario().getDescripcion().equals("Profesor(a)") || usuario.getTipoUsuario().getDescripcion().equals("Docente") || usuario.getTipoUsuario().getDescripcion().equals("PROFESOR(A)") || usuario.getTipoUsuario().getDescripcion().equals("DOCENTE")) {
                 DaoTModulo daoTmodulo = new DaoTModulo();
-                List<Modulo> lstModulo = daoTmodulo.getCboModulosNotas(usuario.getId());
+                List<Modulo> lstModulo = daoTmodulo.getCboModulosNotas(usuario.getId(),tCurso.getId());
                 tipo_user = 1;
                 if (lstModulo != null) {
                     if (lstModulo.size() > 0) {
@@ -488,7 +547,7 @@ public class MbVNotas implements Serializable {
                 }
             } else {
                 DaoTModulo daoTmodulo = new DaoTModulo();
-                List<Modulo> lstModulo = daoTmodulo.getCboModulosNotas(0);
+                List<Modulo> lstModulo = daoTmodulo.getCboModulosNotas(0,tCurso.getId());
                 tipo_user = 0;
                 if (lstModulo != null) {
                     if (lstModulo.size() > 0) {
@@ -796,7 +855,7 @@ public class MbVNotas implements Serializable {
         DaoTNotas daoTnotas = new DaoTNotas();
         try {
             if (lstTblNotas.size() > 0) {
-                msg = daoTnotas.registrar(lstTblNotas, this.clsTblModulosReg.getIdModulo(), accion, docente);
+                msg = daoTnotas.registrar(lstTblNotas, this.clsTblModulosReg.getIdModulo(), accion, docente,pondFecha.getId());
             }
 
         } catch (Exception ex) {

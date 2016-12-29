@@ -86,10 +86,11 @@ public class DaoTNotas implements InterfaceNotas{
                 tNotas.setId(lstNotas.get(i).getIdNota());
                 tNotas.setPonderacionFecha(pondFecha);
                 
-                if(lstNotas.get(i).getTotalAsistencia()>= 90){
+                //Metodo para saber si esta perdidos por asistencia el alumno..!
+//                if(lstNotas.get(i).getTotalAsistencia()>= 90){
                     sesion.saveOrUpdate(tNotas);
-                }else
-                    cont ++;
+//                }else
+//                    cont ++;
                     
             }
             tx.commit();

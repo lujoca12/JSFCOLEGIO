@@ -36,8 +36,9 @@ public class ClsNotas implements Serializable {
     private String horasAsistidas;
     private Double totalAsistencia;
     private Character asistenciaEvaluacion;
+    private String curso;
 
-    public ClsNotas(int idEstudiante, String nombresEstudiante, int idMatricula, String n_matricula, Date fechaMatricula, int idPromocion, String periodo, Date resolucion, int idMaestria, String descripMaestria, int n_registro, String nota, String observacion, Date fecha, boolean estado, int idNota,String usuario,String responsable, String horasAsistidas, Double totalAsistencia, Character asistenciaEvaluacion) {
+    public ClsNotas(int idEstudiante, String nombresEstudiante, int idMatricula, String n_matricula, Date fechaMatricula, int idPromocion, String periodo, Date resolucion, int idMaestria, String descripMaestria, int n_registro, String nota, String observacion, Date fecha, boolean estado, int idNota,String usuario,String responsable, String horasAsistidas, Double totalAsistencia, Character asistenciaEvaluacion, String curso) {
         this.idEstudiante = idEstudiante;
         this.nombresEstudiante = nombresEstudiante;
         this.idMatricula = idMatricula;
@@ -59,6 +60,7 @@ public class ClsNotas implements Serializable {
         this.horasAsistidas = horasAsistidas;
         this.totalAsistencia = totalAsistencia;
         this.asistenciaEvaluacion = asistenciaEvaluacion;
+        this.curso = curso;
     }
 
     
@@ -229,6 +231,14 @@ public class ClsNotas implements Serializable {
 
     public void setAsistenciaEvaluacion(Character asistenciaEvaluacion) {
         this.asistenciaEvaluacion = asistenciaEvaluacion;
+    }
+
+    public String getCurso() {
+        return curso;
+    }
+
+    public void setCurso(String curso) {
+        this.curso = curso;
     }
     
 }

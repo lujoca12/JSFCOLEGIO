@@ -43,14 +43,15 @@ nav a {
     color:white !important;
 }
 nav li, nav li ul{
-   background-color: #1C9626 !important; 
+   background-color: #0073b7 !important; 
 }
 
 nav a:hover {
-    color:#F8AA4F !important;
+    color: #001f3f;
 }
 .color-nav{
-    background-color: #1C9626 !important;
+    /*background-color: #1C9626 !important;*/
+    background-color: #0073b7 !important;
     border-color: #1C9626 !important;
 }
 .navbar-inverse .navbar-nav > .open > a{

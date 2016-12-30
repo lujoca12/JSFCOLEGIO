@@ -9,6 +9,7 @@ import Interface.InterfaceMatricula;
 import Pojo.Matricula;
 import Pojo.Titulacion;
 import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -79,17 +80,31 @@ public class DaoTMatricula implements InterfaceMatricula{
        // String hql="from palabras_clave pal inner join tesis t on pal.id_tesis = t.id where pal.id='4'";
 //        String hql="from Matricula matr inner join fetch matr.promocion pr inner join fetch pr.maestria maest inner join fetch matr.solicitudInscripcion solInsc inner join fetch  solInsc.estudiante estud "
 //                + "where estud.cedPasaporte = '"+cedula+"' and matr.estado='1' and maest.estado = '1'  order by maest.descripcion asc";
-        String hql= "from Matricula matr "
-                + "inner join fetch matr.solicitudInscripcion solInsc "
-                + "inner join fetch  solInsc.estudiante estud "
-                + "inner join fetch solInsc.promocion pr "
-                + "inner join fetch pr.maestria maest\n" +
-                   "where estud.cedPasaporte = '"+cedula+"' "
-                + "and matr.estado='1' "
-                + "and maest.estado = '1'  "
-                + "order by maest.descripcion asc";
+
+        String hql = "from Matricula matr \n" +
+"                inner join fetch matr.solicitudInscripcion solInsc \n" +
+"                inner join fetch  solInsc.estudiante estud \n" +
+"                inner join fetch solInsc.curso curs \n" +
+"                inner join fetch curs.modulos modul \n" +
+"                inner join fetch modul.materias maest  \n" +
+"                inner join fetch modul.promocion pr \n" +
+"                where estud.cedPasaporte = '"+cedula+"' \n" +
+"                and matr.estado='1' \n" +
+"                and maest.estado = '1'  \n" +
+"                order by maest.descripcion asc";
+
+//        String hql= "from Matricula matr "
+//                + "inner join fetch matr.solicitudInscripcion solInsc "
+//                + "inner join fetch  solInsc.estudiante estud "
+//                + "inner join fetch solInsc.promocion pr "
+//                + "inner join fetch pr.maestria maest\n" +
+//                   "where estud.cedPasaporte = '"+cedula+"' "
+//                + "and matr.estado='1' "
+//                + "and maest.estado = '1'  "
+//                + "order by maest.descripcion asc";
         Query query = sesion.createQuery(hql);
-         List<Matricula> lstPermiso=(List<Matricula>) query.list();
+        query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        List<Matricula> lstPermiso=(List<Matricula>) query.list();
         sesion.close();
         return lstPermiso;
     }

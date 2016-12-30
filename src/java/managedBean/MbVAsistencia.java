@@ -325,7 +325,7 @@ public class MbVAsistencia implements Serializable {
                                 this.clsFechaHora.getFecha(),
                                 asist, 0, "", "",this.clsFechaHora.getHoras().toString(),
                                 0.0,
-                                asistencia.getAsistencia_evaluacion()));
+                                asistencia.getAsistencia_evaluacion(),""));
                     }
                 } else {
                     DaoTMatricula daoTmatricula = new DaoTMatricula();
@@ -361,7 +361,7 @@ public class MbVAsistencia implements Serializable {
                                     this.clsFechaHora.getFecha(),
                                     true, 0, "", "",this.clsFechaHora.getHoras().toString(),
                                     0.0,
-                                    ' '));
+                                    ' ',""));
                         }
                     }
                     
@@ -437,7 +437,7 @@ public class MbVAsistencia implements Serializable {
                                 asist,
                                 asistencia.getId(), "", "", this.clsFechaHora.getHoras().toString(),
                                 0.0,
-                                asistencia.getAsistencia_evaluacion()));
+                                asistencia.getAsistencia_evaluacion(),""));
                     }
                 } else {
                     this.estado = 0;

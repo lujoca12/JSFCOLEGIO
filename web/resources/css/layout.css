@@ -47,13 +47,13 @@ nav li, nav li ul{
 }
 
 nav a:hover {
-    color: #001f3f;
+    color: #001f3f !important;
 }
 .color-nav{
     /*background-color: #1C9626 !important;*/
     background-color: #0073b7 !important;
-    border-color: #1C9626 !important;
+    border-color: #29d !important;
 }
 .navbar-inverse .navbar-nav > .open > a{
-    background-color: #0a7240  !important;
+    background-color: #29d  !important;
 }

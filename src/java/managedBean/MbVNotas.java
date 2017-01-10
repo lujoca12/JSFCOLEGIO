@@ -408,27 +408,30 @@ public class MbVNotas implements Serializable {
             int añoInicio = 0;
             int añoFin = 0;
             int cont = 0;
-
+            Modulo mod = null;
+            Object[] modulo = null;
             if (lstMatricula.size() > 0) {
                 for (Matricula matricula : lstMatricula) {
-//                    calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaInicio());
+                    modulo = matricula.getSolicitudInscripcion().getCurso().getModulos().toArray();
+                    mod = (Modulo) modulo[0];
+                    calendar.setTime(mod.getPromocion().getFechaInicio());
                     añoInicio = calendar.get(Calendar.YEAR);
                     cont++;
-  //                  calendar.setTime(matricula.getSolicitudInscripcion().getPromocion().getFechaFin());
+                    calendar.setTime(mod.getPromocion().getFechaFin());
                     añoFin = calendar.get(Calendar.YEAR);
                     estudiante = matricula.getSolicitudInscripcion().getEstudiante().getApellidos() + " " + matricula.getSolicitudInscripcion().getEstudiante().getNombres();
 
-                    lstTblNotas.add(new ClsNotas(matricula.getSolicitudInscripcion().getEstudiante().getId(),
-                            matricula.getSolicitudInscripcion().getEstudiante().getApellidos() + " " + matricula.getSolicitudInscripcion().getEstudiante().getNombres(),
-                            matricula.getId(),
-                            matricula.getNMatricula(),
-                            matricula.getFechaMatricula(),
+                    lstTblNotas.add(new ClsNotas(matricula.getSolicitudInscripcion().getEstudiante().getId(),//id Estudiante
+                            matricula.getSolicitudInscripcion().getEstudiante().getApellidos() + " " + matricula.getSolicitudInscripcion().getEstudiante().getNombres(),//Nombres del estudiante
+                            matricula.getId(),//id matricula
+                            matricula.getNMatricula(),//n_matricula
+                            matricula.getFechaMatricula(),//fecha matricula
                             //matricula.getSolicitudInscripcion().getPromocion().getId(),
-                            0,
+                            mod.getPromocion().getId(),//id promocion
                             añoInicio + "-" + añoFin,
                             null,
-                            0,
-                            "",
+                            0,//id maestria mod.getMaterias().getId()
+                            "",//mod.getMaterias().getDescripcion()
                             //matricula.getSolicitudInscripcion().getPromocion().getFechaResolucion(),
                             //matricula.getSolicitudInscripcion().getPromocion().getMaestria().getId(),
                             //matricula.getSolicitudInscripcion().getPromocion().getMaestria().getDescripcion(),
@@ -439,6 +442,12 @@ public class MbVNotas implements Serializable {
                             true, 0, "", "", null, 0.0, ' ',
                             matricula.getSolicitudInscripcion().getCurso().getDescripcion()+" "+matricula.getSolicitudInscripcion().getCurso().getParalelo()));
                 }
+//                for (int i = 0; i < lstTblNotas.size(); i++) {
+//                    for (int j = 0; j < modulo.length; j++) {
+//                        if(lstTblNotas.get(i).getid)
+//                        mod = (Modulo) modulo[j];
+//                    }
+//                }
             } else {
                 this.estudiante = "";
             }
@@ -480,7 +489,7 @@ public class MbVNotas implements Serializable {
                             if (modulos.getId() == nota.getModulo().getId()) {
                                 bandera = false;
                                 lstTblNotasReg.add(new ClsTblNotas(modulos.getId(),
-                                        modulos.getDescripcion(),
+                                        modulos.getMaterias().getDescripcion(),
                                         modulos.getCreditos().toString(),
                                         nota.getId(),
                                         nota.getNota().doubleValue(),
@@ -492,7 +501,7 @@ public class MbVNotas implements Serializable {
                     }
                     if (bandera) {
                         lstTblNotasReg.add(new ClsTblNotas(modulos.getId(),
-                                modulos.getDescripcion(),
+                                modulos.getMaterias().getDescripcion(),
                                 modulos.getCreditos().toString(),
                                 0,
                                 0.0,

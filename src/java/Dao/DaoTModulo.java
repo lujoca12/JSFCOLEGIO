@@ -240,7 +240,7 @@ public class DaoTModulo implements InterfaceModulos{
         this.tx = null;
         iniciaOperacion();
         //Presento los modulos registrados x años 
-        String hql="from Modulo mod where mod.promocion = "+idPromocion+" and mod.estado <> '0' order by mod.descripcion asc";
+        String hql="from Modulo mod inner join fetch mod.materias mat where mod.promocion = "+idPromocion+" and mod.estado <> '0' and mat.estado <> '0' order by mod.descripcion asc";
         Query query = sesion.createQuery(hql);
         List<Modulo> lstModulos=(List<Modulo>) query.list();
         sesion.close();

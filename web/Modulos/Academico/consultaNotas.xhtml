@@ -82,7 +82,7 @@
                                 <p:dataTable id="tblDetalleNotas" class="tblNotas DataTable datatableHover" scrollable="false" var="notas" 
                                              value="#{mbVNotas.lstTblNotasReg}"
                                              emptyMessage="No hay datos">
-                                    <p:column headerText="Módulo" style="text-align: center !important;">
+                                    <p:column headerText="Módulo" style="text-align: center !important; width: 30%;">
                                         <h:outputText value="#{notas.descripMod}" />
                                     </p:column>
 
@@ -90,17 +90,37 @@
                                         <h:outputText value="#{notas.idNotas eq 0 ? null:notas.nota}"  />
                                     </p:column>
 
-                                    <!--<p:column headerText="N2">
+                                    <p:column headerText="N2">
                                         <h:outputText value="#{car.brand}" />
                                     </p:column>
 
-                                    <p:column headerText="E. Final">
+                                    <p:column headerText="N3">
                                         <h:outputText value="#{car.color}" />
                                     </p:column>
                                     
-                                    <p:column headerText="N. Final">
+                                    <p:column headerText="1 Quim">
                                         <h:outputText value="#{car.color}" />
-                                    </p:column>-->
+                                    </p:column>
+                                    
+                                    <p:column headerText="N1">
+                                        <h:outputText value="#{car.brand}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="N2">
+                                        <h:outputText value="#{car.brand}" />
+                                    </p:column>
+
+                                    <p:column headerText="N3">
+                                        <h:outputText value="#{car.color}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="2 Quim">
+                                        <h:outputText value="#{car.color}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="Sup.">
+                                        <h:outputText value="#{car.color}" />
+                                    </p:column>
                                     
                                     <p:column headerText="Estado" style="text-align: center !important;">
                                         <h:outputText value="#{notas.idNotas eq 0 ? null : notas.nota >= 7 ? 'Aprobado':'Reprobado'}" />

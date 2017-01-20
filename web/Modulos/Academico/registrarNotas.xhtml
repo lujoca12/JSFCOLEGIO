@@ -22,7 +22,7 @@
                             <h:selectOneMenu required="true" id="cboParcial" class="form-control" value="#{mbVNotas.pondFecha.id}">
                                 <f:selectItem itemLabel="Ninguno" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{mbVNotas.cboParciales}"  />  
-                                <p:ajax update="cboCurso"  />
+                                <p:ajax update="cboCurso,frmRegistrarNotas,msgsNotas" listener="#{mbVNotas.cargarTablaRegNotas}" />
                             </h:selectOneMenu>
                             
                             <p:outputLabel for="cboCurso" value="Curso:" styleClass="labelDerecha"  />

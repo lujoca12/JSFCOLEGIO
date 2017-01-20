@@ -32,5 +32,8 @@
             </key>
             <one-to-many class="Pojo.Asistencia" />
         </set>
+        <many-to-one name="promocion" class="Pojo.Promocion" fetch="select">
+            <column name="id_promocion" not-null="true" />
+        </many-to-one>
     </class>
 </hibernate-mapping>

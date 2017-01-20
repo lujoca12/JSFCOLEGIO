@@ -17,7 +17,7 @@ public interface InterfaceNotas {
     
     public boolean registrar(List<ClsNotas> lstNotas, int idModulo, Character accion, String docente, int idPonderFecha) throws Exception;
     public List<Notas> getTodasNotas(int idMatricula) throws Exception;
-    public List<Notas> existe(int idModulo, String estado) throws Exception;
+    public List<Notas> existe(int idModulo, String estado, int idpondfecha) throws Exception;
     public Notas getNotas(String idNotas) throws Exception;
     public boolean update(List<ClsNotas> lstTblNotas, int idModulo) throws Exception;
     

@@ -616,9 +616,9 @@ public class MbVNotas implements Serializable {
             DaoTNotas daoTnotas = new DaoTNotas();
             List<Notas> lstNotas = null;
             if (this.clsTblModulosReg != null) {
-                lstNotas = daoTnotas.existe(this.clsTblModulosReg.getIdModulo(), "0");
+                lstNotas = daoTnotas.existe(this.clsTblModulosReg.getIdModulo(), "0", pondFecha.getId());
             } else {
-                lstNotas = daoTnotas.existe(0, "0");
+                lstNotas = daoTnotas.existe(0, "0", 0);
             }
 
             DaoTMatricula daoTmatricula = new DaoTMatricula();
@@ -802,9 +802,9 @@ public class MbVNotas implements Serializable {
             DaoTNotas daoTnotas = new DaoTNotas();
             List<Notas> lstNotas = null;
             if (this.clsTblModulosReg != null) {
-                lstNotas = daoTnotas.existe(this.clsTblModulosReg.getIdModulo(), "1");
+                lstNotas = daoTnotas.existe(this.clsTblModulosReg.getIdModulo(), "1",pondFecha.getId());
             } else {
-                lstNotas = daoTnotas.existe(0, "1");
+                lstNotas = daoTnotas.existe(0, "1",0);
             }
 
             //Recogiendo Datos de la sesion para saber que usuario ingreso la maestria promocion

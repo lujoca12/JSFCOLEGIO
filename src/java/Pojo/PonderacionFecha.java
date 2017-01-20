@@ -19,15 +19,17 @@ public class PonderacionFecha  implements java.io.Serializable {
      private Character estado;
      private Set notases = new HashSet(0);
      private Set asistencias = new HashSet(0);
+     private Promocion promocion;
 
     public PonderacionFecha() {
     }
 
 	
-    public PonderacionFecha(int id) {
+    public PonderacionFecha(int id, Promocion promocion) {
         this.id = id;
+        this.promocion = promocion;
     }
-    public PonderacionFecha(int id, Ponderaciones ponderaciones, Date fechaInicio, Date fechaFin, Character estado, Set notases, Set asistencias) {
+    public PonderacionFecha(int id, Ponderaciones ponderaciones, Date fechaInicio, Date fechaFin, Character estado, Set notases, Set asistencias, Promocion promocion) {
        this.id = id;
        this.ponderaciones = ponderaciones;
        this.fechaInicio = fechaInicio;
@@ -35,6 +37,7 @@ public class PonderacionFecha  implements java.io.Serializable {
        this.estado = estado;
        this.notases = notases;
        this.asistencias = asistencias;
+       this.promocion = promocion;
     }
    
     public int getId() {
@@ -87,7 +90,13 @@ public class PonderacionFecha  implements java.io.Serializable {
         this.asistencias = asistencias;
     }
 
-
+    public Promocion getPromocion() {
+        return this.promocion;
+    }
+    
+    public void setPromocion(Promocion promocion) {
+        this.promocion = promocion;
+    }
 
 
 }

@@ -173,7 +173,7 @@ public class DaoTNotas implements InterfaceNotas{
     }
 
     @Override
-    public List<Notas> existe(int idModulo, String estado) throws Exception {
+    public List<Notas> existe(int idModulo, String estado, int idpondfecha) throws Exception {
         this.sesion = null;
         this.tx = null;
         iniciaOperacion();
@@ -198,7 +198,9 @@ public class DaoTNotas implements InterfaceNotas{
         }
         
         String hql="from Notas nota inner join fetch nota.matricula matr inner join fetch matr.solicitudInscripcion solin inner join fetch solin.estudiante est inner join fetch nota.modulo mod inner join fetch mod.promocion pr\n" +
-                   " inner join fetch mod.usuario user inner join fetch pr.maestria maest where mod.id="+idModulo+" and nota.estado<>'E' "+consulta1+" "+consulta+"  order by est.apellidos asc";
+                   " inner join fetch mod.usuario user inner join fetch pr.maestria maest where mod.id="+idModulo+" "
+                + "and nota.estado<>'E' and nota.ponderacionFecha="+idpondfecha+" "
+                + ""+consulta1+" "+consulta+"  order by est.apellidos asc";
         Query query = sesion.createQuery(hql);
         List<Notas> lstNotas=(List<Notas>) query.list();
         sesion.close();

@@ -78,7 +78,7 @@ public class DaoTPonderaciones implements InterfacePonderacion{
         
         return band;
     }
-    
+     //ojo con habilitar las fechas de registro de notas x parciales pilas
     @Override
     public List<PonderacionFecha> getTblPonderacionFecha(String ponderacionDescripcion, boolean mostrar) throws Exception {
         this.sesion = null;
@@ -98,17 +98,22 @@ public class DaoTPonderaciones implements InterfacePonderacion{
         else
             consulta = "and p.descripcion like '%"+ponderacionDescripcion+"%'";
         
-        String hql="from PonderacionFecha pond inner join fetch pond.ponderaciones p "
+        String hql="from PonderacionFecha pond inner join fetch pond.ponderaciones p inner join fetch pond.promocion pr "
                 + "where p.estado='1' and "
-                + "(year(current_date) >= year(pond.fechaInicio) "
-                + "and year(current_date)<= year(pond.fechaFin)) "
+                + "(year(current_date) >= year(pr.fechaInicio) "
+                + "and year(current_date)<= year(pr.fechaFin)) "
                 + ""+consulta+" and "+estado+" order by pond.id desc";
+        
+        //+ "(year(current_date) >= year(pond.fechaInicio) "
+          //      + "and year(current_date)<= year(pond.fechaFin)) "
+                
+                
         Query query = sesion.createQuery(hql);
         List<PonderacionFecha> lstPonderacion=(List<PonderacionFecha>) query.list();
         sesion.close();
         return lstPonderacion;
     }
-    
+    //ojo con habilitar las fechas de registro de notas x parciales pilas
     @Override
     public List<PonderacionFecha> getPonderacionFecha(boolean mostrar) throws Exception {
         this.sesion = null;
@@ -122,16 +127,20 @@ public class DaoTPonderaciones implements InterfacePonderacion{
         else
             estado = "pond.estado <> '0'";
         
+        
+         //+ "(year(current_date) >= year(pond.fechaInicio) "
+           //     + "and year(current_date)<= year(pond.fechaFin)) "
+        
         //Presento los modulos registrados x años 
         //if(ponderacionDescripcion.isEmpty())
             consulta = "";
         //else
           //  consulta = "and p.descripcion like '%"+ponderacionDescripcion+"%'";
         
-        String hql="from PonderacionFecha pond inner join fetch pond.ponderaciones p "
+        String hql="from PonderacionFecha pond inner join fetch pond.ponderaciones p inner join fetch pond.promocion pr "
                 + "where p.estado='1' and "
-                + "(year(current_date) >= year(pond.fechaInicio) "
-                + "and year(current_date)<= year(pond.fechaFin)) "
+                + "(year(current_date) >= year(pr.fechaInicio) "
+                + "and year(current_date)<= year(pr.fechaFin)) "
                 + ""+consulta+" and "+estado+" order by pond.fechaInicio asc";
         Query query = sesion.createQuery(hql);
         List<PonderacionFecha> lstPonderacion=(List<PonderacionFecha>) query.list();
